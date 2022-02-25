@@ -3,10 +3,8 @@
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
     "husky": "^7.0.4"
-  }
-  {
-    "scripts": {
-      "prepare": "husky install"
-    }
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
