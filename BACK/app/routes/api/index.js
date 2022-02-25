@@ -1,13 +1,13 @@
 const express = require('express');
 
-const adminUser = require('./admin/users');
+const adminUserRoutes = require('./admin/users');
 //!const customerRouter = require('./customer');
 
 const router = express.Router();
 
 //!router.all('/',apiController.home);
 
-router.use('/admin/user', adminUser);
+router.use('/admin/users', adminUserRoutes);
 //!router.use('/customer', customerRouter);
 
 router.use(()=>{
