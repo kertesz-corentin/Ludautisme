@@ -5,9 +5,8 @@
     "husky": "^7.0.4"
   }
   {
-    "private": true, // ← your package is private, you only need postinstall
     "scripts": {
-      "postinstall": "husky install"
+      "prepare": "husky install"
     }
   }
 }
