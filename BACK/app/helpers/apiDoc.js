@@ -1,17 +1,25 @@
-const swaggerJSDoc = require('swagger-jsdoc');
+const expressJSDocSwagger = require('express-jsdoc-swagger');
 
-const swaggerDefinition = {
-    openapi: '3.0.0',
+const options = {
     info: {
-      title: 'Express API for JSONPlaceholder',
-      version: '0.0.1',
+        version: '1.0.0',
+        title: "O'blog",
+        description: "Blog de l'école O'clock",
     },
-  };
+    baseDir: __dirname,
+    // On analyse tous les fichiers du projet
+    filesPattern: ['../routes/**/*.js', '../models/*.js', '../errors/*.js'],
+    // URL où sera disponible la page de documentation
+    swaggerUIPath: process.env.API_DOCUMENTATION_ROUTE,
+    // Activation de la documentation à travers une route de l'API
+    exposeApiDocs: true,
+    apiDocsPath: '/api/docs',
+};
 
-  const options = {
-    swaggerDefinition,
-    // Paths to files containing OpenAPI definitions
-    apis: ['./routes/api/*.js','./routes/api/admin/*.js'],
-  };
+/**
+ *
+ * @param {object} app Express application
+ * @returns {object} Express JSDoc Swagger middleware that create web documentation
+ */
+module.exports = (app) => expressJSDocSwagger(app)(options);
 
-module.exports = swaggerJSDoc(options);

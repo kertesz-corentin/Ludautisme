@@ -1,13 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const swaggerJSDoc = require('./helpers/apiDoc');
-const swaggerUi = require('swagger-ui-express');
 const router = require('./routes');
 
 const app = express();
 
-//Swagger
-app.use('/api/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerJSDoc));
+require('./helpers/apiDoc')(app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
