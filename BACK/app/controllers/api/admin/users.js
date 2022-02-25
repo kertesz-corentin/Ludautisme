@@ -1,5 +1,6 @@
 const usersDataMapper = require('../../../models/admin/users');
-const { ApiError } = require('../../../helpers/errorHandler');
+//For Post, update...
+//const { ApiError } = require('../../../helpers/errorHandler');
 
 module.exports = {
     async getAll(_, res) {
