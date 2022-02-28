@@ -1,25 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { NavLink } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import logo from './logo.png';
+import LoginUser from '../User/LoginUser/LoginUser';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import './header.scss';
 
 const Header = ({className, ...rest}) => {
-   return (
+    const [value, setValue] = React.useState(0);
+    return (
        <header
             className={classnames('header', className)}
             {...rest}>
-            <img src={logo} className="header-logo" alt="Logo" />
-            <nav>
-                    <NavLink to="/"> Accueil</NavLink>
-                    <NavLink to="/Notre association">Notre association</NavLink>
-                    <NavLink to="/Matériathèque">Matériathèque</NavLink>
-                    <NavLink to="/Infos pratique">Infos pratique</NavLink>
-                    <NavLink to="/Liens utiles">Liens utiles</NavLink>
+
+            <div className="header-logo">
+                <img src={logo} className="header-logo-image" alt="Logo" />
+            </div>
+            <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                    setValue(newValue);
+                }}
+                className="header-nav">
+                    <BottomNavigationAction LinkComponent="/" label="Accueil" value="Accueil" className="header-nav-item" />
+                    <BottomNavigationAction LinkComponent="/association" label="Association" value="Association" className="header-nav-item" />
+                    <BottomNavigationAction LinkComponent="/library" label="Matériathèque" value="Matériathèque" className="header-nav-item" />
+                    <BottomNavigationAction LinkComponent="/infos" label="Infos Pratiques" value="Infos Pratiques" className="header-nav-item" />
+                    <BottomNavigationAction LinkComponent="/usefull_links" label="Liens Utiles" value="Liens Utiles" className="header-nav-item" />
             {/* <NavLink to="/Accueil">Accueil
             </NavLink> */}
-            </nav>
+            </BottomNavigation>
+            <LoginUser />
         </header>
    );
 };
