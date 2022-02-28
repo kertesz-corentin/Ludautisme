@@ -7,11 +7,11 @@ INSERT INTO "role" ("name") VALUES
 ('admin');
 
 INSERT INTO "user" ("email", "member_number", "phone", "first_name", "last_name", "adress_number", "adress_street", "adress_zipcode", "adress_city", "password", "id_role") VALUES
-('kertesz.corentin@hotmail.com', 121, '0761916300', 'corentin', 'kertesz', 4, 'rue dieudonné costes', 29200, 'brest', 'productowner', 2),
-('arnaud@gmail.com', 57, '0648975213', 'arnaud', 'peybernes', 17, 'rue des jonquilles', 14700, 'pau', 'scrummaster', 2),
-('thibault@gmail.com', 21, '0749831522', 'thibault', 'lallement', 85, 'boulevard de la choucroute', 65410, 'castre', 'referent', 2 ),
-('romain@gmail.com', 94, '0647855463', 'romain', 'perdriat', 22, 'impasse des matelots', 29200, 'brest', 'gitmaster', 2),
-('xavier@gmail.com', 76, '0749881254', 'xavier', 'leplatre', 45, 'rue du verdon', 45164, 'bayeux', 'leadfront', 2),
+('corentin@grr.la', 121, '0761916300', 'corentin', 'kertesz', 4, 'rue dieudonné costes', 29200, 'brest', 'productowner', 2),
+('arnaud@grr.la', 57, '0648975213', 'arnaud', 'peybernes', 17, 'rue des jonquilles', 14700, 'pau', 'scrummaster', 2),
+('thibault@grr.la', 21, '0749831522', 'thibault', 'lallement', 85, 'boulevard de la choucroute', 65410, 'castre', 'referent', 2 ),
+('romain@grr.la', 94, '0647855463', 'romain', 'perdriat', 22, 'impasse des matelots', 29200, 'brest', 'gitmaster', 2),
+('xavier@grr.la', 76, '0749881254', 'xavier', 'leplatre', 45, 'rue du verdon', 45164, 'bayeux', 'leadfront', 2),
 ('stephanie.poulesquen@orange.fr', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', 'test', 1),
 ('hledizes@gmail.com', 108,'0663690249', 'héléne', 'le dizes', 2325, 'route de kergoat', 29630, 'plougasnou', 'abcdef', 1);
 
