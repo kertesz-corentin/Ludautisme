@@ -1,5 +1,3 @@
--- Deploy ludautisme:init to pg
-
 BEGIN;
 
 CREATE TABLE "role" (
