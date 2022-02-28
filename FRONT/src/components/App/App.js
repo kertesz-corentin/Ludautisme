@@ -1,5 +1,6 @@
 
 import './App.scss';
+import LoginAdmin from '../Admin/LoginAdmin/LoginAdmin';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <LoginAdmin/>
         <a
           className="App-link"
           href="https://reactjs.org"
