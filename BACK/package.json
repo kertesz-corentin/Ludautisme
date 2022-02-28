@@ -12,5 +12,8 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3"
+  },
+  "scripts": {
+    "start": "node-dev --no-notify index.js"
   }
 }

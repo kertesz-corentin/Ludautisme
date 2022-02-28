@@ -1,5 +1,3 @@
--- Deploy ludautisme:init to pg
-
 BEGIN;
 
 CREATE TABLE "role" (
@@ -13,14 +11,14 @@ CREATE TABLE "user" (
     "phone" TEXT NOT NULL,
     "first_name" TEXT,
     "last_name" TEXT,
-    "adress_number" INT NOT NULL,
+    "adress_number" TEXT NOT NULL,
     "adress_street" TEXT NOT NULL,
     "adress_zipcode" INT NOT NULL,
     "adress_city" TEXT NOT NULL,
     "password" TEXT,
-    "cotisation_ok" BOOLEAN DEFAULT false,
+    "cotisation_status" BOOLEAN DEFAULT false,
     "cotisation_expiration" DATE,
-    "caution_ok" BOOLEAN DEFAULT false,
+    "caution_status" BOOLEAN DEFAULT false,
     "caution_expiration" DATE,
     "archived" BOOLEAN DEFAULT false,
     "id_role" INT REFERENCES "role"("id"),
