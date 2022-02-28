@@ -1,0 +1,55 @@
+@import 'src/styles/vars';
+
+.loginuser {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding:  0.6em;
+
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+
+    &-btnopen{
+        border: none;
+        background: none;
+        color: $color;
+        cursor: pointer;
+        padding: 0.4rem;
+        display: flex;
+    }
+
+    &-form{
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.6rem;
+    }
+
+    &-input{
+        border: 0;
+        background: white;
+        padding: 0.5rem;
+        font-size: 0.8em;
+        border-radius: 3px;
+        margin-bottom: 0.6em;
+    }
+
+    &-submit{
+        border-radius: 3px;
+        color: $font-color;
+        background-color: $color;
+        border: 0;
+        cursor: pointer;
+        padding: 0.5rem;
+        font-weight: 200;
+
+        &:hover:not(:disabled){
+            background-color: $color;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}

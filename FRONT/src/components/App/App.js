@@ -1,4 +1,4 @@
-
+import LoginUser from '../User/LoginUser/LoginUser';
 import './App.scss';
 
 function App() {
@@ -16,6 +16,8 @@ function App() {
         >
           Learn React
         </a>
+
+        <LoginUser/>
       </header>
     </div>
   );
