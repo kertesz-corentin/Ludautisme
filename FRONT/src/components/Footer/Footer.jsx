@@ -1,12 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import './footer.scss';
 
-function Footer(props) {
-  return (
-    <div>Footer</div>
-  )
-}
+const Footer = ({className, ...rest}) => {
+   return (
+       <footer
+            className={classnames('footer', className)}
+            {...rest}
+         >
 
-Footer.propTypes = {}
+        </footer>
+   );
+};
 
-export default Footer
+Footer.propTypes = {
+    className: PropTypes.string,
+};
+Footer.defaultProps = {
+    className: '',
+};
+export default React.memo(Footer);
