@@ -20,7 +20,6 @@ function App() {
         </a>
 
         <LoginUser/>
-      </header>
     </div>
   );
 }
