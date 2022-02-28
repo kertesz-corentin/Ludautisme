@@ -4,6 +4,7 @@ import classnames from 'classnames';
 // import { Link } from 'react-router-dom'
 import logo from './logo.png';
 import LoginUser from '../User/LoginUser/LoginUser';
+import Shop from '../Shop/Shop';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import './header.scss';
 
@@ -32,6 +33,7 @@ const Header = ({className, ...rest}) => {
             {/* <NavLink to="/Accueil">Accueil
             </NavLink> */}
             </BottomNavigation>
+            <Shop />
             <LoginUser />
         </header>
    );

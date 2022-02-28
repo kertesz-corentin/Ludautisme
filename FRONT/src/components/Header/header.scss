@@ -6,7 +6,6 @@
     align-items: center;
     justify-content: space-between;
     padding: $gutter;
-    background-color: red;
 
     &-nav {
         display: flex;
@@ -14,7 +13,5 @@
         flex-wrap: nowrap;
         justify-content: space-evenly;
         flex: 1;
-        background-color: yellow;
-
     }
 }
