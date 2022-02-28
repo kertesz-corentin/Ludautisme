@@ -3,15 +3,14 @@ const expressJSDocSwagger = require('express-jsdoc-swagger');
 const options = {
     info: {
         version: '1.0.0',
-        title: "O'blog",
-        description: "Blog de l'école O'clock",
+        title: "Lud'autisme",
+        description: "API de gestion d'emprunt de jeux",
     },
     baseDir: __dirname,
-    // On analyse tous les fichiers du projet
-    filesPattern: ['../routes/**/*.js', '../models/*.js', '../errors/*.js'],
-    // URL où sera disponible la page de documentation
+    filesPattern: ['../routes/**/*.js', '../models/**/*.js', '../errors/**/*.js'],
+    // Doc URL
     swaggerUIPath: process.env.API_DOCUMENTATION_ROUTE,
-    // Activation de la documentation à travers une route de l'API
+    //Serve API doc
     exposeApiDocs: true,
     apiDocsPath: '/api/docs',
 };
