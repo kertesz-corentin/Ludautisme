@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom'
+import logo from './logo.png';
 import './header.scss';
-import logo from '../Header/logo-lud.jpg'
 
 const Header = ({className, ...rest}) => {
    return (
        <header
             className={classnames('header', className)}
             {...rest}>
-            <img className='App-logo' src={logo} alt="Logo" />
+            <img src={logo} className="header-logo" alt="Logo" />
             <nav>
                     <NavLink to="/"> Accueil</NavLink>
                     <NavLink to="/Notre association">Notre association</NavLink>
