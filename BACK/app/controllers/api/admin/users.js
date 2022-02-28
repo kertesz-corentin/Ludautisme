@@ -7,4 +7,8 @@ module.exports = {
         const users = await usersDataMapper.findAll();
         return res.json(users);
     },
+    async getFiltered(req, res) {
+        const user = await usersDataMapper.findFiltered(req.body);
+        return res.json(user);
+    },
 };
