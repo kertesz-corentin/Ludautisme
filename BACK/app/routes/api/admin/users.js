@@ -1,4 +1,5 @@
 const express = require('express');
+const {userController} = require('../../../controllers')
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 const router = express.Router();
 
@@ -10,6 +11,6 @@ const router = express.Router();
      */
 
 router.route('/')
-    .get((req,res)=>{res.json( { users: 'test'} )});
+    .get(()=>{userController.getAll()});
 
 module.exports = router;

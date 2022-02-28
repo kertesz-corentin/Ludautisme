@@ -1,4 +1,4 @@
-const usersController = require('./users');
+const userController = require('./api/admin/users');
 
 // const apiController = {
 //      /**
@@ -11,4 +11,4 @@ const usersController = require('./users');
 
 // }
 
-module.exports = {usersController};
+module.exports = {userController};

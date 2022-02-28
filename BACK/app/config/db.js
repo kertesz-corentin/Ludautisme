@@ -11,12 +11,14 @@ if (process.env.NODE_ENV === 'production') {
     config.connectionString = process.env.DATABASE_DEV;
 }
 
+console.log(config);
+
 const pool = new Pool(config);
 
 module.exports = {
     originalClient: pool,
     async query(...params) {
-        debug(...params);
+        console.error(...params);
         return this.originalClient.query(...params);
     },
 };
