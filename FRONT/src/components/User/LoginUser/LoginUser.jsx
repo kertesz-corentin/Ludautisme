@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
 import './loginuser.scss';
 
 const LoginUser = ({className, ...rest}) => {
