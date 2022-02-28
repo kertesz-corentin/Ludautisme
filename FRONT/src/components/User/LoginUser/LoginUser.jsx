@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import PropTypes from 'prop-types';
+import TextField from '@mui/material/TextField';
 import classnames from 'classnames';
 
 import './loginuser.scss';
@@ -8,13 +9,15 @@ import './loginuser.scss';
 const LoginUser = ({
     mailValue,
     passwordValue,
-    isOpen,
     onInputsChange,
     onSubmit,
-    onToggleOpen,
     className, ...rest}) => {
 
-    const [isButtonDisable, setIsButtonDisable] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const onToggleOpen = () => {
+        setIsOpen(!isOpen)
+    }
 
     const handleInputChange = (event, inputName) => {
         onInputsChange(inputName, event.target.value);
@@ -38,21 +41,19 @@ const LoginUser = ({
       </button>
       {isOpen && (
         <form className="loginuser-form" onSubmit={handleSubmit}>
-          <input
-            className="loginuser-input"
+          <TextField
+            label="Email"
             type="email"
-            placeholder="Email"
             value={mailValue}
             onChange={(event) => handleInputChange(event, 'mail')}
           />
-          <input
-            className="loginuser-input"
+          <TextField
+            label="Mot de passe"
             type="password"
-            placeholder="Mot de passe"
             value={passwordValue}
             onChange={(event) => handleInputChange(event, 'password')}
           />
-          <button className="loginuser-submit" type="submit" disabled={isButtonDisable}>
+          <button className="loginuser-submit" type="submit">
             Se connecter
           </button>
         </form>
@@ -74,6 +75,5 @@ LoginUser.propTypes = {
 };
 LoginUser.defaultProps = {
     className: '',
-    isOpen: true,
 };
 export default React.memo(LoginUser);
