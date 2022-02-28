@@ -2,6 +2,7 @@ import React,{ useState }from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './loginadmin.scss';
+import TextField from '@mui/material/TextField';
 
 
 const LoginAdmin = ({
@@ -26,22 +27,20 @@ const LoginAdmin = ({
         }
    return (
        <div
-            className={classnames('loginadmin', className)}
+            className={classnames('login-admin', className)}
             {...rest}
          >
          <h1>LOGIN ADMIN</h1>
         <form className="settings-form" onSubmit={handleSubmit}>
-          <input
+          <TextField
+            label="Email"
             type="email"
-            placeholder="Email"
-            className="settings-input"
             value= {mailValue}
             onChange={handleMailChange}
           />
-          <input
+          <TextField
             type="password"
-            placeholder="Mot de passe"
-            className="settings-input"
+            label="Mot de passe"
             value={passwordValue}
             onChange={handlePasswordChange}
           />
