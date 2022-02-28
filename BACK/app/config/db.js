@@ -1,7 +1,8 @@
 const { Pool } = require('pg');
+
 const config = {};
 
-//Heroku
+// Heroku
 if (process.env.NODE_ENV === 'production') {
     config.connectionString = process.env.DATABASE_URL;
     config.ssl = {

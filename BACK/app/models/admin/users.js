@@ -24,7 +24,7 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
 module.exports = {
     //Return all users in db
     async findAll() {
-        const result = await client.query('SELECT * FROM user');
+        const result = await client.query('SELECT * FROM "user"');
         return result.rows;
-    }
-}
+    },
+};
