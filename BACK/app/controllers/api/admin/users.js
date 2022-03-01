@@ -9,7 +9,7 @@ module.exports = {
         return res.json(users);
     },
     async getFiltered(req, res) {
-        //Avoid injection on column
+        //  Avoid injection on column
         const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived'];
         const obj = req.body;
         const props = Object.keys(obj);
@@ -17,8 +17,9 @@ module.exports = {
         props.forEach((prop) => {
             const value = obj[prop];
             const index = columns.indexOf(prop);
-            if (!index) {
-                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémenté');
+            console.log(Number.isNaN(index));
+            if (Number.isNaN(index)) {
+                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
             }
             if (['id', 'member_number'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');

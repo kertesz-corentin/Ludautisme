@@ -21,8 +21,19 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
  * @property {string} cotisation_expiration - cotisation expiration date
  * @property {boolean} caution_status - caution status
  * @property {string} caution_expiration - caution expiration
- * @property {number} id_role - role name
+ * @property {number} id_role - role id
  * @property {string} created_at - date creation
+ */
+
+/**
+ * @typedef {object} usersSearch
+ * @property {number} id - Unique identifier
+ * @property {number} member_number - Unique identifier
+ * @property {string} phone - User phone number
+ * @property {string} first_name - User first name
+ * @property {string} last_name - User last name
+ * @property {string} email - User email
+ * @property {boolean} archived - User archived status
  */
 
 module.exports = {

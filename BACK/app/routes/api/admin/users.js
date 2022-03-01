@@ -8,6 +8,7 @@ const router = express.Router();
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations
  * @tags Users
+ * @param {usersSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
 
