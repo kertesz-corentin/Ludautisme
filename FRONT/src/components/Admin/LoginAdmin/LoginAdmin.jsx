@@ -50,7 +50,8 @@ const LoginAdmin = ({
             value={passwordValue}
             onChange={handlePasswordChange}
           />
-          { mailValue !== ''&& passwordValue !== '' ?
+          { mailValue !== ''&& passwordValue !== ''
+            ?
             <Button variant="contained" className= "submit-admin" type= "submit" onSubmit= {handleSubmit} endIcon={<SendIcon />}  >
                 Se Connecter
             </Button>
