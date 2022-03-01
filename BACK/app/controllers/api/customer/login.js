@@ -14,6 +14,9 @@ module.exports = {
         }
         if (req.body.password !== user[0].password) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
+        }
+        if (user[0].name === 'admin' && req.originalUrl !== '/api/admin/login') {
+            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
             const token = jwt.sign(
                 {
