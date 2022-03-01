@@ -5,9 +5,15 @@ import './adminsection.scss';
 const AdminSection = ({ title, data }) => {
     return (
         <section className='section'>
-            <h1 className="section-title">Tableau de bord - {title}</h1>
-            <button>Ajouter {title}</button>
-            datagrid
+            <div class="section-element">
+                <h1 className="section-element-title">Tableau de bord - {title}</h1>
+            </div>
+            <div class="section-element">
+                <button className="section-element-add">Ajouter {title}</button>
+            </div>
+            <div class="section-element">
+                <div className="section-element-grid">datagrid</div>
+            </div>
         </section>
     );
 };
