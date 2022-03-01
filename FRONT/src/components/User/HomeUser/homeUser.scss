@@ -2,6 +2,10 @@
 
 .home-user {
 
-   background-color: aqua;
+   background-color:rgb(213, 238, 238);
    height: 40rem;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
 }

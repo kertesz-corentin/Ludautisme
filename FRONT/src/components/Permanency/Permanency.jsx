@@ -10,6 +10,11 @@ const Permanency = ({className, ...rest}) => {
             {...rest}
          >
             Permanency
+            <p>
+                Prochaine permanence
+                01/03/2022
+                8h00-12h00
+            </p>
         </div>
    );
 };
