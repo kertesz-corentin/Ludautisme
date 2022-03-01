@@ -59,4 +59,34 @@ module.exports = {
         const result = await client.query(query, placeholders);
         return result.rows;
     },
+
+    async insert(obj) {
+        // const result = await client.query(
+        //     `
+        //         INSERT INTO "user"
+        //         (email, member_number, phone,adress_number, adress_street, adress_zipcode, adress_city) VALUES
+        //         ($1, $2, $3, $4, $5, $6, $7) RETURNING *
+        //     `, ['tedf2st@grr.la', 163, '05', '01', 'rue_street', 51200, 'testcity'],
+        // );
+
+        const props = Object.keys(obj);
+        let query = `INSERT INTO "user" (`;
+        let columns = ``;
+        let values = ``;
+        const placeholders = []
+        props.forEach((prop, index) => {
+            if (index !== props.length -1) {
+                columns += `${prop}, `;
+                values += `$${index+1}, `;
+            } else {
+                columns += `${prop}) VALUES (`;
+                values += `$${index+1}) RETURNING *`;
+            }
+            placeholders.push(obj[prop]);
+        });
+        query += columns + values;
+        console.log(query);
+        const result = await client.query(query, placeholders);
+        return result.rows[0];
+    },
 };

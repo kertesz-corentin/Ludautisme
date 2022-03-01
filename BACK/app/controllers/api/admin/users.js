@@ -36,14 +36,16 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
-        const user = await usersDataMapper.findFiltered({
-            member_number: req.body.member_number,
-            email: req.body.email,
-        });
-        if (user) {
+        const user = await usersDataMapper.findFiltered([
+            {member_number: req.body.member_number},
+            {email: req.body.email},
+        ]);
+        console.log(user);
+        if (user.length > 0) {
             throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
         }
         const newUser = await usersDataMapper.insert(req.body);
+        console.log(newUser);
         return res.json(newUser);
     },
 };

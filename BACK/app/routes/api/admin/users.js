@@ -23,6 +23,7 @@ router.route('/search')
  */
 
 router.route('/')
-    .get(controllerHandler(userController.getAll));
+    .get(controllerHandler(userController.getAll))
+    .post(controllerHandler(userController.create));
 
 module.exports = router;
