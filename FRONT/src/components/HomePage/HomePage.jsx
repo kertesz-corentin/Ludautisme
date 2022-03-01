@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper } from '@mui/material';
-import logo from '../Header/logo.png';
+import logo from '../public/logo.png';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './homepage.scss';
@@ -8,8 +8,15 @@ import { NavLink } from "react-router-dom";
 
 const Accueil = ({className, ...rest}) => {
     return (
+
         <div className={classnames('accueil', className)}
         {...rest}>
+            <div className="bandeauPrésentation">
+                <h2>
+                    Bienvenue chez lud'Autisme
+                </h2>
+
+            </div>
             <div className="categoriesDisplay">
                 <div className="categorie">
                     <NavLink to="/Jeux">

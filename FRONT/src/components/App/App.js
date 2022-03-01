@@ -1,10 +1,10 @@
 
 // import Header from '../../components/Header/Header';
-import Accueil from '../Accueil/Accueil';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
+        <Footer/>
     </div>
   );
 }
