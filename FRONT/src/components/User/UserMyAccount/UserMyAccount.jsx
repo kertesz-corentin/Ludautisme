@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './homeUser.scss';
+import './usermyaccount.scss';
 import MenuUser from '../MenuUser/MenuUser';
 import Permanency from '../../Permanency/Permanency';
 
-const HomeUser = ({className, ...rest}) => {
+const UserMyAccount = ({className, ...rest}) => {
    return (
        <div> Bienvenue Michel
             <div
@@ -19,10 +19,10 @@ const HomeUser = ({className, ...rest}) => {
    );
 };
 
-HomeUser.propTypes = {
+UserMyAccount.propTypes = {
     className: PropTypes.string,
 };
-HomeUser.defaultProps = {
+UserMyAccount.defaultProps = {
     className: '',
 };
-export default React.memo(HomeUser);
+export default React.memo(UserMyAccount);
