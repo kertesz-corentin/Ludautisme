@@ -1,4 +1,8 @@
 
+
+import HomePage from '../HomePage/HomePage';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import Header from '../../components/Header/Header';
 import HomeUser from '../User/UserMyAccount/UserMyAccount';
 import './App.scss';
@@ -8,12 +12,13 @@ import UserBookings from '../User/UserBookings/UserBookings';
 
 
 
+
 function App() {
   return (
     <div className="App">
         <Header/>
         <Routes>
-            {/* <Route path = "/" element = {<HomePage />}></Route> */}
+            <Route path = "/" element = {<HomePage />}></Route>
             {/* <Route path = "/about" element = {<About />}></Route> */}
             {/* <Route path = "/infos" element = {<Infos />}></Route> */}
             {/* <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route> */}
@@ -35,6 +40,7 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
+        <Footer/>
     </div>
   );
 }
