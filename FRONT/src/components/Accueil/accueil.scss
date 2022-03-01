@@ -2,17 +2,14 @@
 
 .categoriesDisplay {
     background-color: rgb(255, 232, 155);
+    font-size: 2em;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: $gutter;
 }
 
 .categorie {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: $gutter;
+    padding: 2rem;
 }
