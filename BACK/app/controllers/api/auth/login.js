@@ -17,30 +17,29 @@ const { ApiError } = require('../../../helpers/errorHandler');
 module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
-        const user = await usersDatamapper.findFiltered(obj);
-        console.log(user);
-        if (!user[0]) {
+        const dbUser = await usersDatamapper.findFiltered(obj);
+        if (!dbUser[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        if (req.body.password !== user[0].password) {
+        if (req.body.password !== dbUser[0].password) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        if (user[0].name === 'admin' && req.originalUrl !== '/api/admin/users/login') {
+        if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
-        } else if (user[0].name === 'user' && req.originalUrl !== '/api/user/login') {
+        } else if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
             const token = jwt.sign(
                 {
-                    userId: user[0].id,
-                    role: user[0].name,
+                    userId: dbUser[0].id,
+                    role: dbUser[0].name,
                 },
                 process.env.SALT,
                 { expiresIn: '24h' },
             );
-            user[0].token = token;
-            const finalUser = user[0];
-            res.status(200).json({ finalUser });
+            dbUser[0].token = token;
+            const user = dbUser[0];
+            res.status(200).json({ user });
         }
     },
 };

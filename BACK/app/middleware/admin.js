@@ -10,8 +10,7 @@ module.exports = (req, res, next) => {
     const { userId, role } = decodedToken;
     if (role !== 'admin') {
         res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
-    }
-    if (req.body.userId && req.body.userId !== userId) {
+    } else if (req.body.userId && req.body.userId !== userId) {
         res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
     } else {
         next();

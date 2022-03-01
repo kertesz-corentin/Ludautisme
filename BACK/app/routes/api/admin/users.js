@@ -1,7 +1,6 @@
 const express = require('express');
-const { userController, loginController } = require('../../../controllers');
+const { userController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
-const authAdmin = require('../../../middleware/admin');
 
 const router = express.Router();
 /**
@@ -15,24 +14,15 @@ router.route('/:id')
     .get(controllerHandler(userController.getById))
     .put(controllerHandler(userController.update));
 
-router.route('/search')
-    .post(authAdmin, controllerHandler(userController.getFiltered));
-/**
- * POST /api/admin/login
- * @summary Get login for admin
- * @tags Login
- * @param {paramLogin} request.body.required
- * @return {allOf|users|token} 200 - success response - application/json
- */
-router.route('/login')
-    .post(controllerHandler(loginController.login));
-
 /**
  * GET /api/admin/users
  * @summary Get all users detailed informations
  * @tags Users
  * @return {users} 200 - success response - application/json
  */
+
+router.route('/search')
+    .post(controllerHandler(userController.getFiltered));
 
 /**
  * POST /api/admin/users
@@ -43,7 +33,8 @@ router.route('/login')
  */
 
 router.route('/')
-    .get(authAdmin, controllerHandler(userController.getAll))
-    .post(authAdmin, controllerHandler(userController.create));
+    .get(controllerHandler(userController.getAll))
+    .post(controllerHandler(userController.create));
+// .patch(controllerHandler(userController.update));
 
 module.exports = router;
