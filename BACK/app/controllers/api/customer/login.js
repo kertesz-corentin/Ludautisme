@@ -16,15 +16,16 @@ const { ApiError } = require('../../../helpers/errorHandler');
  */
 module.exports = {
     async login(req, res) {
-        const obj = { email: req.body.email };
+        const obj = [{ email: req.body.email }];
         const user = await usersDatamapper.findFiltered(obj);
+        console.log(user);
         if (!user[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (req.body.password !== user[0].password) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        if (user[0].name === 'admin' && req.originalUrl !== '/api/admin/login') {
+        if (user[0].name === 'admin' && req.originalUrl !== '/api/admin/users/login') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else if (user[0].name === 'user' && req.originalUrl !== '/api/user/login') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
@@ -38,7 +39,8 @@ module.exports = {
                 { expiresIn: '24h' },
             );
             user[0].token = token;
-            res.status(200).json({ user });
+            const finalUser = user[0];
+            res.status(200).json({ finalUser });
         }
     },
 };
