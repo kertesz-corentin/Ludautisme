@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 import './adminlogin.scss';
 
-const LoginAdmin = ({
+const AdminLogin = ({
     className,
      ...rest
     }) => {
@@ -64,10 +64,10 @@ const LoginAdmin = ({
    );
 };
 
-LoginAdmin.propTypes = {
+AdminLogin.propTypes = {
     className: PropTypes.string,
 };
-LoginAdmin.defaultProps = {
+AdminLogin.defaultProps = {
     className: '',
 };
-export default React.memo(LoginAdmin);
+export default React.memo(AdminLogin);

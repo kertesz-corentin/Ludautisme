@@ -7,7 +7,7 @@ const MenuAdmin = ({className, ...rest}) => {
     return (
         <nav className="menuadmin">
             <NavLink
-                to="/admin"
+                to="/admin/home"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Accueil
@@ -21,10 +21,10 @@ const MenuAdmin = ({className, ...rest}) => {
             </NavLink>
 
             <NavLink
-                to="/admin/articles"
+                to="/admin/references"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
-                Articles
+                Références
             </NavLink>
 
             <NavLink
@@ -34,12 +34,12 @@ const MenuAdmin = ({className, ...rest}) => {
                 Réservations
             </NavLink>
 
-            <NavLink
-                to="/admin/logout"
-                className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
+            <button
+                href="/admin/logout"
+                className="menuadmin-logout"
             >
                 Se déconnecter
-            </NavLink>
+            </button>
         </nav>
    );
 };
