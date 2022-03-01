@@ -1,0 +1,16 @@
+@import 'src/styles/vars';
+
+.home-user {
+
+   background-color:rgb(213, 238, 238);
+   height: 40rem;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+
+}
+.loginuser-form {
+    max-width: 15rem;
+    margin: auto;
+    background-color: white;
+}
