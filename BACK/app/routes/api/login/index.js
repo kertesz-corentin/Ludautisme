@@ -14,4 +14,16 @@ const router = express.Router();
 
 router.route('/user')
     .post(controllerHandler(loginController.login));
+
+/**
+ * POST /api/login/admin
+ * @summary Login for admin
+ * @tags Login
+ * @param {paramLogin} request.body.required
+ * @return {allOf|users|token} 200 - success response - application/json
+ */
+
+router.route('/admin')
+    .post(controllerHandler(loginController.login));
+
 module.exports = router;
