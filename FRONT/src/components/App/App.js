@@ -1,5 +1,6 @@
 
-import Header from '../../components/Header/Header';
+// import Header from '../../components/Header/Header';
+import Accueil from '../Accueil/Accueil';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
