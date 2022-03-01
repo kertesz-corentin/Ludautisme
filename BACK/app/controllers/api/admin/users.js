@@ -8,6 +8,13 @@ module.exports = {
         const users = await usersDataMapper.findAll();
         return res.json(users);
     },
+    async getById(req, res) {
+        console.log(req.body.id);
+        const user = await usersDataMapper.findFiltered([
+            { id: req.body.id },
+        ]);
+        return res.json(user);
+    },
     async getFiltered(req, res) {
         //  Avoid injection on column
         const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived'];
@@ -17,7 +24,6 @@ module.exports = {
         props.forEach((prop) => {
             const value = obj[prop];
             const index = columns.indexOf(prop);
-            console.log(Number.isNaN(index));
             if (Number.isNaN(index)) {
                 throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
             }
@@ -37,8 +43,8 @@ module.exports = {
     },
     async create(req, res) {
         const user = await usersDataMapper.findFiltered([
-            {member_number: req.body.member_number},
-            {email: req.body.email},
+            { member_number: req.body.member_number },
+            { email: req.body.email },
         ]);
         console.log(user);
         if (user.length > 0) {
@@ -50,8 +56,8 @@ module.exports = {
     },
     async update(req, res) {
         const user = await usersDataMapper.findFiltered([
-            {member_number: req.body.member_number},
-            {email: req.body.email},
+            { member_number: req.body.member_number },
+            { email: req.body.email },
         ]);
         console.log(user);
         if (user.length < 1) {

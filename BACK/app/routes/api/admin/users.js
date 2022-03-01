@@ -22,6 +22,10 @@ router.route('/search')
  */
 router.route('/login')
     .post(controllerHandler(loginController.login));
+
+router.route('/:id')
+    .get(controllerHandler(userController.getById))
+    .put(controllerHandler(userController.update));
 /**
  * GET /api/admin/users
  * @summary Get all users detailed informations
@@ -39,7 +43,6 @@ router.route('/login')
 
 router.route('/')
     .get(controllerHandler(userController.getAll))
-    .post(controllerHandler(userController.create))
-    //.patch(controllerHandler(userController.update));
+    .post(controllerHandler(userController.create));
 
 module.exports = router;
