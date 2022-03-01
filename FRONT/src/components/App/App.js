@@ -1,10 +1,16 @@
 
-// import Header from '../../components/Header/Header';
-import './App.scss';
-import {Routes, Route} from 'react-router-dom';
+
 import HomePage from '../HomePage/HomePage';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import Header from '../../components/Header/Header';
+import HomeUser from '../User/UserMyAccount/UserMyAccount';
+import './App.scss';
+import {Routes, Route} from 'react-router-dom';
+import UserMyAccount from '../User/UserMyAccount/UserMyAccount';
+import UserBookings from '../User/UserBookings/UserBookings';
+
+
 
 
 function App() {
@@ -28,8 +34,8 @@ function App() {
             {/* <Route path = "/admin/bookings" element = {<AdminBookings />}></Route> */}
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
             {/* <Route path = "/admin/login" element = {<AdminLogin />}></Route> */}
-            {/* <Route path = "/user/account" element = {<UserMyAccount />}></Route> */}
-            {/* <Route path = "/user/bookings" element = {<UserBookings/>}></Route> */}
+                <Route path = "/user/account" element = {<UserMyAccount />}></Route>
+                <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
             {/* <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route> */}
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
