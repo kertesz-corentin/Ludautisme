@@ -2,15 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './userbookings.scss';
+import Permanency from '../../Permanency/Permanency';
+import MenuUser from '../MenuUser/MenuUser';
 
 const UserBookings = ({className, ...rest}) => {
    return (
-       <div
-            className={classnames('userbookings', className)}
+    <div> MES RESERVATIONS
+    <Permanency/>
+    <div
+            className={classnames('home-user', className)}
             {...rest}
-         >
-            PAGES DE RESERVATION D'UN USER
-        </div>
+        >
+            <MenuUser/>
+
+    </div>
+</div>
+
    );
 };
 

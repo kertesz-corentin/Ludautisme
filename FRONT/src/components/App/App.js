@@ -5,7 +5,7 @@ import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import UserMyAccount from '../User/UserMyAccount/UserMyAccount';
 import UserBookings from '../User/UserBookings/UserBookings';
-import UserHomePage from '../User/UserHomePage/UserHomePage';
+
 
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
             {/* <Route path = "/admin/bookings" element = {<AdminBookings />}></Route> */}
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
             {/* <Route path = "/admin/login" element = {<AdminLogin />}></Route> */}
-                <Route path = "/user/homepage" element = {<UserHomePage />}></Route>
                 <Route path = "/user/account" element = {<UserMyAccount />}></Route>
                 <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
             {/* <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route> */}

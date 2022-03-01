@@ -8,12 +8,13 @@ import Permanency from '../../Permanency/Permanency';
 const UserMyAccount = ({className, ...rest}) => {
    return (
        <div> Bienvenue Michel
+            <Permanency/>
             <div
                     className={classnames('home-user', className)}
                     {...rest}
                 >
                     <MenuUser/>
-                    <Permanency/>
+
             </div>
         </div>
    );
