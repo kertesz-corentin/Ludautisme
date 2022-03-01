@@ -7,7 +7,10 @@ module.exports = (req, res, next) => {
     }
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.SALT);
-    const { userId } = decodedToken;
+    const { userId, role } = decodedToken;
+    if (role !== 'admin') {
+        res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
+    }
     if (req.body.userId && req.body.userId !== userId) {
         res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
     } else {

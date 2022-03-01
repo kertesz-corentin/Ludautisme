@@ -3,7 +3,6 @@ const { userController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
-
 /**
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations

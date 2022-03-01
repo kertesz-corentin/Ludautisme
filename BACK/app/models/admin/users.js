@@ -69,7 +69,8 @@ module.exports = {
         const result = await client.query(
             `
                 SELECT * FROM "user"
-                WHERE ${column}=$1
+                INNER JOIN "role" ON "user"."id_role" = "role"."id"
+                WHERE "user"."${column}"=$1
             `,
             [value],
         );
