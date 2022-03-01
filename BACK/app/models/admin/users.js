@@ -47,7 +47,6 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
  * @property {string} created_at - date creation
  */
 
-
 /**
  * @typedef {object} paramSearch
  * @property {number} id - Unique identifier
@@ -67,7 +66,7 @@ module.exports = {
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" WHERE `;
+        let query = `SELECT * FROM "user" INNER JOIN "role" ON "user"."id_role" = "role"."id" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
@@ -87,14 +86,14 @@ module.exports = {
         let query = `INSERT INTO "user" (`;
         let columns = ``;
         let values = ``;
-        const placeholders = []
+        const placeholders = [];
         props.forEach((prop, index) => {
-            if (index !== props.length -1) {
+            if (index !== props.length - 1) {
                 columns += `${prop}, `;
-                values += `$${index+1}, `;
+                values += `$${index + 1}, `;
             } else {
                 columns += `${prop}) VALUES (`;
-                values += `$${index+1}) RETURNING *`;
+                values += `$${index + 1}) RETURNING *`;
             }
             placeholders.push(obj[prop]);
         });
@@ -109,14 +108,14 @@ module.exports = {
         let query = `INSERT INTO "user" (`;
         let columns = ``;
         let values = ``;
-        const placeholders = []
+        const placeholders = [];
         props.forEach((prop, index) => {
-            if (index !== props.length -1) {
+            if (index !== props.length - 1) {
                 columns += `${prop}, `;
-                values += `$${index+1}, `;
+                values += `$${index + 1}, `;
             } else {
                 columns += `${prop}) VALUES (`;
-                values += `$${index+1}) RETURNING *`;
+                values += `$${index + 1}) RETURNING *`;
             }
             placeholders.push(obj[prop]);
         });

@@ -41,6 +41,6 @@ router.route('/login')
 router.route('/')
     .get(authAdmin, controllerHandler(userController.getAll))
     .post(authAdmin, controllerHandler(userController.create));
-    //.patch(controllerHandler(userController.update));
+// .patch(controllerHandler(userController.update));
 
 module.exports = router;
