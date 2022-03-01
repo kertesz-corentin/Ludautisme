@@ -5,12 +5,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin:0 auto;
     background:rgb(255, 159, 164);
     // position:absolute;
     width:100%;
     padding: $gutter;
     height:auto;
+    margin: auto auto 0 auto;
 
     &-facebook-logo {
         width: 100px;

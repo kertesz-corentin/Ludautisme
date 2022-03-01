@@ -11,15 +11,27 @@ const Accueil = ({className, ...rest}) => {
 
         <div className={classnames('accueil', className)}
         {...rest}>
-            <div className="bandeauPrésentation">
+            <div className="bandeau-présentation">
+                <div className="bandeau-présentation-texte">
                 <h2>Bienvenue chez lud'Autisme</h2>
                 <p>
                     Location de jeux et matériel éducatifs pour les personnes en difficultés d'apprentissage
                 </p><br />
                 <p>
-                    Pour les particuliers
+                    Pour les particuliers adhérents et les professionels partenaires
                 </p><br />
-
+                </div>
+                <div className="bandeau-présentation-permanence">
+                    <Paper elevation={20}>
+                        <h2 className="bandeau-présentation-permanence-title">
+                            Prochaine permanence
+                        </h2>
+                        <p className="bandeau-présentation-permanence-infos">
+                            jj/mm/aaaa <br/>
+                            de hh à hh <br/>
+                        </p>
+                    </Paper>
+                </div>
 
             </div>
             <div className="categoriesDisplay">

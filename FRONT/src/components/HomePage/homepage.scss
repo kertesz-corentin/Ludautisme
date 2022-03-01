@@ -1,5 +1,32 @@
 @import 'src/styles/vars';
 
+.bandeau-présentation {
+    background-image: url("../public/bandeau.png");
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: $gutter;
+}
+
+.bandeau-présentation-texte {
+    font-size: 2rem;
+    color: azure;
+    padding: auto;
+}
+
+.bandeau-présentation-permanence-title {
+    font-size: 2.5rem;
+    padding: 50px 100px 0 100px;
+}
+
+.bandeau-présentation-permanence-infos {
+    font-size: 3rem;
+    padding: 0px 100px 50px 100px;
+}
+
+
+
 .categoriesDisplay {
     background-color: rgb(255, 232, 155);
     font-size: 2em;
@@ -12,4 +39,8 @@
 
 .categorie {
     padding: 2rem;
+}
+
+.categorie:hover{
+    transform: scale(1.5);
 }
