@@ -33,8 +33,8 @@ const MenuUser = ({className, ...rest}) => {
         variant="contained"
 
       >
-       <NavLink to="/MyAccount"> {buttonMyAccount}</NavLink>
-       <NavLink to="/MyBookings"> {buttonMyBookings}</NavLink>
+       <NavLink to="/user/account"> {buttonMyAccount}</NavLink>
+       <NavLink to="/user/bookings"> {buttonMyBookings}</NavLink>
        <NavLink to="/Disconnect"> {buttonDisconnect}</NavLink>
       </ButtonGroup>
     </Box>
