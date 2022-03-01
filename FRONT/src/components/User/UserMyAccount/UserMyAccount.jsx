@@ -26,7 +26,7 @@ const UserMyAccount = ({
     const [passwordValue, setPasswordValue]= useState('coucou');
         // Here i create ButtonModify's state in order to make appear differents elements ( <span><TableContainre> OR <form><TextField>)
         //This state will be modify when clicking ButtonModify with function names handleClickModifyBtn.
-    const [modifyBtn, setModifyBtn]=  useState(false);
+    const [modifyBtn, setModifyBtn]=  useState(true);
 
     function handleClickModifyBtn() {
         setModifyBtn(!modifyBtn)
