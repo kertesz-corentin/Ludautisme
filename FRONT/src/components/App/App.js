@@ -3,7 +3,6 @@
 import HomePage from '../HomePage/HomePage';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Header from '../../components/Header/Header';
 import HomeUser from '../User/UserMyAccount/UserMyAccount';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
