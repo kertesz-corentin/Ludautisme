@@ -4,10 +4,13 @@ import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
 
+import Admin from '../Admin/Admin';
+
 
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
         <Header/>
         <Routes>
             {/* <Route path = "/" element = {<HomePage />}></Route> */}
@@ -32,6 +35,12 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
+=======
+    <Header/>
+
+
+    <Admin />
+>>>>>>> feat: create admin menu
     </div>
   );
 }
