@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
 const { ApiError } = require('../../helpers/apiControllerHandler');
@@ -31,48 +32,20 @@ module.exports = {
         return result.rows;
     },
 
-    async findFiltered(obj) {
-        const prop = Object.keys(obj)[0];
-        const value = obj[prop];
-        let column;
-        switch (prop) {
-        case 'id':
-            column = 'id';
-            if (Number.isNaN(value)) {
-                throw new ApiError(400, 'An id must be a number');
+    async findFiltered(arr) {
+        let query = `SELECT * FROM "user" WHERE `;
+        const placeholders = [];
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                query += `${prop}=$${index + 1} AND `;
+            } else {
+                query += `${prop}=$${index + 1}`;
             }
-            break;
-        case 'member_number':
-            column = 'member_number';
-            if (Number.isNaN(value)) {
-                throw new ApiError(400, 'A member_number must be a number');
-            }
-            break;
-        case 'email':
-            column = 'email';
-            break;
-        case 'first_name':
-            column = 'first_name';
-            break;
-        case 'last_name':
-            column = 'last_name';
-            break;
-        case 'archived':
-            column = 'archived';
-            if (typeof value !== 'boolean') {
-                throw new ApiError(400, 'Archived must be a boolean');
-            }
-            break;
-        default:
-            return;
-        }
-        const result = await client.query(
-            `
-                SELECT * FROM "user"
-                WHERE ${column}=$1
-            `,
-            [value],
-        );
+        });
+
+        const result = await client.query(query, placeholders);
         return result.rows;
     },
 };
