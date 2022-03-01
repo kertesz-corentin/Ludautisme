@@ -14,7 +14,7 @@ const UserMyAccount = ({
     const [firstNameValue,setFirstNameValue] = useState('Michel');
     const [lastNameValue,setLastNameValue] = useState('Michel');
     const [addressValue,setAdressValue] = useState('France');
-    const [mailValue,setMailValue] = useState('michel@mcihel');
+    const [mailValue,setMailValue] = useState('michel@michel');
     const [phoneValue,setPhoneValue] = useState('0000000000');
     const [passwordValue, setPasswordValue]= useState('coucou');
 
@@ -49,52 +49,52 @@ const UserMyAccount = ({
     }
 
    return (
-       <div> Bienvenue Michel
-            <Permanency/>
-            <div>
-                <form className="loginuser-form" onSubmit={handleSubmit}>
-            <TextField
-                label= "Nom"
-                type="text"
-                value= {firstNameValue}
-                onChange={(event) => handleFirstNameChange(event, firstNameValue)}
-            />
-            <TextField
-                label= "Prénom"
-                type="text"
-                value= {lastNameValue}
-                onChange={(event) => handleLastNameChange(event, lastNameValue)}
-            />
-            <TextField
-                label= "Adresse"
-                type="text"
-                value= {addressValue}
-                onChange={(event) => handleAdressChange(event, addressValue)}
-            />
-            <TextField
-                label= "Mail"
-                type="text"
-                value= {mailValue}
-                onChange={(event) => handleMailChange(event, 'mail')}
-            />
-            <TextField
-                label= "telephone"
-                type="text"
-                value= {phoneValue}
-                onChange={(event) => handlePhoneChange(event, phoneValue)}
-            />
-            <TextField
-                label="Mot de passe"
-                type="password"
-                value={passwordValue}
-                onChange={(event) => handlePasswordChange(event, passwordValue)}
-            />
-            <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
-                Valider
-            </button>
-            </form>
-            </div>
-            <MenuUser/>
+       <div > Bienvenue Michel
+         <Permanency/>
+                <div className= "home-user">
+                <MenuUser/>
+                    <form className="loginuser-form" onSubmit={handleSubmit}>
+                        <TextField
+                            label= "Nom"
+                            type="text"
+                            value= {firstNameValue}
+                            onChange={(event) => handleFirstNameChange(event, firstNameValue)}
+                        />
+                        <TextField
+                            label= "Prénom"
+                            type="text"
+                            value= {lastNameValue}
+                            onChange={(event) => handleLastNameChange(event, lastNameValue)}
+                        />
+                        <TextField
+                            label= "Adresse"
+                            type="text"
+                            value= {addressValue}
+                            onChange={(event) => handleAdressChange(event, addressValue)}
+                        />
+                        <TextField
+                            label= "Mail"
+                            type="text"
+                            value= {mailValue}
+                            onChange={(event) => handleMailChange(event, 'mail')}
+                        />
+                        <TextField
+                            label= "telephone"
+                            type="text"
+                            value= {phoneValue}
+                            onChange={(event) => handlePhoneChange(event, phoneValue)}
+                        />
+                        <TextField
+                            label="Mot de passe"
+                            type="password"
+                            value={passwordValue}
+                            onChange={(event) => handlePasswordChange(event, passwordValue)}
+                        />
+                        <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
+                            Valider
+                        </button>
+                    </form>
+                </div>
         </div>
    );
 };
