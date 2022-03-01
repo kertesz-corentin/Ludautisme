@@ -9,7 +9,7 @@ module.exports = {
         return res.json(users);
     },
     async getFiltered(req, res) {
-        //Avoid injection on column
+        //  Avoid injection on column
         const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived'];
         const obj = req.body;
         const props = Object.keys(obj);
@@ -17,8 +17,9 @@ module.exports = {
         props.forEach((prop) => {
             const value = obj[prop];
             const index = columns.indexOf(prop);
-            if (!index) {
-                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémenté');
+            console.log(Number.isNaN(index));
+            if (Number.isNaN(index)) {
+                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
             }
             if (['id', 'member_number'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
@@ -35,14 +36,32 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
-        const user = await usersDataMapper.findFiltered({
-            member_number: req.body.member_number,
-            email: req.body.email,
-        });
-        if (user) {
+        const user = await usersDataMapper.findFiltered([
+            {member_number: req.body.member_number},
+            {email: req.body.email},
+        ]);
+        console.log(user);
+        if (user.length > 0) {
             throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
         }
         const newUser = await usersDataMapper.insert(req.body);
+        console.log(newUser);
         return res.json(newUser);
+    },
+    async update(req, res) {
+        const user = await usersDataMapper.findFiltered([
+            {member_number: req.body.member_number},
+            {email: req.body.email},
+        ]);
+        console.log(user);
+        if (user.length < 1) {
+            throw new ApiError(400, 'L\'utilisateur n\'a pas été trouvé ');
+        }
+        if (user.length > 1) {
+            throw new ApiError(403, 'Impossible de mofidier plusieurs utilisateurs à la fois');
+        }
+        const updatedUser = await usersDataMapper.update(req.body);
+        console.log(updatedUser);
+        return res.json(updatedUser);
     },
 };
