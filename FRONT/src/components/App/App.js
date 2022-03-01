@@ -10,8 +10,7 @@ import Admin from '../Admin/Admin';
 function App() {
   return (
     <div className="App">
-<<<<<<< HEAD
-        <Header/>
+        {/* <Header/> */}
         <Routes>
             {/* <Route path = "/" element = {<HomePage />}></Route> */}
             {/* <Route path = "/about" element = {<About />}></Route> */}
@@ -19,8 +18,8 @@ function App() {
             {/* <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route> */}
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
-            {/* <Route path = "/admin" element = {<Admin />}></Route> */}
-            {/* <Route path = "/admin/users" element = {<AdminUsers/>}></Route> */}
+            <Route path = "/admin" element = {<Admin />}></Route>
+            {/* <Route path = "/admin/users" element = {<AdminUsers />}></Route> */}
             {/* <Route path = "/admin/users/:id" element = {<AdminUser/>}></Route> */}
             {/* <Route path = "/admin/references" element = {<AdminReferences />}></Route> */}
             {/* <Route path = "/admin/references/:id" element = {<AdminReference />}></Route> */}
@@ -35,12 +34,6 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
-=======
-    <Header/>
-
-
-    <Admin />
->>>>>>> feat: create admin menu
     </div>
   );
 }

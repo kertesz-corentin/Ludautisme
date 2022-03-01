@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import MenuAdmin from './MenuAdmin/MenuAdmin';
-import LoginAdmin from './LoginAdmin/LoginAdmin';
+import AdminHome from './AdminHome/AdminHome';
+import AdminLogin from './AdminLogin/AdminLogin';
 import './admin.scss';
 
 const Admin = ({isLogged, className, ...rest}) => {
@@ -12,11 +12,11 @@ const Admin = ({isLogged, className, ...rest}) => {
             {...rest}
          >
         {!isLogged && (
-            <LoginAdmin />
+            <AdminLogin />
         )}
 
         {isLogged && (
-            <MenuAdmin />
+            <AdminHome />
         )}
         </div>
    );
