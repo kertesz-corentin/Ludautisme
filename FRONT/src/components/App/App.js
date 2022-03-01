@@ -2,7 +2,7 @@
 // import Header from '../../components/Header/Header';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
-// import HomePage from '../HomePage/HomePage';
+import HomePage from '../HomePage/HomePage';
 import AdminPage from '../Admin/AdminPage/AdminPage';
 import AdminHome from '../Admin/AdminHome/AdminHome';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
@@ -10,16 +10,13 @@ import AdminLogin from '../Admin/AdminLogin/AdminLogin';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
 
-import Admin from '../Admin/Admin';
-
-
 function App() {
   return (
     <div className="App">
 
         {/* <Header/> */}
         <Routes>
-            {/* <Route path = "/" element = {<HomePage />}></Route> */}
+            <Route path = "/" element = {<HomePage />}></Route>
             {/* <Route path = "/about" element = {<About />}></Route> */}
             {/* <Route path = "/infos" element = {<Infos />}></Route> */}
             {/* <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route> */}
@@ -41,12 +38,6 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
-
-    <Header/>
-
-
-    <Admin />
-
     </div>
   );
 }

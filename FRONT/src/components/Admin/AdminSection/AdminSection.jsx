@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { DataGrid, GridToolBar } from '@mui/x-data-grid';
+// import { useDemoData } from '@mui/x-data-grid-generator';
 import './adminsection.scss';
 
-const AdminSection = ({ title, data }) => {
+const AdminSection = ({ title }) => {
+    // const { data } = useDemoData({
+    //     dataSet: 'Commodity',
+    //     rowLength: 100,
+    //     maxColumns: 6,
+    // })
     return (
         <section className='section'>
             <div class="section-element">
@@ -12,7 +19,15 @@ const AdminSection = ({ title, data }) => {
                 <button className="section-element-add">Ajouter {title}</button>
             </div>
             <div class="section-element">
-                <div className="section-element-grid">datagrid</div>
+                <div className="section-element-grid">
+                    {/* <DataGrid
+                        {...data}
+                        components={{
+                            Toolbar: GridToolBar,
+                        }}
+                    /> */}
+                    datagrid
+                </div>
             </div>
         </section>
     );
