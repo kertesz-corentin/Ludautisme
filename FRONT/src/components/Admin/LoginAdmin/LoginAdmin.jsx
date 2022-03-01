@@ -13,7 +13,7 @@ const LoginAdmin = ({
     }) => {
 
         const [mailValue,setMailValue] = useState('');
-        const [passwordValue, setPasswordValue]= useState('')
+        const [passwordValue, setPasswordValue]= useState('');
         const [isAbble,setIsAbble] = useState(false);
 
         function handleMailChange (event) {
