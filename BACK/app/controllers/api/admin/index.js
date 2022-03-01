@@ -1,6 +1,6 @@
 const usersController = require('./users');
 
-const loginController = require('./login');
+const loginController = require('../customer/login');
 // const apiController = {
 //      /**
 //      * Default API controller to show documention url.
