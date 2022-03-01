@@ -78,7 +78,6 @@ module.exports = {
                 query += `${prop}=$${index + 1}`;
             }
         });
-
         const result = await client.query(query, placeholders);
         return result.rows;
     },

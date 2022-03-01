@@ -1,6 +1,7 @@
 const express = require('express');
 const { userController, loginController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
+const authAdmin = require('../../../middleware/admin');
 
 const router = express.Router();
 /**
@@ -12,7 +13,7 @@ const router = express.Router();
  */
 
 router.route('/search')
-    .post(controllerHandler(userController.getFiltered));
+    .post(authAdmin, controllerHandler(userController.getFiltered));
 /**
  * POST /api/admin/login
  * @summary Get login for admin
@@ -29,8 +30,8 @@ router.route('/login')
  * @return {users} 200 - success response - application/json
  */
 router.route('/')
-    .get(controllerHandler(userController.getAll))
-    .post(controllerHandler(userController.create))
+    .get(authAdmin, controllerHandler(userController.getAll))
+    .post(authAdmin, controllerHandler(userController.create));
     //.patch(controllerHandler(userController.update));
 
 module.exports = router;
