@@ -8,35 +8,35 @@ const MenuAdmin = ({className, ...rest}) => {
     return (
         <nav className="menuadmin">
             <NavLink
-                to="/"
+                to="/admin"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Accueil
             </NavLink>
 
             <NavLink
-                to="/users"
+                to="/admin/users"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Adhérents
             </NavLink>
 
             <NavLink
-                to="/articles"
+                to="/admin/articles"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Articles
             </NavLink>
 
             <NavLink
-                to="/bookings"
+                to="/admin/bookings"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Réservations
             </NavLink>
 
             <NavLink
-                to="/logout"
+                to="/admin/logout"
                 className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
             >
                 Se déconnecter
