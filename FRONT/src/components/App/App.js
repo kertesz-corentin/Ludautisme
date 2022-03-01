@@ -4,6 +4,7 @@ import Accueil from '../Accueil/Accueil';
 import './App.scss';
 import {Routes, Route} from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
+import Header from '../Header/Header';
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <div className="App">
         <Header/>
         <Routes>
-            {/* <Route path = "/" element = {<HomePage />}></Route> */}
+            <Route path = "/" element = {<HomePage />}></Route>
             {/* <Route path = "/about" element = {<About />}></Route> */}
             {/* <Route path = "/infos" element = {<Infos />}></Route> */}
             {/* <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route> */}
