@@ -28,6 +28,15 @@ router.route('/login')
  * @tags Users
  * @return {users} 200 - success response - application/json
  */
+
+/**
+ * POST /api/admin/users
+ * @summary Create a new user
+ * @tags Users
+ * @param {paramUserCreate} request.body.required
+ * @return {users} 200 - success response - application/json
+ */
+
 router.route('/')
     .get(controllerHandler(userController.getAll))
     .post(controllerHandler(userController.create))
