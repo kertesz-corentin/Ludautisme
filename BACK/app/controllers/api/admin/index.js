@@ -1,6 +1,5 @@
 const usersController = require('./users');
 
-const loginController = require('../customer/login');
 // const apiController = {
 //      /**
 //      * Default API controller to show documention url.
@@ -9,7 +8,6 @@ const loginController = require('../customer/login');
 //      * @param {object} res Express response object
 //      * @returns {string} Route API JSON response
 //      */
-
 // }
 
-module.exports = { usersController, loginController };
+module.exports = { usersController };
