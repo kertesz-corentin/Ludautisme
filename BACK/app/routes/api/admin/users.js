@@ -8,7 +8,7 @@ const router = express.Router();
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations
  * @tags Users
- * @param {usersSearch} request.body.required - At least one of these params
+ * @param {paramSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
 
@@ -22,8 +22,17 @@ router.route('/search')
  * @return {users} 200 - success response - application/json
  */
 
+/**
+ * POST /api/admin/users
+ * @summary Create a new user
+ * @tags Users
+ * @param {paramUserCreate} request.body.required
+ * @return {users} 200 - success response - application/json
+ */
+
 router.route('/')
     .get(controllerHandler(userController.getAll))
-    .post(controllerHandler(userController.create));
+    .post(controllerHandler(userController.create))
+    //.patch(controllerHandler(userController.update));
 
 module.exports = router;

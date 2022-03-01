@@ -48,4 +48,20 @@ module.exports = {
         console.log(newUser);
         return res.json(newUser);
     },
+    async update(req, res) {
+        const user = await usersDataMapper.findFiltered([
+            {member_number: req.body.member_number},
+            {email: req.body.email},
+        ]);
+        console.log(user);
+        if (user.length < 1) {
+            throw new ApiError(400, 'L\'utilisateur n\'a pas été trouvé ');
+        }
+        if (user.length > 1) {
+            throw new ApiError(403, 'Impossible de mofidier plusieurs utilisateurs à la fois');
+        }
+        const updatedUser = await usersDataMapper.update(req.body);
+        console.log(updatedUser);
+        return res.json(updatedUser);
+    },
 };

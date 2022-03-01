@@ -26,7 +26,30 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
  */
 
 /**
- * @typedef {object} usersSearch
+ * @typedef {object} paramUserCreate
+ * @property {number} id - Unique identifier
+ * @property {number} member_number.required - Unique identifier
+ * @property {string} phone.required - User phone number
+ * @property {string} first_name - User first name
+ * @property {string} last_name - User last name
+ * @property {string} email.required - User email
+ * @property {string} adress_number.required - User adress number
+ * @property {string} adress_street.required - User adress street
+ * @property {number} adress_zipcode.required - User zipcode
+ * @property {string} adress_city.required - User city
+ * @property {string} password - User password
+ * @property {boolean} archived - User archived status
+ * @property {boolean} cotisation_status - cotisation status
+ * @property {string} cotisation_expiration - cotisation expiration date
+ * @property {boolean} caution_status - caution status
+ * @property {string} caution_expiration - caution expiration
+ * @property {number} id_role - role id
+ * @property {string} created_at - date creation
+ */
+
+
+/**
+ * @typedef {object} paramSearch
  * @property {number} id - Unique identifier
  * @property {number} member_number - Unique identifier
  * @property {string} phone - User phone number
@@ -61,14 +84,28 @@ module.exports = {
     },
 
     async insert(obj) {
-        // const result = await client.query(
-        //     `
-        //         INSERT INTO "user"
-        //         (email, member_number, phone,adress_number, adress_street, adress_zipcode, adress_city) VALUES
-        //         ($1, $2, $3, $4, $5, $6, $7) RETURNING *
-        //     `, ['tedf2st@grr.la', 163, '05', '01', 'rue_street', 51200, 'testcity'],
-        // );
+        const props = Object.keys(obj);
+        let query = `INSERT INTO "user" (`;
+        let columns = ``;
+        let values = ``;
+        const placeholders = []
+        props.forEach((prop, index) => {
+            if (index !== props.length -1) {
+                columns += `${prop}, `;
+                values += `$${index+1}, `;
+            } else {
+                columns += `${prop}) VALUES (`;
+                values += `$${index+1}) RETURNING *`;
+            }
+            placeholders.push(obj[prop]);
+        });
+        query += columns + values;
+        console.log(query);
+        const result = await client.query(query, placeholders);
+        return result.rows[0];
+    },
 
+    async update(obj) {
         const props = Object.keys(obj);
         let query = `INSERT INTO "user" (`;
         let columns = ``;
