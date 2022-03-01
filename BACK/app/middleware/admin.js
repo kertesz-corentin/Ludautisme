@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+// eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
     if (!req.headers.authorization) {
         return res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
