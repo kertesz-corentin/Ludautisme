@@ -11,6 +11,9 @@ const router = express.Router();
  * @param {paramSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
+router.route('/:id')
+    .get(controllerHandler(userController.getById))
+    .put(controllerHandler(userController.update));
 
 router.route('/search')
     .post(authAdmin, controllerHandler(userController.getFiltered));
@@ -24,9 +27,6 @@ router.route('/search')
 router.route('/login')
     .post(controllerHandler(loginController.login));
 
-router.route('/:id')
-    .get(controllerHandler(userController.getById))
-    .put(controllerHandler(userController.update));
 /**
  * GET /api/admin/users
  * @summary Get all users detailed informations
@@ -43,7 +43,7 @@ router.route('/:id')
  */
 
 router.route('/')
-    .get(controllerHandler(userController.getAll))
-    .post(controllerHandler(userController.create));
+    .get(authAdmin, controllerHandler(userController.getAll))
+    .post(authAdmin, controllerHandler(userController.create));
 
 module.exports = router;

@@ -65,6 +65,12 @@ module.exports = {
         return result.rows;
     },
 
+    async findById(id) {
+        const result = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+        return result.rows;
+    },
+
+
     async findFiltered(arr) {
         let query = `SELECT * FROM "user" INNER JOIN "role" ON "user"."id_role" = "role"."id" WHERE `;
         const placeholders = [];
@@ -103,24 +109,19 @@ module.exports = {
         return result.rows[0];
     },
 
-    async update(obj) {
+    async update(id, obj) {
         const props = Object.keys(obj);
-        let query = `INSERT INTO "user" (`;
-        let columns = ``;
-        let values = ``;
+        let query = `UPDATE "user" SET `;
         const placeholders = [];
         props.forEach((prop, index) => {
-            if (index !== props.length - 1) {
-                columns += `${prop}, `;
-                values += `$${index + 1}, `;
-            } else {
-                columns += `${prop}) VALUES (`;
-                values += `$${index + 1}) RETURNING *`;
-            }
             placeholders.push(obj[prop]);
+            if (index !== props.length - 1) {
+                query += `${prop}=$${index + 1}, `;
+            } else {
+                query += `${prop}=$${index + 1} WHERE id=$${index + 2} RETURNING *`;
+                placeholders.push(id);
+            }
         });
-        query += columns + values;
-        console.log(query);
         const result = await client.query(query, placeholders);
         return result.rows[0];
     },

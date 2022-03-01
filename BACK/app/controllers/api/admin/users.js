@@ -14,10 +14,10 @@ module.exports = {
         return res.json(users);
     },
     async getById(req, res) {
-        console.log(req.body.id);
-        const user = await usersDataMapper.findFiltered([
-            { id: req.body.id },
-        ]);
+        const user = await usersDataMapper.findById(req.params.id);
+        if (user.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
         return res.json(user);
     },
     async getFiltered(req, res) {
@@ -60,19 +60,11 @@ module.exports = {
         return res.json(newUser);
     },
     async update(req, res) {
-        const user = await usersDataMapper.findFiltered([
-            { member_number: req.body.member_number },
-            { email: req.body.email },
-        ]);
-        console.log(user);
+        const user = await usersDataMapper.findById(req.params.id);
         if (user.length < 1) {
-            throw new ApiError(400, 'L\'utilisateur n\'a pas été trouvé ');
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
-        if (user.length > 1) {
-            throw new ApiError(403, 'Impossible de mofidier plusieurs utilisateurs à la fois');
-        }
-        const updatedUser = await usersDataMapper.update(req.body);
-        console.log(updatedUser);
+        const updatedUser = await usersDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },
 };
