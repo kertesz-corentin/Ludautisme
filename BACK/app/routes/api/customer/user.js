@@ -5,10 +5,11 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 const router = express.Router();
 
 /**
- * GET /api/user/login
+ * POST /api/user/login
  * @summary Login one user
- * @tags Users
- * @return {users} 200 - success response - application/json
+ * @tags Login
+ * @param {paramLogin} request.body.required
+ * @return {allOf|users|token} 200 - success response - application/json
  */
 
 router.route('/login')

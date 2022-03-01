@@ -5,6 +5,15 @@ require('dotenv').config();
 const usersDatamapper = require('../../../models/admin/users');
 const { ApiError } = require('../../../helpers/errorHandler');
 
+/**
+ * @typedef {object} token
+ * @property {string} token - JSON web token
+ */
+/**
+ * @typedef {object} paramLogin
+ * @property {string} email - user email
+ * @property {string} password -user password
+ */
 module.exports = {
     async login(req, res) {
         const obj = { email: req.body.email };
@@ -16,6 +25,8 @@ module.exports = {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (user[0].name === 'admin' && req.originalUrl !== '/api/admin/login') {
+            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
+        } else if (user[0].name === 'user' && req.originalUrl !== '/api/user/login') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
             const token = jwt.sign(
