@@ -10,10 +10,13 @@ import AdminLogin from '../Admin/AdminLogin/AdminLogin';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
 
+import Admin from '../Admin/Admin';
+
 
 function App() {
   return (
     <div className="App">
+
         {/* <Header/> */}
         <Routes>
             {/* <Route path = "/" element = {<HomePage />}></Route> */}
@@ -38,6 +41,12 @@ function App() {
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
+
+    <Header/>
+
+
+    <Admin />
+
     </div>
   );
 }
