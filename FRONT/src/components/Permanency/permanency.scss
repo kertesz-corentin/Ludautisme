@@ -2,13 +2,17 @@
 
 .permanency{
     font-size: 1.8rem;
-    margin: 30px;
-    margin-top: -30px;
-    margin-bottom: -30px;
-    text-shadow: rgba(0, 0, 0, 0.3) 5px 5px 5px;
+    text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
+    /* Modify clay.css properties */
+    --clay-background: hsl(3, 94%, 53%, 0.9);
+    --clay-border-radius: 30px;
+
+    /* Extended styles */
+    color: blanchedalmond;
+    padding: 30px;
 }
 
 .permanency p{
-    font-size:3rem;
+    font-size:2.5rem;
 }
 
