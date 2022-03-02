@@ -23,13 +23,18 @@ router.route('/:id')
     .get(controllerHandler(userController.getById))
     .put(controllerHandler(userController.update));
 
+<<<<<<< HEAD
 /**
+=======
+    /**
+>>>>>>> fix: jsdoc createuser
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations
  * @tags Users
  * @param {paramSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
+
 
 router.route('/search')
     .post(controllerHandler(userController.getFiltered));
