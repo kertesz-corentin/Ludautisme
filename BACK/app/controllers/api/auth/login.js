@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
-const mailer = require('../../config/mailer');
+const mailer = require('../../../config/mailer');
 require('dotenv').config();
 
 const loginDatamapper = require('../../../models/auth/login');
@@ -64,7 +64,8 @@ module.exports = {
             { expiresIn: '1h' },
         );
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
-        mailer.send(req.body.email, 'Your token', 'link to the token');
+        const html = `<a href="http://${req.get('host')}/api/" data-token="${dbTempToken}">Lien</a>`;
+        mailer.send(req.body.email, 'Your token', html);
         res.json({ status: 'ok' });
     }
 };
