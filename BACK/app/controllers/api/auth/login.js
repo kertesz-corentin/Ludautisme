@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
+const mailer = require('../../config/mailer');
 require('dotenv').config();
 
+const loginDatamapper = require('../../../models/auth/login');
 const usersDatamapper = require('../../../models/admin/users');
 const { ApiError } = require('../../../helpers/errorHandler');
 /**
@@ -50,22 +52,19 @@ module.exports = {
         }
     },
     async resetPassword(req, res) {
-        let user = await usersDatamapper.findFiltered([{ email: req.body.email }]);
-        if (user.length !== 1) {
-            return res.json({ status: 'ok' });
+        const user = await loginDatamapper.getUserWithToken(req.body.email);
+        if (user.temptoken) {
+            await loginDatamapper.resetUserTempToken(req.body.email);
         }
-        user = user[0];
         const token = jwt.sign(
             {
-                userId: user.id
+                userId: user.email,
             },
             process.env.SALT,
             { expiresIn: '1h' },
         );
-
-    //Create token
-    //and stock
-    //Send email
-    res.json(user);
-}
+        const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
+        mailer.send(req.body.email, 'Your token', 'link to the token');
+        res.json({ status: 'ok' });
+    }
 };

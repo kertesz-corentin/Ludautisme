@@ -89,7 +89,7 @@ CREATE TABLE "article" (
 CREATE TABLE "temptoken"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "email_user" TEXT REFERENCES "user"("email"),
-    "token" TEXT NOT NULL
+    "temptoken" TEXT NOT NULL
 );
 
 COMMIT;
