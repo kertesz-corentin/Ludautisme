@@ -5,6 +5,7 @@ import AdminSection from '../AdminSection/AdminSection';
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
+
    return (
        <div
             className={classnames('adminusers', className)}
