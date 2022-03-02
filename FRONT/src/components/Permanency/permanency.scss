@@ -1,18 +1,40 @@
 @import 'src/styles/vars';
 
 .permanency{
+    display: flex;
     font-size: 1.8rem;
-    text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
-    /* Modify clay.css properties */
+    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
     --clay-background: hsl(3, 94%, 53%, 0.9);
     --clay-border-radius: 30px;
-
-    /* Extended styles */
     color: blanchedalmond;
-    padding: 30px;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+
+    &-title {
+        margin-top: 0;
+        flex: 1 0 100%;
+    }
+
+    &-inline {
+        display: flex;
+        // flex-wrap: wrap;
+    }
+
+    &-logo {
+        background-image: url("../public/icones/calendrier.png");
+        width: 150px;
+        height: 150px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+
+    &-date {
+        font-size:2.5rem;
+        margin: auto;
+    }
 }
 
-.permanency p{
-    font-size:2.5rem;
-}
+
 

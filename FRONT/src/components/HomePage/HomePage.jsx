@@ -5,6 +5,11 @@ import './homepage.scss';
 import { NavLink } from "react-router-dom";
 import Permanency from '../Permanency/Permanency';
 import "claymorphism-css/dist/clay.scss";
+import Logo1 from "../public/icones/bloguer.png";
+import Logo2 from "../public/icones/commerce-electronique.png";
+import Logo3 from "../public/icones/magasin.png";
+import Logo4 from "../public/icones/check.png";
+import Logo5 from "../public/icones/arrow.png";
 
 const Accueil = ({className, ...rest}) => {
     return (
@@ -29,22 +34,30 @@ const Accueil = ({className, ...rest}) => {
             <div className="fonctionnement">
                 <h2 className="fonctionnement-title">Comment ça marche?</h2>
                     <div className="fonctionnement-content">
-                        {/* <div className="clay img"></div> */}
-                        <img src="../public/icones/bloguer.png" alt="icone s'inscrire" />
+                            <img className="fonctionnement-logo" src={Logo1} alt="s'incrire" />
                         <p>S'inscrire en tant qu'adhérent auprès de l'association</p>
                     </div>
+                    <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
+                        <img className="fonctionnement-logo" src={Logo2} alt="sélectionner les articles" />
                         <p>Sélectionner les articles que vous souhaitez réserver</p>
                     </div>
+                    <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
+                        <img className="fonctionnement-logo" src={Logo4} alt="valider la réservation" />
                         <p>Valider la réservation de ces articles</p>
                     </div>
+                    <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
+                        <img className="fonctionnement-logo" src={Logo3} alt="récuperer ses articles" />
                         <p>Venez récuperer vos articles le jour de la permanence</p>
                     </div>
             </div>
 
             <div className="categoriesDisplay">
+                <h2 className="categorie-title">
+                    La matériathèque
+                </h2>
                 <div className="clay categorie">
                     <NavLink to="/Jeux">
                             <div className="categorie-img1"></div>
@@ -57,11 +70,13 @@ const Accueil = ({className, ...rest}) => {
                     </NavLink>
                     <p>Autonomie</p>
                 </div>
-                <div className="clay categorie">
-                    <NavLink to="/Jeux">
-                            <div className="categorie-img3"></div>
-                    </NavLink>
-                    <p>Apprentissage</p>
+                <div>
+                    <div className="clay categorie">
+                        <NavLink to="/Jeux">
+                                <div className="categorie-img3"></div>
+                        </NavLink>
+                        <p>Apprentissage</p>
+                    </div>
                 </div>
                 <div className="clay categorie">
                     <NavLink to="/Jeux">

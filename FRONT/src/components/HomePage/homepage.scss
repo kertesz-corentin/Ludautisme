@@ -35,36 +35,44 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
 
     &-title {
         margin-top: 0;
-        font-size: 3rem;
-        color: hsl(353, 92%, 29%, 1);
+        font-size: 2.5rem;
+        color: rgb(0, 0, 0);
         order: -1;
         flex: 1 0 100%;
      }
 
     &-content {
         max-width: 200px;
-        color: hsl(353, 92%, 29%, 1);
+        color: rgb(0, 0, 0);
         font-weight:700;
-        font-size: 1.2rem;
+        font-size: 1rem;
         align-items: baseline;
+    }
+
+    &-logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    &-logo2 {
+        display: flex;
+        width: 50px;
+        height: 50px;
     }
 }
 
-// .img {
-//     --clay-background: #ffffffe1;
-//     --clay-border-radius: 10px;
-//     --clay-shadow-inset-primary: -8px -8px 16px 0 rgba(0, 0, 0, 0.15);
-//     max-width: 100px;
-//     max-height: 100px;
-//     background-image: url("../public/icones/bloguer.png");
-//     background-repeat: no-repeat;
-//     background-size: contain;
-//     background-position: center;
-// }
+.img {
+        width: 100px;
+        max-width: 100px;
+        height: 100px;
+        background-image: url("../public/icones/echecs.png");
+        background-repeat: no-repeat;
+        background-position: center;
+}
 
 .bandeau-présentation-texte {
     font-size: 2rem;
@@ -74,38 +82,50 @@
     text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
 }
 
+
 .categoriesDisplay {
     background-color: hsl(36, 100%, 49%, 1);
-    color: hsl(353, 92%, 29%, 1);
+    color: blanchedalmond;
+    text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
     font-weight:700;
     font-size: 2rem;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: baseline;
     justify-content: space-evenly;
-
     padding: 30px;
 }
 
+
 .categorie {
-    /* Modify clay.css properties */
     --clay-background: blanchedalmond;
-    --clay-border-radius: 10px;
     --clay-shadow-inset-primary: -8px -8px 16px 0 rgba(0, 0, 0, 0.15);
-
-    /* Extended styles */
-
     padding: 10px;
-    max-width: 100px;
+    width:100px;
     max-height: 100px;
+    text-align: center;
+
+    &-title {
+        margin-top: 0;
+        display: flex;
+        flex: 1 0 100%;
+        justify-content: center;
+    }
+
+    & p {
+        display: flex;
+        justify-content: center;
+    }
 
 
     &-img1 {
         width: 100px;
+        max-width: 100px;
         height: 100px;
         background-image: url("../public/icones/echecs.png");
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 90%;
         background-position: center;
         transition: transform .5s;
         filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
@@ -121,7 +141,7 @@
         height: 100px;
         background-image: url("../public/icones/fusee.png") ;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 95%;
         background-position: center;
         transition: transform .5s;
         filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.5));
@@ -137,7 +157,7 @@
         height: 100px;
         background-image: url("../public/icones/idee.png") ;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 90%;
         background-position: center;
         transition: transform .5s;
         filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
@@ -153,8 +173,8 @@
         height: 100px;
         background-image: url("../public/icones/puzzle.png") ;
         background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+        background-size: 90%;
+        background-position-x: center;
         transition: transform .5s;
         filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
 
@@ -167,9 +187,9 @@
     &-img5 {
         width: 100px;
         height: 100px;
-        background-image: url("../public/icones/jeu.png") ;
+        background-image: url("../public/icones/signet.png") ;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 85%;
         background-position: center;
         transition: transform .5s;
         filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
