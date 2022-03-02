@@ -9,7 +9,7 @@ const router = express.Router();
  * @summary Login one user
  * @tags Login
  * @param {paramLogin} request.body.required
- * @return {allOf|users|token} 200 - success response - application/json
+ * @return {login} 200 - success response - application/json
  */
 
 router.route('/user')
@@ -20,7 +20,7 @@ router.route('/user')
  * @summary Login for admin
  * @tags Login
  * @param {paramLogin} request.body.required
- * @return {allOf|users|token} 200 - success response - application/json
+ * @return {login} 200 - success response - application/json
  */
 
 router.route('/admin')
