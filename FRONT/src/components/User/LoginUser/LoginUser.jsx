@@ -1,79 +1,143 @@
-import React, { useState } from 'react';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Popover from '@mui/material/Popover';
+import { useState } from 'react';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import classnames from 'classnames';
-
+import CloseIcon from '@mui/icons-material/Close';
 import './loginuser.scss';
 
-const LoginUser = ({
-    mailValue,
-    passwordValue,
-    onInputsChange,
-    onSubmit,
-    className, ...rest}) => {
 
-    const [isOpen, setIsOpen] = useState(false);
 
-    const onToggleOpen = () => {
-        setIsOpen(!isOpen)
-    }
+const theme = createTheme();
+ export default function SignIn() {
+  const [isOpen, setIsOpen] = useState(false);
+  const onToggleOpen = () => {
+      setIsOpen(!isOpen)
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // eslint-disable-next-line no-console
+    console.log({
+      email: data.get('e-mail'),
+      password: data.get('password'),
+    });
+  };
 
-    const handleInputChange = (event, inputName) => {
-        onInputsChange(inputName, event.target.value);
-    }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        onSubmit();
-    }
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+    setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
-   return (
-       <div
-            className={classnames('loginuser', className)}
-            {...rest}
-         >
+
+  return (
+
+    <div className="loginuser">
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
         onClick={onToggleOpen}
       >
-        <AccountCircle fontSize="large" />
+        { isOpen ?
+                 <CloseIcon fontSize="large"/>
+                 :
+                 <AccountCircle fontSize="large" />
+                 }
       </button>
-      {isOpen && (
-        <form className="loginuser-form" onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            type="email"
-            value={mailValue}
-            onChange={(event) => handleInputChange(event, 'mail')}
-          />
-          <TextField
-            label="Mot de passe"
-            type="password"
-            value={passwordValue}
-            onChange={(event) => handleInputChange(event, 'password')}
-          />
-          <button className="loginuser-submit" type="submit">
-            Se connecter
-          </button>
-        </form>
-      )}
+        {isOpen && (
+            <ThemeProvider theme={theme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <Box
+                    sx={{
+                        marginTop: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                    >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <SentimentSatisfiedAltIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Se connecter
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Adresse e-mail"
+                        name="e-mail"
+                        autoComplete="email"
+                        autoFocus
+                        />
+                        <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Mot de passe"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        />
+                        <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 1, mb: 2 }}
+                        >
+                        Se connecter
+                        </Button>
+                        <Grid container>
+                        <Grid item xs>
+                            <Link href="#" variant="body2">
+                            Mot de passe oublié
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                        <Link href="#" variant="body2" onClick={handleClick}>
+                        Pas Encore de compte?
+                        </Link>
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                            }}
+                        >
+                    <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
+                    </Popover>
+                        </Grid>
+                        </Grid>
+                    </Box>
+                    </Box>
+                </Container>
+            </ThemeProvider>
+        )}
+    </div>
+  );
+}
 
-        </div>
-   );
-};
 
-LoginUser.propTypes = {
-    className: PropTypes.string,
-    mailValue: PropTypes.string.isRequired,
-    passwordValue: PropTypes.string.isRequired,
-    isOpen: PropTypes.bool,
-    onInputsChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    onToggleOpen: PropTypes.func.isRequired,
-
-};
-LoginUser.defaultProps = {
-    className: '',
-};
-export default React.memo(LoginUser);

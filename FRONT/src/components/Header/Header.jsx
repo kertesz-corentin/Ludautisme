@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 // import { Link } from 'react-router-dom'
 import logo from '../public/logo.png';
-import LoginUser from '../User/LoginUser/LoginUser';
-import LoginUserNEW from '../User/LoginUserNEW/LoginUserNEW'
+import LoginUser from '../User/LoginUser/LoginUser'
 import Shop from '../Shop/Shop';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import './header.scss';
@@ -35,7 +34,7 @@ const Header = ({className, ...rest}) => {
             </NavLink> */}
             </BottomNavigation>
             <Shop />
-            <LoginUserNEW />
+            <LoginUser />
         </header>
    );
 };

@@ -1,6 +1,6 @@
 import React,{ useState }from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+
 import './usermyaccount.scss';
 import MenuUser from '../MenuUser/MenuUser';
 import Permanency from '../../Permanency/Permanency';
@@ -11,7 +11,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import LoginUserNEW from '../LoginUserNEW/LoginUserNEW';
+
 
 
 const UserMyAccount = ({
@@ -80,7 +80,6 @@ const UserMyAccount = ({
    return (
        <div > Bienvenue Michel
          <Permanency/>
-         <LoginUserNEW/>
                 <div className= "home-user">
                 <MenuUser/>
                 { modifyBtn
