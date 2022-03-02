@@ -1,32 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { DataGrid, GridToolBar } from '@mui/x-data-grid';
-// import { useDemoData } from '@mui/x-data-grid-generator';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import './adminsection.scss';
 
-const AdminSection = ({ title }) => {
-    // const { data } = useDemoData({
-    //     dataSet: 'Commodity',
-    //     rowLength: 100,
-    //     maxColumns: 6,
-    // })
+const AdminSection = ({ title, rows, columns }) => {
+    const showModal = () => {
+        console.log('showModal');
+    };
+
     return (
         <section className='section'>
-            <div class="section-element">
+            <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <div class="section-element">
+            <div className="section-element">
                 <button className="section-element-add">Ajouter {title}</button>
             </div>
-            <div class="section-element">
-                <div className="section-element-grid">
-                    {/* <DataGrid
-                        {...data}
+            <div className="section-element">
+                <div className="section-element-grid" style={{ height: 400, width: '100%'}}>
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        SelectionOnClick
+                        editMode="cell"
+                        onRowDoubleClick={showModal}
+                        disableSelectionOnClick
                         components={{
-                            Toolbar: GridToolBar,
+                            Toolbar: GridToolbar,
                         }}
-                    /> */}
-                    datagrid
+                    />
                 </div>
             </div>
         </section>
