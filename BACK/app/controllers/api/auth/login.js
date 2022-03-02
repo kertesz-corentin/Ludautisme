@@ -15,6 +15,10 @@ const { ApiError } = require('../../../helpers/errorHandler');
  * @property {string} email - user email
  * @property {string} password -user password
  */
+/**
+ * @typedef {object} paramResetPwd
+ * @property {string} email - user email
+ */
 module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
@@ -45,4 +49,23 @@ module.exports = {
             res.status(200).json(loggedUser);
         }
     },
+    async resetPassword(req, res) {
+        let user = await usersDatamapper.findFiltered([{ email: req.body.email }]);
+        if (user.length !== 1) {
+            return res.json({ status: 'ok' });
+        }
+        user = user[0];
+        const token = jwt.sign(
+            {
+                userId: user.id
+            },
+            process.env.SALT,
+            { expiresIn: '1h' },
+        );
+
+    //Create token
+    //and stock
+    //Send email
+    res.json(user);
+}
 };
