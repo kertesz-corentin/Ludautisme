@@ -1,13 +1,14 @@
 const nodemailer = require('nodemailer');
 const controllerHandler = require('../helpers/apiControllerHandler');
 
+
+console.log(process.env.DATABASE_URL)
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        // user: process.env.MAIL_USER,
-        // pass: process.env.MAIL_PASSWORD,
-        user: 'arnaud.peybernes@gmail.com',
-        pass: 'lqtovmfokqjpnqgk',
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
     },
 });
 
