@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './homepage.scss';
 import { NavLink } from "react-router-dom";
+import legos from '../public/legos.gif';
+import legosfix from '../public/legosfix.png';
+import Permanency from '../Permanency/Permanency';
+import "claymorphism-css/dist/clay.scss";
 
 const Accueil = ({className, ...rest}) => {
     return (
@@ -15,65 +19,65 @@ const Accueil = ({className, ...rest}) => {
                 <div className="bandeau-présentation-texte">
                 <h2>Bienvenue chez lud'Autisme</h2>
                 <p>
-                    Location de jeux et matériel éducatifs pour les personnes en difficultés d'apprentissage
-                </p><br />
-                <p>
-                    Pour les particuliers adhérents et les professionels partenaires
-                </p><br />
+                    Location de jeux et matériel éducatifs pour les personnes en difficultés d'apprentissage <br />
+                    Pour les particuliers adhérents et les professionels partenaires <br />
+                </p>
                 </div>
                 <div className="bandeau-présentation-permanence">
-                    <Paper elevation={20}>
-                        <h2 className="bandeau-présentation-permanence-title">
-                            Prochaine permanence
-                        </h2>
-                        <p className="bandeau-présentation-permanence-infos">
-                            jj/mm/aaaa <br/>
-                            de hh à hh <br/>
+                    {/* <Paper elevation={12}> */}
+                        <p className="clay card">
+                            <Permanency />
                         </p>
-                    </Paper>
+                    {/* </Paper> */}
                 </div>
 
             </div>
             <div className="categoriesDisplay">
-                <div className="categorie">
+                <div className="clay categorie">
                     <NavLink to="/Jeux">
-                        <Paper elevation={12} >
-                            <img src={logo} className="header-logo-image" alt="Logo" />
-                        </Paper>
+                        {/* <Paper elevation={12} > */}
+                            <div className="categorie-img1"></div>
+                            {/* <img src={legosfix} className="categorie-img" alt="Logo" /> */}
+                            {/* <img src={legos} className="categorie-img-gif" alt="Logo" /> */}
+                        {/* </Paper> */}
                     </NavLink>
-                    Jeux
+                    <p>Jeux</p>
                 </div>
-                <div className="categorie">
+                <div className="clay categorie">
                     <NavLink to="/Jeux">
-                        <Paper elevation={12} >
-                            <img src={logo} className="header-logo-image" alt="Logo" />
-                        </Paper>
+                        {/* <Paper elevation={12} > */}
+                            <div className="categorie-img2"></div>
+                            {/* <img src={logo} className="categorie-img" alt="Logo" /> */}
+                        {/* </Paper> */}
                     </NavLink>
-                    Autonomie
+                    <p>Autonomie</p>
                 </div>
-                <div className="categorie">
+                <div className="clay categorie">
                     <NavLink to="/Jeux">
-                        <Paper elevation={12} >
-                            <img src={logo} className="header-logo-image" alt="Logo" />
-                    </Paper>
+                        {/* <Paper elevation={12} > */}
+                            <div className="categorie-img3"></div>
+                            {/* <img src={logo} className="categorie-img" alt="Logo" /> */}
+                    {/* </Paper> */}
                     </NavLink>
-                    Apprentissage
+                    <p>Apprentissage</p>
                 </div>
-                <div className="categorie">
+                <div className="clay categorie">
                     <NavLink to="/Jeux">
-                        <Paper elevation={12} >
-                            <img src={logo} className="header-logo-image" alt="Logo" />
-                        </Paper>
+                        {/* <Paper elevation={12} > */}
+                         <div className="categorie-img4"></div>
+                            {/* <img src={logo} className="categorie-img" alt="Logo" /> */}
+                        {/* </Paper> */}
                     </NavLink>
-                    Montessori
+                    <p>Montessori</p>
                 </div>
-                <div className="categorie">
+                <div className="clay categorie">
                     <NavLink to="/Jeux">
-                        <Paper elevation={12} >
-                            <img src={logo} className="header-logo-image" alt="Logo" />
-                        </Paper>
+                        {/* <Paper elevation={12} > */}
+                         <div className="categorie-img5"></div>
+                            {/* <img src={logo} className="categorie-img" alt="Logo" /> */}
+                        {/* </Paper> */}
                     </NavLink>
-                    Médiathèque
+                    <p>Médiathèque</p>
                 </div>
             </div>
         </div>

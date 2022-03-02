@@ -9,13 +9,15 @@ const Permanency = ({className, ...rest}) => {
    return (
        <div
             className={classnames('permanency', className)}
+            // className={classnames('bandeau-présentation-permanence-infos', className)}
             {...rest}
          >
-
-            <p>
+             <h2>
                 Prochaine permanence
-                01/03/2022
-                8h00-12h00
+             </h2>
+            <p>
+                01/03/2022 <br />
+                8h00-12h00 <br />
             </p>
 
         </div>
