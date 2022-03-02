@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
-const { ApiError } = require('../../helpers/apiControllerHandler');
+// const { ApiError } = require('../../helpers/apiControllerHandler');
 
 /**
  * @typedef {object} users
