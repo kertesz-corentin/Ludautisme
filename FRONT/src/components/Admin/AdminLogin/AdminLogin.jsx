@@ -1,20 +1,19 @@
 import React,{ useState }from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './loginadmin.scss';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
+import './adminlogin.scss';
 
-const LoginAdmin = ({
+const AdminLogin = ({
     className,
      ...rest
     }) => {
 
         const [mailValue,setMailValue] = useState('');
-        const [passwordValue, setPasswordValue]= useState('');
-        const [isAbble,setIsAbble] = useState(false);
+        const [passwordValue, setPasswordValue]= useState('')
 
         function handleMailChange (event) {
             setMailValue(event.target.value)
@@ -31,32 +30,31 @@ const LoginAdmin = ({
         }
    return (
        <div
-            className={classnames('login-admin', className)}
+            className={classnames('admin-login', className)}
             {...rest}
          >
          <h1 className= 'title'>LOGIN ADMIN</h1>
         <form className="admin-form" onSubmit= {handleSubmit} >
           <TextField
-            className= "input-admin"
+            className= "admin-input"
             label="Email"
             type="email"
             value= {mailValue}
             onChange={handleMailChange}
           />
           <TextField
-            className= "input-admin"
+            className= "admin-input"
             type="password"
             label="Mot de passe"
             value={passwordValue}
             onChange={handlePasswordChange}
           />
-          { mailValue !== ''&& passwordValue !== ''
-            ?
-            <Button variant="contained" className= "submit-admin" type= "submit" onSubmit= {handleSubmit} endIcon={<SendIcon />}  >
+          { mailValue !== ''&& passwordValue !== '' ?
+            <Button variant="contained" className= "admin-submit" type= "submit" onSubmit= {handleSubmit} endIcon={<SendIcon />}  >
                 Se Connecter
             </Button>
             :
-            <Button variant="contained" className= "submit-admin" type= "submit" onSubmit= {handleSubmit} endIcon={<SendIcon />} disabled >
+            <Button variant="contained" className= "admin-submit" type= "submit" onSubmit= {handleSubmit} endIcon={<SendIcon />} disabled >
                 Se Connecter
             </Button>
           }
@@ -66,10 +64,10 @@ const LoginAdmin = ({
    );
 };
 
-LoginAdmin.propTypes = {
+AdminLogin.propTypes = {
     className: PropTypes.string,
 };
-LoginAdmin.defaultProps = {
+AdminLogin.defaultProps = {
     className: '',
 };
-export default React.memo(LoginAdmin);
+export default React.memo(AdminLogin);
