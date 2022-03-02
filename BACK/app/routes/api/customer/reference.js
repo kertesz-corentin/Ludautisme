@@ -4,7 +4,6 @@ const { referenceController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
-
 /**
      * GET api/user/articles
      * @summary Get all references with picture

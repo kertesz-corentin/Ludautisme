@@ -14,8 +14,13 @@ const router = express.Router();
 router.use('/login', loginRoutes);
 // !router.all('/',apiController.home);
 
+router.use('/user/articles', authUser, customerReferenceRouter);
 router.use('/admin/users', authAdmin, adminUserRoutes);
+<<<<<<< HEAD
 router.use('/user', authUser, userRoute);
+=======
+router.use('/user', userRoute);
+>>>>>>> fix: fix error router
 // !router.use('/customer', customerRouter);
 
 router.use(() => {
