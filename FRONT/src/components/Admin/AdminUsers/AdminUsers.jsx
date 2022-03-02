@@ -27,15 +27,15 @@ const AdminUsers = ({className, ...rest}) => {
 
     const columnsData = [
         {field: 'member_number', headerName: 'n°adhérent', width: 100},
-        {field: 'first_name', headerName: 'Prenom', editable: true, width: 125},
-        {field: 'last_name', headerName: 'Nom', editable: true, width: 125},
-        {field: 'email', headerName: 'Email', editable: true, width: 200},
-        {field: 'phone', headerName: 'Telephone', editable: true, width: 200},
-        {field: 'adress_number', headerName: 'n°', editable: true, width: 50},
-        {field: 'adress_street', headerName: 'Rue', editable: true, width: 200},
-        {field: 'adress_zipcode', headerName: 'Code Postal', editable: true, width: 125},
-        {field: 'adress_city', headerName: 'Ville', editable: true, width: 200},
-        {field: 'created_at', headerName: 'Membre depuis', editable: true, width: 100},
+        {field: 'first_name', headerName: 'Prenom', width: 125},
+        {field: 'last_name', headerName: 'Nom', width: 125},
+        {field: 'email', headerName: 'Email', width: 200},
+        {field: 'phone', headerName: 'Telephone', width: 200},
+        {field: 'adress_number', headerName: 'n°', width: 50},
+        {field: 'adress_street', headerName: 'Rue', width: 200},
+        {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
+        {field: 'adress_city', headerName: 'Ville', width: 200},
+        {field: 'created_at', headerName: 'Membre depuis', width: 200},
     ]
 
     const rows = [

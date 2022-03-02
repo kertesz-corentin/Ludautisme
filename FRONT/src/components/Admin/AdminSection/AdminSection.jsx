@@ -25,7 +25,8 @@ const AdminSection = ({ title, rows, columns }) => {
                         rowsPerPageOptions={[5]}
                         SelectionOnClick
                         editMode="cell"
-                        onRowClick={showModal}
+                        onRowDoubleClick={showModal}
+                        disableSelectionOnClick
                         components={{
                             Toolbar: GridToolbar,
                         }}
