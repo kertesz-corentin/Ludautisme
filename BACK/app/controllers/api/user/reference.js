@@ -4,7 +4,7 @@ const userReferenceDataMapper = require('../../../models/customer/references');
 
 module.exports = {
     async getAll(_, res) {
-        // const references = await userReferenceDataMapper.getAll();
-        return res.json('coucou');
+        const references = await userReferenceDataMapper.findAll();
+        return res.json(references);
     },
 };
