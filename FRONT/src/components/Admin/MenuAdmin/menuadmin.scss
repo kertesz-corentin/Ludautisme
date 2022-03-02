@@ -1,0 +1,22 @@
+@import 'src/styles/vars';
+
+.menuadmin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 20%;
+    background-color: white;
+
+    &-link {
+        color: black;
+        text-decoration: none;
+        transition: background-color ease-in-out 0.3s;
+
+        &--active {
+            border-right: 3px solid blue;
+            background-color: rgba($color: blue, $alpha: 0.3);
+        }
+    }
+}
+

@@ -1,0 +1,10 @@
+@import 'src/styles/vars';
+
+.shop {
+    border: none;
+    outline: none;
+    background: none;
+    color: $font-color;
+    cursor: pointer;
+    display: flex;
+}

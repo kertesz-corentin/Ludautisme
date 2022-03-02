@@ -1,0 +1,21 @@
+@import 'src/styles/vars';
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: $gutter;
+
+    &-nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        flex: 1;
+    }
+
+    &-logo-image{
+        width: 300px;
+    }
+}

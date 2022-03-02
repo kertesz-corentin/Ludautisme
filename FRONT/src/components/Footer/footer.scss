@@ -1,0 +1,21 @@
+@import 'src/styles/vars';
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background:rgb(255, 159, 164);
+    // position:absolute;
+    width:100%;
+    padding: $gutter;
+    height:auto;
+    margin: auto auto 0 auto;
+
+    &-facebook-logo {
+        width: 100px;
+    }
+    &-logo {
+        height: 100px;
+    }
+}

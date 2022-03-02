@@ -491,6 +491,11 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+claymorphism-css@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/claymorphism-css/-/claymorphism-css-1.0.5.tgz#82a28fc59d5ed39b088fad83b399c50746569ec4"
+  integrity sha512-jbEmVsboW70OHgXRaWLWpVZT22AdrsV8kDWdalxPyqsAx5GJnBFMhHkrMAPof9PqB0sMx/axSXNJshd+OQgT3g==
+
 cliui@^7.0.2:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-7.0.4.tgz#a0265ee655476fc807aea9df3df8df7783808b4f"
