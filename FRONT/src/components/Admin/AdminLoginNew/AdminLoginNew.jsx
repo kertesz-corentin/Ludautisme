@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import './adminloginnew.scss';
-
+import { Grid,Link } from '@mui/material';
 
 
 const theme = createTheme();
@@ -92,6 +92,13 @@ const theme = createTheme();
                         >
                         Se connecter
                         </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                Mot de passe oublié
+                                </Link>
+                            </Grid>
+                        </Grid>
                     </Box>
                     </Box>
                 </Container>

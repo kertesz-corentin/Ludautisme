@@ -76,7 +76,18 @@ const theme = createTheme();
                         <SentimentSatisfiedAltIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Se connecter
+                        Se connecter<Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                            }}
+                        >
+                    <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
+                    </Popover>
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -108,11 +119,11 @@ const theme = createTheme();
                         Se connecter
                         </Button>
                         <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                            Mot de passe oublié
-                            </Link>
-                        </Grid>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                Mot de passe oublié
+                                </Link>
+                            </Grid>
                         <Grid item>
                         <Link href="#" variant="body2" onClick={handleClick}>
                         Pas Encore de compte?
