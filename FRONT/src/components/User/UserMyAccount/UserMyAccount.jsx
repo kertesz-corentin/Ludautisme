@@ -11,6 +11,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import LoginUserNEW from '../LoginUserNEW/LoginUserNEW';
 
 
 const UserMyAccount = ({
@@ -79,6 +80,7 @@ const UserMyAccount = ({
    return (
        <div > Bienvenue Michel
          <Permanency/>
+         <LoginUserNEW/>
                 <div className= "home-user">
                 <MenuUser/>
                 { modifyBtn
