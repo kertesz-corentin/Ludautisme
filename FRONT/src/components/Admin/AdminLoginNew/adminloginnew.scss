@@ -1,0 +1,29 @@
+@import 'src/styles/vars';
+
+.admin-login{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    margin: 0 auto;
+
+    .title{
+        font-size: ($font-size) * 4;
+    }
+    .admin-form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .admin-input{
+        margin-bottom: 1rem;
+    }
+
+    .admin-submit{
+        border-radius:5px;
+    }
+}
