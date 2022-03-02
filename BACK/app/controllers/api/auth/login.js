@@ -25,10 +25,6 @@ module.exports = {
         if (!bcrypt.compareSync(req.body.password, dbUser[0].password)) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        /* if (req.body.password !== dbUser[0].password) {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
-        } */
-
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
