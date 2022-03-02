@@ -8,7 +8,7 @@ import './permanency.scss';
 const Permanency = ({className, ...rest}) => {
    return (
        <div
-            className={classnames('permanency', className)}
+            className={classnames('clay permanency', className)}
             // className={classnames('bandeau-présentation-permanence-infos', className)}
             {...rest}
          >
