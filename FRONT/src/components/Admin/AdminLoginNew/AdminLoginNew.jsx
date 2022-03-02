@@ -83,17 +83,7 @@ const theme = createTheme();
                         id="password"
                         autoComplete="current-password"
                         />
-                        { TextField  ?
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 1, mb: 2 }}
-                        disabled
-                        >
-                        Se connecter
-                        </Button>
-                        :
+                {/* Ici voir pour rendre disablle le bouton se connecter si les deux input ne sont pas remplies */}
                         <Button
                         type="submit"
                         fullWidth
@@ -102,7 +92,6 @@ const theme = createTheme();
                         >
                         Se connecter
                         </Button>
-                        }
                     </Box>
                     </Box>
                 </Container>
