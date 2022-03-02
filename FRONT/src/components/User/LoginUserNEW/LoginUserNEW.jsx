@@ -28,7 +28,7 @@ const theme = createTheme();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('email'),
+      email: data.get('e-mail'),
       password: data.get('password'),
     });
   };
@@ -87,7 +87,7 @@ const theme = createTheme();
                         margin="normal"
                         required
                         fullWidth
-                        name="Mot de passe"
+                        name="password"
                         label="Mot de passe"
                         type="password"
                         id="password"
