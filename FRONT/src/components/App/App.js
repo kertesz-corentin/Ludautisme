@@ -10,8 +10,11 @@ import AdminPage from '../Admin/AdminPage/AdminPage';
 import AdminHome from '../Admin/AdminHome/AdminHome';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminLogin from '../Admin/AdminLogin/AdminLogin';
+import AdminLoginNew from '../Admin/AdminLoginNew/AdminLoginNew';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
+import UserBookingActive from '../User/UserBookingActive/UserBookingActive';
+import UserBookingsHistory from '../User/UserBookingsHistory/UserBookingsHistory';
 
 
 
@@ -36,10 +39,11 @@ function App() {
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-            <Route path = "/admin/login" element = {<AdminLogin />}></Route>
+            <Route path = "/admin/login" element = {<AdminLoginNew />}></Route>
             <Route path = "/user/account" element = {<UserMyAccount />}></Route>
             <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
-            {/* <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route> */}
+            <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
+            <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>

@@ -30,7 +30,7 @@ const UserBookings = ({className, ...rest}) => {
                             <nav aria-label="main mailbox folders">
                                 <List className = "list">
                                     <ListItem disablePadding>
-                                        <ListItemButton component="a" href="/user/account">
+                                        <ListItemButton component="a" href="/user/booking/active">
                                             <ListItemText primary="N ° 45611" />
                                         </ListItemButton>
                                     </ListItem>
@@ -45,16 +45,16 @@ const UserBookings = ({className, ...rest}) => {
                             {/* From now links redirect to userAccount Page but will be change with bookings number later */}
                                 <List >
                                     <ListItem disablePadding>
-                                        <ListItemButton component="a" href="/user/account">
+                                        <ListItemButton component="a" href="/user/bookings/history">
                                             <ListItemText primary="N ° 45611" />
                                         </ListItemButton>
-                                        <ListItemButton component="a" href="/user/account">
+                                        <ListItemButton component="a" href="/user/bookings/history">
                                             <ListItemText primary="N ° 51664" />
                                         </ListItemButton>
-                                        <ListItemButton component="a" href="/user/account">
+                                        <ListItemButton component="a" href="/user/bookings/history">
                                             <ListItemText primary="N ° 65514" />
                                         </ListItemButton>
-                                        <ListItemButton component="a" href="/user/account">
+                                        <ListItemButton component="a" href="/user/bookings/history">
                                             <ListItemText primary="N ° 16315" />
                                         </ListItemButton>
                                     </ListItem>

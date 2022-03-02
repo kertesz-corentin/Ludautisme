@@ -3,19 +3,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Popover from '@mui/material/Popover';
 import { useState } from 'react';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import classnames from 'classnames';
-import CloseIcon from '@mui/icons-material/Close';
-import './loginuser.scss';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import './adminloginnew.scss';
 
 
 
@@ -49,18 +43,8 @@ const theme = createTheme();
   return (
 
     <div className="loginuser">
-        <button
-        className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
-        type="button"
-        onClick={onToggleOpen}
-      >
-        { isOpen ?
-                 <CloseIcon fontSize="large"/>
-                 :
-                 <AccountCircle fontSize="large" />
-                 }
-      </button>
-        {isOpen && (
+
+
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -73,7 +57,7 @@ const theme = createTheme();
                     }}
                     >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <SentimentSatisfiedAltIcon/>
+                        <SupervisorAccountIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Se connecter
@@ -99,6 +83,7 @@ const theme = createTheme();
                         id="password"
                         autoComplete="current-password"
                         />
+                {/* Ici voir pour rendre disablle le bouton se connecter si les deux input ne sont pas remplies */}
                         <Button
                         type="submit"
                         fullWidth
@@ -107,35 +92,10 @@ const theme = createTheme();
                         >
                         Se connecter
                         </Button>
-                        <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                            Mot de passe oublié
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                        <Link href="#" variant="body2" onClick={handleClick}>
-                        Pas Encore de compte?
-                        </Link>
-                        <Popover
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                            }}
-                        >
-                    <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
-                    </Popover>
-                        </Grid>
-                        </Grid>
                     </Box>
                     </Box>
                 </Container>
             </ThemeProvider>
-        )}
     </div>
   );
 }
