@@ -51,12 +51,14 @@ module.exports = {
             { member_number: req.body.member_number },
             { email: req.body.email },
         ]);
-        console.log(user);
         if (user.length > 0) {
             throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
         }
+
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+        req.body.password = hashedPassword;
         const newUser = await usersDataMapper.insert(req.body);
-        console.log(newUser);
         return res.json(newUser);
     },
     async update(req, res) {
