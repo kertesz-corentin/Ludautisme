@@ -7,10 +7,11 @@ const app = express();
 const { dirname } = require('path');
 const appDir = dirname(require.main.filename);
 const buildPath = `${appDir}/../FRONT/build`;
-//END Serve React app
-require('./helpers/apiDoc')(app);
-
 app.use('/',express.static(buildPath));
+//END Serve React app
+//require('./helpers/apiDoc')(app);
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(process.env.CORS_DOMAINS ?? '*'));
