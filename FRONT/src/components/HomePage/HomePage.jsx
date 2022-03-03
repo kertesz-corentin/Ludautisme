@@ -10,6 +10,7 @@ import Logo2 from "../public/icones/commerce-electronique.png";
 import Logo3 from "../public/icones/magasin.png";
 import Logo4 from "../public/icones/check.png";
 import Logo5 from "../public/icones/arrow.png";
+import FacebookPost from "../public/facebook-post.png";
 
 const Accueil = ({className, ...rest}) => {
     return (
@@ -91,7 +92,22 @@ const Accueil = ({className, ...rest}) => {
                     <p>Médiathèque</p>
                 </div>
             </div>
+            <div className="actu">
+                <h2 className="actu-title">
+                    Nos dernières actualités
+                </h2>
+                <div className="clay actu-post">
+                <img className="actu-img" src={FacebookPost} alt="" />
+                </div>
+                <div className="clay actu-post">
+                <img className="actu-img" src={FacebookPost} alt="" />
+                </div>
+                <div className="clay actu-post">
+                <img className="actu-img" src={FacebookPost} alt="" />
+                </div>
+            </div>
         </div>
+
 
    );
 };
