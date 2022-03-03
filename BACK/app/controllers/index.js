@@ -1,6 +1,8 @@
 const userController = require('./api/admin/users');
 
 const loginController = require('./api/auth/login');
+
+const referenceController = require('./api/user/reference');
 // const apiController = {
 //      /**
 //      * Default API controller to show documention url.
@@ -12,4 +14,4 @@ const loginController = require('./api/auth/login');
 
 // }
 
-module.exports = { userController, loginController };
+module.exports = { userController, loginController, referenceController };
