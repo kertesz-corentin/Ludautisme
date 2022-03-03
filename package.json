@@ -16,7 +16,7 @@
     "start": "yarn --cwd ./BACK production",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
-    "postinstall": "yarn --cwd ./FRONT & yarn --cwd ./BACK",
+    "postinstall": "concurrently \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\" \"yarn --cwd ./FRONT build\"",
     "react-start": "yarn --cwd ./FRONT react-scripts start",
     "react-build": "yarn --cwd ./FRONT react-scripts build",
     "react-test": "yarn --cwd ./FRONT react-scripts test",
