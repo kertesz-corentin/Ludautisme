@@ -3,7 +3,7 @@ const usersDataMapper = require('../../../models/admin/users');
 
 module.exports = {
     async getAll() {
-
+        
     },
 
 };

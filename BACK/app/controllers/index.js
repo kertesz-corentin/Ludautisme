@@ -1,9 +1,9 @@
 // const userController = require('./api/admin/users');
 
 const loginController = require('./api/auth/login');
-
+const userController = require('./api/admin/users');
 const userReferenceController = require('./api/user/reference');
-const { adminReferenceController, userController } = require('./api/admin/index');
+const adminReferenceController = require('./api/admin/reference');
 // const apiController = {
 //      /**
 //      * Default API controller to show documention url.
