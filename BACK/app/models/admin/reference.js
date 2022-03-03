@@ -3,6 +3,7 @@ const client = require('../../config/db');
 module.exports = {
     async findAll() {
         const result = await client.query(`
+        SELECT
         r.id,
         r.name,
         r.description,
@@ -15,6 +16,7 @@ module.exports = {
         JOIN "category" ON rtc."id_category" = "category"."id"
         GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, "category"."name"
         `);
+        console.log(result);
         return result.rows;
     },
 };

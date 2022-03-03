@@ -4,6 +4,9 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
 
+/**
+ * GET api/
+ */
 router.route('/')
     .get(controllerHandler(adminReferenceController.getAll));
 
