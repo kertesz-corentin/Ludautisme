@@ -6,6 +6,8 @@ const app = express();
 
 require('./helpers/apiDoc')(app);
 
+app.use(express.static('../FRONT/build/public'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(process.env.CORS_DOMAINS ?? '*'));
