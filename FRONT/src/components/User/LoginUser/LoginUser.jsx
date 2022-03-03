@@ -15,8 +15,8 @@ import { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import classnames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
+import { requestLoginUser } from '../../../requests/requestsUser/login';
 import './loginuser.scss';
-
 
 
 const theme = createTheme();
@@ -25,12 +25,16 @@ const theme = createTheme();
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const data = new FormData (event.currentTarget);
+    const email = data.get('email');
+    const password =  data.get ('password');
+    const response = await requestLoginUser(email,password);
+    console.log(`response`, response);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('e-mail'),
+      email: data.get('email'),
       password: data.get('password'),
     });
   };
@@ -95,8 +99,8 @@ const theme = createTheme();
                         required
                         fullWidth
                         id="email"
-                        label="Adresse e-mail"
-                        name="e-mail"
+                        label="Adresse email"
+                        name="email"
                         autoComplete="email"
                         autoFocus
                         />
