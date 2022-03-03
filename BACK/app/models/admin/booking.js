@@ -11,7 +11,7 @@ const client = require('../../config/db');
  * @property {string} first_name - User first name
  * @property {string} last_name - User last name
  * @property {string} date_start - Booking created at
- * @property {string} date_end - Booking expire at
+ * @property {string} max_return_date - Booking expire at
  * @property {boolean} delivered - User got games
  * @property {boolean} close - User had given back games
  * @property {number} permamency_id - Permanency number for the booking
