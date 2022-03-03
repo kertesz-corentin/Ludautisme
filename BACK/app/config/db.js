@@ -3,16 +3,13 @@ const { Pool } = require('pg');
 const config = {};
 
 // Heroku
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'dev' ) {
     config.connectionString = process.env.DATABASE_URL;
     config.ssl = {
         rejectUnauthorized: false,
     };
 } else {
     config.connectionString = process.env.DATABASE_DEV;
-    config.ssl = {
-        rejectUnauthorized: false,
-    };
 }
 
 console.log(config);

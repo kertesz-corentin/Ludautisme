@@ -7,12 +7,11 @@ const app = express();
 const { dirname } = require('path');
 const appDir = dirname(require.main.filename);
 const buildPath = `${appDir}/../FRONT/build`;
-app.use('/',express.static(buildPath));
+app.use('/', express.static(buildPath));
 //END Serve React app
-if (process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
     require('./helpers/apiDoc')(app);
 }
-
 
 app.use(express.static('../FRONT/build/public'));
 
