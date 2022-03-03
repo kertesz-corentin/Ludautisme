@@ -10,6 +10,9 @@ if (process.env.NODE_ENV === 'production') {
     };
 } else {
     config.connectionString = process.env.DATABASE_DEV;
+    config.ssl = {
+        rejectUnauthorized: false,
+    };
 }
 
 console.log(config);

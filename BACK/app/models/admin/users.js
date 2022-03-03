@@ -80,8 +80,13 @@ module.exports = {
                 query += `${prop}=$${index + 1}`;
             }
         });
+        try {
         const result = await client.query(query, placeholders);
         return result.rows;
+        } catch (err) {
+            console.error(err);
+        }
+
     },
 
     async insert(obj) {
