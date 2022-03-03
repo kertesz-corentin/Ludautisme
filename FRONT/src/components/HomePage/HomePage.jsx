@@ -11,6 +11,8 @@ import Logo3 from "../public/icones/magasin.png";
 import Logo4 from "../public/icones/check.png";
 import Logo5 from "../public/icones/arrow.png";
 import FacebookPost from "../public/facebook-post.png";
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button';
 
 const Accueil = ({className, ...rest}) => {
     return (
@@ -107,7 +109,7 @@ const Accueil = ({className, ...rest}) => {
                 </div>
             </div>
             <div className="contact">
-                <div className="clay contact-coordonnées">
+                <div className="contact-coordonnées">
                     <h3>
                        Nous écrire:
                     </h3>
@@ -118,7 +120,7 @@ const Accueil = ({className, ...rest}) => {
                        Nous rencontrer:
                     </h3>
                     <p>
-                        Place François Mitterand, 29800 LANDERBEAU
+                        Place François Mitterand, 29800 LANDERNEAU
                     </p>
                     <h3>
                        Email:
@@ -128,16 +130,25 @@ const Accueil = ({className, ...rest}) => {
                     </p>
                 </div>
                 <div className="clay contact-map">
-                    googlemap
+                <iframe title="ludo'map" className="contact-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2646.1474306172313!2d-4.257497284157107!3d48.45370073706886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b2c241a4e6ab%3A0xe04f55b4d36b897c!2sMaison%20Pour%20Tous%2FCentre%20Social!5e0!3m2!1sfr!2sfr!4v1646304683575!5m2!1sfr!2sfr" loading="lazy"></iframe>
                 </div>
-                <div className="clay contact-form">
-                    form
+                <div className="contact-form">
+                    <h2 className="contact-form-title">
+                        Formulaire de contact
+                    </h2>
+                    <div className="contact-form-block">
+                    <TextField className="contact-form-text" id="outlined-basic" label="Nom" variant="outlined"/>
+                    <TextField className="contact-form-text" id="outlined-basic" label="Prénom" variant="outlined" />
+                    <TextField className="contact-form-text" id="outlined-basic" label="Objet" variant="outlined" />
+                    <TextField className="contact-form-text-msg" id="outlined-basic" label="Message" variant="outlined" />
+                    </div>
+                    <Button className="contact-button" variant="contained">Envoyer votre message</Button>
                 </div>
             </div>
         </div>
 
 
-   );
+   )
 };
 
 Accueil.propTypes = {

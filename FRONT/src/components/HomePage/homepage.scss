@@ -209,10 +209,12 @@
     &-img {
         width: 300px;
         padding: 30px;
+        filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
     }
 }
 
 .contact {
+    --clay-border-radius: 20px;
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -222,6 +224,46 @@
     &-coordonnées {
         padding: 30px;
         text-align: left;
+    }
+
+    &-iframe {
+        width: 600px;
+        height: 300px ;
+        padding: 30px;
+        border-style: hidden;
+        border-radius: 50px;
+        filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 30px;
+
+
+        &-title {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        &-block {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        &-text {
+            margin-bottom: 20px;
+
+        }
+    }
+
+    &-button {
+        width: max-content;
+
+
     }
 
 }
