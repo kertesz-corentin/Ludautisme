@@ -25,7 +25,6 @@ module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
-        console.log(dbUser);
         if (!dbUser[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
@@ -33,10 +32,12 @@ module.exports = {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
-        } else if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
+            dbUser[0].name = 'user';
+        }
+        if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
+            console.log(dbUser[0].name);
             const token = jwt.sign(
                 {
                     userId: dbUser[0].id,

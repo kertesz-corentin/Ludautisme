@@ -81,12 +81,11 @@ module.exports = {
             }
         });
         try {
-        const result = await client.query(query, placeholders);
-        return result.rows;
+            const result = await client.query(query, placeholders);
+            return result.rows;
         } catch (err) {
             console.error(err);
         }
-
     },
 
     async insert(obj) {
