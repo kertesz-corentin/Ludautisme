@@ -25,11 +25,7 @@ const theme = createTheme();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
-    console.log({
-        'email': email,
-        'password': password
-    });
-    // eslint-disable-next-line no-console
+
     const response = await requestLoginAdmin(email, password)
     console.log({
       response
