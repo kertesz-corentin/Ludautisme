@@ -19,6 +19,7 @@ import { requestLoginUser } from '../../../requests/requestsUser/login';
 import './loginuser.scss';
 import { getLocalBearerToken } from '../../../requests';
 import { removeBearerToken } from '../../../requests';
+import { useEffect } from 'react';
 
 const theme = createTheme();
  export default function SignIn() {
@@ -52,10 +53,12 @@ const theme = createTheme();
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
     const userToken = getLocalBearerToken();
+
     console.log(`Voila le userToken`, userToken);
     function handleDisconnectClick (event) {
         removeBearerToken()
         console.log(`should disconnect`,)
+        setIsOpen(!isOpen)
     }
 
   return (
@@ -64,7 +67,7 @@ const theme = createTheme();
     <div className="loginuser">
 
 
-    { userToken ? <div>coucou</div> : <div>pas coucou</div>}
+    { userToken ? <div>CONNECTE</div> : <div>PAS CONNECTE</div>}
 
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
