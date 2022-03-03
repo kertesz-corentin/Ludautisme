@@ -2,28 +2,26 @@
 
 BEGIN;
 
-DROP TABLE "article";
+DROP TABLE IF EXISTS "article";
 
-DROP TABLE "reference_to_category";
+DROP TABLE IF EXISTS "reference_to_category";
 
-DROP TABLE "reference_to_image";
+DROP TABLE IF EXISTS "reference_to_image";
 
-DROP TABLE "image";
+DROP TABLE IF EXISTS "image";
 
-DROP TABLE "reference";
+DROP TABLE IF EXISTS "reference";
 
-DROP TABLE "category";
+DROP TABLE IF EXISTS "category";
 
-DROP TABLE "booking";
+DROP TABLE IF EXISTS "booking";
 
-DROP TABLE "permanency";
+DROP TABLE IF EXISTS "permanency";
 
-DROP TABLE "temptoken";
+DROP TABLE IF EXISTS "temptoken";
 
-DROP TABLE "user";
+DROP TABLE IF EXISTS "user";
 
-DROP TABLE "role";
-
-
+DROP TABLE IF EXISTS "role";
 
 COMMIT;

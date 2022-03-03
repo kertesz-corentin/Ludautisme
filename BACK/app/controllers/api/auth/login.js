@@ -25,6 +25,7 @@ module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
+        console.log(dbUser);
         if (!dbUser[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
@@ -85,10 +86,6 @@ module.exports = {
         }
         console.log(dbUser[0]);
         await usersDatamapper.update(dbUser[0].id, { password: "updated" });
-        //const { userId, role } = decodedToken;
-        //const user = await loginDatamapper.getUserWithToken(req.body.email);
-        //console.log(user);
-        //await loginDatamapper.resetUserTempToken(req.body.email);
         res.json({ status: 'ok' });
     },
 };
