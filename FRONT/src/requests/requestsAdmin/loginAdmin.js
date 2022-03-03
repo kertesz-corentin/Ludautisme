@@ -1,5 +1,5 @@
 import api from '../index';
-
+import { setBearerToken } from '../index';
 /**
  *
  * @param {string} email : user email
@@ -11,7 +11,8 @@ export async function requestLoginAdmin(email, password) {
         const response = await api.post('/login/admin', {
             email, password
         });
-        console.log('responseApi :', response);
+        setBearerToken(response.data.token);
+        console.log('responseApi :', response.data.token);
         return response
     }
     catch (err) {
