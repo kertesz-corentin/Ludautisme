@@ -212,3 +212,16 @@
     }
 }
 
+.contact {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+
+    &-coordonnées {
+        padding: 30px;
+        text-align: left;
+    }
+
+}
