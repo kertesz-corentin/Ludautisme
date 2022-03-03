@@ -17,7 +17,8 @@ import classnames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
 import { requestLoginUser } from '../../../requests/requestsUser/login';
 import './loginuser.scss';
-
+import { getLocalBearerToken } from '../../../requests';
+import { removeBearerToken } from '../../../requests';
 
 const theme = createTheme();
  export default function SignIn() {
@@ -25,6 +26,8 @@ const theme = createTheme();
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
+
+
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData (event.currentTarget);
@@ -48,11 +51,21 @@ const theme = createTheme();
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-
+    const userToken = getLocalBearerToken();
+    console.log(`Voila le userToken`, userToken);
+    function handleDisconnectClick (event) {
+        removeBearerToken()
+        console.log(`should disconnect`,)
+    }
 
   return (
 
+
     <div className="loginuser">
+
+
+    { userToken ? <div>coucou</div> : <div>pas coucou</div>}
+
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -149,6 +162,7 @@ const theme = createTheme();
                     </Box>
                     </Box>
                 </Container>
+                <Button onClick = {handleDisconnectClick}>Disconnect</Button>
             </ThemeProvider>
         )}
     </div>
