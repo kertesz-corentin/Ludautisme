@@ -9,13 +9,15 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "back": "1.0.0",
+    "front": "0.1.0"
   },
   "scripts": {
     "start": "yarn --cwd ./BACK production",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
-    "postinstall": "concurrently \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\" \"yarn --cwd ./FRONT react-scripts build\"",
+    "postinstall": "yarn --cwd ./FRONT react-scripts build",
     "react-start": "yarn --cwd ./FRONT react-scripts start",
     "react-build": "yarn --cwd ./FRONT react-scripts build",
     "react-test": "yarn --cwd ./FRONT react-scripts test",
