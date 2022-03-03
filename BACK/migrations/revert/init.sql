@@ -18,8 +18,12 @@ DROP TABLE "booking";
 
 DROP TABLE "permanency";
 
+DROP TABLE "temptoken";
+
 DROP TABLE "user";
 
 DROP TABLE "role";
+
+
 
 COMMIT;

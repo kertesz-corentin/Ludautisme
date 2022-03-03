@@ -86,5 +86,10 @@ CREATE TABLE "article" (
     "id_ref" INT REFERENCES "reference"("id") NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
+CREATE TABLE "temptoken"(
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "email_user" TEXT REFERENCES "user"("email"),
+    "temptoken" TEXT NOT NULL
+);
 
 COMMIT;

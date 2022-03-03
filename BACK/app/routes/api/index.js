@@ -1,7 +1,7 @@
 const express = require('express');
 const ApiError = require('../../errors/apiError');
 
-const loginRoutes = require('./login/index');
+const loginRoutes = require('./auth/index');
 const adminUserRoutes = require('./admin/users');
 const userRoute = require('./customer/index');
 
