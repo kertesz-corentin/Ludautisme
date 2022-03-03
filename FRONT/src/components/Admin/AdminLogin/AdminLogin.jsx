@@ -9,10 +9,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import './adminlogin.scss';
 import { Grid,Link } from '@mui/material';
-import { requestLogin } from '../../../requests/requestsAdmin/login';
+import { requestLoginAdmin } from '../../../requests/requestsAdmin/loginAdmin';
 
+import './adminlogin.scss';
 
 const theme = createTheme();
  export default function SignIn() {
@@ -25,9 +25,12 @@ const theme = createTheme();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
-    console.log('email', email, 'password', password);
+    console.log({
+        'email': email,
+        'password': password
+    });
     // eslint-disable-next-line no-console
-    const response = await requestLogin(email, password)
+    const response = await requestLoginAdmin(email, password)
     console.log({
       response
     });
@@ -47,8 +50,6 @@ const theme = createTheme();
   return (
 
     <div className="loginuser">
-
-
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
