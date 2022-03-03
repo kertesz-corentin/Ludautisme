@@ -12,7 +12,7 @@
     "husky": "^7.0.4"
   },
   "scripts": {
-    "start": "concurrently \"yarn --cwd ./FRONT react-scripts build\" \"yarn --cwd ./BACK start\"",
+    "start": "concurrently \"yarn --cwd ./FRONT react-scripts build\" \"yarn --cwd ./BACK production\"",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
     "postinstall": "concurrently \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\"",
