@@ -12,7 +12,7 @@ INSERT INTO "user" ("email", "member_number", "phone", "first_name", "last_name"
 ('thibault@grr.la', 21, '0749831522', 'thibault', 'lallement', 85, 'boulevard de la choucroute', 65410, 'castre', '$2b$10$Q/65PAx2Ciz6UY8qbGv89.u2mUIrarvxZ/jFoeIndRJCaqD7A0LuK', 2 ),
 ('romain@grr.la', 94, '0647855463', 'romain', 'perdriat', 22, 'impasse des matelots', 29200, 'brest', '$2b$10$zPmeea90s/s8deR.SymiZ.fWNX/cfZscTLdiGFuiD.3YwlM4ZrH16', 2),
 ('xavier@grr.la', 76, '0749881254', 'xavier', 'leplatre', 45, 'rue du verdon', 45164, 'bayeux', '$2b$10$dvFGQv3mRlEJw6ckT4q2q.gU.VvkfnkeV2Jp9CffFWRWBnaI3sQXi', 2),
-('stephanie.poulesquen@orange.fr', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', 'test', 1),
+('user@grr.la', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', '$2b$10$wDtwf6o4k2Nq3TGzpYV2k.2KvXa1Lit3qc8kKh/S8zIo86V19lKXm', 1),
 ('hledizes@gmail.com', 108,'0663690249', 'héléne', 'le dizes', 2325, 'route de kergoat', 29630, 'plougasnou', 'abcdef', 1);
 
 INSERT INTO "permanency" ("perm_date") VALUES

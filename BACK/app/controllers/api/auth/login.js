@@ -25,6 +25,7 @@ module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
+        console.log(dbUser);
         if (!dbUser[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
@@ -67,5 +68,5 @@ module.exports = {
         const html = `<a href="http://${req.get('host')}/api/" data-token="${dbTempToken}">Lien</a>`;
         mailer.send(req.body.email, 'Your token', html);
         res.json({ status: 'ok' });
-    }
+    },
 };

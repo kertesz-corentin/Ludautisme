@@ -20,11 +20,16 @@ module.exports = {
                                             r."name",
                                             r."description",
                                             r."valorisation",
-                                            json_agg(json_build_object ('url', "image"."url")) AS "url"
+                                            cat."name" AS mainCategory,
+                                            json_agg(json_build_object ('url', "image"."url")) AS "url",
+                                            json_agg("category"."name") AS tag
                                             FROM "reference" AS r
-                                            JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
-                                            JOIN "image" ON rti."id_image" = "image"."id"
-                                            GROUP BY r.name, r.description, r.valorisation, r.id`);
+                                            LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+                                            LEFT JOIN "image" ON rti."id_image" = "image"."id"
+                                            LEFT JOIN "category" AS cat ON r."id_category" = cat."id"
+                                            LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+                                            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+                                            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`);
         return result.rows;
     },
 };
