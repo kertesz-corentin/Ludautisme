@@ -11,7 +11,7 @@ export async function requestLoginUser(email, password) {
         return response
     }
     catch (err) {
-        console.log(`Voici l'erreur provenant de l 'api`, err.response)
+        console.log(`Voici l'erreur provenant de l'api`, err.response)
         return err.response;
 
     }
