@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
@@ -20,7 +21,28 @@ const client = require('../../config/db');
 
 module.exports = {
     async findAll() {
-        const result = await client.query('SELECT * FORM booking');
+        const result = await client.query(`
+        SELECT
+	    b.id,
+	    b.date_start,
+	    b.max_return_date,
+	    b.delivered,
+	    b.closed,
+	    b.id_permanency,
+	    "user"."id",
+	    "user"."first_name",
+	    "user"."last_name",
+        "user"."email",
+	    json_agg(json_build_object (
+                'id', ar."id",
+                'ref_number', ar."ref_number",
+                'available', ar."available",
+                'archived', ar."archived"
+                )) AS "articles"
+        FROM "booking" AS b
+        INNER JOIN "user" ON "user"."id"="b"."id_user"
+        INNER JOIN "article" AS ar ON "b"."id" = "ar"."id_booking"
+        GROUP BY b.id, "user"."id"`);
         return result.rows;
     },
 };

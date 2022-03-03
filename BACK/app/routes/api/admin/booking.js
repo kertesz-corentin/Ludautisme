@@ -1,10 +1,10 @@
 const express = require('express');
-const { bookingReferenceController } = require('../../../controllers');
+const { bookingController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
 
 router.route('/')
-      .get(controllerHandler(bookingReferenceController.getAll));
+    .get(controllerHandler(bookingController.getAll));
 
 module.exports = router;
