@@ -11,7 +11,7 @@
     "husky": "^7.0.4"
   },
   "scripts": {
-    "start": "yarn --cwd ./FRONT react-scripts start & node ./BACK index.js",
+    "start": "yarn --cwd ./FRONT react-scripts start",
     "prepare": "husky install",
     "postinstall": "cd ./FRONT && yarn & cd ./BACK && yarn",
     "react-start": "yarn --cwd ./FRONT react-scripts start",
