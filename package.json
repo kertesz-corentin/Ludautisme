@@ -13,10 +13,10 @@
     "husky": "^7.0.4"
   },
   "scripts": {
-    "start": "yarn --cwd ./BACK production",
+    "start": "concurrently -m 1 \"yarn --cwd ./FRONT build\" \"yarn --cwd ./BACK production\"",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
-    "postinstall": "concurrently \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\" \"yarn --cwd ./FRONT build\"",
+    "postinstall": "concurrently -m 1 \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\"",
     "react-start": "yarn --cwd ./FRONT react-scripts start",
     "react-build": "yarn --cwd ./FRONT react-scripts build",
     "react-test": "yarn --cwd ./FRONT react-scripts test",
