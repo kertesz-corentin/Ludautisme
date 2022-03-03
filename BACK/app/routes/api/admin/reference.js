@@ -13,6 +13,14 @@ const router = express.Router();
 router.route('/active')
     .get(controllerHandler(adminReferenceController.getActive));
 /**
+ * GET api/admin/references/:id
+ * @summary Get one reference with this articles
+ * @tags Reference
+ * @return {allOf|Reference|Pictures|Articles} 200 - success response - application/json
+ */
+router.route('/:id')
+    .get(controllerHandler(adminReferenceController.getOne));
+/**
  * GET api/admin/references
  * @summary Get all references for admin
  * @tags Reference

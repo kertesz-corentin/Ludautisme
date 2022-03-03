@@ -16,4 +16,11 @@ module.exports = {
         }
         return res.json(results);
     },
+    async getOne(req, res) {
+        const results = await referencesDataMapper.findOne(req.params.id);
+        if (!results[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+        return res.json(results[0]);
+    },
 };
