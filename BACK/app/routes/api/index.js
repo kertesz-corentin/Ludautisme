@@ -2,11 +2,11 @@ const express = require('express');
 const ApiError = require('../../errors/apiError');
 
 const loginRoutes = require('./auth/index');
-const adminUserRoutes = require('./admin/users');
+const adminUserRoutes = require('./admin/index');
 const userRoute = require('./customer/index');
 
 const authAdmin = require('../../middleware/admin');
-const authUser = require('../../middleware/user');
+// const authUser = require('../../middleware/user');
 // !const customerRouter = require('./customer');
 
 const router = express.Router();
@@ -14,8 +14,9 @@ const router = express.Router();
 router.use('/login', loginRoutes);
 // !router.all('/',apiController.home);
 
-router.use('/admin/users', authAdmin, adminUserRoutes);
-router.use('/user', authUser, userRoute);
+router.use('/admin', authAdmin, adminUserRoutes);
+
+router.use('/user', userRoute);
 // !router.use('/customer', customerRouter);
 
 router.use(() => {
