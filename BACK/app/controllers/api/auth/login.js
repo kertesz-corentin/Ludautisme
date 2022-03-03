@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
+const mailer = require('../../../config/mailer');
 require('dotenv').config();
 
+const loginDatamapper = require('../../../models/auth/login');
 const usersDatamapper = require('../../../models/admin/users');
 const { ApiError } = require('../../../helpers/errorHandler');
 /**
@@ -14,6 +16,10 @@ const { ApiError } = require('../../../helpers/errorHandler');
  * @typedef {object} paramLogin
  * @property {string} email - user email
  * @property {string} password -user password
+ */
+/**
+ * @typedef {object} paramResetPwd
+ * @property {string} email - user email
  */
 module.exports = {
     async login(req, res) {
@@ -45,4 +51,21 @@ module.exports = {
             res.status(200).json(loggedUser);
         }
     },
+    async resetPassword(req, res) {
+        const user = await loginDatamapper.getUserWithToken(req.body.email);
+        if (user.temptoken) {
+            await loginDatamapper.resetUserTempToken(req.body.email);
+        }
+        const token = jwt.sign(
+            {
+                userId: user.email,
+            },
+            process.env.SALT,
+            { expiresIn: '1h' },
+        );
+        const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
+        const html = `<a href="http://${req.get('host')}/api/" data-token="${dbTempToken}">Lien</a>`;
+        mailer.send(req.body.email, 'Your token', html);
+        res.json({ status: 'ok' });
+    }
 };

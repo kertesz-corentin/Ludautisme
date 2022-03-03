@@ -40,10 +40,12 @@ module.exports = {
             }
             arr.push({ [columns[index]]: value });
         });
+
         const user = await usersDataMapper.findFiltered(arr);
         if (user.length < 1) {
             throw new ApiError(400, 'Nous n\'avons rien trouvé avec ces critères');
         }
+
         return res.json(user);
     },
     async create(req, res) {
@@ -63,11 +65,14 @@ module.exports = {
     },
     async update(req, res) {
         const user = await usersDataMapper.findById(req.params.id);
+
         if (user.length < 1) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
+
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
         req.body.password = hashedPassword;
+
         const updatedUser = await usersDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },

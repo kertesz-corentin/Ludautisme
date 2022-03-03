@@ -24,6 +24,12 @@ router.route('/:id')
     .put(controllerHandler(userController.update));
 
 /**
+=======
+    /**
+>>>>>>> fix: jsdoc createuser
+=======
+/**
+>>>>>>> fix: fix error router
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations
  * @tags Users

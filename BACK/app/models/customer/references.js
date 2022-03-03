@@ -15,7 +15,16 @@ const client = require('../../config/db');
  */
 module.exports = {
     async findAll() {
-        const result = await client.query('SELECT "reference"."id","reference"."name","reference"."description", "reference"."valorisation", json_agg(json_build_object (\'url\', "image"."url")) AS "url" FROM "reference" JOIN "reference_to_image" ON "reference"."id" = "reference_to_image"."id_ref" JOIN "image" ON "reference_to_image"."id_image" = "image"."id" GROUP BY "reference"."name", "reference"."description", "reference"."valorisation", "reference"."id"');
+        const result = await client.query(`SELECT
+                                            r."id",
+                                            r."name",
+                                            r."description",
+                                            r."valorisation",
+                                            json_agg(json_build_object ('url', "image"."url")) AS "url"
+                                            FROM "reference" AS r
+                                            JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+                                            JOIN "image" ON rti."id_image" = "image"."id"
+                                            GROUP BY r.name, r.description, r.valorisation, r.id`);
         return result.rows;
     },
 };
