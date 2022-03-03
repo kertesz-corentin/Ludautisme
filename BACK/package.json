@@ -16,6 +16,7 @@
     "pg": "^8.7.3"
   },
   "scripts": {
-    "start": "node-dev --no-notify index.js"
+    "start": "node-dev --no-notify index.js",
+    "production": "node index.js"
   }
 }
