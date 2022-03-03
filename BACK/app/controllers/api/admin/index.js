@@ -1,4 +1,5 @@
 const usersController = require('./users');
+const referenceController = require('./reference');
 
 // const apiController = {
 //      /**
@@ -10,4 +11,4 @@ const usersController = require('./users');
 //      */
 // }
 
-module.exports = { usersController };
+module.exports = { usersController, referenceController };

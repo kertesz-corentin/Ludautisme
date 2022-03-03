@@ -2,11 +2,11 @@ const express = require('express');
 const ApiError = require('../../errors/apiError');
 
 const loginRoutes = require('./login/index');
-const adminUserRoutes = require('./admin/users');
+const adminUserRoutes = require('./admin/index');
 const userRoute = require('./customer/index');
 
 const authAdmin = require('../../middleware/admin');
-const authUser = require('../../middleware/user');
+// const authUser = require('../../middleware/user');
 // !const customerRouter = require('./customer');
 
 const router = express.Router();
