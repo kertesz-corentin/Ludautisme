@@ -51,21 +51,44 @@ module.exports = {
             res.status(200).json(loggedUser);
         }
     },
-    async resetPassword(req, res) {
+    async forgotPassword(req, res) {
         const user = await loginDatamapper.getUserWithToken(req.body.email);
         if (user.temptoken) {
             await loginDatamapper.resetUserTempToken(req.body.email);
         }
         const token = jwt.sign(
             {
-                userId: user.email,
+                email: user.email,
             },
             process.env.SALT,
             { expiresIn: '1h' },
         );
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
-        const html = `<a href="http://${req.get('host')}/api/" data-token="${dbTempToken}">Lien</a>`;
+        const html = `<a href="http://${req.get('host')}/api/login/reset-password?token=${dbTempToken.temptoken}">Lien</a>`;
         mailer.send(req.body.email, 'Your token', html);
         res.json({ status: 'ok' });
-    }
+    },
+    async resetPassword(req, res) {
+        //FRONT : Read query token and pass it to back
+        const { token } = req.query;
+        if (!token) {
+            res.json({ status: 'ok' });
+            return;
+        }
+        const decodedToken = jwt.verify(token, process.env.SALT);
+        console.log(decodedToken);
+        const obj = [{ email: decodedToken.email }];
+        const dbUser = await usersDatamapper.findFiltered(obj);
+        if (!dbUser) {
+            res.json({ status: 'ok' });
+            return;
+        }
+        console.log(dbUser[0]);
+        await usersDatamapper.update(dbUser[0].id, { password: "updated" });
+        //const { userId, role } = decodedToken;
+        //const user = await loginDatamapper.getUserWithToken(req.body.email);
+        //console.log(user);
+        //await loginDatamapper.resetUserTempToken(req.body.email);
+        res.json({ status: 'ok' });
+    },
 };
