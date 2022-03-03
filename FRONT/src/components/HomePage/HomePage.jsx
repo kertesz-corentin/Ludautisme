@@ -106,6 +106,34 @@ const Accueil = ({className, ...rest}) => {
                 <img className="actu-img" src={FacebookPost} alt="" />
                 </div>
             </div>
+            <div className="contact">
+                <div className="clay contact-coordonnées">
+                    <h3>
+                       Nous écrire:
+                    </h3>
+                    <p>
+                      8 rue Traverse, 29800 LANDERNEAU
+                    </p>
+                    <h3>
+                       Nous rencontrer:
+                    </h3>
+                    <p>
+                        Place François Mitterand, 29800 LANDERBEAU
+                    </p>
+                    <h3>
+                       Email:
+                    </h3>
+                    <p>
+                      ludautisme@gmail.com
+                    </p>
+                </div>
+                <div className="clay contact-map">
+                    googlemap
+                </div>
+                <div className="clay contact-form">
+                    form
+                </div>
+            </div>
         </div>
 
 
