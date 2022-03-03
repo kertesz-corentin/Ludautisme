@@ -11,6 +11,7 @@ import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import './adminlogin.scss';
 import { Grid,Link } from '@mui/material';
+import { requestLogin } from '../../../requests/requestsAdmin/login';
 
 
 const theme = createTheme();
@@ -19,13 +20,16 @@ const theme = createTheme();
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const password = data.get('password');
+    console.log('email', email, 'password', password);
     // eslint-disable-next-line no-console
+    const response = await requestLogin(email, password)
     console.log({
-      email: data.get('e-mail'),
-      password: data.get('password'),
+      response
     });
   };
 
@@ -68,8 +72,8 @@ const theme = createTheme();
                         required
                         fullWidth
                         id="email"
-                        label="Adresse e-mail"
-                        name="e-mail"
+                        label="Adresse email"
+                        name="email"
                         autoComplete="email"
                         autoFocus
                         />
