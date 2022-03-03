@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
-const { ApiError } = require('../../helpers/apiControllerHandler');
+// const { ApiError } = require('../../helpers/apiControllerHandler');
 
 /**
  * @typedef {object} users
@@ -27,7 +27,6 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
 
 /**
  * @typedef {object} paramUserCreate
- * @property {number} id - Unique identifier
  * @property {number} member_number.required - Unique identifier
  * @property {string} phone.required - User phone number
  * @property {string} first_name - User first name
@@ -44,7 +43,6 @@ const { ApiError } = require('../../helpers/apiControllerHandler');
  * @property {boolean} caution_status - caution status
  * @property {string} caution_expiration - caution expiration
  * @property {number} id_role - role id
- * @property {string} created_at - date creation
  */
 
 /**
@@ -69,7 +67,6 @@ module.exports = {
         const result = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
         return result.rows;
     },
-
 
     async findFiltered(arr) {
         let query = `SELECT * FROM "user" INNER JOIN "role" ON "user"."id_role" = "role"."id" WHERE `;

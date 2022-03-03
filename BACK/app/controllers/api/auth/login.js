@@ -1,12 +1,13 @@
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const usersDatamapper = require('../../../models/admin/users');
 const { ApiError } = require('../../../helpers/errorHandler');
-
 /**
- * @typedef {object} token
+ * @typedef {object} login
+ * @property {string} id - Unique identifier
  * @property {string} token - JSON web token
  */
 /**
@@ -21,7 +22,7 @@ module.exports = {
         if (!dbUser[0]) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        if (req.body.password !== dbUser[0].password) {
+        if (!bcrypt.compareSync(req.body.password, dbUser[0].password)) {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
@@ -37,9 +38,11 @@ module.exports = {
                 process.env.SALT,
                 { expiresIn: '24h' },
             );
-            dbUser[0].token = token;
-            const user = dbUser[0];
-            res.status(200).json({ user });
+            const loggedUser = {
+                id: dbUser[0].id,
+                token,
+            };
+            res.status(200).json(loggedUser);
         }
     },
 };
