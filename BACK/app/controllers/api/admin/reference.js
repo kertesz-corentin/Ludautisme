@@ -23,4 +23,12 @@ module.exports = {
         }
         return res.json(results[0]);
     },
+    async addRef(req, res) {
+        const reference = await referencesDataMapper.findByName(req.body.name);
+        if (reference.length > 0) {
+            throw new ApiError(400, 'Une référence avec le même nom existe déjà');
+        }
+        const newRef = await referencesDataMapper.create(req.body);
+        return res.json(newRef);
+    },
 };

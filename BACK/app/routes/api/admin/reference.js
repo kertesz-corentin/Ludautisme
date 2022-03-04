@@ -26,7 +26,15 @@ router.route('/:id')
  * @tags Reference
  * @return {[Reference]} 200 - success response - application/json
  */
+/**
+ * POST api/admin/references
+ * @summary Create a new reference
+ * @tags Reference
+ * @param {paramRefCreate} request.body.required - At least name
+ * @return {Reference} 201 - succes response - application/json
+ */
 router.route('/')
-    .get(controllerHandler(adminReferenceController.getAll));
+    .get(controllerHandler(adminReferenceController.getAll))
+    .post(controllerHandler(adminReferenceController.addRef));
 
 module.exports = router;
