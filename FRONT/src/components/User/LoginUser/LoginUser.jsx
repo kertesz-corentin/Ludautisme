@@ -80,7 +80,7 @@ export default function SignIn() {
         onClick={onToggleOpen}
       >
 {/* when user connect or not make differents render */}
-        { isOpen && !userToken ?
+        { isOpen  ?
                  <CloseIcon fontSize="large"/>
                  :
 
