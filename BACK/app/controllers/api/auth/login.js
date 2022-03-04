@@ -37,7 +37,6 @@ module.exports = {
         if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
-            console.log(dbUser[0].name);
             const token = jwt.sign(
                 {
                     userId: dbUser[0].id,
