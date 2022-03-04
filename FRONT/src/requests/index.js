@@ -8,7 +8,7 @@ const api = axios.create({
 export default api;
 
 export function setBearerToken(token) {
-    api.defaults.headers.common.Authorization = `bearer ${token}`;
+    api.defaults.headers.common.Authorization = `${token}`;
     localStorage.setItem('token', token);
 }
 

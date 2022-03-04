@@ -15,7 +15,7 @@ const AdminUsers = ({className, ...rest}) => {
         try {
             const response = await axios.get('http://localhost:3001/api/admin/users', {
                 headers: {
-                    Authorization: `${adminToken}`
+                    Authorization: `bearer ${adminToken}`
                 }
             });
             const data = await response.data;
@@ -79,6 +79,8 @@ const AdminUsers = ({className, ...rest}) => {
             created_at: user.created_at,
         }
     })
+
+    console.log(users);
     return (
         <div
             className={classnames('adminusers', className)}
