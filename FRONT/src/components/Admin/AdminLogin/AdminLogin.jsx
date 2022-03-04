@@ -9,29 +9,34 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import './adminlogin.scss';
 import { Grid,Link } from '@mui/material';
-import { requestLogin } from '../../../requests/requestsAdmin/login';
+import { requestLoginAdmin } from '../../../requests/requestsAdmin/loginAdmin';
+import { useNavigate } from 'react-router';
 
+import './adminlogin.scss';
 
 const theme = createTheme();
  export default function SignIn() {
-  const [isOpen, setIsOpen] = useState(false);
-  const onToggleOpen = () => {
-      setIsOpen(!isOpen)
-  }
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
-    console.log('email', email, 'password', password);
-    // eslint-disable-next-line no-console
-    const response = await requestLogin(email, password)
-    console.log({
-      response
-    });
-  };
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+    const onToggleOpen = () => {
+        setIsOpen(!isOpen)
+    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const data = new FormData(event.currentTarget);
+        const email = data.get('email');
+        const password = data.get('password');
+
+        const response = await requestLoginAdmin(email, password)
+        if(response.status === 200) {
+            navigate('/admin/home');
+        }
+        console.log({
+            response
+        });
+    };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -47,8 +52,6 @@ const theme = createTheme();
   return (
 
     <div className="loginuser">
-
-
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />

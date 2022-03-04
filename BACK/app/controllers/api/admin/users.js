@@ -69,9 +69,10 @@ module.exports = {
         if (user.length < 1) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
-
-        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-        req.body.password = hashedPassword;
+        if (req.body.password) {
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+            req.body.password = hashedPassword;
+        }
 
         const updatedUser = await usersDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);

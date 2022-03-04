@@ -15,7 +15,6 @@ import Contact from '../Contact/Contact';
 
 const Accueil = ({className, ...rest}) => {
     return (
-
         <div className={classnames('accueil', className)}
         {...rest}>
             <div className="bandeau-présentation">

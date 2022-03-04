@@ -1,8 +1,10 @@
-{
+{ "private": true,
+  "workspaces": ["back", "front"],
   "dependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
     "claymorphism-css": "^1.0.5",
+    "concurrently": "^7.0.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
@@ -11,10 +13,10 @@
     "husky": "^7.0.4"
   },
   "scripts": {
-    "start": "yarn --cwd ./FRONT react-scripts build & yarn --cwd ./BACK production",
+    "start": "concurrently -m 1 \"yarn --cwd ./FRONT build\" \"yarn --cwd ./BACK production\"",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
-    "postinstall": "cd ./FRONT && yarn & cd ./BACK && yarn",
+    "postinstall": "concurrently -m 1 \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\"",
     "react-start": "yarn --cwd ./FRONT react-scripts start",
     "react-build": "yarn --cwd ./FRONT react-scripts build",
     "react-test": "yarn --cwd ./FRONT react-scripts test",

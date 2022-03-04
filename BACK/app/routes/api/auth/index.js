@@ -34,7 +34,10 @@ router.route('/admin')
  * @return {login} 200 - success response - application/json
  */
 
+router.route('/forgot-password')
+    .post(controllerHandler(loginController.forgotPassword));
+
 router.route('/reset-password')
-    .post(controllerHandler(loginController.resetPassword));
+    .get(controllerHandler(loginController.resetPassword));
 
 module.exports = router;
