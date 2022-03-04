@@ -79,6 +79,9 @@ module.exports = {
     },
     async delete(req,res) {
         const deletedUser = await usersDataMapper.delete(req.params.id);
+        if (!deletedUser) {
+            throw new ApiError(404, `L'utilisateur n'a pas été trouvé, rien n'a été supprimé`);
+        }
         return res.json(deletedUser);
     },
 };

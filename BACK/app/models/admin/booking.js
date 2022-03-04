@@ -7,16 +7,15 @@ const { findFiltered } = require('./users');
 /**
  * @typedef {object} booking
  * @property {number} id - Unique identifier
- * @property {string} member_id - member unique id
+ * @property {boolean} delivered - User got games
+ * @property {boolean} closed - User had given back games
+ * @property {string} id_user - member unique id
  * @property {string} member_number - member card number
  * @property {string} email - member email
  * @property {string} first_name - User first name
  * @property {string} last_name - User last name
- * @property {string} date_start - Booking created at
- * @property {string} max_return_date - Booking expire at
- * @property {boolean} delivered - User got games
- * @property {boolean} close - User had given back games
- * @property {number} permamency_id - Permanency number for the booking
+ * @property {number} id_permanency - Permanency number for the booking
+ * @property {string} date_permanency - Permanency's booking
  * @property {boolean} overdue - overdue returning game
  */
 
@@ -29,6 +28,7 @@ module.exports = {
 	    b.closed,
 	    b.id_permanency,
 	    "user"."id" AS id_user,
+        "user"."member_number" AS member_number,
 	    "user"."first_name",
 	    "user"."last_name",
         "user"."email",
@@ -48,7 +48,6 @@ module.exports = {
         return result.rows;
     },
     async findFiltered(arr) {
-        console.log(arr);
         let query = `
         SELECT
 	    b.id,
@@ -56,6 +55,7 @@ module.exports = {
 	    b.closed,
 	    b.id_permanency,
 	    "user"."id" AS id_user,
+        "user"."member_number" AS member_number,
 	    "user"."first_name",
 	    "user"."last_name",
         "user"."email",
@@ -75,7 +75,7 @@ module.exports = {
         const placeholders = [];
         const aliases = {
             b: ['id', 'delivered', 'closed', 'id_permanency'],
-            user: ['id_user', 'first_name', 'last_name', 'email'],
+            user: ['id_user', 'first_name', 'last_name', 'email', 'member_number'],
             articles: ['id', 'ref_number', 'available', 'archived'],
             perm: ['date_permanency'],
         };
@@ -93,10 +93,10 @@ module.exports = {
                 }
             });
             query += `GROUP BY b.id, "user"."id","date_permanency"`;
+            const result = await client.query(query, placeholders);
+            return result.rows;
         } catch (err) {
             console.error(err);
         }
-        const result = await client.query(query, placeholders);
-        return result.rows;
     },
 };

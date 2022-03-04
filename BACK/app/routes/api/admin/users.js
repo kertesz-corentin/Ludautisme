@@ -12,8 +12,16 @@ const router = express.Router();
  */
 
 /**
- * PUT /api/admin/users/search
+ * PUT /api/admin/users/
  * @summary Modify information for one user
+ * @tags Users
+ * @param {number} request.params.id.required - At least one of these params
+ * @return {users} 200 - success response - application/json
+ */
+
+/**
+ * DELETE /api/admin/users/
+ * @summary Delete One user
  * @tags Users
  * @param {number} request.params.id.required - At least one of these params
  * @return {users} 200 - success response - application/json

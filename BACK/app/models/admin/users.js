@@ -127,9 +127,9 @@ module.exports = {
     },
 
     async delete(id) {
-        const query = `DELETE FROM "user" WHERE id=$1`;
+        const query = `DELETE FROM "user" WHERE id=$1 RETURNING *`;
         const placeholders = [id];
         const result = await client.query(query, placeholders);
         return result.rows[0];
-    }
+    },
 };
