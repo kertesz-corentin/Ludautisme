@@ -1,5 +1,4 @@
 const client = require('../../config/db');
-
 /**
  * @typedef {object} Article
  * @property {number} id - Unique identifier
@@ -52,15 +51,18 @@ module.exports = {
         return result.rows;
     },
     async findOne(id) {
-        const result = await client.query(
-            `SELECT
+        try {
+            const result = await client.query(
+                `SELECT
             r.id,
             r.name,
             r.description,
             r.valorisation,
             cat.name AS mainCategory,
             json_agg("category"."name") AS tag,
-            json_agg(json_build_object ('url', "image"."url")) AS "url",
+            json_agg(json_build_object (
+                'url', "image"."url",
+                'text', "image"."alternative_text")) AS "picture",
             json_agg(json_build_object (
                 'id', ar."id",
                 'ref_number', ar."ref_number",
@@ -79,8 +81,11 @@ module.exports = {
             LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
             WHERE r.id = $1
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
-            [id],
-        );
-        return result.rows;
+                [id],
+            );
+            return result.rows;
+        } catch (err) {
+            console.error(err);
+        }
     },
 };
