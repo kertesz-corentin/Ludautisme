@@ -60,16 +60,18 @@ module.exports = {
     //  Return all users in db
     async findAll() {
         const result = await client.query('SELECT * FROM "user"');
+        console.log(result);
         return result.rows;
     },
 
     async findById(id) {
         const result = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+        console.log(result);
         return result.rows;
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" WHERE `;
+        let query = `SELECT * FROM "user" LEFT JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
