@@ -41,7 +41,8 @@ module.exports = {
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
-        INNER JOIN "article" AS ar ON "b"."id" = "ar"."id_booking"
+		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
 		INNER JOIN "permanency" AS perm ON "perm"."id" = "b"."id_permanency"
         GROUP BY b.id, "user"."id","date_permanency";`);
         return result.rows;
@@ -67,7 +68,8 @@ module.exports = {
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
-        INNER JOIN "article" AS ar ON "b"."id" = "ar"."id_booking"
+		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
 		INNER JOIN "permanency" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE `;
         const placeholders = [];

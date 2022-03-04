@@ -91,4 +91,10 @@ CREATE TABLE "temptoken"(
     "temptoken" TEXT NOT NULL
 );
 
+CREATE TABLE "article_to_booking"(
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "refnum_article" INT REFERENCES "article"("ref_number"),
+    "id_booking" INT REFERENCES "booking"("id")
+);
+
 COMMIT;
