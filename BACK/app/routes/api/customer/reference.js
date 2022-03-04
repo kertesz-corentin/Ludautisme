@@ -8,7 +8,7 @@ const router = express.Router();
      * GET api/user/articles
      * @summary Get all references with picture
      * @tags Reference
-     * @return {[Reference]} 200 - success response - application/json
+     * @return {allOf|Reference|Pictures} 200 - success response - application/json
      */
 router.route('/')
     .get(controllerHandler(userReferenceController.getAll));
