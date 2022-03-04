@@ -82,7 +82,6 @@ module.exports = {
         });
         try {
             const result = await client.query(query, placeholders);
-            console.log(result.rows[0]);
             return result.rows;
         } catch (err) {
             console.error(err);
