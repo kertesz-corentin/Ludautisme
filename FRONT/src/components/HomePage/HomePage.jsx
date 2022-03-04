@@ -16,7 +16,6 @@ import Button from '@mui/material/Button';
 
 const Accueil = ({className, ...rest}) => {
     return (
-
         <div className={classnames('accueil', className)}
         {...rest}>
             <div className="bandeau-présentation">
