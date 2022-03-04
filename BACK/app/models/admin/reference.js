@@ -23,6 +23,14 @@ const client = require('../../config/db');
  * @property {number} valorisation - The price of the reference
  * @property {number} id_category - Id of the main category of the reference
  */
+/**
+ * @typedef {object} RefUpdate
+ * @property {number} id - Unique identifier
+ * @property {string} name - Name of the reference
+ * @property {string} description - Description of the reference
+ * @property {number} valorisation - Price of the reference
+ * @property {number} id_category - Id if the main category
+ */
 module.exports = {
     async findAll() {
         const result = await client.query(`
@@ -132,5 +140,22 @@ module.exports = {
         } catch (err) {
             console.error(err);
         }
+    },
+    async update(id, obj) {
+        const props = Object.keys(obj);
+
+        let query = `UPDATE "reference" SET `;
+        const placeholders = [];
+        props.forEach((prop, index) => {
+            placeholders.push(obj[prop]);
+            if (index !== props.length - 1) {
+                query += `${prop}=$${index + 1}, `;
+            } else {
+                query += `${prop}=$${index + 1} WHERE id=$${index + 2} RETURNING *`;
+                placeholders.push(id);
+            }
+        });
+        const result = await client.query(query, placeholders);
+        return result.rows[0];
     },
 };
