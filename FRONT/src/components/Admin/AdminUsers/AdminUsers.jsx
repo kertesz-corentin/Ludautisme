@@ -15,7 +15,7 @@ const AdminUsers = ({className, ...rest}) => {
         try {
             const response = await axios.get('http://localhost:3001/api/admin/users', {
                 headers: {
-                    Authorization: `bearer ${adminToken}`
+                    Authorization: `${adminToken}`
                 }
             });
             const data = await response.data;
