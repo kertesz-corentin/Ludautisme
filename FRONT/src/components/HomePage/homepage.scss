@@ -13,6 +13,7 @@
 .bandeau-présentation {
     background-color: hsl(178, 100%, 37%, 1);
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -80,6 +81,7 @@
 
 
 .categorie {
+    margin: 20px;
     --clay-background: #ffebcd;
     --clay-shadow-inset-primary: -8px -8px 16px 0 rgba(0, 0, 0, 0.15);
     padding: 10px;
@@ -93,8 +95,8 @@
         flex: 1 0 100%;
         justify-content: center;
     }
-
     & p {
+        margin: 20px;
         display: flex;
         justify-content: center;
     }
@@ -200,6 +202,7 @@
     }
 
     &-post {
+        margin: 20px;
         --clay-background: blanchedalmond;
         --clay-shadow-inset-primary: -8px -8px 16px 0 rgba(0, 0, 0, 0.15);
         color: rgb(0, 0, 0);
@@ -214,12 +217,10 @@
 }
 
 .contact {
-    --clay-border-radius: 20px;
     padding: 30px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 
     &-coordonnées {
         padding: 30px;
@@ -227,8 +228,8 @@
     }
 
     &-iframe {
-        width: 600px;
-        height: 300px ;
+        width: 500px;
+        height: 300px;
         padding: 30px;
         border-style: hidden;
         border-radius: 50px;
@@ -239,31 +240,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 30px;
-
-
-        &-title {
-            margin-top: 0;
-            text-align: center;
-        }
-
-        &-block {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        &-text {
-            margin-bottom: 20px;
-
-        }
     }
 
-    &-button {
-        width: max-content;
-
-
-    }
 
 }

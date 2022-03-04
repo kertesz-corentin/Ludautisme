@@ -1,6 +1,7 @@
 @import 'src/styles/vars';
 
 .permanency{
+    margin: 20px;
     display: flex;
     font-size: 1.8rem;
     text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
@@ -18,7 +19,6 @@
 
     &-inline {
         display: flex;
-        // flex-wrap: wrap;
     }
 
     &-logo {

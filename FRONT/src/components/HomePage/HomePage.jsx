@@ -23,8 +23,8 @@ const Accueil = ({className, ...rest}) => {
                 <div className="bandeau-présentation-texte">
                 <h2>Bienvenue chez lud'Autisme</h2>
                 <p>
-                    Location de jeux et matériel éducatifs pour les personnes en difficultés d'apprentissage <br />
-                    Pour les particuliers adhérents et les professionels partenaires <br />
+                    Location de jeux et matériels éducatifs pour les personnes en difficultés d'apprentissage. <br />
+                    Pour les particuliers adhérents et les professionnels partenaires. <br />
                 </p>
                 </div>
                 <div className="bandeau-présentation-permanence">
@@ -53,7 +53,7 @@ const Accueil = ({className, ...rest}) => {
                     <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
                         <img className="fonctionnement-logo" src={Logo3} alt="récuperer ses articles" />
-                        <p>Venez récuperer vos articles le jour de la permanence</p>
+                        <p>Récuperer vos articles le jour de la permanence</p>
                     </div>
             </div>
 
@@ -61,11 +61,15 @@ const Accueil = ({className, ...rest}) => {
                 <h2 className="categorie-title">
                     La matériathèque
                 </h2>
+                <div className="toto">
                 <div className="clay categorie">
-                    <NavLink to="/Jeux">
-                            <div className="categorie-img1"></div>
+                    <NavLink className="categorie-img1" to="/Jeux">
+                            {/* <div className="categorie-img1"></div> */}
                     </NavLink>
+                    <div className="toto">
                     <p>Jeux</p>
+                    </div>
+                </div>
                 </div>
                 <div className="clay categorie">
                     <NavLink to="/Jeux">
@@ -129,18 +133,24 @@ const Accueil = ({className, ...rest}) => {
                       ludautisme@gmail.com
                     </p>
                 </div>
-                <div className="clay contact-map">
+                <div className="contact-map">
                 <iframe title="ludo'map" className="contact-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2646.1474306172313!2d-4.257497284157107!3d48.45370073706886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b2c241a4e6ab%3A0xe04f55b4d36b897c!2sMaison%20Pour%20Tous%2FCentre%20Social!5e0!3m2!1sfr!2sfr!4v1646304683575!5m2!1sfr!2sfr" loading="lazy"></iframe>
                 </div>
                 <div className="contact-form">
                     <h2 className="contact-form-title">
                         Formulaire de contact
                     </h2>
-                    <div className="contact-form-block">
-                    <TextField className="contact-form-text" id="outlined-basic" label="Nom" variant="outlined"/>
-                    <TextField className="contact-form-text" id="outlined-basic" label="Prénom" variant="outlined" />
-                    <TextField className="contact-form-text" id="outlined-basic" label="Objet" variant="outlined" />
-                    <TextField className="contact-form-text-msg" id="outlined-basic" label="Message" variant="outlined" />
+                    <div className="contact-form-text" >
+                    <TextField size="small" id="outlined-basic" label="Nom" variant="outlined"/>
+                    </div>
+                    <div className="contact-form-text" >
+                    <TextField size="small" id="outlined-basic" label="Prénom" variant="outlined"/>
+                    </div>
+                    <div className="contact-form-text" >
+                    <TextField size="small" id="outlined-basic" label="Objet" variant="outlined"/>
+                    </div>
+                    <div className="contact-form-text" >
+                    <TextField size="small" id="outlined-basic" label="Message" variant="outlined"/>
                     </div>
                     <Button className="contact-button" variant="contained">Envoyer votre message</Button>
                 </div>

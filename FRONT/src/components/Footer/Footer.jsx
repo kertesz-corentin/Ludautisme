@@ -15,7 +15,7 @@ const Footer = ({className, ...rest}) => {
              <div className="footer-texte">
                 <a href="/mentions légales">mentions légales</a><br />
                 <a href="politique de confidentialité">politique de confidentialité</a><br />
-                <p>Lu'Autisme 2022 - Tous droits réservés</p>
+                <p>Lud'Autisme 2022 - Tous droits réservés</p>
              </div>
              <a href="https://fr-fr.facebook.com/pages/category/Community/Ludautisme-344242315626617/" target="_blank" rel="noreferrer"><img className="footer-facebook-logo"src={facebookLogo} alt="logo facebook" /></a>
         </footer>
