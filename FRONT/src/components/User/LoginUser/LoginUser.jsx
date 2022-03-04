@@ -20,6 +20,9 @@ import './loginuser.scss';
 import { getLocalBearerToken } from '../../../requests';
 import { removeBearerToken } from '../../../requests';
 import { useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import UserMyAccount from '../UserMyAccount/UserMyAccount';
+import HomePage from '../../HomePage/HomePage';
 
 const theme = createTheme();
  export default function SignIn() {
@@ -28,7 +31,7 @@ const theme = createTheme();
       setIsOpen(!isOpen)
   }
 
-
+//Use to send Datas
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData (event.currentTarget);
@@ -55,20 +58,27 @@ const theme = createTheme();
     const userToken = getLocalBearerToken();
 
     console.log(`Voila le userToken`, userToken);
+
+//Use to disconnect reset token
     function handleDisconnectClick (event) {
         removeBearerToken()
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
     }
-
+//Expecting to redirect when user just connecting
+    function handleConnectClick (userToken) {
+        if(userToken !== "") {
+            <Route path="/user/account" element={<UserMyAccount/>} />
+        }
+        else{
+            <Route path="/" element={<HomePage/>} />
+        }
+        console.log( userToken, `REDIRECT`)
+    }
   return (
-
-
     <div className="loginuser">
-
-
+{/* when user connect or not make differents render */}
     { userToken ? <div>CONNECTE</div> : <div>PAS CONNECTE</div>}
-
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -132,6 +142,7 @@ const theme = createTheme();
                         />
                         <Button
                         type="submit"
+                        onSubmit= {handleConnectClick}
                         fullWidth
                         variant="contained"
                         sx={{ mt: 1, mb: 2 }}
