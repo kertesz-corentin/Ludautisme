@@ -40,12 +40,14 @@ const MenuAdmin = ({className, ...rest}) => {
                 Réservations
             </NavLink>
 
-            <button
-                onClick={handleLogout}
-                className="menuadmin-logout"
-            >
-                Se déconnecter
-            </button>
+            <NavLink to="/admin/login">
+                <button
+                    onClick={handleLogout}
+                    className="menuadmin-logout"
+                >
+                    Se déconnecter
+                </button>
+            </NavLink>
         </nav>
    );
 };
