@@ -15,11 +15,14 @@ import UserBookingsHistory from '../User/UserBookingsHistory/UserBookingsHistory
 import './App.scss';
 
 function App() {
+
     // Client Application
     return (
     <div className="App">
         <Routes>
             <Route path = "/" element = {<Home children={<HomePage />} />}></Route>
+            <Route path = "/user/account" element = {<Home children={<UserMyAccount />} />}></Route>
+
             <Route path = "/admin" element = {<Admin />}></Route>
             <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             <Route path = "/admin/users" element = {<AdminPage><AdminUsers /></AdminPage>}></Route>
@@ -36,7 +39,7 @@ function App() {
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-            <Route path = "/user/account" element = {<Home children={<UserMyAccount />} />}></Route>
+
             <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
             <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
             <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>

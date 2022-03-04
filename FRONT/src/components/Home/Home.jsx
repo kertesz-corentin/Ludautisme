@@ -15,9 +15,7 @@ const Home = ({className, children}) => {
         <div className={classnames('home', className)}>
         <ContentPage>
             <Header/>
-
                 {children}
-
             <Footer/>
         </ContentPage>
         </div>
