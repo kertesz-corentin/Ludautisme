@@ -1,5 +1,5 @@
 
-import HomePage from '../HomePage/HomePage';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './App.scss';
@@ -12,9 +12,11 @@ import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminLogin from '../Admin/AdminLogin/AdminLogin';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
-
-
-
+import HomePage from '../HomePage/HomePage';
+import About from '../About/About';
+import MaterialLibrary from '../Library/Library';
+import Infos from '../Infos/Infos';
+import UsefullLinks  from '../UsefullLinks/UsefullLinks';
 
 function App() {
   return (
@@ -22,9 +24,10 @@ function App() {
         <Header/>
         <Routes>
             <Route path = "/" element = {<HomePage />}></Route>
-            {/* <Route path = "/about" element = {<About />}></Route> */}
-            {/* <Route path = "/infos" element = {<Infos />}></Route> */}
-            {/* <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route> */}
+            <Route path = "/about" element = {<About />}></Route>
+            <Route path = "/infos" element = {<Infos />}></Route>
+            <Route path = "/UsefullLinks" element = {<UsefullLinks />}></Route>
+            <Route path = "/materiallibrary" element = {<MaterialLibrary />}></Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
             <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
