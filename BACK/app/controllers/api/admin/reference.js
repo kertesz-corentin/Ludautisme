@@ -23,4 +23,21 @@ module.exports = {
         }
         return res.json(results[0]);
     },
+    async addRef(req, res) {
+        const reference = await referencesDataMapper.findByName(req.body.name);
+        if (reference.length > 0) {
+            throw new ApiError(400, 'Une référence avec le même nom existe déjà');
+        }
+        const newRef = await referencesDataMapper.create(req.body);
+        return res.json(newRef);
+    },
+    async update(req, res) {
+        const reference = await referencesDataMapper.findOne(req.params.id);
+
+        if (reference.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
+        const updateRef = await referencesDataMapper.update(req.params.id, req.body);
+        return res.json(updateRef);
+    },
 };
