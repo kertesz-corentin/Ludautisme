@@ -65,7 +65,6 @@ module.exports = {
 
     async findById(id) {
         const result = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
-        console.log(result);
         return result.rows;
     },
 
@@ -106,14 +105,12 @@ module.exports = {
             placeholders.push(obj[prop]);
         });
         query += columns + values;
-        console.log(query);
         const result = await client.query(query, placeholders);
         return result.rows[0];
     },
 
     async update(id, obj) {
         const props = Object.keys(obj);
-        console.log(obj);
         let query = `UPDATE "user" SET `;
         const placeholders = [];
         props.forEach((prop, index) => {
