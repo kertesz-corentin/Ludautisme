@@ -19,27 +19,32 @@ import { requestLoginUser } from '../../../requests/requestsUser/login';
 import './loginuser.scss';
 import { getLocalBearerToken } from '../../../requests';
 import { removeBearerToken } from '../../../requests';
-import { useEffect } from 'react';
-import { Route } from 'react-router-dom';
-import UserMyAccount from '../UserMyAccount/UserMyAccount';
-import HomePage from '../../HomePage/HomePage';
+import {useNavigate} from "react-router-dom";
+
+
 
 const theme = createTheme();
- export default function SignIn() {
+export default function SignIn() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
 
-//Use to send Datas
+    //Use to send Datas
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData (event.currentTarget);
     const email = data.get('email');
     const password =  data.get ('password');
     const response = await requestLoginUser(email,password);
+
     console.log(`response`, response);
-    // eslint-disable-next-line no-console
+    if(response.status === 200) {
+        navigate('/user/account')
+    }
+    else{navigate('/')}
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -65,16 +70,15 @@ const theme = createTheme();
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
     }
+
+
+
+
 //Expecting to redirect when user just connecting
-    function handleConnectClick (userToken) {
-        if(userToken !== "") {
-            <Route path="/user/account" element={<UserMyAccount/>} />
-        }
-        else{
-            <Route path="/" element={<HomePage/>} />
-        }
-        console.log( userToken, `REDIRECT`)
-    }
+function handleConnectClick () {
+    console.log(`Connect`)
+}
+
 
   return (
     <div className="loginuser">
@@ -112,6 +116,7 @@ const theme = createTheme();
                             open={open}
                             anchorEl={anchorEl}
                             onClose={handleClose}
+    // eslint-disable-next-line no-console
                             anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'left',
@@ -143,7 +148,6 @@ const theme = createTheme();
                         />
                         <Button
                         type="submit"
-                        onSubmit= {handleConnectClick}
                         fullWidth
                         variant="contained"
                         sx={{ mt: 1, mb: 2 }}
