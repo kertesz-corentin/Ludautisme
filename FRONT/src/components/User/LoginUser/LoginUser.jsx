@@ -15,9 +15,14 @@ import { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import classnames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
+import { requestLoginUser } from '../../../requests/requestsUser/login';
 import './loginuser.scss';
-
-
+import { getLocalBearerToken } from '../../../requests';
+import { removeBearerToken } from '../../../requests';
+import { useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import UserMyAccount from '../UserMyAccount/UserMyAccount';
+import HomePage from '../../HomePage/HomePage';
 
 const theme = createTheme();
  export default function SignIn() {
@@ -25,12 +30,18 @@ const theme = createTheme();
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
-  const handleSubmit = (event) => {
+
+//Use to send Datas
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const data = new FormData (event.currentTarget);
+    const email = data.get('email');
+    const password =  data.get ('password');
+    const response = await requestLoginUser(email,password);
+    console.log(`response`, response);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('e-mail'),
+      email: data.get('email'),
       password: data.get('password'),
     });
   };
@@ -44,11 +55,31 @@ const theme = createTheme();
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+    const userToken = getLocalBearerToken();
 
+    console.log(`Voila le userToken`, userToken);
+
+//Use to disconnect reset token
+    function handleDisconnectClick (event) {
+        removeBearerToken()
+        console.log(`should disconnect`,)
+        setIsOpen(!isOpen)
+    }
+//Expecting to redirect when user just connecting
+    function handleConnectClick (userToken) {
+        if(userToken !== "") {
+            <Route path="/user/account" element={<UserMyAccount/>} />
+        }
+        else{
+            <Route path="/" element={<HomePage/>} />
+        }
+        console.log( userToken, `REDIRECT`)
+    }
 
   return (
-
     <div className="loginuser">
+{/* when user connect or not make differents render */}
+    { userToken ? <div>CONNECTE</div> : <div>PAS CONNECTE</div>}
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -95,8 +126,8 @@ const theme = createTheme();
                         required
                         fullWidth
                         id="email"
-                        label="Adresse e-mail"
-                        name="e-mail"
+                        label="Adresse email"
+                        name="email"
                         autoComplete="email"
                         autoFocus
                         />
@@ -112,6 +143,7 @@ const theme = createTheme();
                         />
                         <Button
                         type="submit"
+                        onSubmit= {handleConnectClick}
                         fullWidth
                         variant="contained"
                         sx={{ mt: 1, mb: 2 }}
@@ -145,6 +177,7 @@ const theme = createTheme();
                     </Box>
                     </Box>
                 </Container>
+                <Button onClick = {handleDisconnectClick}>Disconnect</Button>
             </ThemeProvider>
         )}
     </div>
