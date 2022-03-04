@@ -31,4 +31,13 @@ module.exports = {
         const newRef = await referencesDataMapper.create(req.body);
         return res.json(newRef);
     },
+    async update(req, res) {
+        const reference = await referencesDataMapper.findOne(req.params.id);
+
+        if (reference.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
+        const updateRef = await referencesDataMapper.update(req.params.id, req.body);
+        return res.json(updateRef);
+    },
 };
