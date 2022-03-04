@@ -69,7 +69,7 @@ module.exports = {
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" INNER JOIN "role" ON "user"."id_role" = "role"."id" WHERE `;
+        let query = `SELECT * FROM "user" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
@@ -112,6 +112,7 @@ module.exports = {
 
     async update(id, obj) {
         const props = Object.keys(obj);
+        console.log(obj);
         let query = `UPDATE "user" SET `;
         const placeholders = [];
         props.forEach((prop, index) => {
