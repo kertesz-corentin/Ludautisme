@@ -60,6 +60,7 @@ module.exports = {
     //  Return all users in db
     async findAll() {
         const result = await client.query('SELECT * FROM "user"');
+        console.log(result);
         return result.rows;
     },
 
