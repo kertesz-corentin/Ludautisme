@@ -3,7 +3,8 @@ const { adminReferenceController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
-
+router.route('/article')
+    .post(controllerHandler(adminReferenceController))
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
