@@ -12,7 +12,7 @@ INSERT INTO "user" ("email", "member_number", "phone", "first_name", "last_name"
 ('thibault@grr.la', 21, '0749831522', 'thibault', 'lallement', 85, 'boulevard de la choucroute', 65410, 'castre', '$2b$10$Q/65PAx2Ciz6UY8qbGv89.u2mUIrarvxZ/jFoeIndRJCaqD7A0LuK', 2 ),
 ('romain@grr.la', 94, '0647855463', 'romain', 'perdriat', 22, 'impasse des matelots', 29200, 'brest', '$2b$10$zPmeea90s/s8deR.SymiZ.fWNX/cfZscTLdiGFuiD.3YwlM4ZrH16', 2),
 ('xavier@grr.la', 76, '0749881254', 'xavier', 'leplatre', 45, 'rue du verdon', 45164, 'bayeux', '$2b$10$dvFGQv3mRlEJw6ckT4q2q.gU.VvkfnkeV2Jp9CffFWRWBnaI3sQXi', 2),
-('user@grr.la', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', '$2b$10$wDtwf6o4k2Nq3TGzpYV2k.2KvXa1Lit3qc8kKh/S8zIo86V19lKXm', 1),
+('user@grr.la', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', '$2b$10$H5eSsaHtOYnSnt5CIRMCcOEDwLaSO9HHeWmsZSkYYYdISw4GFMrF6', 1),
 ('hledizes@gmail.com', 108,'0663690249', 'héléne', 'le dizes', 2325, 'route de kergoat', 29630, 'plougasnou', 'abcdef', 1);
 
 INSERT INTO "permanency" ("perm_date") VALUES
@@ -21,12 +21,12 @@ INSERT INTO "permanency" ("perm_date") VALUES
 ('2022-03-10'),
 ('2022-04-06');
 
-INSERT INTO "booking" ("date_start", "delivered", "max_return_date", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
-('2022-02-01', false, null, false, 0, 2, 6),
-('2022-02-01', true, '2022-05-05', false, 0, 2, 7),
-('2022-02-02', true, '2022-05-05', true, 0, 2, 5),
-('2021-10-10', true, '2022-01-10', false, 3, 1, 4),
-('2021-10-10', false, null, false, 0, 1, 1);
+INSERT INTO "booking" ( "delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
+( false, false, 0, 2, 6),
+( true, false, 0, 2, 7),
+( true, true, 0, 2, 5),
+( true, false, 3, 1, 4),
+( false, false, 0, 1, 1);
 
 INSERT INTO "category" ("name", "description", "main") VALUES
 ('jeux', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices mollis libero eget molestie.', true),
@@ -59,11 +59,22 @@ INSERT INTO "reference_to_category" ("id_ref", "id_category") VALUES
 (3, 6),
 (1, 6);
 
-INSERT INTO "article" ("ref_number", "origin", "date_buy", "available", "id_booking", "id_ref") VALUES
-(19, 'achat fnac', '2019-06-14', false, 2, 4),
-(27, 'don adherent', '2020-04-15', true, null, 1),
-(215, 'tombé du ciel', '2021-12-24', false, null, 4),
-(418, 'achat leclerc', '2022-07-24', false, 2, 3),
-(314, 'don asso', '2017-01-06', true, null, 4);
+INSERT INTO "article" ("ref_number", "origin", "date_buy", "available", "id_ref") VALUES
+(19, 'achat fnac', '2019-06-14', false, 4),
+(27, 'don adherent', '2020-04-15', true, 1),
+(215, 'tombé du ciel', '2021-12-24', false, 4),
+(216, 'tombé du ciel', '2021-12-24', false, 4),
+(217, 'tombé du ciel', '2021-12-24', false, 2),
+(418, 'achat leclerc', '2022-07-24', false, 3),
+(314, 'don asso', '2017-01-06', true, 4);
+
+INSERT INTO "article_to_booking"("id_booking","refnum_article") VALUES
+(1,19),
+(1,27),
+(1,215),
+(2,216),
+(2,217),
+(2,418),
+(3,314);
 
 COMMIT;

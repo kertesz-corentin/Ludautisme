@@ -37,7 +37,6 @@ module.exports = {
         if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
-            console.log(dbUser[0].name);
             const token = jwt.sign(
                 {
                     userId: dbUser[0].id,
@@ -71,7 +70,7 @@ module.exports = {
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
-        //FRONT : Read query token and pass it to back
+        // FRONT : Read query token and pass it to back
         const { token } = req.query;
         if (!token) {
             res.json({ status: 'ok' });
