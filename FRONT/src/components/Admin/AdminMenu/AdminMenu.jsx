@@ -40,7 +40,7 @@ const MenuAdmin = ({className, ...rest}) => {
                 Réservations
             </NavLink>
 
-            <NavLink to="/admin/login">
+            <NavLink to="/admin">
                 <button
                     onClick={handleLogout}
                     className="menuadmin-logout"

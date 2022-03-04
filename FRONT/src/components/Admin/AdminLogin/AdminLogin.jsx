@@ -11,27 +11,32 @@ import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Grid,Link } from '@mui/material';
 import { requestLoginAdmin } from '../../../requests/requestsAdmin/loginAdmin';
+import { useNavigate } from 'react-router';
 
 import './adminlogin.scss';
 
 const theme = createTheme();
  export default function SignIn() {
-  const [isOpen, setIsOpen] = useState(false);
-  const onToggleOpen = () => {
-      setIsOpen(!isOpen)
-  }
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+    const onToggleOpen = () => {
+        setIsOpen(!isOpen)
+    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
+        const data = new FormData(event.currentTarget);
+        const email = data.get('email');
+        const password = data.get('password');
 
-    const response = await requestLoginAdmin(email, password)
-    console.log({
-        response
-      });
-  };
+        const response = await requestLoginAdmin(email, password)
+        if(response.status === 200) {
+            navigate('/admin/home');
+        }
+        console.log({
+            response
+        });
+    };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
