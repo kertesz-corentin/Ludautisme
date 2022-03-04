@@ -61,7 +61,6 @@ export default function SignIn() {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
     const userToken = getLocalBearerToken();
-
     console.log(`Voila le userToken`, userToken);
 
 //Use to disconnect reset token
@@ -69,121 +68,127 @@ export default function SignIn() {
         removeBearerToken()
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
+        navigate('/')
     }
-
-
-
-
-//Expecting to redirect when user just connecting
-function handleConnectClick () {
-    console.log(`Connect`)
-}
-
 
   return (
     <div className="loginuser">
 {/* when user connect or not make differents render */}
-    { userToken ? <div>CONNECTE</div> : <div>PAS CONNECTE</div>}
+
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
         onClick={onToggleOpen}
       >
-        { isOpen ?
+
+        { isOpen && !userToken ?
                  <CloseIcon fontSize="large"/>
                  :
+
                  <AccountCircle fontSize="large" />
                  }
       </button>
-        {isOpen && (
-            <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs">
-                    <CssBaseline />
-                    <Box
-                    sx={{
-                        marginTop: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
+        {!userToken
+            ?
+                <div>
+                    {isOpen && (
+                        <ThemeProvider theme={theme}>
+                            <Container component="main" maxWidth="xs">
+                                <CssBaseline />
+                                    <Box
+                                    sx={{
+                                        marginTop: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                    >
+                                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                            <SentimentSatisfiedAltIcon/>
+                                        </Avatar>
+                                        <Typography component="h1" variant="h5">
+                                            Se connecter<Popover
+                                                id={id}
+                                                open={open}
+                                                anchorEl={anchorEl}
+                                                onClose={handleClose}
+                        // eslint-disable-next-line no-console
+                                                anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'left',
+                                                }}
+                                            >
+                                <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
+                                </Popover>
+                                </Typography>
+                                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                                    <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Adresse email"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    />
+                                    <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Mot de passe"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    />
+                                    <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 1, mb: 2 }}
+                                    >
+                                    Se connecter
+                                    </Button>
+                                    <Grid container>
+                                        <Grid item xs>
+                                            <Link href="#" variant="body2">
+                                            Mot de passe oublié
+                                            </Link>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Link href="#" variant="body2" onClick={handleClick}>
+                                            Pas Encore de compte?
+                                            </Link>
+                                            <Popover
+                                                id={id}
+                                                open={open}
+                                                anchorEl={anchorEl}
+                                                onClose={handleClose}
+                                                anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'left',
+                                                }}
+                                            >
+                                                <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
+                                            </Popover>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                                </Box>
+                            </Container>
+
+                        </ThemeProvider>
+                    )}
+                </div>
+            :   <div>
+                    <Button
+                        onClick = {handleDisconnectClick}
                     >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <SentimentSatisfiedAltIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Se connecter<Popover
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-    // eslint-disable-next-line no-console
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                            }}
-                        >
-                    <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
-                    </Popover>
-                    </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Adresse email"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        />
-                        <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Mot de passe"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        />
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 1, mb: 2 }}
-                        >
-                        Se connecter
-                        </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                Mot de passe oublié
-                                </Link>
-                            </Grid>
-                        <Grid item>
-                        <Link href="#" variant="body2" onClick={handleClick}>
-                        Pas Encore de compte?
-                        </Link>
-                        <Popover
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                            }}
-                        >
-                    <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
-                    </Popover>
-                        </Grid>
-                        </Grid>
-                    </Box>
-                    </Box>
-                </Container>
-                <Button onClick = {handleDisconnectClick}>Disconnect</Button>
-            </ThemeProvider>
-        )}
+                    Se déconnecter
+                    </Button>
+                </div>
+        }
     </div>
   );
 }
