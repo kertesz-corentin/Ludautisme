@@ -33,13 +33,12 @@ CREATE TABLE "permanency" (
 
 CREATE TABLE "booking" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "date_start" DATE,
     "delivered" BOOLEAN DEFAULT false,
-    "max_return_date" DATE,
     "closed" BOOLEAN DEFAULT false,
     "nb_prolongation" INTEGER DEFAULT 0,
     "id_permanency" INT REFERENCES "permanency"("id"),
-    "id_user" INT REFERENCES "user"("id")
+    "id_user" INT REFERENCES "user"("id"),
+    "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE "category" (
