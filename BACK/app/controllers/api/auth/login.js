@@ -70,7 +70,7 @@ module.exports = {
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
-        //FRONT : Read query token and pass it to back
+        // FRONT : Read query token and pass it to back
         const { token } = req.query;
         if (!token) {
             res.json({ status: 'ok' });

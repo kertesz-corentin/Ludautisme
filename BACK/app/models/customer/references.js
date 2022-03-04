@@ -11,11 +11,12 @@ const client = require('../../config/db');
  */
 /**
  * @typedef {object} Pictures
- * @property {array<Url>} picture - Url of picture
+ * @property {array<Picture>} picture - Url of picture
  */
 /**
- * @typedef {string} Url
+ * @typedef {string} Picture
  * @property {string} url - Url of reference image
+ * @property {string} text - Alternative text of picture
  */
 
 module.exports = {
@@ -27,7 +28,10 @@ module.exports = {
                                             r."valorisation",
                                             cat."name" AS mainCategory,
                                             json_agg("category"."name") AS tag,
-                                            json_agg(json_build_object ('url', "image"."url")) AS "url"
+                                            json_agg(json_build_object (
+                                                'url', "image"."url",
+                                                'text', "image"."alternative_text"
+                                            )) AS "picture"
                                             FROM "reference" AS r
                                             LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
                                             LEFT JOIN "image" ON rti."id_image" = "image"."id"
@@ -46,7 +50,10 @@ module.exports = {
             r.valorisation,
             cat.name AS mainCategory,
             json_agg("category"."name") AS tag,
-            json_agg(json_build_object ('url', "image"."url")) AS "url"
+            json_agg(json_build_object (
+                'url', "image"."url",
+                'text', "image"."alternative_text"
+            )) AS "picture"
             FROM "reference" AS r
             LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
             LEFT JOIN "image" ON rti."id_image" = "image"."id"
