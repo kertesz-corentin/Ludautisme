@@ -38,7 +38,6 @@ function App() {
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-            <Route path = "/admin/login" element = {<AdminLogin />}></Route>
             <Route path = "/user/account" element = {<UserMyAccount />}></Route>
             <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
             <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
