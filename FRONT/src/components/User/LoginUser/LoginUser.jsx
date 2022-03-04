@@ -38,13 +38,11 @@ export default function SignIn() {
     const email = data.get('email');
     const password =  data.get ('password');
     const response = await requestLoginUser(email,password);
-
     console.log(`response`, response);
     if(response.status === 200) {
         navigate('/user/account')
     }
     else{navigate('/')}
-
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -73,14 +71,12 @@ export default function SignIn() {
 
   return (
     <div className="loginuser">
-{/* when user connect or not make differents render */}
-
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
         onClick={onToggleOpen}
       >
-
+{/* when user connect or not make differents render */}
         { isOpen && !userToken ?
                  <CloseIcon fontSize="large"/>
                  :
