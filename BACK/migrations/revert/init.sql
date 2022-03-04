@@ -2,6 +2,8 @@
 
 BEGIN;
 
+DROP TABLE IF EXISTS "article_to_booking";
+
 DROP TABLE IF EXISTS "article";
 
 DROP TABLE IF EXISTS "reference_to_category";
