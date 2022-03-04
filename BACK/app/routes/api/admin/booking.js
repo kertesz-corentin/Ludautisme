@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * GET /api/admin/booking
  * @summary Get all detailed booking
- * @tags Users
+ * @tags Booking
  * @param {paramSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
@@ -15,7 +15,7 @@ router.route('/')
 /**
  * POST /api/admin/booking/search
  * @summary Get detailed booking with details
- * @tags Users
+ * @tags Booking
  * @param {paramSearchBooking} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */

@@ -11,7 +11,7 @@ module.exports = {
         const columns = [
             'id', 'delivered', 'closed',
             'id_permanency', 'date_permanency',
-            'id_user', 'email', 'first_name', 'last_name'];
+            'id_user', 'email', 'first_name', 'last_name', 'member_number'];
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
