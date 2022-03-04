@@ -21,7 +21,8 @@ const router = express.Router();
 
 router.route('/:id')
     .get(controllerHandler(userController.getById))
-    .put(controllerHandler(userController.update));
+    .put(controllerHandler(userController.update))
+    .delete(controllerHandler(userController.delete));
 
 /**
  * POST /api/admin/users/search
@@ -52,6 +53,5 @@ router.route('/search')
 router.route('/')
     .get(controllerHandler(userController.getAll))
     .post(controllerHandler(userController.create));
-// .patch(controllerHandler(userController.update));
 
 module.exports = router;

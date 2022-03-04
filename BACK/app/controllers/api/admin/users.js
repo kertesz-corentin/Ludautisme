@@ -77,4 +77,8 @@ module.exports = {
         const updatedUser = await usersDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },
+    async delete(req,res) {
+        const deletedUser = await usersDataMapper.delete(req.params.id);
+        return res.json(deletedUser);
+    },
 };
