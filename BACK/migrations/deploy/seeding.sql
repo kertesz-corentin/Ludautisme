@@ -68,7 +68,7 @@ INSERT INTO "article" ("ref_number", "origin", "date_buy", "available", "id_ref"
 (418, 'achat leclerc', '2022-07-24', false, 3),
 (314, 'don asso', '2017-01-06', true, 4);
 
-INSERT INTO "article_to_booking"("id_booking","ref_number_article") VALUES
+INSERT INTO "article_to_booking"("id_booking","refnum_article") VALUES
 (1,19),
 (1,27),
 (1,215),

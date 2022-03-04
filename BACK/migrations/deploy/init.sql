@@ -93,7 +93,7 @@ CREATE TABLE "temptoken"(
 
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "ref_number_article" INT REFERENCES "article"("ref_number"),
+    "refnum_article" INT REFERENCES "article"("ref_number"),
     "id_booking" INT REFERENCES "booking"("id")
 );
 
