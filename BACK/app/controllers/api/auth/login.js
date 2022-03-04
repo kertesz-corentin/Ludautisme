@@ -32,8 +32,9 @@ module.exports = {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
-        } else if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
+            dbUser[0].name = 'user';
+        }
+        if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
             throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
             const token = jwt.sign(
@@ -69,7 +70,7 @@ module.exports = {
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
-        //FRONT : Read query token and pass it to back
+        // FRONT : Read query token and pass it to back
         const { token } = req.query;
         if (!token) {
             res.json({ status: 'ok' });
@@ -85,10 +86,6 @@ module.exports = {
         }
         console.log(dbUser[0]);
         await usersDatamapper.update(dbUser[0].id, { password: "updated" });
-        //const { userId, role } = decodedToken;
-        //const user = await loginDatamapper.getUserWithToken(req.body.email);
-        //console.log(user);
-        //await loginDatamapper.resetUserTempToken(req.body.email);
         res.json({ status: 'ok' });
     },
 };

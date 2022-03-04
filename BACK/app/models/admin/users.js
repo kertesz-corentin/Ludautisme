@@ -69,7 +69,7 @@ module.exports = {
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" WHERE `;
+        let query = `SELECT * FROM "user" LEFT JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
@@ -82,7 +82,6 @@ module.exports = {
         });
         try {
             const result = await client.query(query, placeholders);
-            console.log(result.rows[0]);
             return result.rows;
         } catch (err) {
             console.error(err);
@@ -106,14 +105,12 @@ module.exports = {
             placeholders.push(obj[prop]);
         });
         query += columns + values;
-        console.log(query);
         const result = await client.query(query, placeholders);
         return result.rows[0];
     },
 
     async update(id, obj) {
         const props = Object.keys(obj);
-        console.log(obj);
         let query = `UPDATE "user" SET `;
         const placeholders = [];
         props.forEach((prop, index) => {

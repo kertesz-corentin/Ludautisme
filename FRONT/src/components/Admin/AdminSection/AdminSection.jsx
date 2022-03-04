@@ -17,12 +17,12 @@ const AdminSection = ({ title, rows, columns }) => {
                 <button className="section-element-add">Ajouter {title}</button>
             </div>
             <div className="section-element">
-                <div className="section-element-grid" style={{ height: 400, width: '100%'}}>
+                <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
+                        pageSize={15}
+                        rowsPerPageOptions={[15]}
                         SelectionOnClick
                         editMode="cell"
                         onRowDoubleClick={showModal}
