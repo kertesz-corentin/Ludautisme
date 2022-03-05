@@ -13,6 +13,18 @@
         flex-wrap: nowrap;
         justify-content: space-evenly;
         flex: 1;
+
+        &-link {
+            text-decoration: none;
+            &--active {
+             border-bottom: 2px solid blue;
+            }
+
+            &:hover {
+                background-color: rgba($color: #000000, $alpha: 0.3);
+            }
+
+        }
     }
 
     &-logo-image{
