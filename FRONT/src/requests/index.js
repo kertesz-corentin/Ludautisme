@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = (window.location.origin.includes('localhost')) ? `${window.location.origin}:3001`: window.location.origin;
+
 const api = axios.create({
-    baseURL: `${window.location.origin}/api`,
+    baseURL: `${baseURL}/api`,
 });
 
 export default api;
