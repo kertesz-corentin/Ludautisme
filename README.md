@@ -1,5 +1,8 @@
 # Projet-03-lud-autisme
 
+## Commandes utiles
+`git push <remote> <local branch name>:<remote branch to push into>` push une branche locale sur une remote
+
 ## Description du projet
 
 ### Syntaxe des commits
