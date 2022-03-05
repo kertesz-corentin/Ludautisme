@@ -3,8 +3,15 @@ const { adminReferenceController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
+/**
+ * POST api/admin/references/article
+ * @summary Add one article to reference
+ * @tags Reference
+ * @param {ParamArticleCreate} request.body.required At least ref_number and id_ref
+ * @return {Article} 201 - success response - application/json
+ */
 router.route('/article')
-    .post(controllerHandler(adminReferenceController))
+    .post(controllerHandler(adminReferenceController.addArticle));
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
