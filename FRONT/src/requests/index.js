@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const baseURL = (window.location.origin.includes('localhost')) ? `${window.location.origin}:3001`: window.location.origin;
-
+const baseURL = (window.location.origin.includes('localhost')) ? `http://localhost:3001`: window.location.origin;
+console.log(baseURL);
 const api = axios.create({
     baseURL: `${baseURL}/api`,
 });
