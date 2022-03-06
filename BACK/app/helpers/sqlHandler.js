@@ -12,11 +12,11 @@ module.exports = async (query, placeholders) => {
     console.log("gere");
     try {
         const result = (!placeholders) ? await client.query(query) : await client.query(query, placeholders);
-        console.log('result', result);
         return result;
     } catch (err) {
         const showErr = {
             name : err.constructor.name,
+            message : err.message,
             stack: err.stack,
             table : err.table,
             schemas : err.schemas,

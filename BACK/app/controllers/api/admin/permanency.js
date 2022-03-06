@@ -11,10 +11,12 @@ module.exports = {
         res.json(activePermanency);
     },
     async closeActive(_,res) {
-        const activePermanency = await permanencyDataMapper.findActive();
+        let activePermanency = await permanencyDataMapper.findActive();
         const { id } = activePermanency[0];
-        const permanency = await permanencyDataMapper.closeActive(id);
-        res.json(permanency);
+        await permanencyDataMapper.toggleActive(id);
+        const newPerm = await permanencyDataMapper.newPerm();
+        activePermanency = await permanencyDataMapper.findActive();
+        res.json(activePermanency);
     },
     async setDateNext() {
 

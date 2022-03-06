@@ -14,12 +14,12 @@ const sqlHandler = require('../../helpers/sqlHandler');
 
 module.exports = {
     async findAll() {
-        const result = await client.query(
+        const query =
             `SELECT * ,
             LEAD(id,1) OVER(ORDER BY id) AS next_id,
             LEAD(perm_date,1) OVER(ORDER BY perm_date) AS next_date
-            FROM "permanency"`,
-        );
+            FROM "permanency"`;
+        const result = await sqlHandler(query);
         return result.rows;
     },
     async findActive() {
@@ -35,15 +35,12 @@ module.exports = {
     async toggleActive(id) {
         const query = `UPDATE "permanency" SET "active" = NOT "active" WHERE id=$1 OR id =$2;`;
         const placeholders = [id, id + 1];
-        try {
-            await client.query(query, placeholders);
-            return { status: "Active Perm Changed " };
-        } catch (err) {
-            console.error(err);
-        }
+        await sqlHandler(query, placeholders);
+        return { status: "Active Perm Changed " };
     },
     async newPerm() {
-        await client.query(`INSERT INTO "permanency" DEFAULT VALUES`);
+        const query = `INSERT INTO "permanency" DEFAULT VALUES`;
+        await sqlHandler(query);
         return { status: "New Perm Added" };
     },
     async setDateNext() {
