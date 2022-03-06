@@ -9,7 +9,6 @@ const client = require('../config/db');
  * @returns {object} result or error
  */
 module.exports = async (query, placeholders) => {
-    console.log("gere");
     try {
         const result = (!placeholders) ? await client.query(query) : await client.query(query, placeholders);
         return result;

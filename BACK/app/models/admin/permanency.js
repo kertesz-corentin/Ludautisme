@@ -9,7 +9,9 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} id - Unique identifier
  * @property {boolean} active - Is it the current active permanency?
  * @property {boolean} published - Date is published?
- * @property {string} date - permanency date
+ * @property {string} perm_date - permanency date
+ * @property {number} next_id - permanency date
+ * @property {string} next_date - permanency date
  */
 
 module.exports = {
@@ -23,7 +25,8 @@ module.exports = {
         return result.rows;
     },
     async findActive() {
-        const query = `SELECT * FROM(
+        const query = `
+            SELECT * FROM(
                 SELECT "id","perm_date","active","published",
                     LEAD(id,1) OVER(ORDER BY id) AS next_id,
                     LEAD(perm_date,1) OVER(ORDER BY id) AS next_date
@@ -43,8 +46,10 @@ module.exports = {
         await sqlHandler(query);
         return { status: "New Perm Added" };
     },
-    async setDateNext() {
-        const result = await client.query(`SELECT * FROM "permanency"`);
+    async setDateNext(nextId, date) {
+        const query = `UPDATE "permanency" SET "perm_date"=$1  WHERE id=$2 RETURNING *`;
+        const placeholders = [date, nextId];
+        const result = sqlHandler(query, placeholders);
         return result.rows;
     },
 };

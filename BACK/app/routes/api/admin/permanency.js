@@ -14,6 +14,6 @@ router.route('/active/close')
     .get(controllerHandler(permanencyController.closeActive));
 
 router.route('/next')
-    .post(controllerHandler(permanencyController.setDateNext));
+    .patch(controllerHandler(permanencyController.setDateNext));
 
 module.exports = router;

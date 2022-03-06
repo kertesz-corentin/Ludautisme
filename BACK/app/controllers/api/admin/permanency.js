@@ -18,7 +18,12 @@ module.exports = {
         activePermanency = await permanencyDataMapper.findActive();
         res.json(activePermanency);
     },
-    async setDateNext() {
-
+    async setDateNext(req,res) {
+        const activePermanency = await permanencyDataMapper.findActive();
+        console.log(activePermanency);
+        const nextId = activePermanency[0].next_id;
+        const date = req.body.next_date;
+        const updatedNextPerm = await permanencyDataMapper.setDateNext(nextId, date);
+        res.json(updatedNextPerm);
     },
 };
