@@ -28,6 +28,7 @@ CREATE TABLE "user" (
 CREATE TABLE "permanency" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "perm_date" DATE,
+    "active" BOOLEAN DEFAULT false,
     "published" BOOLEAN DEFAULT false
 );
 

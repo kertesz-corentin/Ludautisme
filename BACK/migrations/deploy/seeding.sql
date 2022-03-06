@@ -15,11 +15,11 @@ INSERT INTO "user" ("email", "member_number", "phone", "first_name", "last_name"
 ('user@grr.la', 107, '0685164926', 'stéphanie', 'severe', 6, 'residence goas huella', 29460, 'irvillac', '$2b$10$H5eSsaHtOYnSnt5CIRMCcOEDwLaSO9HHeWmsZSkYYYdISw4GFMrF6', 1),
 ('hledizes@gmail.com', 108,'0663690249', 'héléne', 'le dizes', 2325, 'route de kergoat', 29630, 'plougasnou', 'abcdef', 1);
 
-INSERT INTO "permanency" ("perm_date") VALUES
-('2022-01-04'),
-('2022-02-05'),
-('2022-03-10'),
-('2022-04-06');
+INSERT INTO "permanency" ("perm_date","active") VALUES
+('2022-01-04', false),
+('2022-02-05', false),
+('2022-03-10', true),
+('2022-04-06', false);
 
 INSERT INTO "booking" ( "delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
 ( false, false, 0, 2, 6),

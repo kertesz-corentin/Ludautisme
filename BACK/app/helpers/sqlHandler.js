@@ -1,0 +1,29 @@
+/* eslint-disable max-len */
+const { SqlError } = require('./errorHandler');
+const client = require('../config/db');
+
+/**
+ * Controller wrapper to manage errors
+ * @param {string} query a simple of parametred query
+ * @param {array} placeholders an array of placeholders
+ * @returns {object} result or error
+ */
+module.exports = async (query, placeholders) => {
+    console.log("gere");
+    try {
+        const result = (!placeholders) ? await client.query(query) : await client.query(query, placeholders);
+        console.log('result', result);
+        return result;
+    } catch (err) {
+        const showErr = {
+            name : err.constructor.name,
+            stack: err.stack,
+            table : err.table,
+            schemas : err.schemas,
+            column: err.column,
+            dataType: err.dataType,
+        };
+        console.error(showErr);
+        return { rows: [showErr] };
+    }
+};
