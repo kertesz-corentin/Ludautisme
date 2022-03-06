@@ -12,8 +12,16 @@ const router = express.Router();
  */
 
 /**
- * PUT /api/admin/users/search
+ * PUT /api/admin/users/
  * @summary Modify information for one user
+ * @tags Users
+ * @param {number} request.params.id.required - At least one of these params
+ * @return {users} 200 - success response - application/json
+ */
+
+/**
+ * DELETE /api/admin/users/
+ * @summary Delete One user
  * @tags Users
  * @param {number} request.params.id.required - At least one of these params
  * @return {users} 200 - success response - application/json
@@ -21,7 +29,8 @@ const router = express.Router();
 
 router.route('/:id')
     .get(controllerHandler(userController.getById))
-    .put(controllerHandler(userController.update));
+    .put(controllerHandler(userController.update))
+    .delete(controllerHandler(userController.delete));
 
 /**
  * POST /api/admin/users/search
@@ -52,6 +61,5 @@ router.route('/search')
 router.route('/')
     .get(controllerHandler(userController.getAll))
     .post(controllerHandler(userController.create));
-// .patch(controllerHandler(userController.update));
 
 module.exports = router;

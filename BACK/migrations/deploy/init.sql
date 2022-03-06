@@ -28,6 +28,7 @@ CREATE TABLE "user" (
 CREATE TABLE "permanency" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "perm_date" DATE,
+    "active" BOOLEAN DEFAULT false,
     "published" BOOLEAN DEFAULT false
 );
 
@@ -37,7 +38,7 @@ CREATE TABLE "booking" (
     "closed" BOOLEAN DEFAULT false,
     "nb_prolongation" INTEGER DEFAULT 0,
     "id_permanency" INT REFERENCES "permanency"("id"),
-    "id_user" INT REFERENCES "user"("id"),
+    "id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -94,7 +95,7 @@ CREATE TABLE "temptoken"(
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "refnum_article" INT REFERENCES "article"("ref_number"),
-    "id_booking" INT REFERENCES "booking"("id")
+    "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
 
 COMMIT;
