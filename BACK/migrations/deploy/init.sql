@@ -98,4 +98,11 @@ CREATE TABLE "article_to_booking"(
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
 
+DROP VIEW IF EXISTS "full_perm";
+CREATE OR REPLACE VIEW "full_perm" AS
+SELECT * ,
+    LEAD(id,1) OVER(ORDER BY id) AS next_id,
+    LEAD(perm_date,1) OVER(ORDER BY perm_date) AS next_date
+    FROM "permanency";
+
 COMMIT;

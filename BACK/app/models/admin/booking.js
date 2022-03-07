@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
-const { findFiltered } = require('./users');
+const sqlHandler = require('../../helpers/sqlHandler');
 
 /**
  * @typedef {object} booking
@@ -19,9 +19,24 @@ const { findFiltered } = require('./users');
  * @property {boolean} overdue - overdue returning game
  */
 
+/**
+ * @typedef {object} paramSearchBooking
+ * @property {number} id - Unique identifier
+ * @property {boolean} delivered - User got games
+ * @property {boolean} closed - User had given back games
+ * @property {string} id_user - member unique id
+ * @property {string} member_number - member card number
+ * @property {string} email - member email
+ * @property {string} first_name - User first name
+ * @property {string} last_name - User last name
+ * @property {number} id_permanency - Permanency number for the booking
+ * @property {string} date_permanency - Permanency's booking
+ * @property {boolean} overdue - overdue returning game
+ */
+
 module.exports = {
     async findAll() {
-        const result = await client.query(`
+        const query = `
         SELECT
 	    b.id,
 	    b.delivered,
@@ -33,6 +48,8 @@ module.exports = {
 	    "user"."last_name",
         "user"."email",
 		"perm"."perm_date" AS date_permanency,
+        "perm"."next_date" AS return_permanency,
+        (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
                 'ref_number', ar."ref_number",
@@ -43,8 +60,9 @@ module.exports = {
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
         INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
-		INNER JOIN "permanency" AS perm ON "perm"."id" = "b"."id_permanency"
-        GROUP BY b.id, "user"."id","date_permanency";`);
+		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
+        GROUP BY b.id, "user"."id","date_permanency","return_permanency";`;
+        const result = await sqlHandler(query);
         return result.rows;
     },
     async findFiltered(arr) {
@@ -60,6 +78,8 @@ module.exports = {
 	    "user"."last_name",
         "user"."email",
 		"perm"."perm_date" AS date_permanency,
+        "perm"."next_date" AS return_permanency,
+        (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
                 'ref_number', ar."ref_number",
@@ -70,7 +90,7 @@ module.exports = {
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
         INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
-		INNER JOIN "permanency" AS perm ON "perm"."id" = "b"."id_permanency"
+		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE `;
         const placeholders = [];
         const aliases = {
@@ -92,8 +112,8 @@ module.exports = {
                     query += `"${alias}"."${prop}"=$${index + 1} `;
                 }
             });
-            query += `GROUP BY b.id, "user"."id","date_permanency"`;
-            const result = await client.query(query, placeholders);
+            query += `GROUP BY b.id, "user"."id","date_permanency","return_permanency"`;
+            const result = await sqlHandler(query, placeholders);
             return result.rows;
         } catch (err) {
             console.error(err);
