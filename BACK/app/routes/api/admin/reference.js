@@ -1,19 +1,9 @@
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+
 const { adminReferenceController, pictureController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
+const multer = require('../../../middleware/multer-config');
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename(req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
-const upload = multer({ storage: storage});
 const router = express.Router();
 
 /**
@@ -22,7 +12,7 @@ const router = express.Router();
  * @tags Picture
  */
 router.route('/picture')
-    .post(upload.single('userFile'), controllerHandler(pictureController.addPicture));
+    .post(controllerHandler(multer), controllerHandler(pictureController.addPicture));
 /**
  * POST api/admin/references/article
  * @summary Add one article to reference
