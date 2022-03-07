@@ -1,8 +1,18 @@
 const express = require('express');
-const { adminReferenceController } = require('../../../controllers');
+
+const { adminReferenceController, pictureController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
+const multer = require('../../../middleware/multer-config');
 
 const router = express.Router();
+
+/**
+ * POST api/admin/references/picture
+ * @summary Add one picture to one article
+ * @tags Picture
+ */
+router.route('/picture')
+    .post(controllerHandler(multer), controllerHandler(pictureController.addPicture));
 /**
  * POST api/admin/references/article
  * @summary Add one article to reference
