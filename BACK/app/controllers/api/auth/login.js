@@ -18,9 +18,14 @@ const { ApiError } = require('../../../helpers/errorHandler');
  * @property {string} password -user password
  */
 /**
- * @typedef {object} paramResetPwd
+ * @typedef {object} paramForgotPwd
  * @property {string} email - user email
  */
+/**
+ * @typedef {object} paramResetPwd
+ * @property {string} request.param.token.required token - temp token
+ */
+
 module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];

@@ -27,16 +27,23 @@ router.route('/admin')
     .post(controllerHandler(loginController.login));
 
 /**
- * POST /api/login/reset-password
- * @summary Reset password if user got an email
+ * POST /api/login/forgot-password
+ * @summary Send an email to user with temp token
  * @tags Login
- * @param {paramResetPwd} request.body.required
- * @return {login} 200 - success response - application/json
+ * @param {paramForgotPwd} request.body.required
+ * @return {string} 200 - success response - application/json
  */
 
 router.route('/forgot-password')
     .post(controllerHandler(loginController.forgotPassword));
 
+/**
+ * GET /api/login/reset-password
+ * @summary Reset password if user got an email
+ * @tags Login
+ * @param {paramResetPwd} request.body.required
+ * @return {login} 200 - success response - application/json
+ */
 router.route('/reset-password')
     .get(controllerHandler(loginController.resetPassword));
 

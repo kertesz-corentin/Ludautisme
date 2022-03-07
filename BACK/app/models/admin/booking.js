@@ -30,8 +30,15 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} first_name - User first name
  * @property {string} last_name - User last name
  * @property {number} id_permanency - Permanency number for the booking
- * @property {string} date_permanency - Permanency's booking
+ * @property {string} date_permanency - Borrow data
+ * @property {string} return_permanency - Return expected Date
  * @property {boolean} overdue - overdue returning game
+ */
+
+/**
+ * @typedef {object} paramAddBooking
+ * @property {number} request.param.id.required - Array of articles Id
+ * @property {number} request.body.articleId.required - Array of articles Id
  */
 
 module.exports = {
@@ -48,7 +55,8 @@ module.exports = {
 	    "user"."last_name",
         "user"."email",
 		"perm"."perm_date" AS date_permanency,
-        "perm"."next_date" AS return_permanency,
+        "perm"."next_id" AS return_id_permanency,
+        "perm"."next_date" AS return_date_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -61,7 +69,7 @@ module.exports = {
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
         INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
-        GROUP BY b.id, "user"."id","date_permanency","return_permanency";`;
+        GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency";`;
         const result = await sqlHandler(query);
         return result.rows;
     },
@@ -77,8 +85,8 @@ module.exports = {
 	    "user"."first_name",
 	    "user"."last_name",
         "user"."email",
-		"perm"."perm_date" AS date_permanency,
-        "perm"."next_date" AS return_permanency,
+        "perm"."next_id" AS return_id_permanency,
+        "perm"."next_date" AS return_date_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -112,11 +120,51 @@ module.exports = {
                     query += `"${alias}"."${prop}"=$${index + 1} `;
                 }
             });
-            query += `GROUP BY b.id, "user"."id","date_permanency","return_permanency"`;
+            query += `GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency"`;
             const result = await sqlHandler(query, placeholders);
             return result.rows;
         } catch (err) {
             console.error(err);
         }
+    },
+    async findOne(id) {
+        console.log(id);
+        const query = `
+        SELECT
+	    b.id,
+	    b.delivered,
+	    b.closed,
+	    b.id_permanency,
+	    "user"."id" AS id_user,
+        "user"."member_number" AS member_number,
+	    "user"."first_name",
+	    "user"."last_name",
+        "user"."email",
+		"perm"."perm_date" AS date_permanency,
+        "perm"."next_id" AS return_id_permanency,
+        "perm"."next_date" AS return_date_permanency,
+        (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+	    json_agg(json_build_object (
+                'id', ar."id",
+                'ref_number', ar."ref_number",
+                'available', ar."available",
+                'archived', ar."archived"
+                )) AS "articles"
+        FROM "booking" AS b
+        INNER JOIN "user" ON "user"."id"="b"."id_user"
+		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
+		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
+        WHERE b.id=$1
+        GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency"`;
+        const placeholders = [id];
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
+    async addOne(id,articles) {
+        const query = 'SELECT * FROM "booking" WHERE id=$1';
+        const placeholders = [id];
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
 };
