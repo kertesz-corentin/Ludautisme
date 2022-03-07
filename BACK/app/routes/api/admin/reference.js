@@ -10,6 +10,8 @@ const router = express.Router();
  * POST api/admin/references/picture
  * @summary Add one picture to one article
  * @tags Picture
+ * @param {ParamsCreatePicture} request.body.required
+ * @return {Picture} 201 - create - application/json
  */
 router.route('/picture')
     .post(controllerHandler(multer), controllerHandler(pictureController.addPicture));
