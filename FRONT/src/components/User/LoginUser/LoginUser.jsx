@@ -73,9 +73,10 @@ export default function SignIn() {
     }
 
   return (
-
+//Here if user is not connecting, render l78 to 187
+    !userToken ?
     <div className={classnames('loginuser', { 'loginuser-isActive': isOpen })}>
-    {!userToken ?
+
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -89,9 +90,9 @@ export default function SignIn() {
                  <AccountCircle fontSize="large" />
                  }
       </button>
-      :
-       ""}
 
+
+{/* //Here even is this condition looks useless, she's not and delete her will make a secound btn appears whe user not connected. */}
         {!userToken
             ?
                 <div>
@@ -183,7 +184,7 @@ export default function SignIn() {
                         </ThemeProvider>
                     )}
                 </div>
-            :
+     :
             <button
         className={classnames('loginuser-btnopen', { 'loginuser-isConnect': isOpen || userToken })}
         type="button"
@@ -196,6 +197,67 @@ export default function SignIn() {
                  }
       </button>
         }
+        <div >
+                    {(isOpen && userToken) &&  (
+                        <ThemeProvider theme={theme}>
+                            <Container component="main" maxWidth="xs">
+                                <CssBaseline />
+                                    <Box
+                                    sx={{
+                                        marginTop: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                    >
+
+                                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                                <Grid container className= "gridContainer">
+                                        <Grid item xs>
+                                            <Link href="/user/account" variant="body2">
+                                            Mon Compte
+                                            </Link>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Link href="/user/bookings" variant="body2" onClick={handleClick}>
+                                            Mes réservations
+                                            </Link>
+
+                                        </Grid>
+                                    </Grid>
+                                    <Button
+                                    onClick= {handleDisconnectClick}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 1, mb: 2 }}
+                                    >
+                                    Se Déconnecter
+                                    </Button>
+
+                                </Box>
+                                </Box>
+                            </Container>
+
+                        </ThemeProvider>
+                    )}
+                </div>
+    </div>
+  :
+  <div className={classnames('loginuser', { 'loginuser-isConnect': isOpen })}>
+
+            <button
+        className={classnames('loginuser-btnopen', { 'loginuser': isOpen || userToken })}
+        type="button"
+        onClick={onToggleOpen}
+      >
+        { isOpen  ?
+                 <CloseIcon fontSize="large"/>
+                 :
+                 <AccountCircle fontSize="large" />
+                 }
+      </button>
+
         <div >
                     {(isOpen && userToken) &&  (
                         <ThemeProvider theme={theme}>

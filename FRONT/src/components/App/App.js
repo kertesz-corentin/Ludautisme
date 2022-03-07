@@ -47,7 +47,7 @@ function App() {
             <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
             <Route path = "/user/account" element = {<UserMyAccount />}></Route>
-            <Route path = "/user/bookings" element = {<UserBookings/>}></Route>
+            <Route path = "/user/bookings" element = {<Home children= {<UserBookings/>}/>}></Route>
             <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
             <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
