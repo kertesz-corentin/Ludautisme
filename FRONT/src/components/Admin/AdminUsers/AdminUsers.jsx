@@ -15,8 +15,8 @@ const AdminUsers = ({className, ...rest}) => {
     const getUsers = async () => {
         try {
             const response = await api.get('/admin/users');
-            console.log(response);
-            return response.data;
+            const data = await response.data;
+            setUsers(data);
         }
         catch (err) {
             console.error(err);
@@ -37,7 +37,7 @@ const AdminUsers = ({className, ...rest}) => {
         {field: 'adress_street', headerName: 'Rue', width: 200},
         {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
         {field: 'adress_city', headerName: 'Ville', width: 200},
-    ]
+    ];
 
 
     return (

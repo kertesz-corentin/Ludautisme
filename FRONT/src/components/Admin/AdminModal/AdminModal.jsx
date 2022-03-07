@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { TextField, Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
+import schemas from '../Schemas/Schemas'
 
 const AdminModal = ({name, fields, request, token, className, ...rest}) => {
     const [open, setOpen] = useState(false)
@@ -28,8 +29,9 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
 
     }
 
-    const date = new Date();
 
+    const date = new Date();
+    const {user} = schemas();
 
     return (
         <div>
@@ -52,28 +54,21 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
                         </Button>
                     </div>
                     <div className="modal-inputs">
-                        {fields.map((field) => {
+
+                    {Object.keys(user).map((field) => {
+                            console.log(user[field].label);
                             return (
                                 <TextField
-                                    key={field.id}
+                                    key={field}
                                     id='outlined'
-                                    label={field.headerName}
-                                    name={field.field}
+                                    label={field}
+                                    name={field}
                                     className="modal-inputs-item"
                                     required
                                 >
                                 </TextField>
                             )
                         })}
-
-                        <TextField
-                            id='outlined'
-                            value={date}
-                            disabled
-                            className="modal-inputs-item"
-                        >
-
-                        </TextField>
                     </div>
                     <div className="modal-footer">
                         <Button
