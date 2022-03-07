@@ -1,0 +1,11 @@
+@import 'src/styles/vars';
+
+.contact {
+    display: flex;
+
+    &-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+}
+}

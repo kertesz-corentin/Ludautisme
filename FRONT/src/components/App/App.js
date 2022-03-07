@@ -12,7 +12,14 @@ import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
 import UserBookingActive from '../User/UserBookingActive/UserBookingActive';
 import UserBookingsHistory from '../User/UserBookingsHistory/UserBookingsHistory';
+import About from '../About/About';
+import Infos from '../Infos/Infos';
+import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';
+import UsefullLinks from '../UsefullLinks/UsefullLinks';
 import './App.scss';
+
+
+
 
 function App() {
 
@@ -26,10 +33,10 @@ function App() {
             <Route path = "/admin" element = {<Admin />}></Route>
             <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             <Route path = "/admin/users" element = {<AdminPage><AdminUsers /></AdminPage>}></Route>
-            {/* <Route path = "/about" element = {<About />}></Route>
-            <Route path = "/infos" element = {<Infos />}></Route>
-            <Route path = "/usefulllinks" element = {<UsefullLinks />}></Route>
-            <Route path = "/materiallibrary" element = {<MaterialLibrary />}></Route> */}
+            <Route path = "/about" element = {<Home children={<About />} />}></Route>
+            <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
+            <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home children={<MaterialLibrary />} />}></Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
             {/* <Route path = "/admin/users/:id" element = {<AdminUser/>}></Route> */}
