@@ -37,6 +37,7 @@ function App() {
             <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
             <Route path = "/materiallibrary" element = {<Home children={<MaterialLibrary />} />}></Route>
+            <Route path = "/admin/references" element = {<AdminPage><AdminReferences /></AdminPage>}></Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
             {/* <Route path = "/admin/users/:id" element = {<AdminUser/>}></Route> */}

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import api from '../../../requests';
-import { getLocalBearerToken } from '../../../requests';
+import api, { getLocalBearerToken } from '../../../requests';
 import { addUser } from '../../../requests/requestsAdmin/crudUsers';
 
 import './adminusers.scss';
@@ -44,22 +43,6 @@ const AdminUsers = ({className, ...rest}) => {
         {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
         {field: 'adress_city', headerName: 'Ville', width: 200},
     ]
-
-    // const rows = [
-    //     {
-    //         id: 1,
-    //         member_number: 1,
-    //         first_name: 'Xavier',
-    //         last_name: 'LEPLATRE',
-    //         email: 'test@mail.com',
-    //         phone: '06 xx xx xx xx',
-    //         adress_number: '1',
-    //         adress_street: 'rue de la Liberté',
-    //         adress_zipcode: '75000',
-    //         adress_city: 'PARIS',
-    //         created_at: '01-01-2022',
-    //     }
-    // ]
 
     const rowData = users.map(user => {
         return {
