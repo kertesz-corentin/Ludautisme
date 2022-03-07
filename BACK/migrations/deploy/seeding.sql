@@ -36,7 +36,7 @@ INSERT INTO "category" ("name", "description", "main") VALUES
 ('livre', null, false),
 ('bois', null, false);
 
-INSERT INTO "reference" ("name", "valorisation", "id_category") VALUES
+INSERT INTO "reference" ("name", "valorisation", "main_category") VALUES
 ('animaux à lacer', 10, 1),
 ('declic mai-juin 2012', 5, 4),
 ('le coffret écriture lecture', 30, 2),

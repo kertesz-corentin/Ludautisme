@@ -54,7 +54,7 @@ CREATE TABLE "reference" (
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "valorisation" INT,
-    "id_category" INT REFERENCES "category"("id")
+    "main_category" INT REFERENCES "category"("id")
 );
 
 CREATE TABLE "image" (

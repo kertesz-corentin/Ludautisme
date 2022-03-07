@@ -28,9 +28,35 @@ const sqlHandler = require('../../helpers/sqlHandler');
  */
 module.exports = {
     async findAll() {
-        const query = `SELECT * FROM "article"
-                    INNER JOIN "reference" ON "article"."number"="article"."id"`;
+        const query = `
+            SELECT
+            article.*,
+            reference.id AS ref_id,
+            reference.name AS ref_name,
+            category.id AS cat_id,
+            category.name AS cat_name
+            FROM "article"
+            INNER JOIN "reference" ON "article"."id_ref" = "reference"."id"
+            INNER JOIN "category" ON "reference"."main_category" = "category"."id"`;
         const result = await sqlHandler(query);
+        return result.rows;
+    },
+    async findOne(id) {
+        console.log(id);
+        const query = `
+            SELECT
+            article.*,
+            reference.id AS ref_id,
+            reference.name AS ref_name,
+            category.id AS cat_id,
+            category.name AS cat_name
+            FROM "article"
+            INNER JOIN "reference" ON "article"."id_ref" = "reference"."id"
+            INNER JOIN "category" ON "reference"."main_category" = "category"."id"
+            WHERE "article"."id" = $1
+            `;
+        const placeholders = [id];
+        const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
     async findByCode(code) {
