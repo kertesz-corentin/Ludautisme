@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import axios from 'axios';
 import api from '../../../requests/index';
 import { getLocalBearerToken } from '../../../requests';
 import './adminusers.scss';
