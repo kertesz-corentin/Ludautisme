@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import api, { getLocalBearerToken } from '../../../requests';
-import { addUser } from '../../../requests/requestsAdmin/crudUsers';
+import api from '../../../requests/index';
 
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
-    const adminToken = getLocalBearerToken();
-
 
     const getUsers = async () => {
         try {
             const response = await api.get('/admin/users');
             const data = await response.data;
+            console.log(data);
             setUsers(data);
         }
         catch (err) {
@@ -49,8 +47,6 @@ const AdminUsers = ({className, ...rest}) => {
                 title="Adhérent"
                 rows={users}
                 columns={columnsData}
-                request={addUser}
-                token={adminToken}
             />
         </div>
 

@@ -38,9 +38,7 @@ export default function SignIn() {
     const email = data.get('email');
     const password =  data.get ('password');
     const response = await api.login(email,password);
-    const dataRes = await response.data;
-    console.log(`response`, data);
-    if(dataRes.status === 200) {
+    if(response.status === 200) {
         navigate('/user/account')
         setIsOpen(!isOpen)
     }
@@ -60,7 +58,7 @@ export default function SignIn() {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const userToken = api.login()
+    const userToken = localStorage.getItem('token');
     console.log(`Voila le userToken`, userToken);
 
 //Use to disconnect reset token

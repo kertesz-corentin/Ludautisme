@@ -16,14 +16,14 @@ import { NavLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { removeBearerToken } from '../../../requests';
+import api from '../../../requests/index';
 
 
 
 export default function AccountMenu() {
   const navigate = useNavigate();
   function handleDisconnectClick (event) {
-    removeBearerToken()
+    api.logout();
     console.log(`should disconnect`)
     navigate('/')
 }

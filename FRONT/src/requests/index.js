@@ -26,9 +26,9 @@ const api = {
     async login(email, password,type) {
         let response = null;
         if (type === "user"){
-            response = await connection.post('/login/admin', { email, password });
-        } else {
             response = await connection.post('/login/user', { email, password });
+        } else {
+            response = await connection.post('/login/admin', { email, password });
         }
         if (response.data.token) {
             localStorage.setItem("token", response.data.token);
@@ -112,21 +112,21 @@ const authHeader = () => {
 
 // export default api;
 
-export function setBearerToken(token) {
-    api.defaults.headers.common.Authorization = `bearer ${token}`;
+// export function setBearerToken(token) {
+//     api.defaults.headers.common.Authorization = `bearer ${token}`;
 
-    console.log("token set", localStorage.getItem('token'))
-}
+//     console.log("token set", localStorage.getItem('token'))
+// }
 
-export function removeBearerToken() {
-    api.defaults.headers.common.Authorization = undefined;
-    localStorage.removeItem('token');
-}
+// export function removeBearerToken() {
+//     api.defaults.headers.common.Authorization = undefined;
+//     localStorage.removeItem('token');
+// }
 
-export function getLocalBearerToken() {
-    const localToken = localStorage.getItem('token');
-    if (localToken) {
-        return localToken;
-    }
-    return undefined;
-}
+// export function getLocalBearerToken() {
+//     const localToken = localStorage.getItem('token');
+//     if (localToken) {
+//         return localToken;
+//     }
+//     return undefined;
+// }
