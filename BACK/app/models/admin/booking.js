@@ -60,14 +60,14 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'ref_number', ar."ref_number",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency";`;
         const result = await sqlHandler(query);
@@ -90,21 +90,21 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'ref_number', ar."ref_number",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE `;
         const placeholders = [];
         const aliases = {
             b: ['id', 'delivered', 'closed', 'id_permanency'],
             user: ['id_user', 'first_name', 'last_name', 'email', 'member_number'],
-            articles: ['id', 'ref_number', 'available', 'archived'],
+            articles: ['id', 'number', 'available', 'archived'],
             perm: ['date_permanency'],
         };
         try {
@@ -146,14 +146,14 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'ref_number', ar."ref_number",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."ref_number"
+        INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE b.id=$1
         GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency"`;

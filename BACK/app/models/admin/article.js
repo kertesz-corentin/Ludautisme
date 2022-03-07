@@ -2,11 +2,12 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 const client = require('../../config/db');
+const sqlHandler = require('../../helpers/sqlHandler');
 
 /**
  * @typedef {object} Article
  * @property {number} id - Unique identifier
- * @property {number} ref_number - Physique code of object
+ * @property {number} number - Physique code of object
  * @property {string} origin - Origin of object
  * @property {string} date_buy - Date of the object is buy
  * @property {boolean} available - If the object is available for booking
@@ -20,17 +21,23 @@ const client = require('../../config/db');
  */
 /**
  * @typedef {object} ParamArticleCreate
- * @property {number} ref_number - Physique code of object
+ * @property {number} number - Physique code of object
  * @property {string} origin - The origin of the object
  * @property {string} date_buy - Date of purchase of object
  * @property {number} id_ref - ID of the parent reference
  */
 module.exports = {
+    async findAll() {
+        const query = `SELECT * FROM "article"
+                    INNER JOIN "reference" ON "article"."number"="article"."id"`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
     async findByCode(code) {
         try {
             const result = await client.query(`
             SELECT * FROM "article"
-            WHERE "ref_number" =$1
+            WHERE "number" =$1
             `, [code]);
             return result.rows;
         } catch (err) {

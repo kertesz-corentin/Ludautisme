@@ -59,7 +59,7 @@ INSERT INTO "reference_to_category" ("id_ref", "id_category") VALUES
 (3, 6),
 (1, 6);
 
-INSERT INTO "article" ("ref_number", "origin", "date_buy", "available", "id_ref") VALUES
+INSERT INTO "article" ("number", "origin", "date_buy", "available", "id_ref") VALUES
 (19, 'achat fnac', '2019-06-14', false, 4),
 (27, 'don adherent', '2020-04-15', true, 1),
 (215, 'tombé du ciel', '2021-12-24', false, 4),
