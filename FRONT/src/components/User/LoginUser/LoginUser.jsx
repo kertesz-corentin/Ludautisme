@@ -20,6 +20,8 @@ import './loginuser.scss';
 import { getLocalBearerToken } from '../../../requests';
 import { removeBearerToken } from '../../../requests';
 import {useNavigate} from "react-router-dom";
+import AccountMenu from '../AccountMenu/AccountMenu';
+
 
 
 
@@ -71,19 +73,23 @@ export default function SignIn() {
 
   return (
     <div className="loginuser">
+    {!userToken ?
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
         onClick={onToggleOpen}
       >
 {/* when user connect or not make differents render */}
-        { isOpen && !userToken ?
+        { isOpen  ?
                  <CloseIcon fontSize="large"/>
                  :
 
                  <AccountCircle fontSize="large" />
                  }
       </button>
+      :
+       ""}
+
         {!userToken
             ?
                 <div>
@@ -178,11 +184,7 @@ export default function SignIn() {
                     )}
                 </div>
             :   <div>
-                    <Button
-                        onClick = {handleDisconnectClick}
-                    >
-                    Se déconnecter
-                    </Button>
+                    <AccountMenu/>
                 </div>
         }
     </div>
