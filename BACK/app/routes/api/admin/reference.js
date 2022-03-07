@@ -1,8 +1,28 @@
 const express = require('express');
-const { adminReferenceController } = require('../../../controllers');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const { adminReferenceController, pictureController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename(req, file, cb) {
+        cb(null, file.originalname);
+    },
+});
+const upload = multer({ storage: storage});
 const router = express.Router();
+
+/**
+ * POST api/admin/references/picture
+ * @summary Add one picture to one article
+ * @tags Picture
+ */
+router.route('/picture')
+    .post(upload.single('userFile'), controllerHandler(pictureController.addPicture));
 /**
  * POST api/admin/references/article
  * @summary Add one article to reference
