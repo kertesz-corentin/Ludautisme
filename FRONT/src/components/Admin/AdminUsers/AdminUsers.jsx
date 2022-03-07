@@ -33,7 +33,6 @@ const AdminUsers = ({className, ...rest}) => {
     }, []);
 
     const columnsData = [
-        {field: 'member_number', headerName: 'n°adhérent', width: 100},
         {field: 'first_name', headerName: 'Prenom', width: 125},
         {field: 'last_name', headerName: 'Nom', width: 125},
         {field: 'email', headerName: 'Email', width: 200},
@@ -42,7 +41,6 @@ const AdminUsers = ({className, ...rest}) => {
         {field: 'adress_street', headerName: 'Rue', width: 200},
         {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
         {field: 'adress_city', headerName: 'Ville', width: 200},
-        {field: 'created_at', headerName: 'Membre depuis', width: 200},
     ]
 
     // const rows = [

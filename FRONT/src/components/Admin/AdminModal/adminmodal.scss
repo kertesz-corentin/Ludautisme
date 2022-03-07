@@ -1,0 +1,16 @@
+@import  'src/styles/vars';
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: auto;
+    padding: $gutter;
+    width: 40%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    outline: none;
+}

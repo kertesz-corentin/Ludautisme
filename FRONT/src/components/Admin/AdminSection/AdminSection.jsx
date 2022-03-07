@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
 const AdminSection = ({ title, rows, columns }) => {
@@ -13,9 +14,7 @@ const AdminSection = ({ title, rows, columns }) => {
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <div className="section-element">
-                <button className="section-element-add">Ajouter {title}</button>
-            </div>
+            <AdminModal name={title} fields={columns} />
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid
