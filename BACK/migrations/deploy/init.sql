@@ -60,13 +60,15 @@ CREATE TABLE "reference" (
 CREATE TABLE "image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "url" TEXT NOT NULL,
-    "alternative_text" TEXT
+    "title" TEXT,
+    "alternative_text" TEXT,
+    "main" BOOLEAN
 );
 
 CREATE TABLE "reference_to_image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "id_ref" INT REFERENCES "reference"("id"),
-    "id_image" INT REFERENCES "image"("id")
+    "id_ref" INT REFERENCES "reference"("id") NOT NULL,
+    "id_image" INT REFERENCES "image"("id") NOT NULL
 );
 
 CREATE TABLE "reference_to_category" (

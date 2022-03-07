@@ -42,11 +42,11 @@ INSERT INTO "reference" ("name", "valorisation", "id_category") VALUES
 ('le coffret écriture lecture', 30, 2),
 ('ma journée', 12, 3);
 
-INSERT INTO "image" ("url", "alternative_text") VALUES
-('https://static.alipson.fr/vilac.4/vilac-jeu-de-lacage--mes-animaux-a-lacer.134448-1.600.jpg', 'animaux a lacer'),
-('https://bb.ca/catalogue_images/580x358/2209708_1.png', 'animaux à lacer'),
-('http://www.lepaysdesmerveilles.com/wp-content/uploads/2016/09/coffret-ecriture-lecture-montessori-grapheme-rugueux-balthazar.jpg', 'coffret lecture ecriture'),
-('https://img.scoop.it/CtEd9UP0K3g6EJKiCAkmPoXXXL4j3HpexhjNOf_P3YmryPKwJ94QGRtDb3Sbc6KY', 'ma journée');
+INSERT INTO "image" ("url","title", "alternative_text","main") VALUES
+('https://static.alipson.fr/vilac.4/vilac-jeu-de-lacage--mes-animaux-a-lacer.134448-1.600.jpg', 'animaux a lacer', 'jouet représantant des animaux a lacer', true),
+('https://bb.ca/catalogue_images/580x358/2209708_1.png', 'animaux à lacer', 'un autre jeux avec des animaux a lacer', false),
+('http://www.lepaysdesmerveilles.com/wp-content/uploads/2016/09/coffret-ecriture-lecture-montessori-grapheme-rugueux-balthazar.jpg', 'coffret lecture ecriture', 'un coffret pour apprendre a écrire', false),
+('https://img.scoop.it/CtEd9UP0K3g6EJKiCAkmPoXXXL4j3HpexhjNOf_P3YmryPKwJ94QGRtDb3Sbc6KY', 'ma journée', 'un livre qui explique les étapes dans une journée', true);
 
 INSERT INTO "reference_to_image" ("id_ref", "id_image") VALUES
 (1, 1),

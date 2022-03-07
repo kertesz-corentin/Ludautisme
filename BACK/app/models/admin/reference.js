@@ -65,8 +65,12 @@ module.exports = {
             cat.name AS mainCategory,
             json_agg("category"."name") AS tag,
             json_agg(json_build_object (
+                'id', "image"."id",
                 'url', "image"."url",
-                'text', "image"."alternative_text")) AS "picture",
+                'title', "image"."title",
+                'text', "image"."alternative_text",
+                'main', "image"."main"
+                )) AS "picture",
             json_agg(json_build_object (
                 'id', ar."id",
                 'ref_number', ar."ref_number",
