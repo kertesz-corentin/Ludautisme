@@ -10,6 +10,11 @@ import Logo2 from "../public/icones/commerce-electronique.png";
 import Logo3 from "../public/icones/magasin.png";
 import Logo4 from "../public/icones/check.png";
 import Logo5 from "../public/icones/arrow.png";
+import Logo6 from "../public/icones/echecs.png";
+import Logo7 from "../public/icones/fusee.png";
+import Logo8 from "../public/icones/idee.png";
+import Logo9 from "../public/icones/puzzle.png";
+import Logo10 from "../public/icones/signet.png";
 import FacebookPost from "../public/facebook-post.png";
 import Contact from '../Contact/Contact';
 
@@ -59,17 +64,55 @@ const Accueil = ({className, ...rest}) => {
                 <h2 className="categorie-title">
                     La matériathèque
                 </h2>
-                <div className="toto">
-                <div className="clay categorie">
-                    <NavLink className="categorie-img1" to="/Jeux">
-                            {/* <div className="categorie-img1"></div> */}
+
+                <div className="categorie-box">
+                    <NavLink  className="clay categorie" to="/jeux">
+                            <img className="categorie-img" src={Logo6} alt="catégorie"></img>
                     </NavLink>
-                    <div className="toto">
+                    <div>
                     <p>Jeux</p>
                     </div>
                 </div>
+
+                <div className="categorie-box">
+                    <NavLink  className="clay categorie" to="/autonomie">
+                            <img className="categorie-img" src={Logo7} alt="catégorie"></img>
+                    </NavLink>
+                    <div>
+                    <p>Autonomie</p>
+                    </div>
                 </div>
-                <div className="clay categorie">
+
+                <div className="categorie-box">
+                    <NavLink  className="clay categorie" to="/apprentissage">
+                            <img className="categorie-img" src={Logo8} alt="catégorie"></img>
+                    </NavLink>
+                    <div>
+                    <p>Apprentissage</p>
+                    </div>
+                </div>
+
+                <div className="categorie-box">
+                    <NavLink  className="clay categorie" to="/montessori">
+                            <img className="categorie-img" src={Logo9} alt="catégorie"></img>
+                    </NavLink>
+                    <div>
+                    <p>Montessori</p>
+                    </div>
+                </div>
+
+                <div className="categorie-box">
+                    <NavLink  className="clay categorie" to="/mediatheque">
+                            <img className="categorie-img" src={Logo10} alt="catégorie"></img>
+                    </NavLink>
+                    <div>
+                    <p>Médiathèque</p>
+                    </div>
+                </div>
+
+
+
+                {/* <div className="clay categorie">
                     <NavLink to="/Jeux">
                             <div className="categorie-img2"></div>
                     </NavLink>
@@ -94,7 +137,7 @@ const Accueil = ({className, ...rest}) => {
                          <div className="categorie-img5"></div>
                     </NavLink>
                     <p>Médiathèque</p>
-                </div>
+                </div> */}
             </div>
             <div className="actu">
                 <h2 className="actu-title">

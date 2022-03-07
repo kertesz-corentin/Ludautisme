@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
 import Shop from '../Shop/Shop';
-import Button from '@mui/material';
 import './header.scss';
 import { NavLink } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ const Header = ({className, ...rest}) => {
             className={classnames('header', className)}
             {...rest}>
             <div className="header-logo">
-                <img src={Logo} className="header-logo-image" alt="Logo" />
+                <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
             <nav className="header-nav">
                 <NavLink
@@ -31,7 +30,7 @@ const Header = ({className, ...rest}) => {
                     Association
                 </NavLink>
                 <NavLink
-                    to="/library"
+                    to="/materiallibrary"
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Matériathèque

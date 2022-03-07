@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './library.scss';
+import './materialLibrary.scss';
 
-const Library = ({className, ...rest}) => {
+const MaterialLibrary = ({className, ...rest}) => {
    return (
        <div            className={classnames('library', className)}
             {...rest}
@@ -13,10 +13,10 @@ library
    );
 };
 
-Library.propTypes = {
+MaterialLibrary.propTypes = {
     className: PropTypes.string,
 };
-Library.defaultProps = {
+MaterialLibrary.defaultProps = {
     className: '',
 };
-export default React.memo(Library);
+export default React.memo(MaterialLibrary);

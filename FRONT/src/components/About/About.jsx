@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './about.scss';
 import Permanency from '../Permanency/Permanency';
 import Contact from '../Contact/Contact';
 import Button from '@mui/material/Button';
+import Paypal from '../Paypal/Paypal';
 
 const About = ({className, ...rest}) => {
+    const [checkout, setCheckOut] = useState(false);
    return (
         <div className={classnames('practicalinformations', className)}
         {...rest}>
 
             <div className="présentation">
                 PRESENTATION
+                <Permanency />
             </div>
 
             <div className="contact">
@@ -20,7 +23,19 @@ const About = ({className, ...rest}) => {
             </div>
 
             <div className="don">
-                <Button className="don-paypal" variant="contained">Faire un don</Button>
+            <div className="App">
+      {checkout ? (
+        <Paypal />
+      ) : (
+        <button
+          onClick={() => {
+            setCheckOut(true);
+          }}
+        >
+          Checkout
+        </button>
+      )}
+    </div>
             </div>
 
 

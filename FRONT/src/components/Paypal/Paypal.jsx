@@ -1,69 +1,45 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './paypal.scss';
+// import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-const Paypal = ({className, ...rest}) => {
-   return (
-       <div className={classnames('paypal', className)}
-            {...rest}>
-
-
-
-<div className="smart-button-container">
-      <div style="text-align: center;">
-        <div id="paypal-button-container"></div>
-      </div>
-    </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=EUR" data-sdk-integration-source="button-factory"></script>
-  <script>
-    function initPayPalButton() {
-      Paypal.Buttons({
-        style: {
-          shape: 'pill',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'donate',
-
-        },
-
-        createOrder: function(data, actions) {
+const Paypal = () => {
+    const paypal = useRef();
+  useEffect(() => {
+    window.paypal
+      .Buttons({
+        createOrder: (data, actions, err) => {
           return actions.order.create({
-            purchase_units: [{"description":"Faire un don à Lud'Autisme","amount":{"currency_code":"EUR","value":0,"breakdown":{"item_total":{"currency_code":"EUR","value":0}}},"items":[{"name":"item name","unit_amount":{"currency_code":"EUR","value":0},"quantity":"1","category":"DONATION"}]}]
+            intent: "CAPTURE",
+            purchase_units: [
+              {
+                description: "Cool looking table",
+                amount: {
+                  currency_code: "CAD",
+                  value: 650.0,
+                },
+              },
+            ],
           });
         },
-
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(orderData) {
-
-            // Full available details
-            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-            // Show a success message within this page, e.g.
-            const element = document.getElementById('paypal-button-container');
-            element.innerHTML = '';
-            element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-            // Or go to another URL:  actions.redirect('thank_you.html');
-
-          });
+        onApprove: async (data, actions) => {
+          const order = await actions.order.capture();
+          console.log(order);
         },
-
-        onError: function(err) {
+        onError: (err) => {
           console.log(err);
-        }
-      }).render('#paypal-button-container');
-    }
+        },
+      })
+      .render(paypal.current);
+  }, []);
 
-    initPayPalButton();
-  </script>
-
-
-
-
-        </div>
-   );
-};
+  return (
+    <div>
+      <div ref={paypal}></div>
+    </div>
+  );
+}
 
 Paypal.propTypes = {
     className: PropTypes.string,
