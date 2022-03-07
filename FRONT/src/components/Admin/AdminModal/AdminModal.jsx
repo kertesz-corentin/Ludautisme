@@ -4,14 +4,21 @@ import { TextField, Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
 
-const AdminModal = ({name, fields, className, ...rest}) => {
+const AdminModal = ({name, fields, request, token, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('coucou');
+        const data = new FormData(event.currentTarget);
+
+        const response = await request(data, token)
+        if(response.status === 200) {
+            console.log(data);
+            handleClose();
+        }
+
     }
 
     const date = new Date();
@@ -22,9 +29,8 @@ const AdminModal = ({name, fields, className, ...rest}) => {
             <Modal
                 open={open}
                 onClose={handleClose}
-
             >
-                <Box className='modal' component='form' onSubmit={handleSubmit}>
+                <Box className="modal" component="form" onSubmit={handleSubmit}>
                     <div className="modal-header">
                         <Typography className='modal-header-title'>
                             Ajouter un {name}
@@ -32,6 +38,7 @@ const AdminModal = ({name, fields, className, ...rest}) => {
                         <Button
                             className='modal-header-close'
                             onClick={handleClose}
+                            variant="contained"
                         >
                             <CloseIcon />
                         </Button>
@@ -43,7 +50,9 @@ const AdminModal = ({name, fields, className, ...rest}) => {
                                     key={field.id}
                                     id='outlined'
                                     label={field.headerName}
+                                    name={field.field}
                                     className="modal-inputs-item"
+                                    required
                                 >
                                 </TextField>
                             )
@@ -59,7 +68,13 @@ const AdminModal = ({name, fields, className, ...rest}) => {
                         </TextField>
                     </div>
                     <div className="modal-footer">
-                        <Button type='submit' className="modal-footer-submit">Valider</Button>
+                        <Button
+                            type='submit'
+                            className="modal-footer-submit"
+                            variant="contained"
+                        >
+                            Valider
+                        </Button>
                     </div>
                 </Box>
             </Modal>
@@ -74,6 +89,7 @@ AdminModal.propTypes = {
         field: PropTypes.string.isRequired,
         headerName: PropTypes.string.isRequired,
     }).isRequired,
+    request: PropTypes.func.isRequired,
 };
 AdminModal.defaultProps = {
     className: '',

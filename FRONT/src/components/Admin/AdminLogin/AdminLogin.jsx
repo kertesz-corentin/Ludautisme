@@ -33,9 +33,6 @@ const theme = createTheme();
         if(response.status === 200) {
             navigate('/admin/home');
         }
-        console.log({
-            response
-        });
     };
 
     const [anchorEl, setAnchorEl] = React.useState(null);

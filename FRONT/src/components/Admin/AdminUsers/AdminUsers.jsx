@@ -2,24 +2,26 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import axios from 'axios';
+import api from '../../../requests';
 import { getLocalBearerToken } from '../../../requests';
+import { addUser } from '../../../requests/requestsAdmin/crudUsers';
+
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
     const adminToken = getLocalBearerToken();
-    console.log('token', adminToken);
+
 
     const getUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/admin/users', {
+            const response = await api.get('/admin/users', {
                 headers: {
                     Authorization: `bearer ${adminToken}`
                 }
             });
             const data = await response.data;
-            console.log('response', response);
+
             setUsers(data);
 
         }
@@ -78,13 +80,18 @@ const AdminUsers = ({className, ...rest}) => {
         }
     })
 
-    console.log(users);
     return (
         <div
             className={classnames('adminusers', className)}
             {...rest}
         >
-            <AdminSection title="Adhérent" rows={rowData} columns={columnsData} />
+            <AdminSection
+                title="Adhérent"
+                rows={rowData}
+                columns={columnsData}
+                request={addUser}
+                token={adminToken}
+            />
         </div>
 
     );
