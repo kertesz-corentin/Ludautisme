@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import axios from 'axios';
+import api from '../../../requests/index';
 import { getLocalBearerToken } from '../../../requests';
 import './adminusers.scss';
 
@@ -13,7 +14,7 @@ const AdminUsers = ({className, ...rest}) => {
 
     const getUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/admin/users', {
+            const response = await api.get('/admin/users', {
                 headers: {
                     Authorization: `bearer ${adminToken}`
                 }
