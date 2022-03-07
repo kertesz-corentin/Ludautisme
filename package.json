@@ -13,7 +13,7 @@
     "husky": "^7.0.4"
   },
   "scripts": {
-    "start": "concurrently -m 1 \"yarn --cwd ./FRONT build\" \"yarn --cwd ./BACK production\"",
+    "start": "yarn --cwd ./BACK production",
     "dev": "yarn --cwd ./FRONT start",
     "prepare": "husky install",
     "postinstall": "concurrently -m 1 \"yarn --cwd ./FRONT\" \"yarn --cwd ./BACK\"",

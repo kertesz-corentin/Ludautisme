@@ -1,0 +1,13 @@
+PORT = 3001
+NODE_ENV = front | dev | production
+
+DATABASE_URL = postgres://user:pwd@remote_host:5432/dbname
+DATABASE_DEV = postgres://user:pwd@localhost:5432/dbname
+
+API_DOCUMENTATION_ROUTE = /api/api-doc
+
+SALT= salt for JWT & BCRYPT
+
+MAIL_USERNAME = USERNAME-TEST
+MAIL_USER = email@gmail.com
+MAIL_PASSWORD = paswword
