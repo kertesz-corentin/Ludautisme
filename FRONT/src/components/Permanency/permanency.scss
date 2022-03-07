@@ -1,6 +1,7 @@
 @import 'src/styles/vars';
 
 .permanency{
+    width: fit-content;
     margin: 20px;
     display: flex;
     font-size: 1.8rem;
@@ -15,20 +16,8 @@
         margin: 30px;
     }
 
-    &-inline {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
     &-logo {
-        background-image: url("../public/icones/calendrier.png");
-        width: 150px;
-        height: 150px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+        max-width: 150px;
         filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
     }
 
