@@ -1,24 +1,25 @@
 @import 'src/styles/vars';
 
 .permanency{
+    margin: 20px;
     display: flex;
     font-size: 1.8rem;
     text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
     --clay-background: hsl(3, 94%, 53%, 0.9);
     --clay-border-radius: 30px;
     color: blanchedalmond;
-    padding: 20px;
     flex-direction: column;
     align-items: center;
 
     &-title {
-        margin-top: 0;
-        flex: 1 0 100%;
+        margin: 30px;
     }
 
     &-inline {
         display: flex;
-        // flex-wrap: wrap;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
     }
 
     &-logo {
@@ -33,7 +34,7 @@
 
     &-date {
         font-size:2.5rem;
-        margin: auto;
+        // margin: auto;
     }
 }
 
