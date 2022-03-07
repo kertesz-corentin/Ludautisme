@@ -42,9 +42,9 @@ INSERT INTO "reference" ("name", "valorisation", "id_category") VALUES
 ('le coffret écriture lecture', 30, 2),
 ('ma journée', 12, 3);
 
-INSERT INTO "image" ("url", "alternative_text") VALUES
-('https://static.alipson.fr/vilac.4/vilac-jeu-de-lacage--mes-animaux-a-lacer.134448-1.600.jpg', 'animaux a lacer'),
-('https://bb.ca/catalogue_images/580x358/2209708_1.png', 'animaux à lacer'),
+INSERT INTO "image" ("url","name", "alternative_text","main") VALUES
+('https://static.alipson.fr/vilac.4/vilac-jeu-de-lacage--mes-animaux-a-lacer.134448-1.600.jpg', 'animaux a lacer', 'jouet représantant des animaux a lacer', true),
+('https://bb.ca/catalogue_images/580x358/2209708_1.png', 'animaux à lacer', 'un autre jeux d'),
 ('http://www.lepaysdesmerveilles.com/wp-content/uploads/2016/09/coffret-ecriture-lecture-montessori-grapheme-rugueux-balthazar.jpg', 'coffret lecture ecriture'),
 ('https://img.scoop.it/CtEd9UP0K3g6EJKiCAkmPoXXXL4j3HpexhjNOf_P3YmryPKwJ94QGRtDb3Sbc6KY', 'ma journée');
 

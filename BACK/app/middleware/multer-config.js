@@ -31,4 +31,4 @@ module.exports = multer({
             return cb(new ApiError(401, 'Seul les formats .png, .jpg, .jpeg et .webp sont accepté'));
         }
     },
-}).single('userFile');
+}).single('picture');

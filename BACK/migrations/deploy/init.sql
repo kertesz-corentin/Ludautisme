@@ -60,7 +60,9 @@ CREATE TABLE "reference" (
 CREATE TABLE "image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "url" TEXT NOT NULL,
-    "alternative_text" TEXT
+    "name" TEXT,
+    "alternative_text" TEXT,
+    "main" BOOLEAN
 );
 
 CREATE TABLE "reference_to_image" (
