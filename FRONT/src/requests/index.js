@@ -23,8 +23,13 @@ const api = {
     async delete(path) {
         return connection.delete(path, { headers: authHeader() });
     },
-    async login(email, password) {
-        const response = await connection.post('/login/admin', { email, password });
+    async login(email, password,type) {
+        let response = null;
+        if (type === "user"){
+            response = await connection.post('/login/admin', { email, password });
+        } else {
+            response = await connection.post('/login/user', { email, password });
+        }
         if (response.data.token) {
             localStorage.setItem("token", response.data.token);
         }
@@ -32,7 +37,8 @@ const api = {
 
     },
     async logout() {
-        localStorage.removeItem("user");
+        console.log('logout');
+        localStorage.removeItem("token");
         return { message: "logged Out" };
     }
 

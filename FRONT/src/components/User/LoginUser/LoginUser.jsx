@@ -15,10 +15,8 @@ import { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import classnames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
-import { requestLoginUser } from '../../../requests/requestsUser/login';
+import api from '../../../requests/index';
 import './loginuser.scss';
-import { getLocalBearerToken } from '../../../requests';
-import { removeBearerToken } from '../../../requests';
 import {useNavigate} from "react-router-dom";
 import AccountMenu from '../AccountMenu/AccountMenu';
 
@@ -39,9 +37,10 @@ export default function SignIn() {
     const data = new FormData (event.currentTarget);
     const email = data.get('email');
     const password =  data.get ('password');
-    const response = await requestLoginUser(email,password);
-    console.log(`response`, response);
-    if(response.status === 200) {
+    const response = await api.login(email,password);
+    const dataRes = await response.data;
+    console.log(`response`, data);
+    if(dataRes.status === 200) {
         navigate('/user/account')
     }
     else{navigate('/')}
@@ -60,12 +59,12 @@ export default function SignIn() {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const userToken = getLocalBearerToken();
+    const userToken = api.login()
     console.log(`Voila le userToken`, userToken);
 
 //Use to disconnect reset token
     function handleDisconnectClick (event) {
-        removeBearerToken()
+        api.logout();
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
         navigate('/')

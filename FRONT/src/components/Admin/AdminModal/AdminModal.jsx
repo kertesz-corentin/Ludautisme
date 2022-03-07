@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TextField, Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
-import schemas from '../Schemas/Schemas'
+import schemas from '../../../Schemas/Schemas'
 
 const AdminModal = ({name, fields, request, token, className, ...rest}) => {
     const [open, setOpen] = useState(false)
