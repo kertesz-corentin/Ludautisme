@@ -12,16 +12,24 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-
-        const response = await request(data, token)
+        const user = {}
+        for (var entrie of data.entries()) {
+            const prop = entrie[0];
+            const value = entrie[1];
+            user[prop]=value;
+         }
+        console.log(user,request);
+        const response = await request(user, token);
+        console.log(response);
         if(response.status === 200) {
-            console.log(data);
+            console.log(response);
             handleClose();
         }
 
     }
 
     const date = new Date();
+
 
     return (
         <div>

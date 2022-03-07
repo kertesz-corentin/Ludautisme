@@ -10,8 +10,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Grid,Link } from '@mui/material';
-import { requestLoginAdmin } from '../../../requests/requestsAdmin/loginAdmin';
 import { useNavigate } from 'react-router';
+import api from '../../../requests/index';
 
 import './adminlogin.scss';
 
@@ -29,7 +29,7 @@ const theme = createTheme();
         const email = data.get('email');
         const password = data.get('password');
 
-        const response = await requestLoginAdmin(email, password)
+        const response = await api.login(email, password);
         if(response.status === 200) {
             navigate('/admin/home');
         }

@@ -14,15 +14,9 @@ const AdminUsers = ({className, ...rest}) => {
 
     const getUsers = async () => {
         try {
-            const response = await api.get('/admin/users', {
-                headers: {
-                    Authorization: `bearer ${adminToken}`
-                }
-            });
-            const data = await response.data;
-
-            setUsers(data);
-
+            const response = await api.get('/admin/users');
+            console.log(response);
+            return response.data;
         }
         catch (err) {
             console.error(err);
@@ -45,24 +39,6 @@ const AdminUsers = ({className, ...rest}) => {
         {field: 'adress_city', headerName: 'Ville', width: 200},
     ]
 
-    const rowData = users.map(user => {
-        return {
-            id: user.id,
-            phone: user.phone,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            adress_number: user.adress_number,
-            adress_street: user.adress_street,
-            adress_zipcode: user.adress_zipcode,
-            adress_city: user.adress_city,
-            cotisation_status: user.cotisation_status,
-            cotisation_expiration : user.cotisation_expiration,
-            caution_status: user.caution_status,
-            caution_expiration : user.caution_expiration,
-            created_at: user.created_at,
-        }
-    })
 
     return (
         <div
@@ -71,7 +47,7 @@ const AdminUsers = ({className, ...rest}) => {
         >
             <AdminSection
                 title="Adhérent"
-                rows={rowData}
+                rows={users}
                 columns={columnsData}
                 request={addUser}
                 token={adminToken}
