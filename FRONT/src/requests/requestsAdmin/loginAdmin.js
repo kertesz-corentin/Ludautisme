@@ -12,7 +12,7 @@ export async function requestLoginAdmin(email, password) {
             email, password
         });
         setBearerToken(response.data.token);
-        console.log('responseApi :', response.data.token);
+
         return response
     }
     catch (err) {

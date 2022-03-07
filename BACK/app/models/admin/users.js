@@ -1,6 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
+const sqlHandler = require('../../helpers/sqlHandler');
 // const { ApiError } = require('../../helpers/apiControllerHandler');
 
 /**
@@ -105,7 +106,7 @@ module.exports = {
             placeholders.push(obj[prop]);
         });
         query += columns + values;
-        const result = await client.query(query, placeholders);
+        const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
 

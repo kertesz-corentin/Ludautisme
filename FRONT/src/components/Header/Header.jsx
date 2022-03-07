@@ -1,38 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-// import { Link } from 'react-router-dom'
-import logo from '../public/logo.png';
+import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
 import Shop from '../Shop/Shop';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import './header.scss';
+import { NavLink } from 'react-router-dom';
+
 
 const Header = ({className, ...rest}) => {
-    const [value, setValue] = React.useState(0);
     return (
        <header
             className={classnames('header', className)}
             {...rest}>
-
             <div className="header-logo">
-                <img src={logo} className="header-logo-image" alt="Logo" />
+                <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
-            <BottomNavigation
-                showLabels
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}
-                className="header-nav">
-                    <BottomNavigationAction LinkComponent="/" label="Accueil" value="Accueil" className="header-nav-item" />
-                    <BottomNavigationAction LinkComponent="/association" label="Association" value="Association" className="header-nav-item" />
-                    <BottomNavigationAction LinkComponent="/library" label="Matériathèque" value="Matériathèque" className="header-nav-item" />
-                    <BottomNavigationAction LinkComponent="/infos" label="Infos Pratiques" value="Infos Pratiques" className="header-nav-item" />
-                    <BottomNavigationAction LinkComponent="/usefull_links" label="Liens Utiles" value="Liens Utiles" className="header-nav-item" />
-            {/* <NavLink to="/Accueil">Accueil
-            </NavLink> */}
-            </BottomNavigation>
+            <nav className="header-nav">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
+                >
+                    Accueil
+                </NavLink>
+                <NavLink
+                    to="/about"
+                    className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
+                >
+                    Association
+                </NavLink>
+                <NavLink
+                    to="/materiallibrary"
+                    className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
+                >
+                    Matériathèque
+                </NavLink>
+                <NavLink
+                    to="/infos"
+                    className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
+                >
+                    Infos pratiques
+                </NavLink>
+                <NavLink
+                    to="/usefullLinks"
+                    className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
+                >
+                    Liens utiles
+                </NavLink>
+            </nav>
+
             <Shop />
             <LoginUser />
         </header>
@@ -45,4 +61,6 @@ Header.propTypes = {
 Header.defaultProps = {
     className: '',
 };
+
 export default React.memo(Header);
+

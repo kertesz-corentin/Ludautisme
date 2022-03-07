@@ -53,15 +53,20 @@ module.exports = {
             { member_number: req.body.member_number },
             { email: req.body.email },
         ]);
-        if (user.length > 0) {
-            throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
+        console.log(user);
+        try {
+            if (user.length > 0) {
+                throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
+            }
+
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+            req.body.password = hashedPassword;
+            const newUser = await usersDataMapper.insert(req.body);
+            return res.json(newUser);
+        } catch (err) {
+            return res.json(err,err.message);
         }
-
-        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-        req.body.password = hashedPassword;
-        const newUser = await usersDataMapper.insert(req.body);
-        return res.json(newUser);
     },
     async update(req, res) {
         const user = await usersDataMapper.findById(req.params.id);
@@ -77,7 +82,7 @@ module.exports = {
         const updatedUser = await usersDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },
-    async delete(req,res) {
+    async delete(req, res) {
         const deletedUser = await usersDataMapper.delete(req.params.id);
         if (!deletedUser) {
             throw new ApiError(404, `L'utilisateur n'a pas été trouvé, rien n'a été supprimé`);

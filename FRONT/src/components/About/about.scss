@@ -1,0 +1,40 @@
+@import 'src/styles/vars';
+
+.présentation-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 100px;
+
+    &-perm {
+        flex: 100%;
+
+    }
+
+    // &-permanency {
+    //     width: 45%;
+    // }
+
+    &-local {
+        flex:45%;
+    }
+
+    &-adresse {
+        flex:45%;
+    }
+
+    &-map {
+        flex:45%;
+    }
+}
+
+.don {
+
+    &-paypal {
+        background-color: aqua;
+    }
+}
+
+#toto {
+    width: 45%;
+}
