@@ -34,6 +34,7 @@ const AdminUsers = ({className, ...rest}) => {
     }, []);
 
     const columnsData = [
+        {field: 'member_number', headerName: 'n°adhérent', width: 125},
         {field: 'first_name', headerName: 'Prenom', width: 125},
         {field: 'last_name', headerName: 'Nom', width: 125},
         {field: 'email', headerName: 'Email', width: 200},
