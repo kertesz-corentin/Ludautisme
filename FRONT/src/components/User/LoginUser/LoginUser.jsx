@@ -21,6 +21,7 @@ import { getLocalBearerToken } from '../../../requests';
 import { removeBearerToken } from '../../../requests';
 import {useNavigate} from "react-router-dom";
 import AccountMenu from '../AccountMenu/AccountMenu';
+import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
 
 
 
@@ -70,6 +71,12 @@ export default function SignIn() {
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
         navigate('/')
+    }
+
+// Use to recover password
+
+    function handleForgetPassword () {
+        console.log(`Envoyer le mot de passe`)
     }
 
   return (
@@ -154,14 +161,12 @@ export default function SignIn() {
                                     </Button>
                                     <Grid container className= "gridContainer">
                                         <Grid item xs>
-                                            <Link href="#" variant="body2">
-                                            Mot de passe oublié
-                                            </Link>
+                                        <RecoverPassworldModal/>
                                         </Grid>
                                         <Grid item xs>
-                                            <Link href="#" variant="body2" onClick={handleClick}>
+                                            <Button onClick={handleClick}>
                                             Pas encore de compte?
-                                            </Link>
+                                            </Button>
                                             <Popover
                                                 sx={{ borderRadius: 8}}
                                                 id={id}
