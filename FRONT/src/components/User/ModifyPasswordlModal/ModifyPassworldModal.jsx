@@ -4,21 +4,35 @@ import classnames from 'classnames';
 import './modifypassworldmodal.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const ModifyPassworldModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [passwordValue, setPasswordValue]= useState();
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+
 
     function handlePasswordSubmit(event){
         event.preventDefault();
-        console.log(`New Password to send Back`)
+        const newPassword = {
+            password:passworldValue
+        }
+        console.log(`New Password to send Back`, newPassword)
+        handleClose()
     }
+    const [passworldValue, setPasswordValue]= useState()
 
     function handlePasswordChange (event) {
         setPasswordValue(event.target.value)
@@ -26,29 +40,35 @@ const ModifyPassworldModal = ({className, ...rest}) => {
     }
 
     return (
+
       <div>
-        <Button onClick={handleOpen}>Modifier mon mot de passe</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box className="modifypassworldmodal">
-            <form>
-                <TextField
-                    label= "Entrez ici votre nouveau mot de passe"
-                    type="text"
-                    value= {passwordValue}
-                    onChange={(event) => handlePasswordChange(event, passwordValue)}
-                />
-                <Button className="loginuser-submit" type="submit" onSubmit= {handlePasswordSubmit}>
-                    Valider
-                </Button>
-            </form>
-          </Box>
-        </Modal>
-      </div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+            Modifier mon mot de passe
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Valider</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Veuillez entrer votre nouveau mot de passe
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Mot de passe"
+            type="password"
+            fullWidth
+            variant="standard"
+            value= {passworldValue}
+            onChange={(event) => handlePasswordChange(event, passworldValue)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handlePasswordSubmit}>Valider</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
     );
 };
 
