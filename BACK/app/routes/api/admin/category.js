@@ -8,7 +8,7 @@ const router = express.Router();
  * @summary Get category by status (main/secondary)
  * @tags Category
  * @param {string} request.body.required Status you want for filter
- * @return {array<string>} 200 - succes response - applucation/json
+ * @return {array<string>} 200 - succes response - application/json
  */
 router.route('/status')
     .post(controllerHandler(categorieController.getByStatus));
@@ -16,7 +16,8 @@ router.route('/status')
  * POST api/categorie/reference
  * @summary Get all category of one reference
  * @tags Category
- * @param {}
+ * @param {number} request.body.required ID of the parent reference
+ * @return {array<string>} 200 - succes response -
  */
 router.route('/reference')
     .post(controllerHandler(categorieController.getByRef));
