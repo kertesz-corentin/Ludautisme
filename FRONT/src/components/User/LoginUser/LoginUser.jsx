@@ -58,7 +58,7 @@ export default function SignIn() {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const userToken = localStorage.getItem('token');
+    const userToken = JSON.parse(localStorage.getItem('user'));
 
 //Use to disconnect reset token
     function handleDisconnectClick (event) {

@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
-const client = require('../../config/db');
 const sqlHandler = require('../../helpers/sqlHandler');
 // const { ApiError } = require('../../helpers/apiControllerHandler');
 
@@ -60,17 +59,21 @@ const sqlHandler = require('../../helpers/sqlHandler');
 module.exports = {
     //  Return all users in db
     async findAll() {
-        const result = await client.query('SELECT * FROM "user"');
+        const query = 'SELECT * FROM "user"';
+        const result = await sqlHandler(query);
         return result.rows;
     },
 
     async findById(id) {
-        const result = await client.query('SELECT * FROM "user" WHERE id=$1', [id]);
+        const query = 'SELECT * FROM "user" WHERE id=$1';
+        const placeholders = [id];
+        const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" LEFT JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
+        console.log(arr);
+        let query = `SELECT "user".*, role.name FROM "user" INNER JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
@@ -81,12 +84,8 @@ module.exports = {
                 query += `${prop}=$${index + 1}`;
             }
         });
-        try {
-            const result = await client.query(query, placeholders);
-            return result.rows;
-        } catch (err) {
-            console.error(err);
-        }
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
 
     async insert(obj) {
@@ -123,14 +122,14 @@ module.exports = {
                 placeholders.push(id);
             }
         });
-        const result = await client.query(query, placeholders);
+        const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
 
     async delete(id) {
         const query = `DELETE FROM "user" WHERE id=$1 RETURNING *`;
         const placeholders = [id];
-        const result = await client.query(query, placeholders);
+        const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
 };

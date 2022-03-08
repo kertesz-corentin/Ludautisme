@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
-const client = require('../../config/db');
+const sqlHandler = require('../../helpers/sqlHandler');
 /**
  * @typedef {object} paramRefCreate
  * @property {string} name.required - The name of the reference
@@ -19,7 +19,8 @@ const client = require('../../config/db');
  */
 module.exports = {
     async findAll() {
-        const result = await client.query(`
+        console.log('data !!');
+        const result = await sqlHandler(`
         SELECT
         r.id,
         r.name,
@@ -36,7 +37,7 @@ module.exports = {
         return result.rows;
     },
     async findActive() {
-        const result = await client.query(`
+        const result = await sqlHandler(`
         SELECT
         r.id,
         r.name,
@@ -56,7 +57,7 @@ module.exports = {
     },
     async findOne(id) {
         try {
-            const result = await client.query(
+            const result = await sqlHandler(
                 `SELECT
             r.id,
             r.name,
@@ -114,7 +115,7 @@ module.exports = {
                 placeholders.push(obj[prop]);
             });
             query += columns + values;
-            const result = await client.query(query, placeholders);
+            const result = await sqlHandler(query, placeholders);
             return result.rows[0];
         } catch (err) {
             console.error(err);
@@ -122,7 +123,7 @@ module.exports = {
     },
     async findByName(name) {
         try {
-            const result = await client.query(`
+            const result = await sqlHandler(`
             SELECT * FROM "reference"
             WHERE "name" =$1
             `, [name]);
@@ -145,7 +146,7 @@ module.exports = {
                 placeholders.push(id);
             }
         });
-        const result = await client.query(query, placeholders);
+        const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
 };

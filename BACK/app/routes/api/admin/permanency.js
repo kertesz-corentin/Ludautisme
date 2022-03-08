@@ -1,5 +1,5 @@
 const express = require('express');
-const { permanencyController } = require('../../../controllers');
+const { permanencyController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();

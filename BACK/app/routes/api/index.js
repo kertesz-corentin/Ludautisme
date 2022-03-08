@@ -3,7 +3,7 @@ const ApiError = require('../../errors/apiError');
 
 const loginRoutes = require('./auth/index');
 const adminUserRoutes = require('./admin/index');
-const userRoute = require('./customer/index');
+const customerRoute = require('./customer/index');
 
 const authAdmin = require('../../middleware/admin');
 // const authUser = require('../../middleware/user');
@@ -16,7 +16,7 @@ router.use('/login', loginRoutes);
 
 router.use('/admin', authAdmin, adminUserRoutes);
 
-router.use('/user', userRoute);
+router.use('/customer', customerRoute);
 // !router.use('/customer', customerRouter);
 
 router.use(() => {
