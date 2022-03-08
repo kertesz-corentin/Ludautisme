@@ -1,4 +1,4 @@
-import React,{ useState }from 'react';
+import React,{ useEffect, useState }from 'react';
 import PropTypes from 'prop-types';
 
 import './usermyaccount.scss';
@@ -11,13 +11,31 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import api from '../../../requests';
 
+
+//Prochaine étape, coder la requete pour envoyer les infos à l'api
 
 
 const UserMyAccount = ({
     className,
      ...rest
     }) => {
+// Each time page is loading, want to call requestGetDatasOneUser
+    useEffect(() => {requestGetDatasOneUser()},[])
+
+//This const get id, role and token from API when user is logged
+    const userDatas= JSON.parse(localStorage.getItem('user'));
+    console.log(`Données de l'utilisateur`, userDatas)
+
+//This function takes id, role and token, send them to API in order to get back every user's infos
+    async function requestGetDatasOneUser ()  {
+        console.log(`fonction qui envoi l'id, le rôle et le token`)
+        const response = await api.get('/admin/users/:id',userDatas)
+        console.log(`expected user's datas`, response)
+    }
+
+
 
     const [firstNameValue,setFirstNameValue] = useState('Michel');
     const [lastNameValue,setLastNameValue] = useState('Michel');
