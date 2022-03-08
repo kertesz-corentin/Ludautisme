@@ -7,6 +7,7 @@ const adminReferenceController = require('./api/admin/reference');
 const bookingController = require('./api/admin/booking');
 const permanencyController = require('./api/admin/permanency');
 const pictureController = require('./api/admin/picture');
+const articleController = require('./api/admin/article');
 
 module.exports = {
     userController,
@@ -16,4 +17,5 @@ module.exports = {
     bookingController,
     permanencyController,
     pictureController,
+    articleController,
 };

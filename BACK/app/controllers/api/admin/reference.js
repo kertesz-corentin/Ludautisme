@@ -46,7 +46,7 @@ module.exports = {
         if (reference.length < 1) {
             throw new ApiError(404, 'La référence parent n\'existe pas');
         }
-        const article = await articleDataMapper.findByCode(req.body.ref_number);
+        const article = await articleDataMapper.findByCode(req.body.number);
         if (article.length > 0) {
             throw new ApiError(400, 'Un article avec le même numéro existe déjà');
         }

@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { removeBearerToken } from '../../../requests';
 import './adminmenu.scss';
+import api from '../../../requests/index';
+
 
 const MenuAdmin = ({className, ...rest}) => {
 
     const handleLogout = (event) => {
-        removeBearerToken();
+        api.logout();
     }
 
     return (

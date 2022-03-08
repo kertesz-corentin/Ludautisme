@@ -9,7 +9,7 @@ const router = express.Router();
  * POST api/admin/references/article
  * @summary Add one article to reference
  * @tags Reference
- * @param {ParamArticleCreate} request.body.required At least ref_number and id_ref
+ * @param {ParamArticleCreate} request.body.required At least number and id_ref
  * @return {Article} 201 - success response - application/json
  */
 router.route('/article')

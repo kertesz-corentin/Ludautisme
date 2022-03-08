@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.aeca782c.css",
-    "main.js": "/static/js/main.e87d3744.js",
+    "main.css": "/static/css/main.58eb3a5e.css",
+    "main.js": "/static/js/main.a4fe5ad5.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
-    "static/media/logo.png": "/static/media/logo.695eff076d41f2eb0b52.png",
+    "static/media/logo.png": "/static/media/logo.37ac0bf617f0e4ac9832.png",
     "static/media/signet.png": "/static/media/signet.c965202b11de71e647f4.png",
     "static/media/idee.png": "/static/media/idee.b7086270b6ab09b4815c.png",
     "static/media/fusee.png": "/static/media/fusee.7ae0aef4e87c9aa4651a.png",
@@ -15,12 +15,12 @@
     "static/media/bloguer.png": "/static/media/bloguer.014b9f25fcc15996e680.png",
     "static/media/calendrier.png": "/static/media/calendrier.2cf2c05efe809681edc2.png",
     "index.html": "/index.html",
-    "main.aeca782c.css.map": "/static/css/main.aeca782c.css.map",
-    "main.e87d3744.js.map": "/static/js/main.e87d3744.js.map",
+    "main.58eb3a5e.css.map": "/static/css/main.58eb3a5e.css.map",
+    "main.a4fe5ad5.js.map": "/static/js/main.a4fe5ad5.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.aeca782c.css",
-    "static/js/main.e87d3744.js"
+    "static/css/main.58eb3a5e.css",
+    "static/js/main.a4fe5ad5.js"
   ]
 }

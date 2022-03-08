@@ -73,7 +73,7 @@ module.exports = {
                 )) AS "picture",
             json_agg(json_build_object (
                 'id', ar."id",
-                'ref_number', ar."ref_number",
+                'number', ar."number",
                 'origin', ar."origin",
                 'date_buy', ar."date_buy",
                 'available', ar."available",
