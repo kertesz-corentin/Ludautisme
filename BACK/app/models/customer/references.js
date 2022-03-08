@@ -56,9 +56,9 @@ module.exports = {
             FROM "reference" AS r
             LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
             LEFT JOIN "image" ON rti."id_image" = "image"."id"
-            LEFT JOIN "category" AS cat ON r."id_category" = cat."id"
+            LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
-            LEFT JOIN "category" ON rtc."main_category" = "category"."id"
+            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
             LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
             WHERE r.id = $1
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
