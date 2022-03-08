@@ -1,9 +1,27 @@
 const express = require('express');
-const { adminReferenceController } = require('../../../controllers');
+
+const { adminReferenceController, pictureController } = require('../../../controllers');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
+const multer = require('../../../middleware/multer-config');
 
 const router = express.Router();
 
+/**
+ * POST api/admin/references/picture
+ * @summary Add one picture to one article
+ * @tags Picture
+ */
+router.route('/picture')
+    .post(controllerHandler(multer), controllerHandler(pictureController.addPicture));
+/**
+ * POST api/admin/references/article
+ * @summary Add one article to reference
+ * @tags Reference
+ * @param {ParamArticleCreate} request.body.required At least number and id_ref
+ * @return {Article} 201 - success response - application/json
+ */
+router.route('/article')
+    .post(controllerHandler(adminReferenceController.addArticle));
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin

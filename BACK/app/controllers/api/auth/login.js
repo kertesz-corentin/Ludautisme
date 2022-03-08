@@ -18,24 +18,30 @@ const { ApiError } = require('../../../helpers/errorHandler');
  * @property {string} password -user password
  */
 /**
- * @typedef {object} paramResetPwd
+ * @typedef {object} paramForgotPwd
  * @property {string} email - user email
  */
+/**
+ * @typedef {object} paramResetPwd
+ * @property {string} request.param.token.required token - temp token
+ */
+
 module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
         if (!dbUser[0]) {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
+            throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (!bcrypt.compareSync(req.body.password, dbUser[0].password)) {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
+            throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
+        console.log(req.originalUrl);
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
             dbUser[0].name = 'user';
         }
         if (dbUser[0].name === 'user' && req.originalUrl !== '/api/login/user') {
-            throw new ApiError(404, 'L\'email ou le mot de passe utilisé est invalide');
+            throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         } else {
             const token = jwt.sign(
                 {

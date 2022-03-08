@@ -109,35 +109,6 @@ const Accueil = ({className, ...rest}) => {
                     <p>Médiathèque</p>
                     </div>
                 </div>
-
-
-
-                {/* <div className="clay categorie">
-                    <NavLink to="/Jeux">
-                            <div className="categorie-img2"></div>
-                    </NavLink>
-                    <p>Autonomie</p>
-                </div>
-                <div>
-                    <div className="clay categorie">
-                        <NavLink to="/Jeux">
-                                <div className="categorie-img3"></div>
-                        </NavLink>
-                        <p>Apprentissage</p>
-                    </div>
-                </div>
-                <div className="clay categorie">
-                    <NavLink to="/Jeux">
-                         <div className="categorie-img4"></div>
-                    </NavLink>
-                    <p>Montessori</p>
-                </div>
-                <div className="clay categorie">
-                    <NavLink to="/Jeux">
-                         <div className="categorie-img5"></div>
-                    </NavLink>
-                    <p>Médiathèque</p>
-                </div> */}
             </div>
             <div className="actu">
                 <h2 className="actu-title">

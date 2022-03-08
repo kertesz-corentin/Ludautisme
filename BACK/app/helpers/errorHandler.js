@@ -1,5 +1,6 @@
 // const logger = require('./logger');
 const ApiError = require('../errors/apiError');
+const SqlError = require('../errors/sqlError');
 // const WebsiteError = require('../errors/websiteError');
 
 /**
@@ -32,5 +33,6 @@ const errorHandler = (err, res) => {
 
 module.exports = {
     ApiError,
+    SqlError,
     errorHandler,
 };

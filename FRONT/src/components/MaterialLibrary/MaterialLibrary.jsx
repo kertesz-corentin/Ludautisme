@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materialLibrary.scss';
+import Permanency from '../Permanency/Permanency';
 
 const MaterialLibrary = ({className, ...rest}) => {
    return (
        <div            className={classnames('library', className)}
             {...rest}
          >
-library
+            <Permanency />
         </div>
    );
 };

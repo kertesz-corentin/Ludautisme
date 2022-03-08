@@ -3,20 +3,6 @@
 /* eslint-disable consistent-return */
 const client = require('../../config/db');
 /**
- * @typedef {object} Article
- * @property {number} id - Unique identifier
- * @property {number} ref_number - Physique code of object
- * @property {string} origin - Origin of object
- * @property {string} date_buy - Date of the object is buy
- * @property {boolean} available - If the object is available for booking
- * @property {boolean} archived - If the object is archived
- * @property {string} created_at - Date of the registration in DB
- */
-/**
- * @typedef {object} Articles
- * @property {array<Article>} article - One article of the reference
- */
-/**
  * @typedef {object} paramRefCreate
  * @property {string} name.required - The name of the reference
  * @property {string} description - The description of the reference
@@ -83,7 +69,7 @@ module.exports = {
                 'text', "image"."alternative_text")) AS "picture",
             json_agg(json_build_object (
                 'id', ar."id",
-                'ref_number', ar."ref_number",
+                'number', ar."number",
                 'origin', ar."origin",
                 'date_buy', ar."date_buy",
                 'available', ar."available",

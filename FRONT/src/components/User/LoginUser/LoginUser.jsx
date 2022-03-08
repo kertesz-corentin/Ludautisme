@@ -15,10 +15,8 @@ import { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import classnames from 'classnames';
 import CloseIcon from '@mui/icons-material/Close';
-import { requestLoginUser } from '../../../requests/requestsUser/login';
+import api from '../../../requests/index';
 import './loginuser.scss';
-import { getLocalBearerToken } from '../../../requests';
-import { removeBearerToken } from '../../../requests';
 import {useNavigate} from "react-router-dom";
 import AccountMenu from '../AccountMenu/AccountMenu';
 
@@ -39,10 +37,10 @@ export default function SignIn() {
     const data = new FormData (event.currentTarget);
     const email = data.get('email');
     const password =  data.get ('password');
-    const response = await requestLoginUser(email,password);
-    console.log(`response`, response);
+    const response = await api.login(email,password,"user");
     if(response.status === 200) {
         navigate('/user/account')
+        setIsOpen(!isOpen)
     }
     else{navigate('/')}
     console.log({
@@ -60,20 +58,21 @@ export default function SignIn() {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const userToken = getLocalBearerToken();
-    console.log(`Voila le userToken`, userToken);
+    const userToken = localStorage.getItem('token');
 
 //Use to disconnect reset token
     function handleDisconnectClick (event) {
-        removeBearerToken()
+        api.logout();
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
         navigate('/')
     }
 
   return (
-    <div className="loginuser">
-    {!userToken ?
+//Here if user is not connecting, render l78 to 187
+    !userToken ?
+    <div className={classnames('loginuser', { 'loginuser-isActive': isOpen })}>
+
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -87,9 +86,9 @@ export default function SignIn() {
                  <AccountCircle fontSize="large" />
                  }
       </button>
-      :
-       ""}
 
+
+{/* //Here even is this condition looks useless, she's not and delete her will make a secound btn appears whe user not connected. */}
         {!userToken
             ?
                 <div>
@@ -105,10 +104,7 @@ export default function SignIn() {
                                         alignItems: 'center',
                                     }}
                                     >
-                                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                                            <SentimentSatisfiedAltIcon/>
-                                        </Avatar>
-                                        <Typography component="h1" variant="h5">
+                                        <Typography component="h1" variant="h6">
                                             Se connecter<Popover
                                                 id={id}
                                                 open={open}
@@ -152,7 +148,7 @@ export default function SignIn() {
                                     >
                                     Se connecter
                                     </Button>
-                                    <Grid container>
+                                    <Grid container className= "gridContainer">
                                         <Grid item xs>
                                             <Link href="#" variant="body2">
                                             Mot de passe oublié
@@ -160,9 +156,10 @@ export default function SignIn() {
                                         </Grid>
                                         <Grid item xs>
                                             <Link href="#" variant="body2" onClick={handleClick}>
-                                            Pas Encore de compte?
+                                            Pas encore de compte?
                                             </Link>
                                             <Popover
+                                                sx={{ borderRadius: 8}}
                                                 id={id}
                                                 open={open}
                                                 anchorEl={anchorEl}
@@ -172,7 +169,7 @@ export default function SignIn() {
                                                 horizontal: 'left',
                                                 }}
                                             >
-                                                <Typography sx={{ p: 2 }}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
+                                                <Typography  sx={{ p: 2, borderRadius: 8}}>Venez nous rencontrer lors d'une permanence pour le faire ensemble!</Typography>
                                             </Popover>
                                         </Grid>
                                     </Grid>
@@ -183,10 +180,125 @@ export default function SignIn() {
                         </ThemeProvider>
                     )}
                 </div>
-            :   <div>
-                    <AccountMenu/>
-                </div>
+     :
+            <button
+        className={classnames('loginuser-btnopen', { 'loginuser-isConnect': isOpen || userToken })}
+        type="button"
+        onClick={onToggleOpen}
+      >
+        { isOpen  ?
+                 <CloseIcon fontSize="large"/>
+                 :
+                 <AccountCircle fontSize="large" />
+                 }
+      </button>
         }
+        <div >
+                    {(isOpen && userToken) &&  (
+                        <ThemeProvider theme={theme}>
+                            <Container component="main" maxWidth="xs">
+                                <CssBaseline />
+                                    <Box
+                                    sx={{
+                                        marginTop: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                    >
+
+                                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                                <Grid container className= "gridContainer">
+                                        <Grid item xs>
+                                            <Link href="/user/account" variant="body2">
+                                            Mon Compte
+                                            </Link>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Link href="/user/bookings" variant="body2" onClick={handleClick}>
+                                            Mes réservations
+                                            </Link>
+
+                                        </Grid>
+                                    </Grid>
+                                    <Button
+                                    onClick= {handleDisconnectClick}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 1, mb: 2 }}
+                                    >
+                                    Se Déconnecter
+                                    </Button>
+
+                                </Box>
+                                </Box>
+                            </Container>
+
+                        </ThemeProvider>
+                    )}
+                </div>
+    </div>
+  :
+  <div className={classnames('loginuser', { 'loginuser-isConnect': isOpen })}>
+
+            <button
+        className={classnames('loginuser-btnopen', { 'loginuser': isOpen || userToken })}
+        type="button"
+        onClick={onToggleOpen}
+      >
+        { isOpen  ?
+                 <CloseIcon fontSize="large"/>
+                 :
+                 <AccountCircle fontSize="large" />
+                 }
+      </button>
+
+        <div >
+                    {(isOpen && userToken) &&  (
+                        <ThemeProvider theme={theme}>
+                            <Container component="main" maxWidth="xs">
+                                <CssBaseline />
+                                    <Box
+                                    sx={{
+                                        marginTop: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                    >
+
+                                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                                <Grid container className= "gridContainer">
+                                        <Grid item xs>
+                                            <Link href="/user/account" variant="body2">
+                                            Mon Compte
+                                            </Link>
+                                        </Grid>
+                                        <Grid item xs>
+                                            <Link href="/user/bookings" variant="body2" onClick={handleClick}>
+                                            Mes réservations
+                                            </Link>
+
+                                        </Grid>
+                                    </Grid>
+                                    <Button
+                                    onClick= {handleDisconnectClick}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 1, mb: 2 }}
+                                    >
+                                    Se Déconnecter
+                                    </Button>
+
+                                </Box>
+                                </Box>
+                            </Container>
+
+                        </ThemeProvider>
+                    )}
+                </div>
     </div>
   );
 }
