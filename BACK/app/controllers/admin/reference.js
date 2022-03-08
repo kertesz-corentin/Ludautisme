@@ -1,6 +1,7 @@
-const ApiError = require('../../../errors/apiError');
-const referencesDataMapper = require('../../../models/admin/reference');
-const articleDataMapper = require('../../../models/admin/article');
+const ApiError = require('../../errors/apiError');
+const { referencesDataMapper } = require('../../models/admin');
+const { articleDataMapper } = require('../../models/admin');
+
 module.exports = {
     async getAll(req, res) {
         const results = await referencesDataMapper.findAll();

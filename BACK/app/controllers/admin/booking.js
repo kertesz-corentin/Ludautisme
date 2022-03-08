@@ -1,6 +1,5 @@
-const ApiError = require('../../../errors/apiError');
-const bookingDataMapper = require('../../../models/admin/booking');
-const articleController = require('./article');
+const ApiError = require('../../errors/apiError');
+const { bookingDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {

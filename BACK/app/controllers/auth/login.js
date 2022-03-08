@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
-const mailer = require('../../../config/mailer');
+const mailer = require('../../config/mailer');
 require('dotenv').config();
 
-const loginDatamapper = require('../../../models/auth/login');
-const usersDatamapper = require('../../../models/admin/users');
-const { ApiError } = require('../../../helpers/errorHandler');
+const loginDatamapper = require('../../models/auth/login');
+const { usersDatamapper } = require('../../models/admin');
+const { ApiError } = require('../../helpers/errorHandler');
 /**
  * @typedef {object} login
  * @property {string} id - Unique identifier
@@ -30,13 +30,13 @@ module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
+        console.log(dbUser[0]);
         if (!dbUser[0]) {
             throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (!bcrypt.compareSync(req.body.password, dbUser[0].password)) {
             throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        console.log(req.originalUrl);
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
             dbUser[0].name = 'user';
         }
@@ -49,11 +49,12 @@ module.exports = {
                     role: dbUser[0].name,
                 },
                 process.env.SALT,
-                { expiresIn: '24h' },
+                { expiresIn: '31d'},
             );
             const loggedUser = {
                 id: dbUser[0].id,
                 token,
+                role: dbUser[0].name,
             };
             res.status(200).json(loggedUser);
         }

@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use('/articles', referenceRouter);
 
-router.use('/', userRouter);
+router.use('/user', userRouter);
 
 router.use(() => {
     throw new ApiError(404, 'API Route not found');

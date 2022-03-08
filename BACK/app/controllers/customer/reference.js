@@ -1,6 +1,6 @@
-const ApiError = require('../../../errors/apiError');
+const ApiError = require('../../errors/apiError');
 
-const userReferenceDataMapper = require('../../../models/customer/references');
+const userReferenceDataMapper = require('../../models/customer/references');
 
 module.exports = {
     async getAll(_, res) {

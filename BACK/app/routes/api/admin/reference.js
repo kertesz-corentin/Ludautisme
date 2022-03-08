@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { adminReferenceController } = require('../../../controllers');
+const { referenceController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const router = express.Router();
  * @return {Article} 201 - success response - application/json
  */
 router.route('/article')
-    .post(controllerHandler(adminReferenceController.addArticle));
+    .post(controllerHandler(referenceController.addArticle));
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
@@ -21,7 +21,7 @@ router.route('/article')
  * @return {[Reference]} 200 - success response - application/json
  */
 router.route('/active')
-    .get(controllerHandler(adminReferenceController.getActive));
+    .get(controllerHandler(referenceController.getActive));
 /**
  * GET api/admin/references/:id
  * @summary Get one reference with this articles
@@ -37,8 +37,8 @@ router.route('/active')
  * @returns {RefUpdate} 201 - succes response - application/json
  */
 router.route('/:id')
-    .get(controllerHandler(adminReferenceController.getOne))
-    .put(controllerHandler(adminReferenceController.update));
+    .get(controllerHandler(referenceController.getOne))
+    .put(controllerHandler(referenceController.update));
 /**
  * GET api/admin/references
  * @summary Get all references for admin
@@ -53,7 +53,7 @@ router.route('/:id')
  * @return {Reference} 201 - succes response - application/json
  */
 router.route('/')
-    .get(controllerHandler(adminReferenceController.getAll))
-    .post(controllerHandler(adminReferenceController.addRef));
+    .get(controllerHandler(referenceController.getAll))
+    .post(controllerHandler(referenceController.addRef));
 
 module.exports = router;
