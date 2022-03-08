@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { referenceSchema } from '../../../Schemas';
+import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
 
 
 // import scss
@@ -30,13 +31,19 @@ const AdminReferences = ({className, ...rest}) => {
         getReferences();
     }, []);
 
-    const columnsData = [
-        {field: 'name', headerName: 'Nom', width: 200},
-        {field: 'description', headerName: 'Description', width: 350},
-        {field: 'valorisation', headerName: 'Valorisation', width: 100},
-        {field: 'mainCategory', headerName: 'Catégorie', width: 200},
-        {field: 'tag', headerName: 'Tags', width: 200}
-    ]
+    const columnBuilder = (() => {
+        const columns = [];
+        Object.keys(referenceSchema).forEach(prop => {
+            const propElt = referenceSchema[prop];
+            const config = {
+                type: propElt.type,
+                field:prop,
+                headerName:propElt.label,
+                width: propElt.width};
+            columns.push(config);
+        });
+        return columns;
+    })();
 
    return (
        <div
@@ -46,7 +53,9 @@ const AdminReferences = ({className, ...rest}) => {
             <AdminSection
                 title="Référence"
                 rows={references}
-                columns={columnsData}
+                columns={columnBuilder}
+                path={path}
+                children={<AddReferenceModal />}
             />
         </div>
    );

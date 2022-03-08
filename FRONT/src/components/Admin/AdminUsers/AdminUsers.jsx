@@ -5,6 +5,7 @@ import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { userSchema } from '../../../Schemas';
 import { ToggleButton } from '@mui/material';
+import AddUserModal from '../AddUserModal/AddUserModal';
 // import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
 import { GridCheckIcon } from '@mui/x-data-grid';
@@ -86,7 +87,8 @@ const AdminUsers = ({className, ...rest}) => {
                         id_role: false,
                       },
                     },
-                  }}
+                }}
+                children={<AddUserModal />}
             />
         </div>
 
