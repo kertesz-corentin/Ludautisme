@@ -22,6 +22,7 @@ const Accueil = ({className, ...rest}) => {
     return (
         <div className={classnames('accueil', className)}
         {...rest}>
+
             <div className="bandeau-présentation">
                 <div className="bandeau-présentation-texte">
                 <h2>Bienvenue chez lud'Autisme</h2>

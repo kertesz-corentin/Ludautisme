@@ -1,29 +1,42 @@
 @import 'src/styles/vars';
 
 .permanency{
-    width: fit-content;
+
     margin: 20px;
     display: flex;
+    flex-flow: row wrap ;
     font-size: 1.8rem;
-    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    white-space: nowrap;
     --clay-background: hsl(3, 94%, 53%, 0.9);
     --clay-border-radius: 30px;
     color: blanchedalmond;
-    flex-direction: column;
-    align-items: center;
+
 
     &-title {
-        margin: 30px;
+        flex: 1 100%;
+
+        h2 {border-top: 0;
+            margin-bottom: 0;
+            text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
+        }
     }
 
     &-logo {
+        margin: 30px;
         max-width: 150px;
-        filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(rgb(0 0 0 / 30%) 5px 3px 5px);
     }
 
     &-date {
+        filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 30%) 5px 3px 5px);
+        border-radius: 10px;
+        padding: 10px;
+        border: 3px solid $font-color-2;
         font-size:2.5rem;
-        // margin: auto;
+        margin: 30px;
     }
 }
 

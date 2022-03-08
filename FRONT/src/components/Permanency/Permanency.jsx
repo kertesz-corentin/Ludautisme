@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './permanency.scss';
-import Calendier from '../public/icones/calendrier.png'
+import Calendrier from '../public/icones/calendrier.png'
 
 
 
@@ -12,19 +12,21 @@ const Permanency = ({className, ...rest}) => {
             className={classnames('clay permanency', className)}
             // className={classnames('bandeau-présentation-permanence-infos', className)}
             {...rest}
-         >
-             <h2 className="permanency-title">
-                Prochaine permanence
-             </h2>
-             <div className="permanency-inline">
-                <div className="permanency-logo">
-                    <img src="../public/icones/calendrier.png" alt="" />
+         >      <div className="permanency-title">
+                    <h2>
+                        Prochaine permanence
+                    </h2>
                 </div>
-                <p className="permanency-date">
-                    01/03/2022 <br />
+                <div>
+                    <img className="permanency-logo" src={Calendrier} alt="" />
+                </div>
+                <div>
+                    <p className="permanency-date">
+                        01/03/2022 <br />
                     8h00-12h00 <br />
-                </p>
-            </div>
+                    </p>
+                </div>
+
         </div>
    );
 };

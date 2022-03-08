@@ -9,7 +9,8 @@ const MaterialLibrary = ({className, ...rest}) => {
        <div            className={classnames('library', className)}
             {...rest}
          >
-            <Permanency />
+             <div>
+            <Permanency /></div>
         </div>
    );
 };

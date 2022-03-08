@@ -5,10 +5,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin: 100px;
+    align-items: center;
 
     &-perm {
-        flex: 100%;
-
+        flex:100%;
+        width: 100%;
     }
 
     // &-permanency {
