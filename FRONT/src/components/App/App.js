@@ -29,6 +29,11 @@ function App() {
     <div className="App">
         <Routes>
             <Route path = "/" element = {<Home children={<HomePage />} />}></Route>
+            <Route path = "/about" element = {<Home children={<About />} />}></Route>
+            <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
+            <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home children={<MaterialLibrary />} />}></Route>
+
 
             <Route path = "/admin" element = {<Admin />}></Route>
 
@@ -49,16 +54,25 @@ function App() {
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
             <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
 
-            <Route path = "/about" element = {<Home children={<About />} />}></Route>
-            <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
-            <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home children={<MaterialLibrary />} />}></Route>
-            <Route path = "/user/account" element = {<Home children={<UserMyAccount />} />}></Route>
+
+
+
+            <Route path = "/user/account" element = {<PrivateRoute/>}>
+                <Route path = "/user/account" element = {<Home children={<UserMyAccount />} />}></Route>
+            </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
-            <Route path = "/user/account" element = {<UserMyAccount />}></Route>
-            <Route path = "/user/bookings" element = {<Home children= {<UserBookings/>}/>}></Route>
-            <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
-            <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
+            <Route path = "/user/account" element = {<PrivateRoute/>}>
+                <Route path = "/user/account" element = {<UserMyAccount />}></Route>
+            </Route>
+            <Route path = "/user/bookings" element = {<PrivateRoute/>}>
+                <Route path = "/user/bookings" element = {<Home children= {<UserBookings/>}/>}></Route>
+            </Route>
+            <Route path = "/user/booking/active" element = {<PrivateRoute/>}>
+                <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
+            </Route>
+            <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
+                <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
+            </Route>
             {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
