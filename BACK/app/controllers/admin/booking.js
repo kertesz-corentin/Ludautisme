@@ -35,20 +35,24 @@ module.exports = {
         }
         return res.json(user);
     },
-    async getOne(req,res) {
+    async getOne(req, res) {
         const idUser = Number(req.params.id);
         const booking = await bookingDataMapper.findOne(idUser);
         return res.json(booking);
     },
-    async addOne(req,res) {
-        const idUser = Number(req.params.id);
-        const { articlesIds } = req.body;
-        if (articlesIds.length > 8) {
+    async addOne(req, res) {
+        const userId = Number(req.params.UserId);
+        const articlesIds = req.body.articleIds;
+        console.log("userId", userId, "articles", articlesIds);
+        const currentArticles = 2;
+        if (articlesIds && articlesIds.length > 8) {
             throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
         }
+
+
         //Une autre réservation sur cette perm ne doit pas exister
         //Pas plus de 8 articles
-        const newBooking = await bookingDataMapper.addOne(idUser, articlesIds);
-        return res.json(newBooking);
+        //const newBooking = await bookingDataMapper.addOne(userId, articlesIds);
+        return res.json({ coucou: "coucou" });
     },
 };

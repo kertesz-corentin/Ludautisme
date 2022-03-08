@@ -1,7 +1,6 @@
 /* eslint-disable no-tabs */
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
-const client = require('../../config/db');
 const sqlHandler = require('../../helpers/sqlHandler');
 
 /**

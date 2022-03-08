@@ -19,15 +19,18 @@ router.route('/')
  * @param {number} request.params.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
+
+router.route('/:id')
+    .get(controllerHandler(bookingController.getOne))
+
 /**
- * POST /api/admin/booking/:id
+ * POST /api/admin/booking/add/:UserId
  * @summary Add a new booking
  * @tags Booking
  * @param {paramAddBooking} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
-router.route('/:id')
-    .get(controllerHandler(bookingController.getOne))
+router.route('/add/:UserId')
     .post(controllerHandler(bookingController.addOne));
 /**
  * POST /api/admin/booking/search
