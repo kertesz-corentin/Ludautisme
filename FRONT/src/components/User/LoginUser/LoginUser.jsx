@@ -37,7 +37,7 @@ export default function SignIn() {
     const data = new FormData (event.currentTarget);
     const email = data.get('email');
     const password =  data.get ('password');
-    const response = await api.login(email,password);
+    const response = await api.login(email,password,"user");
     if(response.status === 200) {
         navigate('/user/account')
         setIsOpen(!isOpen)

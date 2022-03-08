@@ -29,8 +29,10 @@ const api = {
             response = await connection.post('/login/user', { email, password });
         } else {
             response = await connection.post('/login/admin', { email, password });
+
         }
         if (response.data.token) {
+            (type === "user") ? localStorage.setItem("role", "user") : localStorage.setItem("role", "admin");
             localStorage.setItem("token", response.data.token);
         }
         return response;
@@ -39,6 +41,7 @@ const api = {
     async logout() {
         console.log('logout');
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
         return { message: "logged Out" };
     }
 

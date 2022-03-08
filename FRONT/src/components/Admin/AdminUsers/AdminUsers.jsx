@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
-
+import { userSchema } from '../../../Schemas';
+// import {ToggleButton} from '@mui/material';
+// import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
+    const [selected, setSelected] = useState([]);
 
     const getUsers = async () => {
         try {
@@ -25,17 +28,33 @@ const AdminUsers = ({className, ...rest}) => {
         getUsers();
     }, []);
 
-    const columnsData = [
-        {field: 'member_number', headerName: 'n°adhérent', width: 125},
-        {field: 'first_name', headerName: 'Prenom', width: 125},
-        {field: 'last_name', headerName: 'Nom', width: 125},
-        {field: 'email', headerName: 'Email', width: 200},
-        {field: 'phone', headerName: 'Telephone', width: 200},
-        {field: 'adress_number', headerName: 'n°', width: 50},
-        {field: 'adress_street', headerName: 'Rue', width: 200},
-        {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
-        {field: 'adress_city', headerName: 'Ville', width: 200},
-    ];
+    console.log("schemas",userSchema);
+    const columnBuilder = (() => {
+        const columns = [];
+        Object.keys(userSchema).forEach(prop => {
+            const propElt = userSchema[prop];
+            const config = {
+                field:prop,
+                headerName:propElt.label,
+                width: propElt.width};
+
+            if (propElt.gridDisplay !== "normal"){
+                switch (propElt.gridDisplay){
+                    case "toggle":
+                        config.renderCell = (params) =>(
+                            <a href="/city">params</a>
+                        );
+                        break;
+                    default:
+                        break;
+                }
+            }
+            columns.push(config);
+        });
+        return columns;
+    })();
+
+    console.log("colbuild",columnBuilder);
 
 
     return (
@@ -46,7 +65,15 @@ const AdminUsers = ({className, ...rest}) => {
             <AdminSection
                 title="Adhérent"
                 rows={users}
-                columns={columnsData}
+                columns={columnBuilder}
+                initialState={{
+                    columns: {
+                      columnVisibilityModel: {
+                        // Hide columns status and traderName, the other columns will remain visible
+                        id_role: false,
+                      },
+                    },
+                  }}
             />
         </div>
 

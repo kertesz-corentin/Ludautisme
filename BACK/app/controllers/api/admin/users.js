@@ -49,20 +49,21 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
+        console.log("body",req.body, req.body.member_number , req.body.email);
         const user = await usersDataMapper.findFiltered([
-            { member_number: req.body.member_number },
+            { member_number: Number(req.body.member_number) },
             { email: req.body.email },
         ]);
-        console.log(user);
         try {
             if (user.length > 0) {
                 throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
             }
-
-            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-            req.body.password = hashedPassword;
+            if (req.body.password) {
+                const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+                req.body.password = hashedPassword;
+            }
             const newUser = await usersDataMapper.insert(req.body);
+            console.log(newUser);
             return res.json(newUser);
         } catch (err) {
             return res.json(err,err.message);

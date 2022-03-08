@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TextField, Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
-import schemas from '../../../Schemas/Schemas'
+import { userSchema } from '../../../Schemas'
 
 const AdminModal = ({name, fields, request, token, className, ...rest}) => {
     const [open, setOpen] = useState(false)
@@ -31,7 +31,6 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
 
 
     const date = new Date();
-    const {user} = schemas();
 
     return (
         <div>
@@ -55,8 +54,7 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
                     </div>
                     <div className="modal-inputs">
 
-                    {Object.keys(user).map((field) => {
-                            console.log(user[field].label);
+                    {/*Object.keys(user).map((field) => {
                             return (
                                 <TextField
                                     key={field}
@@ -68,7 +66,7 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
                                 >
                                 </TextField>
                             )
-                        })}
+                        })*/}
                     </div>
                     <div className="modal-footer">
                         <Button

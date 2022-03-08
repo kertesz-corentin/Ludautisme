@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -30,6 +31,7 @@ const theme = createTheme();
         const password = data.get('password');
 
         const response = await api.login(email, password);
+        console.log(response);
         if(response.status === 200) {
             navigate('/admin/home');
         }
@@ -60,12 +62,17 @@ const theme = createTheme();
                         alignItems: 'center',
                     }}
                     >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar
+                    sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <SupervisorAccountIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Se connecter
                     </Typography>
+                    <Alert variant="outlined"
+                            severity="error">
+                                This is an error alert — check it out!
+                    </Alert>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                         margin="normal"
