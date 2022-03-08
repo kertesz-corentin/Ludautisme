@@ -53,8 +53,8 @@ const api = {
 export default api;
 
 const authHeader = () => {
-    const {token } = JSON.parse(localStorage.getItem('user'));
-    console.log(token);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user.token;
     if (token) {
         return { 'x-access-token': token }
     }
