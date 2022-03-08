@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
-<<<<<<< HEAD
-import { getLocalBearerToken } from '../../../requests';
-=======
 import { userSchema } from '../../../Schemas';
 // import {ToggleButton} from '@mui/material';
 // import {CheckIcon} from '@material-ui/icons';
->>>>>>> GLOBAL_auth_refactor
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
