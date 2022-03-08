@@ -1,5 +1,5 @@
 const express = require('express');
-const { categorieController } = require('');
+const { categorieController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -10,8 +10,8 @@ const router = express.Router();
  * @param {string} request.body.required Status you want for filter
  * @return {array<Category>} 200 - succes response - application/json
  */
-router.route('/status')
-    .post(controllerHandler(categorieController.getByStatus));
+/* router.route('/status')
+    .post(controllerHandler(categorieController.getByStatus)); */
 /**
  * POST api/admin/categorie/reference
  * @summary Get all category of one reference
@@ -19,8 +19,8 @@ router.route('/status')
  * @param {number} request.body.required ID of the parent reference
  * @return {array<Category>} 200 - succes response - application/json
  */
-router.route('/reference')
-    .post(controllerHandler(categorieController.getByRef));
+/* router.route('/reference')
+    .post(controllerHandler(categorieController.getByRef)); */
 /**
  * GET api/admin/categorie/:id
  * @summary Get on category
@@ -42,10 +42,10 @@ router.route('/reference')
  * @param {number} 200 - succes response - application/json
  * @return {string} 200 - succes response - application/json
  */
-router.route('/:id')
+/* router.route('/:id')
     .get(controllerHandler(categorieController.getOne))
     .put(controllerHandler(categorieController.update))
-    .delete(controllerHandler(categorieController.delete));
+    .delete(controllerHandler(categorieController.delete)); */
 /**
  * GET api/admin/categorie
  * @summary Get all category
@@ -60,7 +60,7 @@ router.route('/:id')
  * @return {Category} 200 - succes response - application/json
  */
 router.route('/')
-    .get(controllerHandler(categorieController.getAll))
-    .post(controllerHandler(categorieController.addCategorie));
+    .get(controllerHandler(categorieController.getAll));
+//  .post(controllerHandler(categorieController.addCategorie));
 
 module.exports = router;
