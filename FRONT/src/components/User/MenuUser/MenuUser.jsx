@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
+import ModifyPassworldModal from '../ModifyPasswordlModal/ModifyPassworldModal';
 
 const MenuUser = ({className, ...rest}) => {
 
@@ -32,11 +33,7 @@ const MenuUser = ({className, ...rest}) => {
       >
        <NavLink to="/user/account"> {buttonMyAccount}</NavLink>
        <NavLink to="/user/bookings"> {buttonMyBookings}</NavLink>
-       <Button
-        onClick={handleClick}
-       >
-        Modifier mon mot de passe
-       </Button>
+       <ModifyPassworldModal/>
       </ButtonGroup>
     </Box>
    );
