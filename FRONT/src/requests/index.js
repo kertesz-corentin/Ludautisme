@@ -32,16 +32,19 @@ const api = {
 
         }
         if (response.data.token) {
-            (type === "user") ? localStorage.setItem("role", "user") : localStorage.setItem("role", "admin");
-            localStorage.setItem("token", response.data.token);
+            const user = {
+                id: response.data.id,
+                role:response.data.role,
+                token: response.data.token
+            }
+            console.log("user logged:",user);
+            localStorage.setItem("user",JSON.stringify(user));
         }
         return response;
-
     },
     async logout() {
         console.log('logout');
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        localStorage.removeItem("user");
         return { message: "logged Out" };
     }
 
@@ -50,9 +53,10 @@ const api = {
 export default api;
 
 const authHeader = () => {
-    const localToken = localStorage.getItem('token');
-    if (localToken) {
-        return { 'x-access-token': localToken }
+    const {token } = JSON.parse(localStorage.getItem('user'));
+    console.log(token);
+    if (token) {
+        return { 'x-access-token': token }
     }
     //No token
     return {};
