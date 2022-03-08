@@ -21,6 +21,12 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} refId.required - Foreign key of the parent reference
  * @property {boolean} main - If the picture is the main
  */
+/**
+ * @typedef {object} ParamsUpdatePicture
+ * @property {string} title - Title of the picture
+ * @property {string} description - Alternative text of picture
+ * @property {boolean} main - If the image is the main
+ */
 module.exports = {
     async addPicture(obj) {
         const props = Object.keys(obj);
@@ -69,8 +75,27 @@ module.exports = {
         return !!result.rowCount;
     },
     async getById(id) {
-        const result = await sqlHandler('SELECT * FROM "image" WHERE id=$1', [id]);
-
+        const result = await sqlHandler(`SELECT * FROM "image"
+                                        JOIN "reference_to_image" AS rti
+                                        ON rti."id_image" = "image"."id"
+                                        WHERE "image"."id" = $1`, [id]);
         return result.rows;
+    },
+    async update(id, obj) {
+        const props = Object.keys(obj);
+        console.log(obj);
+        let query = `UPDATE "image" SET `;
+        const placeholders = [];
+        props.forEach((prop, index) => {
+            placeholders.push(obj[prop]);
+            if (index !== props.length - 1) {
+                query += `${prop}=$${index + 1}, `;
+            } else {
+                query += `${prop}=$${index + 1} WHERE id=$${index + 2} RETURNING *`;
+                placeholders.push(id);
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
     },
 };

@@ -63,4 +63,27 @@ module.exports = {
             throw new ApiError(500, err);
         }
     },
+    async updatePicture(req, res) {
+        const { id } = req.params;
+        const { title, description, main } = req.body;
+        // I verify if picture exist and take this infos
+        const picture = await pictureDataMapper.getById(id);
+        if (picture.length < 1) {
+            throw new ApiError(404, 'L\'image demandé n\'existe pas');
+        }
+        // If image is main, i pass other picture of this reference secondary
+        if (main && main === 'true') {
+            const secondary = await pictureDataMapper.passSecondary(picture[0].id_ref, id);
+            if (secondary[0]) {
+                throw new ApiError(500, `erreur: ${secondary[0].message}`);
+            }
+        }
+        const obj = {
+            title,
+            alternative_text: description,
+            main,
+        };
+        const newPicture = await pictureDataMapper.update(id, obj);
+        res.json(newPicture);
+    },
 };
