@@ -41,6 +41,7 @@ const UserMyAccount = ({
         setAdressStreetValue(response.data.adress_street)
         setAdressZipCodeValue(response.data.adress_zipcode)
         setAdressCityValue(response.data.adress_city)
+        setPassworldValue(response.data.password)
     }
 
     const [firstNameValue,setFirstNameValue] = useState();
@@ -51,7 +52,7 @@ const UserMyAccount = ({
     const [addressCityValue,setAdressCityValue] = useState();
     const [mailValue,setMailValue] = useState();
     const [phoneValue,setPhoneValue] = useState();
-    const [passwordValue, setPasswordValue]= useState();
+    const [passworldValue, setPassworldValue]= useState();
         // Here i create ButtonModify's state in order to make appear differents elements ( <span><TableContainre> OR <form><TextField>)
         //This state will be modify when clicking ButtonModify with function names handleClickModifyBtn.
     const [modifyBtn, setModifyBtn]=  useState(true);
@@ -63,16 +64,17 @@ const UserMyAccount = ({
     function handleSubmit (event) {
         event.preventDefault()
         const newUserDatas = {
-            firstNameValue,
-            lastNameValue,
-            addressNumberValue,
-            addressStreetValue,
-            addressZipCodeValue,
-            addressCityValue,
-            mailValue,
-            phoneValue,
-            passwordValue
+         first_name:   firstNameValue,
+         last_name:   lastNameValue,
+         adress_number:   addressNumberValue,
+         adress_street:   addressStreetValue,
+         adress_zipcode:   addressZipCodeValue,
+         adress_city:   addressCityValue,
+         email:   mailValue,
+         phone:   phoneValue,
+         password:   passworldValue
         }
+        api.put('/admin/users/id', newUserDatas)
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
         console.log(`Voila les données à envoyer au back:`, newUserDatas)
@@ -109,8 +111,8 @@ const UserMyAccount = ({
         setPhoneValue(event.target.value)
         console.log(`Phone`, event.target.value)
     }
-    function handlePasswordChange (event) {
-        setPasswordValue(event.target.value)
+    function handlePassworldChange (event) {
+        setPassworldValue(event.target.value)
         console.log(`Password`, event.target.value)
     }
     function createData(label, content) {
@@ -126,6 +128,7 @@ const UserMyAccount = ({
         createData('Ville:', addressCityValue ),
         createData('Mail:', mailValue),
         createData('Telephone:', phoneValue),
+        createData('Mot de passe:', passworldValue),
       ];
 
    return (
@@ -206,6 +209,12 @@ const UserMyAccount = ({
                                 type="text"
                                 value= {phoneValue}
                                 onChange={(event) => handlePhoneChange(event, phoneValue)}
+                            />
+                            <TextField
+                                label= "mot de passe"
+                                type="passworld"
+                                value= {passworldValue}
+                                onChange={(event) => handlePassworldChange(event, passworldValue)}
                             />
 
                             <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
