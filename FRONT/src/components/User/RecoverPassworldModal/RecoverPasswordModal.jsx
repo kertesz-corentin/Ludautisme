@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './recoverpasswordmodal.scss';
+//import './modifypassworldmodal.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
+import { TextField } from '@mui/material';
 import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {requestGetNewPassword} from '../../../requests/requestsUser/recoverpassword'
 
 const RecoverPasswordModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [mailValue,setMailValue] = useState('');
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+
+      const handleClose = () => {
+        setOpen(false);
+      };
+
+
 
   function handleMailChange (event) {
     setMailValue(event.target.value)
@@ -22,55 +32,46 @@ const RecoverPasswordModal = ({className, ...rest}) => {
 }
 
 const handleMailSubmit = async(event) => {
-    event.preventDefault()
-    const data = new FormData (event.currentTarget);
-    console.log(`A ENVOYER AU BACK`)
-    const userMail = data.get('email')
-    const response = await requestGetNewPassword(userMail)
-    console.log(`Voila le mail où envoyer le nouveau mot de passe:`, userMail)
-    console.log(`voila la  réponse de l'Api`, response.status)
+    event.preventDefault();
+        const mail = {
+            mail:mailValue
+        }
+        console.log(`Mail where send newPassword`, mail)
+        handleClose()
 }
+
+const [mailValue, setMailValue]= useState()
 
   return (
     <div>
-      <Button onClick={handleOpen}>Mot de passe oubliée?</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className = "recoverpasswordmodal">
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Entrez votre adresse mail pour réinitialiser votre mot de passe
-          </Typography>
-          <form className="mail-form" >
+      <Button variant="outlined" onClick={handleClickOpen}>
+            Mot de passe oublié ?
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Valider</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Veuillez entrer votre mail pour recevoir votre nouveau mot de passe
+          </DialogContentText>
           <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Adresse email"
-                name="email"
-                autoComplete="email"
-                value={mailValue}
-                onChange={(event) => handleMailChange(event, 'mail')}
-                autoFocus
-                />
-                <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                onSubmit={handleMailSubmit}
-                sx={{ mt: 1, mb: 2 }}
-                >
-                Nouveau mot de passe
-                </Button>
-            </form>
-        </Box>
-      </Modal>
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Mon adresse mail"
+            type="password"
+            fullWidth
+            variant="standard"
+            value= {mailValue}
+            onChange={(event) => handleMailChange(event, mailValue)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleMailSubmit}>Valider</Button>
+        </DialogActions>
+      </Dialog>
     </div>
-  );
+    );
 };
 
 RecoverPasswordModal.propTypes = {
@@ -80,3 +81,4 @@ RecoverPasswordModal.defaultProps = {
     className: '',
 };
 export default React.memo(RecoverPasswordModal);
+
