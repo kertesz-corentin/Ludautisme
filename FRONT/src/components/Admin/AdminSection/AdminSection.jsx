@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
 import AdminModal from '../AdminModal/AdminModal';
+import AddUserModal from '../AddUserModal/AddUserModal';
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, request, path, initialState }) => {
+const AdminSection = ({ title, rows, columns, path, initialState }) => {
     const showModal = () => {
         console.log('showModal');
     };
@@ -14,7 +15,8 @@ const AdminSection = ({ title, rows, columns, request, path, initialState }) => 
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <AdminModal name={title} fields={columns} path={path} />
+            {/* <AdminModal name={title} fields={columns} path={path} /> */}
+            <AddUserModal />
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid

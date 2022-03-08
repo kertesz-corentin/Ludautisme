@@ -4,13 +4,18 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { userSchema } from '../../../Schemas';
-// import {ToggleButton} from '@mui/material';
+import { ToggleButton } from '@mui/material';
 // import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
+import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState(false);
+
+    // config path for api route
+    const path = '/admin/users';
+
 
     const getUsers = async () => {
         try {
@@ -22,10 +27,6 @@ const AdminUsers = ({className, ...rest}) => {
             console.error(err);
         }
     }
-
-
-    const path = '/admin/users'
-
 
     useEffect(() => {
         getUsers();
@@ -45,10 +46,17 @@ const AdminUsers = ({className, ...rest}) => {
             if (propElt.gridDisplay !== "normal"){
                 switch (propElt.gridDisplay){
                     case "toggle":
-                        config.renderCell = (params) =>(
-                            <a href="/city">params</a>
+                        config.renderCell = (params) => (
+                            <ToggleButton
+                                value={params}
+                                selected={selected}
+                                onChange={() => {setSelected(!selected);}}
+                            >
+                                <GridCheckIcon />
+                            </ToggleButton>
                         );
                         break;
+
                     default:
                         break;
                 }
