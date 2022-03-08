@@ -6,24 +6,14 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-
-
-
-
-
-
-
-
-
 
 const MenuUser = ({className, ...rest}) => {
 
-
-
     const buttonMyAccount =  <Button key="one" type = "click"  >Mon Compte</Button>;
     const buttonMyBookings = <Button key="two" type = "click"  >Mes Réservations</Button>;
+    function handleClick() {
+        console.log(`Je souhaite modifier mon mdp`)
+    }
 
    return (
        <Box
@@ -42,6 +32,11 @@ const MenuUser = ({className, ...rest}) => {
       >
        <NavLink to="/user/account"> {buttonMyAccount}</NavLink>
        <NavLink to="/user/bookings"> {buttonMyBookings}</NavLink>
+       <Button
+        onClick={handleClick}
+       >
+        Modifier mon mot de passe
+       </Button>
       </ButtonGroup>
     </Box>
    );

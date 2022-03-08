@@ -207,12 +207,7 @@ const UserMyAccount = ({
                                 value= {phoneValue}
                                 onChange={(event) => handlePhoneChange(event, phoneValue)}
                             />
-                            <TextField
-                                label="Mot de passe"
-                                type="password"
-                                value={passwordValue}
-                                onChange={(event) => handlePasswordChange(event, passwordValue)}
-                            />
+
                             <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
                                 Valider
                             </button>
