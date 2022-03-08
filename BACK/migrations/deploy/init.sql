@@ -28,6 +28,7 @@ CREATE TABLE "user" (
 CREATE TABLE "permanency" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "perm_date" DATE,
+    "active" BOOLEAN DEFAULT false,
     "published" BOOLEAN DEFAULT false
 );
 
@@ -53,7 +54,7 @@ CREATE TABLE "reference" (
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "valorisation" INT,
-    "id_category" INT REFERENCES "category"("id")
+    "main_category" INT REFERENCES "category"("id")
 );
 
 CREATE TABLE "image" (
@@ -76,7 +77,7 @@ CREATE TABLE "reference_to_category" (
 
 CREATE TABLE "article" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "ref_number" INT NOT NULL UNIQUE,
+    "number" INT NOT NULL UNIQUE,
     "origin" TEXT,
     "date_buy" DATE,
     "available" BOOLEAN DEFAULT true,
@@ -93,8 +94,15 @@ CREATE TABLE "temptoken"(
 
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "refnum_article" INT REFERENCES "article"("ref_number"),
+    "refnum_article" INT REFERENCES "article"("number"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
+
+DROP VIEW IF EXISTS "full_perm";
+CREATE OR REPLACE VIEW "full_perm" AS
+SELECT * ,
+    LEAD(id,1) OVER(ORDER BY id) AS next_id,
+    LEAD(perm_date,1) OVER(ORDER BY perm_date) AS next_date
+    FROM "permanency";
 
 COMMIT;

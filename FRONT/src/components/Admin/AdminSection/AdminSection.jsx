@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
 import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, request, token }) => {
+const AdminSection = ({ title, rows, columns, request, token, initialState }) => {
     const showModal = () => {
         console.log('showModal');
     };
@@ -26,9 +26,11 @@ const AdminSection = ({ title, rows, columns, request, token }) => {
                         editMode="cell"
                         onRowDoubleClick={showModal}
                         disableSelectionOnClick
+                        localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{
                             Toolbar: GridToolbar,
                         }}
+                        initialState = {initialState}
                     />
                 </div>
             </div>

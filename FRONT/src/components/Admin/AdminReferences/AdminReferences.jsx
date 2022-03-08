@@ -2,22 +2,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import api, { getLocalBearerToken } from '../../../requests';
+import api from '../../../requests/index'
+
 
 // import scss
 import './adminreferences.scss';
 
 const AdminReferences = ({className, ...rest}) => {
     const [references, setReferences] = useState([]);
-    const adminToken = getLocalBearerToken();
 
     const getReferences = async () => {
         try {
-            const response = await api.get('admin/references', {
-                headers: {
-                    Authorization: `bearer ${adminToken}`
-                }
-            })
+            const response = await api.get('admin/references');
             const data = await response.data;
 
             setReferences(data);
