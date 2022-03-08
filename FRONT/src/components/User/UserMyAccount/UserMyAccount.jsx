@@ -61,7 +61,7 @@ const UserMyAccount = ({
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
     }
-    function handleSubmit (event) {
+    async function handleSubmit (event) {
         event.preventDefault()
         const newUserDatas = {
          first_name:   firstNameValue,
@@ -74,10 +74,11 @@ const UserMyAccount = ({
          phone:   phoneValue,
          password:   passworldValue
         }
-        api.put('/admin/users/id', newUserDatas)
+       const response = await api.put('/admin/users/id', newUserDatas)
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
         console.log(`Voila les données à envoyer au back:`, newUserDatas)
+        console.log(response)
     }
     function handleFirstNameChange (event) {
         setFirstNameValue(event.target.value)
