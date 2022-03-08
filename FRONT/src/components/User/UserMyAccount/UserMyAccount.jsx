@@ -74,7 +74,7 @@ const UserMyAccount = ({
          phone:   phoneValue,
          password:   passworldValue
         }
-       const response = await api.put('/admin/users/id', newUserDatas)
+       const response = await api.put(`/customer/users/${userAllDatas.id}`, newUserDatas)
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
         console.log(`Voila les données à envoyer au back:`, newUserDatas)
