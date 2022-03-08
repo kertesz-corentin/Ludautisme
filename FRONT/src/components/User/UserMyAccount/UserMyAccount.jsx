@@ -25,24 +25,33 @@ const UserMyAccount = ({
     useEffect(() => {requestGetDatasOneUser()},[])
 
 //This const get id, role  from API when user is logged
-    const userDatas= JSON.parse(localStorage.getItem('user'));
-    console.log(`Données de l'utilisateur`, userDatas)
+    const userAllDatas= JSON.parse(localStorage.getItem('user'));
+    console.log(`Données de l'utilisateur`, userAllDatas)
 
 //This function takes id, role and token, send them to API in order to get back every user's infos
-    async function requestGetDatasOneUser ()  {
+ async function requestGetDatasOneUser ()  {
         console.log(`fonction qui envoi l'id, le rôle `)
-        const response = await api.get('/admin/users/:id',userDatas)
-        console.log(`expected user's datas`, response)
+        const  response = await api.get(`/customer/user/${userAllDatas.id}`)
+        console.log(`expected user's datas`, response.data)
+        setFirstNameValue (response.data.first_name)
+        setLastNameValue (response.data.last_name)
+        setMailValue (response.data.email)
+        setPhoneValue (response.data.phone)
+        setAdressNumberValue(response.data.adress_number)
+        setAdressStreetValue(response.data.adress_street)
+        setAdressZipCodeValue(response.data.adress_zipcode)
+        setAdressCityValue(response.data.adress_city)
     }
 
-
-
-    const [firstNameValue,setFirstNameValue] = useState('Michel');
-    const [lastNameValue,setLastNameValue] = useState('Michel');
-    const [addressValue,setAdressValue] = useState('France');
-    const [mailValue,setMailValue] = useState('michel@michel');
-    const [phoneValue,setPhoneValue] = useState('0000000000');
-    const [passwordValue, setPasswordValue]= useState('coucou');
+    const [firstNameValue,setFirstNameValue] = useState();
+    const [lastNameValue,setLastNameValue] = useState();
+    const [addressNumberValue,setAdressNumberValue] = useState();
+    const [addressStreetValue,setAdressStreetValue] = useState();
+    const [addressZipCodeValue,setAdressZipCodeValue] = useState();
+    const [addressCityValue,setAdressCityValue] = useState();
+    const [mailValue,setMailValue] = useState();
+    const [phoneValue,setPhoneValue] = useState();
+    const [passwordValue, setPasswordValue]= useState();
         // Here i create ButtonModify's state in order to make appear differents elements ( <span><TableContainre> OR <form><TextField>)
         //This state will be modify when clicking ButtonModify with function names handleClickModifyBtn.
     const [modifyBtn, setModifyBtn]=  useState(true);
@@ -53,7 +62,17 @@ const UserMyAccount = ({
     }
     function handleSubmit (event) {
         event.preventDefault()
-        const newUserDatas = {firstNameValue,lastNameValue,addressValue,mailValue,phoneValue,passwordValue}
+        const newUserDatas = {
+            firstNameValue,
+            lastNameValue,
+            addressNumberValue,
+            addressStreetValue,
+            addressZipCodeValue,
+            addressCityValue,
+            mailValue,
+            phoneValue,
+            passwordValue
+        }
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
         console.log(`Voila les données à envoyer au back:`, newUserDatas)
@@ -66,9 +85,21 @@ const UserMyAccount = ({
         setLastNameValue(event.target.value)
         console.log(`LastName`, event.target.value)
     }
-    function handleAdressChange (event) {
-        setAdressValue(event.target.value)
-        console.log(`Adresse`, event.target.value)
+    function handleAdressNumberChange (event) {
+        setAdressNumberValue(event.target.value)
+        console.log(`AdresseNumber`, event.target.value)
+    }
+    function handleAdressStreetChange (event) {
+        setAdressStreetValue(event.target.value)
+        console.log(`AdresseStreet`, event.target.value)
+    }
+    function handleAdressZipCodeChange (event) {
+        setAdressZipCodeValue(event.target.value)
+        console.log(`AdresseZipCode`, event.target.value)
+    }
+    function handleAdressCityChange (event) {
+        setAdressCityValue(event.target.value)
+        console.log(`AdresseCity`, event.target.value)
     }
     function handleMailChange (event) {
         setMailValue(event.target.value)
@@ -82,19 +113,23 @@ const UserMyAccount = ({
         setPasswordValue(event.target.value)
         console.log(`Password`, event.target.value)
     }
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
+    function createData(label, content) {
+        return {label, content };
+      }
+
       const rows = [
-        createData('Nom:', firstNameValue),
-        createData('Prenom:', lastNameValue ),
-        createData('Adresse:', addressValue ),
+        createData('Prénom:', firstNameValue),
+        createData('Nom:', lastNameValue ),
+        createData('Numéro de rue:', addressNumberValue ),
+        createData('Nom de rue:', addressStreetValue ),
+        createData('Code Postale:', addressZipCodeValue ),
+        createData('Ville:', addressCityValue ),
         createData('Mail:', mailValue),
         createData('Telephone:', phoneValue),
       ];
 
    return (
-       <div > Bienvenue Michel
+       <div > Bienvenue {firstNameValue}
          <Permanency/>
                 <div className= "home-user">
                 <MenuUser/>
@@ -106,13 +141,13 @@ const UserMyAccount = ({
                                     <TableBody>
                                     {rows.map((row) => (
                                         <TableRow
-                                        key={row.name}
+                                        key={row.label}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
-                                            {row.name}
+                                            {row.label}
                                             </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
+                                        <TableCell align="right">{row.content}</TableCell>
                                         </TableRow>
                                     ))}
                                     </TableBody>
@@ -125,28 +160,46 @@ const UserMyAccount = ({
                     :
                         <form className="loginuser-form" onSubmit={handleSubmit}>
                             <TextField
-                                label= "Nom"
+                                label= "Nom:"
                                 type="text"
                                 value= {firstNameValue}
                                 onChange={(event) => handleFirstNameChange(event, firstNameValue)}
                             />
                             <TextField
-                                label= "Prénom"
+                                label= "Prénom:"
                                 type="text"
                                 value= {lastNameValue}
                                 onChange={(event) => handleLastNameChange(event, lastNameValue)}
                             />
                             <TextField
-                                label= "Adresse"
+                                label= "Numéro de rue:"
                                 type="text"
-                                value= {addressValue}
-                                onChange={(event) => handleAdressChange(event, addressValue)}
+                                value= {addressNumberValue}
+                                onChange={(event) => handleAdressNumberChange(event, addressNumberValue)}
+                            />
+                            <TextField
+                                label= "Nom de rue:"
+                                type="text"
+                                value= {addressStreetValue}
+                                onChange={(event) => handleAdressStreetChange(event, addressStreetValue)}
+                            />
+                            <TextField
+                                label= "Code Postale:"
+                                type="text"
+                                value= {addressZipCodeValue}
+                                onChange={(event) => handleAdressZipCodeChange(event, addressZipCodeValue)}
+                            />
+                            <TextField
+                                label= "Ville"
+                                type="text"
+                                value= {addressCityValue}
+                                onChange={(event) => handleAdressCityChange(event, addressCityValue)}
                             />
                             <TextField
                                 label= "Mail"
                                 type="text"
                                 value= {mailValue}
-                                onChange={(event) => handleMailChange(event, 'mail')}
+                                onChange={(event) => handleMailChange(event, mailValue)}
                             />
                             <TextField
                                 label= "telephone"
