@@ -4,7 +4,7 @@ import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
 import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, request, token, initialState }) => {
+const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
     const showModal = () => {
         console.log('showModal');
     };
@@ -14,7 +14,8 @@ const AdminSection = ({ title, rows, columns, request, token, initialState }) =>
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <AdminModal name={title} fields={columns} request={request} token={token} />
+            {/* <AdminModal name={title} fields={columns} path={path} /> */}
+            {children}
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid

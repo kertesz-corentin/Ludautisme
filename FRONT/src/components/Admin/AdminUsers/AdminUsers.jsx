@@ -4,19 +4,24 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { userSchema } from '../../../Schemas';
-// import {ToggleButton} from '@mui/material';
+import { ToggleButton } from '@mui/material';
+import AddUserModal from '../AddUserModal/AddUserModal';
 // import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
+import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState(false);
+
+    // config path for api route
+    const path = '/admin/users';
+
 
     const getUsers = async () => {
         try {
             const response = await api.get('/admin/users');
             const data = await response.data;
-            console.log(data);
             setUsers(data);
         }
         catch (err) {
@@ -34,6 +39,7 @@ const AdminUsers = ({className, ...rest}) => {
         Object.keys(userSchema).forEach(prop => {
             const propElt = userSchema[prop];
             const config = {
+                type: propElt.type,
                 field:prop,
                 headerName:propElt.label,
                 width: propElt.width};
@@ -41,10 +47,17 @@ const AdminUsers = ({className, ...rest}) => {
             if (propElt.gridDisplay !== "normal"){
                 switch (propElt.gridDisplay){
                     case "toggle":
-                        config.renderCell = (params) =>(
-                            <a href="/city">params</a>
+                        config.renderCell = (params) => (
+                            <ToggleButton
+                                value={params}
+                                selected={selected}
+                                onChange={() => {setSelected(!selected);}}
+                            >
+                                <GridCheckIcon />
+                            </ToggleButton>
                         );
                         break;
+
                     default:
                         break;
                 }
@@ -66,14 +79,16 @@ const AdminUsers = ({className, ...rest}) => {
                 title="Adhérent"
                 rows={users}
                 columns={columnBuilder}
+                path={path}
                 initialState={{
                     columns: {
                       columnVisibilityModel: {
-                        // Hide columns status and traderName, the other columns will remain visible
+                        // Hide columns <column name>, the other columns will remain visible
                         id_role: false,
                       },
                     },
-                  }}
+                }}
+                children={<AddUserModal />}
             />
         </div>
 
