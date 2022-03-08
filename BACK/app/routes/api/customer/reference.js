@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { userReferenceController } = require('../../../controllers');
+const { referenceController } = require('../../../controllers/api/customer');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -11,7 +11,7 @@ const router = express.Router();
  * @returns {allOf|Reference|Pictures} 200 - success response - application/json
  */
 router.route('/:id')
-    .get(controllerHandler(userReferenceController.getOne));
+    .get(controllerHandler(referenceController.getOne));
 /**
      * GET api/user/articles
      * @summary Get all references with picture
@@ -19,6 +19,6 @@ router.route('/:id')
      * @return {allOf|Reference|Pictures} 200 - success response - application/json
      */
 router.route('/')
-    .get(controllerHandler(userReferenceController.getAll));
+    .get(controllerHandler(referenceController.getAll));
 
 module.exports = router;
