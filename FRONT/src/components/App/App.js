@@ -44,8 +44,9 @@ function App() {
             <Route path = "/admin/users" element = {<PrivateRoute/>}>
                 <Route path = "/admin/users" element = {<AdminPage><AdminUsers /></AdminPage>}></Route>
             </Route>
-            <Route path = "/admin/references" element = {<AdminPage><AdminReferences /></AdminPage>}></Route>
-            <Route path = "/admin/references" element = {<AdminPage><AdminReferences /></AdminPage>}></Route>
+            <Route path = "/admin/references" element = {<PrivateRoute/>}>
+                <Route path = "/admin/references" element = {<AdminPage><AdminReferences /></AdminPage>}></Route>
+            </Route>
             {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
             {/* <Route path = "/admin/users/:id" element = {<AdminUser/>}></Route> */}
             {/* <Route path = "/admin/references/:id" element = {<AdminReference />}></Route> */}
