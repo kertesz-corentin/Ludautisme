@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import api from '../../../requests/index'
+import api from '../../../requests/index';
+import { referenceSchema } from '../../../Schemas';
 
 
 // import scss
@@ -11,11 +12,13 @@ import './adminreferences.scss';
 const AdminReferences = ({className, ...rest}) => {
     const [references, setReferences] = useState([]);
 
+    // config path for api route
+    const path = '/admin/references';
+
     const getReferences = async () => {
         try {
             const response = await api.get('admin/references');
             const data = await response.data;
-
             setReferences(data);
         }
         catch (err) {
@@ -35,17 +38,6 @@ const AdminReferences = ({className, ...rest}) => {
         {field: 'tag', headerName: 'Tags', width: 200}
     ]
 
-    const rowsData = references.map(reference => {
-        return {
-            id: reference.id,
-            name: reference.name,
-            description: reference.description,
-            valorisation: reference.valorisation,
-            mainCategory: reference.mainCategory,
-            tag: reference.tag,
-        }
-    })
-
    return (
        <div
             className={classnames('adminreferences', className)}
@@ -53,7 +45,7 @@ const AdminReferences = ({className, ...rest}) => {
          >
             <AdminSection
                 title="Référence"
-                rows={rowsData}
+                rows={references}
                 columns={columnsData}
             />
         </div>
