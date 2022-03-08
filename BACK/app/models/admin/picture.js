@@ -63,4 +63,14 @@ module.exports = {
         );
         return result.rows;
     },
+    async deletePicture(id) {
+        const result = await sqlHandler('DELETE FROM "image" WHERE id=$1', [id]);
+
+        return !!result.rowCount;
+    },
+    async getById(id) {
+        const result = await sqlHandler('SELECT * FROM "image" WHERE id=$1', [id]);
+
+        return result.rows;
+    },
 };

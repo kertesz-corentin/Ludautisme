@@ -18,7 +18,7 @@ const router = express.Router();
  * @summary Delete one picture
  * @tags Picture
  * @param {number} request.params.id.required - ID of the picture tu update
- * @returns {} 200 - succes response - application/json
+ * @returns {string} 200 - succes response - application/json
  */
 router.route('/:id')
     // .put(controllerHandler(pictureController.updatePicture))
