@@ -1,5 +1,5 @@
+const fs = require('fs');
 const ApiError = require('../../../errors/apiError');
-
 const pictureDataMapper = require('../../../models/admin/picture');
 
 module.exports = {
@@ -35,6 +35,32 @@ module.exports = {
             res.json(picture).status(201);
         } else {
             throw new ApiError(500, `erreur: ${result[0].message}`);
+        }
+    },
+    async deletePicture(req, res) {
+        const { id } = req.params;
+        const picture = await pictureDataMapper.getById(id);
+        if (picture.length < 1) {
+            throw new ApiError(404, 'L\'image demandé n\'existe pas');
+        }
+        const arrayUrl = picture[0].url.split('/');
+        const name = arrayUrl[arrayUrl.length - 1];
+        const path = `../FRONT/public/pictures/${name}`;
+        try {
+            fs.unlink(path, (async (err) => {
+                if (err) {
+                    throw new ApiError(500, err);
+                } else {
+                    const deletePict = await pictureDataMapper.deletePicture(id);
+                    if (deletePict) {
+                        res.json(`${name} a bien été supprimé`);
+                    } else {
+                        throw new ApiError(500, err);
+                    }
+                }
+            }));
+        } catch (err) {
+            throw new ApiError(500, err);
         }
     },
 };

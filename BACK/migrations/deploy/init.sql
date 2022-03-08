@@ -68,7 +68,7 @@ CREATE TABLE "image" (
 CREATE TABLE "reference_to_image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "id_ref" INT REFERENCES "reference"("id") NOT NULL,
-    "id_image" INT REFERENCES "image"("id") NOT NULL
+    "id_image" INT NOT NULL REFERENCES "image"("id")  ON DELETE CASCADE
 );
 
 CREATE TABLE "reference_to_category" (

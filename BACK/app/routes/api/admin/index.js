@@ -1,5 +1,6 @@
 const express = require('express');
 
+const pictureRouter = require('./picture');
 const userRouter = require('./users');
 const referenceRouter = require('./reference');
 const bookingRouter = require('./booking');
@@ -9,6 +10,7 @@ const { ApiError } = require('../../../errors/apiError');
 
 const router = express.Router();
 
+router.use('/picture', pictureRouter);
 router.use('/users', userRouter);
 router.use('/references', referenceRouter);
 router.use('/booking', bookingRouter);
