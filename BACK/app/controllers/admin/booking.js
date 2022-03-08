@@ -44,7 +44,7 @@ module.exports = {
         const userId = Number(req.params.UserId);
         const articlesIds = req.body.articleIds;
         console.log("userId", userId, "articles", articlesIds);
-        const existingBooking = await bookingDataMapper.findFiltered([{ id: userId }]);
+        const currentArticles = 2;
         if (articlesIds && articlesIds.length > 8) {
             throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
         }
