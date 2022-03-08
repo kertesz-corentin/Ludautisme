@@ -6,18 +6,25 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
-
-function handleClick  (event) {
-console.log('coucou',event)
-}
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 
-  const buttonMyAccount =  <Button key="one" type = "click" onClick = {handleClick} >Mon Compte</Button>;
-  const buttonMyBookings = <Button key="two" type = "click" onClick = {handleClick} >Mes Réservations</Button>;
-  const buttonDisconnect =   <Button key="three" type = "click" onClick = {handleClick} >Se déconnecter</Button>;
-  ;
+
+
+
+
+
+
+
 
 const MenuUser = ({className, ...rest}) => {
+
+
+
+    const buttonMyAccount =  <Button key="one" type = "click"  >Mon Compte</Button>;
+    const buttonMyBookings = <Button key="two" type = "click"  >Mes Réservations</Button>;
+
    return (
        <Box
       sx={{
@@ -35,7 +42,6 @@ const MenuUser = ({className, ...rest}) => {
       >
        <NavLink to="/user/account"> {buttonMyAccount}</NavLink>
        <NavLink to="/user/bookings"> {buttonMyBookings}</NavLink>
-       <NavLink to="/Disconnect"> {buttonDisconnect}</NavLink>
       </ButtonGroup>
     </Box>
    );
