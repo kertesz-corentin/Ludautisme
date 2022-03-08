@@ -30,13 +30,13 @@ module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
         const dbUser = await usersDatamapper.findFiltered(obj);
+        console.log(dbUser[0]);
         if (!dbUser[0]) {
             throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
         if (!bcrypt.compareSync(req.body.password, dbUser[0].password)) {
             throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
-        console.log(req.originalUrl);
         if (dbUser[0].name === 'admin' && req.originalUrl !== '/api/login/admin') {
             dbUser[0].name = 'user';
         }
@@ -54,6 +54,7 @@ module.exports = {
             const loggedUser = {
                 id: dbUser[0].id,
                 token,
+                role: dbUser[0].name,
             };
             res.status(200).json(loggedUser);
         }

@@ -70,7 +70,7 @@ module.exports = {
     },
 
     async findFiltered(arr) {
-        let query = `SELECT * FROM "user" LEFT JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
+        let query = `SELECT "user".*, role.name FROM "user" INNER JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
