@@ -59,7 +59,6 @@ const sqlHandler = require('../../helpers/sqlHandler');
 module.exports = {
     //  Return all users in db
     async findAll() {
-        console.log("testtest");
         const query = 'SELECT * FROM "user"';
         const result = await sqlHandler(query);
         return result.rows;
@@ -73,6 +72,7 @@ module.exports = {
     },
 
     async findFiltered(arr) {
+        console.log(arr);
         let query = `SELECT "user".*, role.name FROM "user" INNER JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {

@@ -5,7 +5,7 @@ const mailer = require('../../config/mailer');
 require('dotenv').config();
 
 const loginDatamapper = require('../../models/auth/login');
-const { usersDatamapper } = require('../../models/admin');
+const { usersDataMapper } = require('../../models/admin');
 const { ApiError } = require('../../helpers/errorHandler');
 /**
  * @typedef {object} login
@@ -29,8 +29,7 @@ const { ApiError } = require('../../helpers/errorHandler');
 module.exports = {
     async login(req, res) {
         const obj = [{ email: req.body.email }];
-        const dbUser = await usersDatamapper.findFiltered(obj);
-        console.log(dbUser[0]);
+        const dbUser = await usersDataMapper.findFiltered(obj);
         if (!dbUser[0]) {
             throw new ApiError(403, 'L\'email ou le mot de passe utilisé est invalide');
         }
