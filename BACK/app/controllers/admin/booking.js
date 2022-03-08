@@ -10,7 +10,7 @@ module.exports = {
         //Avoid injection on column
         const columns = [
             'id', 'delivered', 'closed',
-            'id_permanency', 'date_permanency',
+            'id_permanency', 'date_permanency', 'active_permanency',
             'id_user', 'email', 'first_name', 'last_name', 'member_number'];
         const obj = req.body;
         const props = Object.keys(obj);
@@ -44,7 +44,7 @@ module.exports = {
         const userId = Number(req.params.UserId);
         const articlesIds = req.body.articleIds;
         console.log("userId", userId, "articles", articlesIds);
-        const currentArticles = 2;
+        const existingBooking = await bookingDataMapper.findFiltered([{ id: userId }]);
         if (articlesIds && articlesIds.length > 8) {
             throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
         }

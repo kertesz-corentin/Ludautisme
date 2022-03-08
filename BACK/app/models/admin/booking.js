@@ -56,6 +56,7 @@ module.exports = {
 		"perm"."perm_date" AS date_permanency,
         "perm"."next_id" AS return_id_permanency,
         "perm"."next_date" AS return_date_permanency,
+		"perm"."active" AS active_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -68,7 +69,8 @@ module.exports = {
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
         INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
-        GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency";`;
+        GROUP BY b.id, "user"."id",
+            "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
         const result = await sqlHandler(query);
         return result.rows;
     },
@@ -84,8 +86,10 @@ module.exports = {
 	    "user"."first_name",
 	    "user"."last_name",
         "user"."email",
+		"perm"."perm_date" AS date_permanency,
         "perm"."next_id" AS return_id_permanency,
         "perm"."next_date" AS return_date_permanency,
+		"perm"."active" AS active_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -104,7 +108,7 @@ module.exports = {
             b: ['id', 'delivered', 'closed', 'id_permanency'],
             user: ['id_user', 'first_name', 'last_name', 'email', 'member_number'],
             articles: ['id', 'number', 'available', 'archived'],
-            perm: ['date_permanency'],
+            custom: ['date_permanency', 'active_permanency', 'return_id_permanency', 'return_date_permanency'],
         };
         try {
             arr.forEach((filter, index) => {
@@ -119,7 +123,8 @@ module.exports = {
                     query += `"${alias}"."${prop}"=$${index + 1} `;
                 }
             });
-            query += `GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency"`;
+            query += `GROUP BY b.id, "user"."id",
+                "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
             const result = await sqlHandler(query, placeholders);
             return result.rows;
         } catch (err) {
@@ -142,6 +147,7 @@ module.exports = {
 		"perm"."perm_date" AS date_permanency,
         "perm"."next_id" AS return_id_permanency,
         "perm"."next_date" AS return_date_permanency,
+		"perm"."active" AS active_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -155,12 +161,13 @@ module.exports = {
         INNER JOIN "article" AS ar ON "ar_to_book"."refnum_article" = "ar"."number"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE b.id=$1
-        GROUP BY b.id, "user"."id","date_permanency","return_date_permanency","return_id_permanency"`;
+        GROUP BY b.id, "user"."id",
+                "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
-    async addOne(id,articles) {
+    async addOne(id, articles) {
         const query = 'SELECT * FROM "booking" WHERE id=$1';
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
