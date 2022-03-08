@@ -23,7 +23,7 @@ const AdminUsers = ({className, ...rest}) => {
         }
     }
 
-    const addUser = api.post;
+
     const path = '/admin/users'
 
 
@@ -70,7 +70,6 @@ const AdminUsers = ({className, ...rest}) => {
                 title="Adhérent"
                 rows={users}
                 columns={columnBuilder}
-                request={addUser}
                 path={path}
                 initialState={{
                     columns: {

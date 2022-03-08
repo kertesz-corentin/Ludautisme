@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../../requests';
 import { TextField, Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
 import { userSchema } from '../../../Schemas'
 
-const AdminModal = ({name, fields, request, path, className, ...rest}) => {
+const AdminModal = ({name, fields, path, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -19,9 +20,9 @@ const AdminModal = ({name, fields, request, path, className, ...rest}) => {
             const value = entrie[1];
             user[prop]=value;
          }
-        console.log('user', user, 'request', request);
+        console.log('user', user);
 
-        const response = await request(path, user);
+        const response = await api.post(path, user);
         console.log('response', response);
         if(response.status === 200) {
             console.log('data', response.data);

@@ -14,7 +14,7 @@ const AdminSection = ({ title, rows, columns, request, path, initialState }) => 
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <AdminModal name={title} fields={columns} request={request} path={path} />
+            <AdminModal name={title} fields={columns} path={path} />
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid
