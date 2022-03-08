@@ -1,6 +1,5 @@
-const ApiError = require('../../../errors/apiError');
-const articleDataMapper = require('../../../models/admin/article');
-const { getFiltered } = require('./users');
+const ApiError = require('../../errors/apiError');
+const { articleDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {

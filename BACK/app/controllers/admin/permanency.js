@@ -1,5 +1,5 @@
-const ApiError = require('../../../errors/apiError');
-const permanencyDataMapper = require('../../../models/admin/permanency');
+const ApiError = require('../../errors/apiError');
+const { permanencyDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_,res) {
@@ -20,7 +20,6 @@ module.exports = {
     },
     async setDateNext(req,res) {
         const activePermanency = await permanencyDataMapper.findActive();
-        console.log(activePermanency);
         const nextId = activePermanency[0].next_id;
         const date = req.body.next_date;
         const updatedNextPerm = await permanencyDataMapper.setDateNext(nextId, date);

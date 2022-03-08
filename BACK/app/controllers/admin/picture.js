@@ -1,6 +1,5 @@
-const ApiError = require('../../../errors/apiError');
-
-const pictureDataMapper = require('../../../models/admin/picture');
+const ApiError = require('../../errors/apiError');
+const { pictureDataMapper } = require('../../models/admin');
 
 module.exports = {
     async addPicture(req, res) {

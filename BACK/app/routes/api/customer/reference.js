@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { referenceController } = require('../../../controllers/api/customer');
+const { referenceController } = require('../../../controllers/customer');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();

@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
-const mailer = require('../../../config/mailer');
+const mailer = require('../../config/mailer');
 require('dotenv').config();
 
-const loginDatamapper = require('../../../models/auth/login');
-const usersDatamapper = require('../../../models/admin/users');
-const { ApiError } = require('../../../helpers/errorHandler');
+const loginDatamapper = require('../../models/auth/login');
+const { usersDatamapper } = require('../../models/admin');
+const { ApiError } = require('../../helpers/errorHandler');
 /**
  * @typedef {object} login
  * @property {string} id - Unique identifier
@@ -49,7 +49,7 @@ module.exports = {
                     role: dbUser[0].name,
                 },
                 process.env.SALT,
-                { expiresIn: '24h' },
+                { expiresIn: '31d'},
             );
             const loggedUser = {
                 id: dbUser[0].id,

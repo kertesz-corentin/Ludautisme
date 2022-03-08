@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const userDataMapper = require('../../../models/customer/user');
-const ApiError = require('../../../errors/apiError');
+const userDataMapper = require('../../models/customer/user');
+const ApiError = require('../../errors/apiError');
 
 const saltRounds = 10;
 
@@ -20,7 +20,7 @@ module.exports = {
             'adress_street',
             'adress_zipcode',
             'adress_city',
-            'password'
+            'password',
         ];
         Object.keys(req.body).forEach(prop => {
             if (!authorizedFields.includes(prop)) {
@@ -28,7 +28,6 @@ module.exports = {
             }
         });
         const user = await userDataMapper.findById(req.params.id);
-        console.log('user', user);
 
         if (user.length < 1) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
@@ -37,7 +36,6 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
             req.body.password = hashedPassword;
         }
-        console.log(req.params.id, req.body);
         const updatedUser = await userDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },

@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
-const ApiError = require('../../../errors/apiError');
-const usersDataMapper = require('../../../models/admin/users');
+const ApiError = require('../../errors/apiError');
+const { usersDataMapper } = require('../../models/admin');
 
 //  Enable it when Post, update...
 //  const { ApiError } = require('../../../helpers/errorHandler');

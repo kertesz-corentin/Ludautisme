@@ -1,5 +1,5 @@
 const express = require('express');
-const { userController } = require('../../../controllers');
+const { usersController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -28,9 +28,9 @@ const router = express.Router();
  */
 
 router.route('/:id')
-    .get(controllerHandler(userController.getById))
-    .put(controllerHandler(userController.update))
-    .delete(controllerHandler(userController.delete));
+    .get(controllerHandler(usersController.getById))
+    .put(controllerHandler(usersController.update))
+    .delete(controllerHandler(usersController.delete));
 
 /**
  * POST /api/admin/users/search
@@ -41,7 +41,7 @@ router.route('/:id')
  */
 
 router.route('/search')
-    .post(controllerHandler(userController.getFiltered));
+    .post(controllerHandler(usersController.getFiltered));
 
 /**
  * GET /api/admin/users
@@ -59,7 +59,7 @@ router.route('/search')
  */
 
 router.route('/')
-    .get(controllerHandler(userController.getAll))
-    .post(controllerHandler(userController.create));
+    .get(controllerHandler(usersController.getAll))
+    .post(controllerHandler(usersController.create));
 
 module.exports = router;
