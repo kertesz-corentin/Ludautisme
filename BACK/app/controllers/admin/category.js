@@ -7,4 +7,7 @@ module.exports = {
         const results = await categoryDataMapper.getAll();
         return res.json(results);
     },
+    async addCategorie(req, res) {
+        const results = await categoryDataMapper.create();
+    },
 };

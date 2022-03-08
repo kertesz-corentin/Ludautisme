@@ -60,7 +60,7 @@ const router = express.Router();
  * @return {Category} 200 - succes response - application/json
  */
 router.route('/')
-    .get(controllerHandler(categorieController.getAll));
-//  .post(controllerHandler(categorieController.addCategorie));
+    .get(controllerHandler(categorieController.getAll))
+    .post(controllerHandler(categorieController.addCategorie));
 
 module.exports = router;

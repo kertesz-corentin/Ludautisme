@@ -12,4 +12,7 @@ module.exports = {
         const result = await sqlHandler('SELECT * FROM "category"');
         return result.rows;
     },
+    async create() {
+        const result =
+    },
 };
