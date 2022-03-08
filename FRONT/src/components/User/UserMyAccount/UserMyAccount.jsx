@@ -24,13 +24,13 @@ const UserMyAccount = ({
 // Each time page is loading, want to call requestGetDatasOneUser
     useEffect(() => {requestGetDatasOneUser()},[])
 
-//This const get id, role and token from API when user is logged
+//This const get id, role  from API when user is logged
     const userDatas= JSON.parse(localStorage.getItem('user'));
     console.log(`Données de l'utilisateur`, userDatas)
 
 //This function takes id, role and token, send them to API in order to get back every user's infos
     async function requestGetDatasOneUser ()  {
-        console.log(`fonction qui envoi l'id, le rôle et le token`)
+        console.log(`fonction qui envoi l'id, le rôle `)
         const response = await api.get('/admin/users/:id',userDatas)
         console.log(`expected user's datas`, response)
     }
