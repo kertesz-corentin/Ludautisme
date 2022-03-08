@@ -12,7 +12,7 @@ const router = express.Router();
  */
 
 /**
- * PUT /api/admin/users/
+ * PUT /api/admin/users/:id
  * @summary Modify information for one user
  * @tags Users
  * @param {number} request.params.id.required - At least one of these params
@@ -20,7 +20,7 @@ const router = express.Router();
  */
 
 /**
- * DELETE /api/admin/users/
+ * DELETE /api/admin/users/:id
  * @summary Delete One user
  * @tags Users
  * @param {number} request.params.id.required - At least one of these params
