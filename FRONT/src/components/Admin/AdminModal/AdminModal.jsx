@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
 import { userSchema } from '../../../Schemas'
 
-const AdminModal = ({name, fields, request, token, className, ...rest}) => {
+const AdminModal = ({name, fields, request, path, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -19,18 +19,16 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
             const value = entrie[1];
             user[prop]=value;
          }
-        console.log(user,request);
-        const response = await request(user, token);
-        console.log(response);
+        console.log('user', user, 'request', request);
+
+        const response = await request(path, user);
+        console.log('response', response);
         if(response.status === 200) {
-            console.log(response);
+            console.log('data', response.data);
             handleClose();
         }
 
     }
-
-
-    const date = new Date();
 
     return (
         <div>
@@ -54,19 +52,20 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
                     </div>
                     <div className="modal-inputs">
 
-                    {/*Object.keys(user).map((field) => {
+                    {/* {Object.keys(userSchema).map((field) => { */}
+                    {fields.map((field) => {
                             return (
                                 <TextField
-                                    key={field}
+                                    key={field.field}
                                     id='outlined'
-                                    label={field}
-                                    name={field}
+                                    label={field.headerName}
+                                    name={field.field}
+                                    type={field.type}
                                     className="modal-inputs-item"
-                                    required
                                 >
                                 </TextField>
                             )
-                        })*/}
+                        })}
                     </div>
                     <div className="modal-footer">
                         <Button

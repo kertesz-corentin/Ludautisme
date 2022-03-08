@@ -16,13 +16,16 @@ const AdminUsers = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/users');
             const data = await response.data;
-            console.log(data);
             setUsers(data);
         }
         catch (err) {
             console.error(err);
         }
     }
+
+    const addUser = api.post;
+    const path = '/admin/users'
+
 
     useEffect(() => {
         getUsers();
@@ -34,6 +37,7 @@ const AdminUsers = ({className, ...rest}) => {
         Object.keys(userSchema).forEach(prop => {
             const propElt = userSchema[prop];
             const config = {
+                type: propElt.type,
                 field:prop,
                 headerName:propElt.label,
                 width: propElt.width};
@@ -66,10 +70,12 @@ const AdminUsers = ({className, ...rest}) => {
                 title="Adhérent"
                 rows={users}
                 columns={columnBuilder}
+                request={addUser}
+                path={path}
                 initialState={{
                     columns: {
                       columnVisibilityModel: {
-                        // Hide columns status and traderName, the other columns will remain visible
+                        // Hide columns <column name>, the other columns will remain visible
                         id_role: false,
                       },
                     },
