@@ -47,7 +47,7 @@ module.exports = {
     async addOne(req, res) {
         const userId = Number(req.params.UserId);
         const articlesIds = req.body.articleIds;
-        //Check if user exist
+        // Check if user exist
         const user = await usersDataMapper.findById(userId);
         if (user.length !== 1) {
             throw new ApiError(400, 'Cet utilisateur n\'existe pas');
@@ -73,9 +73,9 @@ module.exports = {
             id_permanency: activePerm[0].next_id,
             id_user: userId,
         };
-        //Add booking to get an id booking
+        // Add booking to get an id booking
         const newBookingConfirm = await bookingDataMapper.addOne(newBooking);
-        //Add link between article_number and booking
+        // Add link between article_number and booking
         const articlesUnavailables = await bookingDataMapper.updateArticlesAvailability(articlesIds);
         console.log(articlesUnavailables);
         const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
