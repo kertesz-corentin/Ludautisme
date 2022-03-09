@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import './materiallibrary.scss';
 import MaterialLibraryMenu from '../MaterialLibraryMenu/MaterialLibraryMenu';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
+import NextPages from '../NextPages/NextPages';
 
 
 const MaterialLibrary = ({className, ...rest}) => {
@@ -12,7 +13,11 @@ const MaterialLibrary = ({className, ...rest}) => {
             {...rest}
         >
         <MaterialLibraryMenu/>
-        <ListOfReferences/>
+            <div classnames= "allReferences">
+                <NextPages/>
+                <ListOfReferences/>
+                <NextPages/>
+            </div>
         </div>
    );
 };
