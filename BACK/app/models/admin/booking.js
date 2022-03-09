@@ -237,7 +237,6 @@ module.exports = {
         WHERE ("article_available"='true' AND "article_archived"='false' AND row_number=1)
             OR ("article_available"='false' AND row_number=1)
         `;
-        console.log(query);
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
