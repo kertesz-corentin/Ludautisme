@@ -35,7 +35,7 @@ const RecoverPasswordModal = ({className, ...rest}) => {
 const handleMailSubmit = async(event) => {
     event.preventDefault();
         const mail = {
-            mail:mailValue
+            email:mailValue
         }
         console.log(`Mail where send newPassword`, mail)
         const response = await api.post('/login/forgot-password',mail)
@@ -61,7 +61,7 @@ const [mailValue, setMailValue]= useState()
             margin="dense"
             id="name"
             label="Mon adresse mail"
-            type="password"
+            type="string"
             fullWidth
             variant="standard"
             value= {mailValue}
