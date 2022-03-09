@@ -2,20 +2,51 @@
 
 .footer {
     display: flex;
-    flex-direction: row;
+    flex-flow: wrap row;
+    position: relative;
+    width: 100%;
     align-items: center;
-    justify-content: space-around;
-    background:rgb(255, 159, 164);
-    // position:absolute;
-    width:100%;
-    padding: $gutter;
-    height:auto;
-    margin: auto auto 0 auto;
+    justify-content: space-between;
+    background:$font-color-2;
+    left: 0;
+    bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    filter: $drop-shadow;
+
 
     &-facebook-logo {
-        width: 100px;
+        height: 40px;
+        margin-right: 30px;
+        border-radius: 8px;
+        filter: $drop-shadow;
+        // border: 3px solid $font-color-2;
     }
+
+    &-left {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items:center;
+        color: $font-color;
+        font-size: 1.1rem;
+
+        & a {
+            flex-wrap: wrap;
+        }
+    }
+
     &-logo {
-        height: 100px;
+        font-size: 1.2rem;
+        margin: auto 30px;
+        height: 70px;
+    }
+
+    &-texte {
+        margin: 30px;
+        font-size: 1.1rem;
+        text-decoration: none;
+        color: $font-color;
     }
 }

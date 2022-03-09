@@ -9,6 +9,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
 
 const UserBookingsHistory = ({className, ...rest}) => {
    return (
@@ -26,18 +27,30 @@ const UserBookingsHistory = ({className, ...rest}) => {
                         {/* From now links redirect to userAccount Page but will be change with bookings number later */}
                             <List >
                                 <ListItem disablePadding>
+                                <div classnames= "eachList">
                                     <ListItemButton component="a" href="/user/bookings/history">
                                         <ListItemText primary="N ° 45611" />
                                     </ListItemButton>
+                                    <ListOfReferences/>
+                                </div>
+                                <div classnames= "eachList">
                                     <ListItemButton component="a" href="/user/bookings/history">
                                         <ListItemText primary="N ° 51664" />
                                     </ListItemButton>
+                                    <ListOfReferences/>
+                                </div>
+                                <div classnames= "eachList">
                                     <ListItemButton component="a" href="/user/bookings/history">
                                         <ListItemText primary="N ° 65514" />
                                     </ListItemButton>
+                                    <ListOfReferences/>
+                                </div>
+                                <div classnames= "eachList">
                                     <ListItemButton component="a" href="/user/bookings/history">
                                         <ListItemText primary="N ° 16315" />
                                     </ListItemButton>
+                                    <ListOfReferences/>
+                                </div>
                                 </ListItem>
                             </List>
                         </nav>

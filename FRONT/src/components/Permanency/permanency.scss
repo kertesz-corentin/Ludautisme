@@ -1,29 +1,49 @@
 @import 'src/styles/vars';
 
 .permanency{
-    width: fit-content;
-    margin: 20px;
+
     display: flex;
+    flex-flow: row wrap ;
     font-size: 1.8rem;
-    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
-    --clay-background: hsl(3, 94%, 53%, 0.9);
-    --clay-border-radius: 30px;
-    color: blanchedalmond;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    max-width: fit-content;
+    --clay-background: hsl(3, 94%, 53%, 0.9);
+    --clay-border-radius: 20px;
+    color: blanchedalmond;
+
 
     &-title {
-        margin: 30px;
+        flex: 1 100%;
+
+        h2 {
+            width: max-content;
+            margin: 30px;
+            margin-bottom: 0;
+            text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
+        }
+    }
+
+    &-block {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     &-logo {
+        margin: 30px;
         max-width: 150px;
-        filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(rgb(0 0 0 / 30%) 5px 3px 5px);
     }
 
     &-date {
-        font-size:2.5rem;
-        // margin: auto;
+        filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 30%) 5px 3px 5px);
+        border-radius: 10px;
+        padding: 10px;
+        border: 3px solid $font-color-2;
+        font-size:2rem;
+        margin: 30px;
+        width: max-content;
     }
 }
 

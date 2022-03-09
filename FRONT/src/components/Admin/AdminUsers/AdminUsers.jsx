@@ -4,19 +4,18 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { userSchema } from '../../../Schemas';
-import { ToggleButton } from '@mui/material';
+import { ToggleButton, IconButton } from '@mui/material';
 import AddUserModal from '../AddUserModal/AddUserModal';
+import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
 // import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
 import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
-    const [selected, setSelected] = useState(false);
 
     // config path for api route
     const path = '/admin/users';
-
 
     const getUsers = async () => {
         try {
@@ -49,14 +48,28 @@ const AdminUsers = ({className, ...rest}) => {
                     case "toggle":
                         config.renderCell = (params) => (
                             <ToggleButton
-                                value={params}
-                                selected={selected}
-                                onChange={() => {setSelected(!selected);}}
+                                value={params.value}
+                                selected={params.value}
+                                onChange={async () => {
+                                    const response = await api.put(`/admin/users/${params.row.id}`, {[prop] : !params.value});
+                                }}
+                                aria-label={`${prop}-${params.row.id}`}
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
-                        );
-                        break;
+                    );
+                    break;
+                    case "edit":
+                        config.renderCell = (params) => (
+
+                            <IconButton
+                                value={params.value}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <UpdateUserModal params={params} />
+                            </IconButton>
+                    );
+                    break;
 
                     default:
                         break;
@@ -85,7 +98,12 @@ const AdminUsers = ({className, ...rest}) => {
                       columnVisibilityModel: {
                         // Hide columns <column name>, the other columns will remain visible
                         id_role: false,
+                        cotisation_expiration: false,
+                        caution_expiration: false,
                       },
+                    },
+                    sorting: {
+                        sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
                 children={<AddUserModal />}

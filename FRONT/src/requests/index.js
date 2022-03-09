@@ -54,10 +54,11 @@ export default api;
 
 const authHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const token = user.token;
-    if (token) {
-        return { 'x-access-token': token }
+
+    if (user != null) {
+        return { 'x-access-token': user }
     }
+
     //No token
     return {};
 }
