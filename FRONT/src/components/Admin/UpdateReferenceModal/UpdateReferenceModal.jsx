@@ -1,11 +1,9 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
 import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { referenceSchema } from '../../../Schemas';
 
 import './updatereferencemodal.scss';
 
@@ -14,6 +12,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState('');
+    const [articles, setArticles] = useState([]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,16 +32,25 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
         console.log('response', response);
     }
 
-    const handleDelete = async () => {
-        const response = await api.delete(`/admin/references/${params.row.id}`)
-        if(response.status === 200) {
-            handleClose();
-        }
-    }
-
     const handleChange = (event) => {
         setCategory(event.target.value);
     }
+
+    const getReferenceWithArticles = async () => {
+        try {
+            const response = await api.get(`/admin/references/${params.row.id}`);
+            const data = await response.data;
+            setArticles(data);
+            console.log('articles', data);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        getReferenceWithArticles();
+    }, [])
 
     return (
         <div>

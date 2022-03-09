@@ -11,7 +11,6 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [checked, setChecked] = useState(false);
     const [category, setCategory] = useState('');
 
     const handleSubmit = async (event) => {

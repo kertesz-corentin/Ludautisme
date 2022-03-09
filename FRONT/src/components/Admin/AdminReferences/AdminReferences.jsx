@@ -21,7 +21,7 @@ const AdminReferences = ({className, ...rest}) => {
 
     const getReferences = async () => {
         try {
-            const response = await api.get('admin/references');
+            const response = await api.get('/admin/references');
             const data = await response.data;
             setReferences(data);
             console.log('references', data);
@@ -31,9 +31,9 @@ const AdminReferences = ({className, ...rest}) => {
         }
     }
 
-    const getCategories = async () => {
+    const getMainCategories = async () => {
         try {
-            const response = await api.get('/admin/categorie');
+            const response = await api.post('/admin/categorie/search', {"main": true});
             const data = await response.data;
             setCategories(data);
             console.log('categories', data)
@@ -45,7 +45,7 @@ const AdminReferences = ({className, ...rest}) => {
 
     useEffect(() => {
         getReferences();
-        getCategories();
+        getMainCategories();
     }, []);
 
     const columnBuilder = (() => {
