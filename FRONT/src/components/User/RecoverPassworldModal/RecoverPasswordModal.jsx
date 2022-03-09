@@ -13,6 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {requestGetNewPassword} from '../../../requests/requestsUser/recoverpassword'
+import api from '../../../requests';
 
 const RecoverPasswordModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
@@ -37,7 +38,9 @@ const handleMailSubmit = async(event) => {
             mail:mailValue
         }
         console.log(`Mail where send newPassword`, mail)
-        handleClose()
+        const response = await api.post('/login/forgot-password',mail)
+        console.log(response);
+        handleClose();
 }
 
 const [mailValue, setMailValue]= useState()
