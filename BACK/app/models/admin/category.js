@@ -23,7 +23,6 @@ module.exports = {
         let query = `SELECT * FROM "category"
         WHERE `;
         const placeholders = [];
-        console.log(`placeholder: ${placeholders}`);
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
             placeholders.push(filter[prop]);
@@ -53,6 +52,22 @@ module.exports = {
             placeholders.push(obj[prop]);
         });
         query += columns + values;
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
+    },
+    async update(id, obj) {
+        const props = Object.keys(obj);
+        let query = `UPDATE "category" SET `;
+        const placeholders = [];
+        props.forEach((prop, index) => {
+            placeholders.push(obj[prop]);
+            if (index !== props.length - 1) {
+                query += `${prop}=$${index + 1}, `;
+            } else {
+                query += `${prop}=$${index + 1} WHERE id=$${index + 2} RETURNING *`;
+                placeholders.push(id);
+            }
+        });
         const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },

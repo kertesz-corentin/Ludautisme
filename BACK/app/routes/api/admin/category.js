@@ -26,18 +26,19 @@ router.route('/search')
  * @summary Update one category
  * @tags Category
  * @param {number} request.params.id.required - Id of category
+ * @param {ParamCreateCat} request.body.required - At least one of these
  * @return {Category} 200 - succes response - application/json
  */
 /**
  * DELETE api/admin/categorie/:id
  * @summary Delete on category
  * @tags Category
- * @param {number} 200 - succes response - application/json
+ * @param {number} request.params.requires - Id of category
  * @return {string} 200 - succes response - application/json
  */
-/* router.route('/:id')
-    .put(controllerHandler(categorieController.update))
-    .delete(controllerHandler(categorieController.delete)); */
+router.route('/:id')
+    .put(controllerHandler(categorieController.update));
+// .delete(controllerHandler(categorieController.delete));
 /**
  * GET api/admin/categorie
  * @summary Get all category

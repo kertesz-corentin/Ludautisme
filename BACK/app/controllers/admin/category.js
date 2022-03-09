@@ -35,11 +35,19 @@ module.exports = {
             }
             arr.push({ [columns[index]]: value });
         });
-        console.log(arr);
         const category = await categoryDataMapper.findFiltered(arr);
         if (category.length < 1) {
             throw new ApiError(400, 'Nous n\'avons rien trouvé avec ces critères');
         }
         return res.json(category);
+    },
+    async update(req, res) {
+        const id = [{ id: req.params.id }];
+        const user = await categoryDataMapper.findFiltered(id);
+        if (user.length < 1) {
+            throw new ApiError(404, 'Cette catégorie n\'existe pas');
+        }
+        const updatedCategory = await categoryDataMapper.update(req.params.id, req.body);
+        return res.json(updatedCategory);
     },
 };
