@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Permanency from '../../Permanency/Permanency';
 import MenuUser from '../MenuUser/MenuUser';
+import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
 
 const UserBookingActive = ({className, ...rest}) => {
    return (
@@ -30,6 +31,7 @@ const UserBookingActive = ({className, ...rest}) => {
                                             </ListItemButton>
                                         </ListItem>
                                     </List>
+                                    <ListOfReferences/>
                                 </nav>
                             </Box>
                         </div>
