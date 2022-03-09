@@ -1,0 +1,11 @@
+@import 'src/styles/vars';
+
+.referencemodal{
+    background-color: aqua;
+    position: absolute;
+    margin-top:22%;
+    margin-left:45%;
+    max-width: 80%;
+    border: 2px solid black;
+    padding:2rem;
+}
