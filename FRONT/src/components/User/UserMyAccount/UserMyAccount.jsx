@@ -74,6 +74,8 @@ const UserMyAccount = ({
          phone:   phoneValue,
          password:   passworldValue
         }
+
+// Ici c'est la requête pour envoyer les données modifiés au back, problème pour le moment je recois une erreur 500.
        const response = await api.put(`/customer/users/${userAllDatas.id}`, newUserDatas)
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
