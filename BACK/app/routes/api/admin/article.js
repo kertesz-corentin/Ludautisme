@@ -16,15 +16,18 @@ const router = express.Router();
  * @summary Update one article
  * @tags Article
  * @param {number} request.params.required - ID of the article
+ * @param {ParamArticleCreate} request.body.required - At least one of these
  * @return {Article} 200 - success response - application/json
  */
 router.route('/:id')
     .get(controllerHandler(articleController.getOne))
-    .put(controllerHandler(articleController.update));
+    .put(controllerHandler(articleController.updateArticle));
 /**
  * POST /api/admin/articles/search
  * @summary Get article filtered
- * 
+ * @tags Article
+ * @param {ParamArticleCreate} request.body.required - At least one of these
+ * @return {array<Article>} 200 - success response - application/json
  */
 router.route('/search')
     .post(controllerHandler(articleController.getFiltered));

@@ -52,4 +52,7 @@ module.exports = {
 
         return res.json(newArticle);
     },
+    async updateArticle(req, res) {
+        
+    },
 };
