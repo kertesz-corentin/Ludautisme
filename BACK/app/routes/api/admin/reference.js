@@ -1,6 +1,6 @@
 const express = require('express');
 const ApiError = require('../../../errors/apiError');
-const { referenceController } = require('../../../controllers/admin');
+const { referenceController, articleController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const router = express.Router();
  * @return {Article} 201 - success response - application/json
  */
 router.route('/article')
-    .post(controllerHandler(referenceController.addArticle));
+    .post(controllerHandler(articleController.addArticle));
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
