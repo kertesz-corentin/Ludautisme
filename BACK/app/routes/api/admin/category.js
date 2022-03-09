@@ -1,4 +1,5 @@
 const express = require('express');
+const ApiError = require('../../../errors/apiError');
 const { categorieController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
@@ -47,5 +48,7 @@ router.route('/:id')
 router.route('/')
     .get(controllerHandler(categorieController.getAll))
     .post(controllerHandler(categorieController.addCategorie));
-
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;

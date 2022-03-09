@@ -1,4 +1,5 @@
 const express = require('express');
+const ApiError = require('../../../errors/apiError');
 const { permanencyController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
@@ -37,4 +38,7 @@ router.route('/active/close')
 router.route('/next')
     .patch(controllerHandler(permanencyController.setDateNext));
 
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;

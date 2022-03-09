@@ -1,4 +1,5 @@
 const express = require('express');
+const ApiError = require('../../../errors/apiError');
 const loginController = require('../../../controllers/auth/login');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
@@ -47,4 +48,7 @@ router.route('/forgot-password')
 router.route('/reset-password')
     .get(controllerHandler(loginController.resetPassword));
 
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;
