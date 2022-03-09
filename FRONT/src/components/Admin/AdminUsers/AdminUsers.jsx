@@ -5,7 +5,6 @@ import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests/index';
 import { userSchema } from '../../../Schemas';
 import { ToggleButton, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import AddUserModal from '../AddUserModal/AddUserModal';
 import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
 // import {CheckIcon} from '@material-ui/icons';

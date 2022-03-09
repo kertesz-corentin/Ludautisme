@@ -1,17 +1,18 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FromGroup, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { referenceSchema } from '../../../Schemas';
 
-import './addreferencemodal.scss';
+import './updatereferencemodal.scss';
 
-const AddReferenceModal = ({className, ...rest}) => {
+const UpdateReferenceModal = ({params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [checked, setChecked] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -20,20 +21,29 @@ const AddReferenceModal = ({className, ...rest}) => {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
-            'main_category': data.get('main_category'),
+            'main_categpry': data.get('main_category'),
         };
 
         console.log('reference', reference);
-        const response = await api.post('/admin/references', reference)
+        const response = await api.put(`/admin/references/${params.row.id}`, reference)
         if(response.status === 200) {
             handleClose();
         }
         console.log('response', response);
     }
 
+    const handleDelete = async () => {
+        const response = await api.delete(`/admin/references/${params.row.id}`)
+        if(response.status === 200) {
+            handleClose();
+        }
+    }
+
     return (
         <div>
-            <Button onClick={handleOpen}>Ajouter référence</Button>
+            <IconButton onClick={handleOpen}>
+                <EditIcon />
+            </IconButton>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -41,7 +51,7 @@ const AddReferenceModal = ({className, ...rest}) => {
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
                     <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Nouvelle Référence
+                            Edition Adhérent
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -58,14 +68,16 @@ const AddReferenceModal = ({className, ...rest}) => {
                             name='name'
                             type='string'
                             className="modal-inputs-item"
+                            defaultValue={params.row.name}
                         >
                         </TextField>
                         <TextField
                             id='outlined'
                             label='Description'
                             name='description'
-                            type='textarea'
+                            type='string'
                             className="modal-inputs-item"
+                            defaultValue={params.row.description}
                         >
                         </TextField>
                         <TextField
@@ -74,6 +86,7 @@ const AddReferenceModal = ({className, ...rest}) => {
                             name='valorisation'
                             type='number'
                             className="modal-inputs-item"
+                            defaultValue={params.row.valorisation}
                         >
                         </TextField>
                         <TextField
@@ -82,8 +95,10 @@ const AddReferenceModal = ({className, ...rest}) => {
                             name='main_category'
                             type='number'
                             className="modal-inputs-item"
+                            defaultValue={params.row.main_category}
                         >
                         </TextField>
+
 
                     </div>
                     <div className="modal-footer">
@@ -92,8 +107,18 @@ const AddReferenceModal = ({className, ...rest}) => {
                             className="modal-footer-submit"
                             variant="contained"
                         >
-                            Valider
+                            Mettre à jour
                         </Button>
+
+                        <Button
+                            onClick={handleDelete}
+                            className="modal-footer-submit"
+                            variant="outlined"
+                            startIcon={<DeleteIcon />}
+                        >
+                            Supprimer
+                        </Button>
+
                     </div>
                 </Box>
             </Modal>
@@ -102,10 +127,10 @@ const AddReferenceModal = ({className, ...rest}) => {
     );
 };
 
-AddReferenceModal.propTypes = {
+UpdateReferenceModal.propTypes = {
     className: PropTypes.string,
 };
-AddReferenceModal.defaultProps = {
+UpdateReferenceModal.defaultProps = {
     className: '',
 };
-export default React.memo(AddReferenceModal);
+export default React.memo(UpdateReferenceModal);

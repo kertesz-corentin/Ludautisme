@@ -9,7 +9,7 @@ import { userSchema } from '../../../Schemas';
 
 import './updateusermodal.scss';
 
-const AddUserModal = ({params, className, ...rest}) => {
+const UpdateUserModal = ({params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -163,7 +163,7 @@ const AddUserModal = ({params, className, ...rest}) => {
                             name='adress_city'
                             type='string'
                             className="modal-inputs-item"
-                            defaultValue={params.row.city}
+                            defaultValue={params.row.adress_city}
                         >
                         </TextField>
                         <FormGroup >
@@ -199,10 +199,10 @@ const AddUserModal = ({params, className, ...rest}) => {
     );
 };
 
-AddUserModal.propTypes = {
+UpdateUserModal.propTypes = {
     className: PropTypes.string,
 };
-AddUserModal.defaultProps = {
+UpdateUserModal.defaultProps = {
     className: '',
 };
-export default React.memo(AddUserModal);
+export default React.memo(UpdateUserModal);

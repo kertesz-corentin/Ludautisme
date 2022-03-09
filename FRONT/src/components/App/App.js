@@ -40,7 +40,6 @@ function App() {
             <Route path = "/admin/home" element = {<PrivateRoute/>}>
                 <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             </Route>
-
             <Route path = "/admin/users" element = {<PrivateRoute/>}>
                 <Route path = "/admin/users" element = {<AdminPage><AdminUsers /></AdminPage>}></Route>
             </Route>
