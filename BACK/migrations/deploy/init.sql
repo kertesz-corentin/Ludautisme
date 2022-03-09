@@ -84,7 +84,6 @@ CREATE TABLE "article" (
     "date_buy" DATE,
     "available" BOOLEAN DEFAULT true,
     "archived" BOOLEAN DEFAULT false,
-    "id_booking" INT REFERENCES "booking"("id"),
     "id_ref" INT REFERENCES "reference"("id") NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );

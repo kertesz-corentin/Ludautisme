@@ -22,11 +22,11 @@ INSERT INTO "permanency" ("perm_date","active") VALUES
 ('2022-04-06', false);
 
 INSERT INTO "booking" ( "delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
-( false, false, 0, 2, 6),
-( true, false, 0, 2, 7),
-( true, true, 0, 2, 5),
-( true, false, 3, 1, 4),
-( false, false, 0, 1, 1);
+( false, false, 0, 3, 6),
+( true, false, 0, 3, 1),
+( true, true, 0, 3, 5),
+( true, false, 3, 4, 4),
+( false, false, 0, 4, 1);
 
 INSERT INTO "category" ("name", "description", "main") VALUES
 ('jeux', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices mollis libero eget molestie.', true),
@@ -60,20 +60,22 @@ INSERT INTO "reference_to_category" ("id_ref", "id_category") VALUES
 (1, 6);
 
 INSERT INTO "article" ("number", "origin", "date_buy", "available", "id_ref") VALUES
-(19, 'achat fnac', '2019-06-14', false, 4),
+(19, 'achat fnac', '2019-06-14', true, 4),
 (27, 'don adherent', '2020-04-15', true, 1),
-(215, 'tombé du ciel', '2021-12-24', false, 4),
-(216, 'tombé du ciel', '2021-12-24', false, 4),
-(217, 'tombé du ciel', '2021-12-24', false, 2),
-(418, 'achat leclerc', '2022-07-24', false, 3),
+(28, 'don adherent', '2020-04-15', true, 1),
+(29, 'don adherent', '2020-04-15', true, 1),
+(215, 'tombé du ciel', '2021-12-24', true, 4),
+(216, 'tombé du ciel', '2021-12-24', true, 4),
+(217, 'tombé du ciel', '2021-12-24', true, 2),
+(418, 'achat leclerc', '2022-07-24', true, 3),
 (314, 'don asso', '2017-01-06', true, 4);
 
 INSERT INTO "article_to_booking"("id_booking","id_article") VALUES
 (1,1),
 (1,2),
 (1,3),
-(2,4),
-(2,5),
+(5,4),
+(5,5),
 (2,6),
 (3,7);
 

@@ -23,6 +23,7 @@ router.route('/')
 
 router.route('/:id')
     .get(controllerHandler(bookingController.getOne))
+    .put(controllerHandler(bookingController.updateBooking));
 
 /**
  * POST /api/admin/booking/add/:UserId
@@ -32,7 +33,7 @@ router.route('/:id')
  * @return {booking} 200 - success response - application/json
  */
 router.route('/add/:UserId')
-    .post(controllerHandler(bookingController.addOne));
+    .post(controllerHandler(bookingController.addBooking));
 /**
  * POST /api/admin/booking/search
  * @summary Get detailed booking with details

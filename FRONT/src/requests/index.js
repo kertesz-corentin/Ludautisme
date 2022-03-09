@@ -9,16 +9,17 @@ const connection = axios.create({
 
 const api = {
     async get(path) {
-        return connection.get(path, { headers: authHeader() });
+        return await connection.get(path, { headers: authHeader() });
     },
     async post(path, data) {
-        return connection.post(path, data, { headers: authHeader() });
+        await console.log(authHeader());
+        return await connection.post(path, data, { headers: authHeader() });
     },
     async patch(path, data) {
-        return connection.patch(path, data, { headers: authHeader() });
+        return await connection.patch(path, data, { headers: authHeader() });
     },
     async put(path, data) {
-        return connection.put(path, data, { headers: authHeader() });
+        return await connection.put(path, data, { headers: authHeader() });
     },
     async delete(path) {
         return connection.delete(path, { headers: authHeader() });
@@ -56,7 +57,7 @@ const authHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (user != null) {
-        return { 'x-access-token': user }
+        return { 'x-access-token': user.token }
     }
 
     //No token

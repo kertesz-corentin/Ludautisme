@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
     } else if (req.body.userId && req.body.userId !== userId) {
         res.json({ status: 'error', statusCode: 403, message: 'Identification invalide2' });
     } else {
+        console.log("test");
         next();
     }
 };
