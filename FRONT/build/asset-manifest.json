@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.842226bc.css",
-    "main.js": "/static/js/main.3812103f.js",
+    "main.css": "/static/css/main.955fa6b3.css",
+    "main.js": "/static/js/main.0527b2bf.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
     "static/media/tarifs.pdf": "/static/media/tarifs.1e4ac79fcd6f89f695c2.pdf",
     "static/media/adhésion.pdf": "/static/media/adhésion.3b5de6c2ac429295ed8f.pdf",
@@ -24,12 +24,12 @@
     "static/media/calendrier.png": "/static/media/calendrier.2cf2c05efe809681edc2.png",
     "static/media/Logo-Facebook.png": "/static/media/Logo-Facebook.c9125ab120cd917dcca0.png",
     "index.html": "/index.html",
-    "main.842226bc.css.map": "/static/css/main.842226bc.css.map",
-    "main.3812103f.js.map": "/static/js/main.3812103f.js.map",
+    "main.955fa6b3.css.map": "/static/css/main.955fa6b3.css.map",
+    "main.0527b2bf.js.map": "/static/js/main.0527b2bf.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.842226bc.css",
-    "static/js/main.3812103f.js"
+    "static/css/main.955fa6b3.css",
+    "static/js/main.0527b2bf.js"
   ]
 }
