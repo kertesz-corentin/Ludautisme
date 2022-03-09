@@ -7,7 +7,7 @@ module.exports = {
         res.json(booking);
     },
     async getFiltered(req, res) {
-        //Avoid injection on column
+        // Avoid injection on column
         const columns = [
             'id', 'delivered', 'closed',
             'id_permanency', 'date_permanency',
@@ -35,19 +35,19 @@ module.exports = {
         }
         return res.json(user);
     },
-    async getOne(req,res) {
+    async getOne(req, res) {
         const idUser = Number(req.params.id);
         const booking = await bookingDataMapper.findOne(idUser);
         return res.json(booking);
     },
-    async addOne(req,res) {
+    async addOne(req, res) {
         const idUser = Number(req.params.id);
         const { articlesIds } = req.body;
         if (articlesIds.length > 8) {
             throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
         }
-        //Une autre réservation sur cette perm ne doit pas exister
-        //Pas plus de 8 articles
+        // Une autre réservation sur cette perm ne doit pas exister
+        // Pas plus de 8 articles
         const newBooking = await bookingDataMapper.addOne(idUser, articlesIds);
         return res.json(newBooking);
     },

@@ -1,6 +1,5 @@
 const ApiError = require('../../errors/apiError');
-const { referenceDataMapper } = require('../../models/admin');
-const { articleDataMapper } = require('../../models/admin');
+const { referenceDataMapper, articleDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -40,19 +39,5 @@ module.exports = {
         }
         const updateRef = await referenceDataMapper.update(req.params.id, req.body);
         return res.json(updateRef);
-    },
-    async addArticle(req, res) {
-        // je vérifie si la référence existe
-        const reference = await referenceDataMapper.findOne(req.body.id_ref);
-        if (reference.length < 1) {
-            throw new ApiError(404, 'La référence parent n\'existe pas');
-        }
-        const article = await articleDataMapper.findByCode(req.body.number);
-        if (article.length > 0) {
-            throw new ApiError(400, 'Un article avec le même numéro existe déjà');
-        }
-        const newArticle = await articleDataMapper.create(req.body);
-
-        return res.json(newArticle);
     },
 };
