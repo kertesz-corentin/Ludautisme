@@ -4,15 +4,6 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
 /**
- * POST api/admin/categorie/status
- * @summary Get category by status (main/secondary)
- * @tags Category
- * @param {string} request.body.required Status you want for filter
- * @return {array<Category>} 200 - succes response - application/json
- */
-/* router.route('/status')
-    .post(controllerHandler(categorieController.getByStatus)); */
-/**
  * POST api/admin/categorie/reference
  * @summary Get all category of one reference
  * @tags Category
@@ -22,12 +13,14 @@ const router = express.Router();
 /* router.route('/reference')
     .post(controllerHandler(categorieController.getByRef)); */
 /**
- * GET api/admin/categorie/:id
- * @summary Get on category
+ * POST api/admin/categorie/reference/search
+ * @summary Get category filtered
  * @tags Category
- * @param {number} request.params.id.required - Id of category
- * @return {Category} 200 - succes response - application/json
+ * @param {Category} request.body.required At least one of these
+ * @return {array<Category>} 200 - succes response - application/json
  */
+router.route('/search')
+    .post(controllerHandler(categorieController.findFiltered));
 /**
  * PUT api/admin/categorie/:id
  * @summary Update one category
@@ -43,7 +36,6 @@ const router = express.Router();
  * @return {string} 200 - succes response - application/json
  */
 /* router.route('/:id')
-    .get(controllerHandler(categorieController.getOne))
     .put(controllerHandler(categorieController.update))
     .delete(controllerHandler(categorieController.delete)); */
 /**
