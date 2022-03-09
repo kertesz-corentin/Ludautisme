@@ -8,6 +8,10 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Unavailable from '../Unavailable/Unavailable';
+import Available from '../Available/Available';
+import { CardMedia } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ReferenceModal = ({className, ...rest}) => {
 
@@ -32,11 +36,32 @@ const ReferenceModal = ({className, ...rest}) => {
             <Fade in={open}>
               <Box className="referencemodal">
                 <Typography id="transition-modal-title" variant="h6" component="h2">
-                  Text in a modal
+                  Nom de l'article
+                </Typography>
+                <div>
+                <Typography id="transition-modal-title" variant="h6" component="h2">
+                  description de l'article
+                </Typography>
+                 <Available/>
+                 <Unavailable/>
+                <Typography id="transition-modal-title" variant="h6" component="h2">
+                  Prix
+                </Typography>
+                </div>
+                <CardMedia
+                component="img"
+                height="140"
+                image="../../public/legosfix.png"
+                alt="image about the article"
+                className= "cardmedia"
+            />
+                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                 Catégorie: Jeux
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                 Quantité: 2
                 </Typography>
+                <Button> <AddShoppingCartIcon/></Button>
               </Box>
             </Fade>
           </Modal>
