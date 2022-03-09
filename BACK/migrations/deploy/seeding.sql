@@ -68,13 +68,13 @@ INSERT INTO "article" ("number", "origin", "date_buy", "available", "id_ref") VA
 (418, 'achat leclerc', '2022-07-24', false, 3),
 (314, 'don asso', '2017-01-06', true, 4);
 
-INSERT INTO "article_to_booking"("id_booking","refnum_article") VALUES
-(1,19),
-(1,27),
-(1,215),
-(2,216),
-(2,217),
-(2,418),
-(3,314);
+INSERT INTO "article_to_booking"("id_booking","id_article") VALUES
+(1,1),
+(1,2),
+(1,3),
+(2,4),
+(2,5),
+(2,6),
+(3,7);
 
 COMMIT;

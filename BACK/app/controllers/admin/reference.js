@@ -3,6 +3,7 @@ const { referenceDataMapper, articleDataMapper } = require('../../models/admin')
 
 module.exports = {
     async getAll(req, res) {
+        console.log(coucou);
         const results = await referenceDataMapper.findAll();
         if (!results) {
             throw new ApiError(404, 'Aucun résultat trouvé');
