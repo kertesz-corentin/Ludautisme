@@ -8,6 +8,12 @@ module.exports = {
         return res.json(results);
     },
     async addCategorie(req, res) {
-        const results = await categoryDataMapper.create();
+        const arr = [{ name: req.body.name }];
+        const category = await categoryDataMapper.findFiltered(arr);
+        if (category.length > 0) {
+            throw new ApiError(400, 'Une catégorie avec le même nom existe déjà');
+        }
+        const newCategory = await categoryDataMapper.create(req.body);
+        return res.json(newCategory);
     },
 };

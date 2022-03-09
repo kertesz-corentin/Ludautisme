@@ -49,7 +49,7 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
-        console.log("body",req.body, req.body.member_number , req.body.email);
+        console.log('body', req.body, req.body.member_number, req.body.email);
         const user = await usersDataMapper.findFiltered([
             { member_number: Number(req.body.member_number) },
             { email: req.body.email },
@@ -63,10 +63,9 @@ module.exports = {
                 req.body.password = hashedPassword;
             }
             const newUser = await usersDataMapper.insert(req.body);
-            console.log(newUser);
             return res.json(newUser);
         } catch (err) {
-            return res.json(err,err.message);
+            return res.json(err, err.message);
         }
     },
     async update(req, res) {
@@ -86,7 +85,7 @@ module.exports = {
     async delete(req, res) {
         const deletedUser = await usersDataMapper.delete(req.params.id);
         if (!deletedUser) {
-            throw new ApiError(404, `L'utilisateur n'a pas été trouvé, rien n'a été supprimé`);
+            throw new ApiError(404, 'L\'utilisateur n\'a pas été trouvé, rien n\'a été supprimé');
         }
         return res.json(deletedUser);
     },

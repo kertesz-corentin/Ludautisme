@@ -54,7 +54,7 @@ const router = express.Router();
  */
 /**
  * POST api/admin/categorie
- * @summary Add nex category
+ * @summary Add new category
  * @tags Category
  * @param {ParamCreateCat} request.body.required - At least name
  * @return {Category} 200 - succes response - application/json
