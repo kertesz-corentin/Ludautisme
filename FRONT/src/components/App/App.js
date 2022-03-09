@@ -73,7 +73,7 @@ function App() {
             <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
                 <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             </Route>
-            {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
+            <Route path = "/user/articles" element = {<Home children={<MaterialLibrary />} />}></Route>
             {/* <Route path = "*" element = {<Error />}></Route>  */}
         </Routes>
     </div>
