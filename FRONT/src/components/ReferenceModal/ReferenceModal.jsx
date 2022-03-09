@@ -10,17 +10,23 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
-import { CardMedia } from '@mui/material';
+import { CardMedia, Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useState } from 'react';
 
 const ReferenceModal = ({className, ...rest}) => {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    let [counter, setCounter] = useState(4);
+
+//each time i add article to my booking, delete one on quantity
     function handleClick () {
         console.log(`add this article to my booking`)
+        setCounter (counter > 0 ? counter -=1 : counter)
     }
+
 
     return (
         <div>
@@ -41,16 +47,15 @@ const ReferenceModal = ({className, ...rest}) => {
                 <Typography id="transition-modal-title" variant="h6" component="h2">
                   Nom de l'article
                 </Typography>
-                <div>
+                <Divider/>
                 <Typography id="transition-modal-title" variant="h6" component="h5">
-                  description de l'article:
+                  description de l'article: blablabla
                 </Typography>
-                 <Available/>
-                 <Unavailable/>
+                {counter > 0 ? <Available/> : <Unavailable/>}
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                   Prix:
                 </Typography>
-                </div>
+                <Divider/>
                 <CardMedia
                 component="img"
                 height="140"
@@ -62,7 +67,7 @@ const ReferenceModal = ({className, ...rest}) => {
                  Catégorie: Jeux
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Quantité: 2
+                 Quantité: {counter}
                 </Typography>
                     <Button
                     onClick={handleClick}>
