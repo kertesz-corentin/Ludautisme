@@ -1,6 +1,7 @@
 @import 'src/styles/vars';
 
-.library {
+.materiallibrary {
     display: flex;
+    flex-direction: row;
     width: fit-content;
 }

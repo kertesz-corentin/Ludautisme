@@ -18,6 +18,9 @@ const ReferenceModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    function handleClick () {
+        console.log(`add this article to my booking`)
+    }
 
     return (
         <div>
@@ -39,13 +42,13 @@ const ReferenceModal = ({className, ...rest}) => {
                   Nom de l'article
                 </Typography>
                 <div>
-                <Typography id="transition-modal-title" variant="h6" component="h2">
-                  description de l'article
+                <Typography id="transition-modal-title" variant="h6" component="h5">
+                  description de l'article:
                 </Typography>
                  <Available/>
                  <Unavailable/>
-                <Typography id="transition-modal-title" variant="h6" component="h2">
-                  Prix
+                <Typography id="transition-modal-title" variant="h6" component="h5">
+                  Prix:
                 </Typography>
                 </div>
                 <CardMedia
@@ -61,7 +64,10 @@ const ReferenceModal = ({className, ...rest}) => {
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité: 2
                 </Typography>
-                <Button> <AddShoppingCartIcon/></Button>
+                    <Button
+                    onClick={handleClick}>
+                        <AddShoppingCartIcon/>
+                    </Button>
               </Box>
             </Fade>
           </Modal>

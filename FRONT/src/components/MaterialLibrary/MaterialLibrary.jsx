@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './materialLibrary.scss';
-import Permanency from '../Permanency/Permanency';
+import './materiallibrary.scss';
 import MaterialLibraryMenu from '../MaterialLibraryMenu/MaterialLibraryMenu';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 
 
 const MaterialLibrary = ({className, ...rest}) => {
    return (
-       <div            className={classnames('library', className)}
+        <div            className={classnames('materiallibrary', className)}
             {...rest}
-         >
-            <Permanency />
-            <MaterialLibraryMenu/>
-            <ListOfReferences/>
-
-
+        >
+        <MaterialLibraryMenu/>
+        <ListOfReferences/>
         </div>
    );
 };

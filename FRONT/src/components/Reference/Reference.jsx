@@ -13,7 +13,6 @@ const Reference = ({className, ...rest}) => {
    return (
 
         <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
             <CardMedia
                 component="img"
                 height="140"
@@ -26,7 +25,6 @@ const Reference = ({className, ...rest}) => {
                 </Typography>
                 <ReferenceModal/>
             </CardContent>
-            </CardActionArea>
         </Card>
    );
 };

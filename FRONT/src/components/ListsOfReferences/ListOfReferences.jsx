@@ -13,7 +13,7 @@ const ListOfReferences = ({className, ...rest}) => {
     return (
         <React.Fragment>
           <CssBaseline />
-          <Container maxWidth="sl">
+          <Container maxWidth="70%">
             <Stack spacing={2}>
                 <Pagination count={10} color="primary" />
             </Stack>
