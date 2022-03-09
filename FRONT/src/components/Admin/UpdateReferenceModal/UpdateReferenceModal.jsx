@@ -21,7 +21,7 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
-            'main_categpry': data.get('main_category'),
+            'main_category': data.get('main_category'),
         };
 
         console.log('reference', reference);
@@ -95,7 +95,7 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                             name='main_category'
                             type='number'
                             className="modal-inputs-item"
-                            defaultValue={params.row.main_category}
+                            defaultValue={params.row.maincategory}
                         >
                         </TextField>
 

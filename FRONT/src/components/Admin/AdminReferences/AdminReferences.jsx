@@ -23,6 +23,7 @@ const AdminReferences = ({className, ...rest}) => {
             const response = await api.get('admin/references');
             const data = await response.data;
             setReferences(data);
+            console.log(response.data);
         }
         catch (err) {
             console.error (err);
