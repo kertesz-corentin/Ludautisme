@@ -17,14 +17,16 @@ const Permanency = ({className, ...rest}) => {
                         Prochaine permanence
                     </h2>
                 </div>
-                <div>
-                    <img className="permanency-logo" src={Calendrier} alt="" />
-                </div>
-                <div>
-                    <p className="permanency-date">
-                        01/03/2022 <br />
-                    8h00-12h00 <br />
-                    </p>
+                <div className='permanency-block'>
+                    <div>
+                        <img className="permanency-logo" src={Calendrier} alt="" />
+                    </div>
+                    <div>
+                        <p className="permanency-date">
+                            01/03/2022 <br />
+                            8h00-12h00 <br />
+                        </p>
+                    </div>
                 </div>
 
         </div>
