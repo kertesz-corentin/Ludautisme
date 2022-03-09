@@ -10,13 +10,12 @@ const MaterialLibraryMenu = ({className, ...rest}) => {
             className={classnames('materiallibrarymenu', className)}
             {...rest}
          >
-            Menu de la matériathèque
+            Matériathèque
             <ChoiceSelect/>
             <ChoiceSelect/>
             <ChoiceSelect/>
             <ChoiceSelect/>
             <ChoiceSelect/>
-
         </div>
    );
 };
