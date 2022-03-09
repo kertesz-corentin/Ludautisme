@@ -188,7 +188,7 @@ module.exports = {
         let query = `INSERT INTO "article_to_booking" ("id_booking","id_article") VALUES `;
         const placeholders = [];
         arr.forEach((articleId, index) => {
-            query += `(${id},$${index+1})`;
+            query += `(${id},$${index + 1})`;
             query += (index < arr.length - 1) ? `,` : ` RETURNING *;`;
             placeholders.push(articleId);
         });
@@ -196,14 +196,25 @@ module.exports = {
         return result.rows[0];
     },
     async updateArticlesAvailability(arr) {
-        let query = `UPDATE "article" SET "available"=false WHERE `;
+        let query = `UPDATE "article" SET "available"='false' WHERE `;
         const placeholders = [];
         arr.forEach((articleId, index) => {
-            query += `id=${index+1}`
-            query += (index < arr.length - 1) ? ` OR ` : `;`;
+            query += `"id"=$${index + 1}`;
+            query += (index < arr.length - 1) ? ` OR ` : ` RETURNING *;`;
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
-        return result.rows[0];
+        return result.rows;
+    },
+    async getArticlesAvailability(arr) {
+        let query = `SELECT * FROM article WHERE id IN (`;
+        const placeholders = [];
+        arr.forEach((articleId, index) => {
+            query += `$${index + 1}`;
+            query += (index < arr.length - 1) ? `,` : `);`;
+            placeholders.push(articleId);
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
 };

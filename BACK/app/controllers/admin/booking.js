@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const ApiError = require('../../errors/apiError');
-const { bookingDataMapper, permanencyDataMapper, articleDataMapper,usersDataMapper } = require('../../models/admin');
+const { bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {
@@ -46,15 +46,19 @@ module.exports = {
     async addOne(req, res) {
         const userId = Number(req.params.UserId);
         const articlesIds = req.body.articleIds;
+
+        // Check if too much articles are booked
+        if (articlesIds && articlesIds.length > 7) {
+            throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
+        }
+
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
         if (user.length !== 1) {
             throw new ApiError(400, 'Cet utilisateur n\'existe pas');
         }
 
-        if (articlesIds && articlesIds.length > 8) {
-            throw new ApiError(400, 'La réservation ne peut pas comporter plus de 8 articles');
-        }
+
         //  Check exisiting booking for this permanency
         const activePerm = await permanencyDataMapper.findActive();
         console.log(activePerm[0].next_id);
@@ -65,7 +69,16 @@ module.exports = {
         const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
         console.log("booking", bookingExist);
         if (bookingExist.length > 0) {
-            throw new ApiError(400, 'Une réservation existe déjà pour cet utilisateur pour cette permanence');
+            throw new ApiError(400, 'Cet utilisateur à déjà une réservation pour cette permanence');
+        }
+
+        // Check if articles are available
+        const available = await bookingDataMapper.getArticlesAvailability(articlesIds);
+        if (!available.every((article) => article.available)) {
+            const unavailable = available.filter((article) => !article.available);
+            const test = unavailable.map((article) => {return `number ${article.number}`});
+            console.log(test);
+            throw new ApiError(400, `Ce ou ces articles sont indisponibles : ${JSON.stringify(test)}`);
         }
 
         const newBooking = {
@@ -74,11 +87,10 @@ module.exports = {
         };
         // Add booking to get an id booking
         const newBookingConfirm = await bookingDataMapper.addOne(newBooking);
-        // Add link between article_number and booking
-        const articlesUnavailables = await bookingDataMapper.updateArticlesAvailability(articlesIds);
-        console.log(articlesUnavailables);
+        // Update availability on each article
+        await bookingDataMapper.updateArticlesAvailability(articlesIds);
         const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
         console.log(articlesBooked);
-        return res.json({ coucou: "coucou" });
+        return res.json({ newBookingConfirm, articlesBooked });
     },
 };
