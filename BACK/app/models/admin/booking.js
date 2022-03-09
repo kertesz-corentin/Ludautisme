@@ -188,7 +188,7 @@ module.exports = {
         let query = `INSERT INTO "article_to_booking" ("id_booking","id_article") VALUES `;
         const placeholders = [];
         arr.forEach((articleId, index) => {
-            query += `(${id},$${index+1})`;
+            query += `(${id},$${index + 1})`;
             query += (index < arr.length - 1) ? `,` : ` RETURNING *;`;
             placeholders.push(articleId);
         });
@@ -196,14 +196,48 @@ module.exports = {
         return result.rows[0];
     },
     async updateArticlesAvailability(arr) {
-        let query = `UPDATE "article" SET "available"=false WHERE `;
+        let query = `UPDATE "article" SET "available"='false' WHERE `;
         const placeholders = [];
         arr.forEach((articleId, index) => {
-            query += `id=${index+1}`
-            query += (index < arr.length - 1) ? ` OR ` : `;`;
+            query += `"id"=$${index + 1}`;
+            query += (index < arr.length - 1) ? ` OR ` : ` RETURNING *;`;
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
-        return result.rows[0];
+        return result.rows;
+    },
+    async getRefsAvailability(arr) {
+        let query = `
+        WITH add_row_number AS (
+            SELECT
+            "reference"."id",
+            "reference"."name",
+            "article"."id" AS "article_id" ,
+            "article"."available" AS "article_available",
+            "article"."archived" AS "article_archived",
+            ROW_NUMBER() OVER(PARTITION BY "reference"."id") AS row_number
+            FROM "reference"
+            INNER JOIN "article" ON "reference"."id" = "article"."id_ref"
+            WHERE "reference"."id" IN (`;
+        const placeholders = [];
+        arr.forEach((articleId, index) => {
+            query += `$${index + 1}`;
+            query += (index < arr.length - 1) ? `,` : `)`;
+            placeholders.push(articleId);
+        });
+        query += `
+        )
+        SELECT
+            "id",
+            "name",
+            "article_id" ,
+            "article_available",
+            "article_archived"
+        FROM add_row_number
+        WHERE ("article_available"='true' AND "article_archived"='false' AND row_number=1)
+            OR ("article_available"='false' AND row_number=1)
+        `;
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
 };
