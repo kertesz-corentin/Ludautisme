@@ -1,6 +1,6 @@
 const express = require('express');
-
-const { referenceController } = require('../../../controllers/admin');
+const ApiError = require('../../../errors/apiError');
+const { referenceController, articleController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const router = express.Router();
  * @return {Article} 201 - success response - application/json
  */
 router.route('/article')
-    .post(controllerHandler(referenceController.addArticle));
+    .post(controllerHandler(articleController.addArticle));
 /**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
@@ -55,5 +55,7 @@ router.route('/:id')
 router.route('/')
     .get(controllerHandler(referenceController.getAll))
     .post(controllerHandler(referenceController.addRef));
-
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;

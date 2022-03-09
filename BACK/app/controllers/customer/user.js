@@ -22,7 +22,7 @@ module.exports = {
             'adress_city',
             'password',
         ];
-        Object.keys(req.body).forEach(prop => {
+        Object.keys(req.body).forEach((prop) => {
             if (!authorizedFields.includes(prop)) {
                 throw new ApiError(403, 'Vous ne pouvez pas modifier ce champ');
             }

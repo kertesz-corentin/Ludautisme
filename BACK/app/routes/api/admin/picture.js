@@ -1,5 +1,5 @@
 const express = require('express');
-
+const ApiError = require('../../../errors/apiError');
 const { pictureController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 const multer = require('../../../middleware/multer-config');
@@ -35,4 +35,7 @@ router.route('/:id')
 router.route('/')
     .post(controllerHandler(multer), controllerHandler(pictureController.addPicture));
 
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;

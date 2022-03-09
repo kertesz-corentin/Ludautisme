@@ -72,7 +72,6 @@ module.exports = {
     },
 
     async findFiltered(arr) {
-        console.log(arr);
         let query = `SELECT "user".*, role.name FROM "user" INNER JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {

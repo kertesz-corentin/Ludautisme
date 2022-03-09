@@ -6,10 +6,12 @@ const referenceRouter = require('./reference');
 const bookingRouter = require('./booking');
 const permanencyRouter = require('./permanency');
 const articleRouter = require('./article');
+const categorieRouter = require('./category');
 const { ApiError } = require('../../../errors/apiError');
 
 const router = express.Router();
 
+router.use('/categorie', categorieRouter);
 router.use('/picture', pictureRouter);
 router.use('/users', userRouter);
 router.use('/references', referenceRouter);

@@ -1,4 +1,5 @@
 const express = require('express');
+const ApiError = require('../../../errors/apiError');
 const { usersController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
@@ -61,5 +62,8 @@ router.route('/search')
 router.route('/')
     .get(controllerHandler(usersController.getAll))
     .post(controllerHandler(usersController.create));
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 
 module.exports = router;
