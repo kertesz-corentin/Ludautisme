@@ -3,15 +3,7 @@ const { categorieController } = require('../../../controllers/admin');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
-/**
- * POST api/admin/categorie/reference
- * @summary Get all category of one reference
- * @tags Category
- * @param {number} request.body.required ID of the parent reference
- * @return {array<Category>} 200 - succes response - application/json
- */
-/* router.route('/reference')
-    .post(controllerHandler(categorieController.getByRef)); */
+
 /**
  * POST api/admin/categorie/reference/search
  * @summary Get category filtered
@@ -34,11 +26,11 @@ router.route('/search')
  * @summary Delete on category
  * @tags Category
  * @param {number} request.params.requires - Id of category
- * @return {string} 200 - succes response - application/json
+ * @return {Category} 200 - succes response - application/json
  */
 router.route('/:id')
-    .put(controllerHandler(categorieController.update));
-// .delete(controllerHandler(categorieController.delete));
+    .put(controllerHandler(categorieController.update))
+    .delete(controllerHandler(categorieController.delete));
 /**
  * GET api/admin/categorie
  * @summary Get all category

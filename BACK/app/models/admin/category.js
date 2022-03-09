@@ -71,4 +71,10 @@ module.exports = {
         const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
+    async delete(id) {
+        const query = `DELETE FROM "category" WHERE id=$1 RETURNING *`;
+        const placeholders = [id];
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
+    },
 };

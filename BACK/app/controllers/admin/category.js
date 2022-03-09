@@ -50,4 +50,11 @@ module.exports = {
         const updatedCategory = await categoryDataMapper.update(req.params.id, req.body);
         return res.json(updatedCategory);
     },
+    async delete(req, res) {
+        const deletedCategory = await categoryDataMapper.delete(req.params.id);
+        if (!deletedCategory) {
+            throw new ApiError(404, 'La catégorie n\'a pas été trouvé, rien n\'a été supprimé');
+        }
+        return res.json(deletedCategory);
+    },
 };
