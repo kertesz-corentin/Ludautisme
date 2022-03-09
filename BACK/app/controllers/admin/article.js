@@ -27,7 +27,7 @@ module.exports = {
             if (['id', 'number', 'id_booking', 'id_ref', 'cat_id'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
             }
-            if (['archived','available'].includes(columns[index]) && typeof value !== 'boolean') {
+            if (['archived', 'available'].includes(columns[index]) && typeof value !== 'boolean') {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
             }
             arr.push({ [columns[index]]: value });
