@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
+import ChoiceSelect from '../Select/ChoiceSelect';
 
 const MaterialLibraryMenu = ({className, ...rest}) => {
    return (
@@ -10,6 +11,12 @@ const MaterialLibraryMenu = ({className, ...rest}) => {
             {...rest}
          >
             Menu de la matériathèque
+            <ChoiceSelect/>
+            <ChoiceSelect/>
+            <ChoiceSelect/>
+            <ChoiceSelect/>
+            <ChoiceSelect/>
+
         </div>
    );
 };
