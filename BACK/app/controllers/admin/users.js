@@ -10,6 +10,7 @@ const { usersDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {
+        console.log("test");
         const users = await usersDataMapper.findAll();
         return res.json(users);
     },

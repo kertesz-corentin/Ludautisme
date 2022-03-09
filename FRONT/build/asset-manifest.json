@@ -1,26 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.58eb3a5e.css",
-    "main.js": "/static/js/main.a4fe5ad5.js",
+    "main.css": "/static/css/main.842226bc.css",
+    "main.js": "/static/js/main.3812103f.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
+    "static/media/tarifs.pdf": "/static/media/tarifs.1e4ac79fcd6f89f695c2.pdf",
+    "static/media/adhésion.pdf": "/static/media/adhésion.3b5de6c2ac429295ed8f.pdf",
     "static/media/logo.png": "/static/media/logo.37ac0bf617f0e4ac9832.png",
+    "static/media/règlementIntérieur.pdf": "/static/media/règlementIntérieur.acfcd3fcea90775ff11e.pdf",
     "static/media/signet.png": "/static/media/signet.c965202b11de71e647f4.png",
+    "static/media/adhérent.png": "/static/media/adhérent.a0c6fcc91916e7aca429.png",
     "static/media/idee.png": "/static/media/idee.b7086270b6ab09b4815c.png",
+    "static/media/bénévole.png": "/static/media/bénévole.98078e1448481a37920c.png",
     "static/media/fusee.png": "/static/media/fusee.7ae0aef4e87c9aa4651a.png",
     "static/media/check.png": "/static/media/check.789ab0ee634162f3f575.png",
     "static/media/commerce-electronique.png": "/static/media/commerce-electronique.93729e7af319402a41d6.png",
+    "static/media/lettre.png": "/static/media/lettre.183686e8560347c995c8.png",
     "static/media/echecs.png": "/static/media/echecs.3f79d0b132404d0d52f7.png",
     "static/media/magasin.png": "/static/media/magasin.e1b1ca0729a44f8995ba.png",
+    "static/media/photo.png": "/static/media/photo.3de66aa6fca24d99cca3.png",
     "static/media/puzzle.png": "/static/media/puzzle.83658667d39591b25bf6.png",
+    "static/media/cafe.png": "/static/media/cafe.f64bd09b5c30dfb3406b.png",
     "static/media/bloguer.png": "/static/media/bloguer.014b9f25fcc15996e680.png",
     "static/media/calendrier.png": "/static/media/calendrier.2cf2c05efe809681edc2.png",
+    "static/media/Logo-Facebook.png": "/static/media/Logo-Facebook.c9125ab120cd917dcca0.png",
     "index.html": "/index.html",
-    "main.58eb3a5e.css.map": "/static/css/main.58eb3a5e.css.map",
-    "main.a4fe5ad5.js.map": "/static/js/main.a4fe5ad5.js.map",
+    "main.842226bc.css.map": "/static/css/main.842226bc.css.map",
+    "main.3812103f.js.map": "/static/js/main.3812103f.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.58eb3a5e.css",
-    "static/js/main.a4fe5ad5.js"
+    "static/css/main.842226bc.css",
+    "static/js/main.3812103f.js"
   ]
 }
