@@ -11,7 +11,7 @@ const Unavailable = ({className, ...rest}) => {
    return (
         <Stack direction="row" spacing={8}>
         <Avatar sx={{ bgcolor: deepOrange[500], fontSize: 10, p:2, width:80 }} variant="rounded">
-          Inisponible
+          Indisponible
         </Avatar>
       </Stack>
     )
