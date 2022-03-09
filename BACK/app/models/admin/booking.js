@@ -206,14 +206,38 @@ module.exports = {
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
-    async getArticlesAvailability(arr) {
-        let query = `SELECT * FROM article WHERE id IN (`;
+    async getRefsAvailability(arr) {
+        let query = `
+        WITH add_row_number AS (
+            SELECT
+            "reference"."id",
+            "reference"."name",
+            "article"."id" AS "article_id" ,
+            "article"."available" AS "article_available",
+            "article"."archived" AS "article_archived",
+            ROW_NUMBER() OVER(PARTITION BY "reference"."id") AS row_number
+            FROM "reference"
+            INNER JOIN "article" ON "reference"."id" = "article"."id_ref"
+            WHERE "reference"."id" IN (`;
         const placeholders = [];
         arr.forEach((articleId, index) => {
             query += `$${index + 1}`;
-            query += (index < arr.length - 1) ? `,` : `);`;
+            query += (index < arr.length - 1) ? `,` : `)`;
             placeholders.push(articleId);
         });
+        query += `
+        )
+        SELECT
+            "id",
+            "name",
+            "article_id" ,
+            "article_available",
+            "article_archived"
+        FROM add_row_number
+        WHERE ("article_available"='true' AND "article_archived"='false' AND row_number=1)
+            OR ("article_available"='false' AND row_number=1)
+        `;
+        console.log(query);
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
