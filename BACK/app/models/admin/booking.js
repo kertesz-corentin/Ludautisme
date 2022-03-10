@@ -240,4 +240,16 @@ module.exports = {
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
+    async getArticlesAvailability(arr) {
+        let query = `
+       SELECT * FROM "article" WHERE "article"."id" IN (`;
+        const placeholders = [];
+        arr.forEach((articleId, index) => {
+            query += `$${index + 1}`;
+            query += (index < arr.length - 1) ? `,` : `);`;
+            placeholders.push(articleId);
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
 };
