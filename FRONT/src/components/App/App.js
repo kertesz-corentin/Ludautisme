@@ -76,7 +76,7 @@ function App() {
             </Route>
             <Route path = "/user/articles" element = {<Home children={<MaterialLibrary />} />}></Route>
             <Route path = "/resetpassword" element ={<ResetPwd />}></Route>
-             <Route path = "*" element = {<Error />}></Route>
+            <Route path = "*" element = {<Error />}></Route>
         </Routes>
     </div>
     );
