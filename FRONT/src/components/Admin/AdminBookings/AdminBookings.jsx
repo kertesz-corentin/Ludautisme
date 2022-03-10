@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests';
 import { bookingSchema } from '../../../Schemas';
+import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 
 import './adminbookings.scss';
 import { IconButton, ToggleButton } from '@mui/material';
@@ -100,7 +101,7 @@ const AdminBookings = ({className, ...rest}) => {
                         sortModel: [{field: 'id', sort: 'asc'}],
                     }
                 }}
-                children
+                children={<BookingUserChoice />}
             />
         </div>
     );

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { referenceSchema } from '../../../Schemas';
 
 import './addreferencemodal.scss';
 
