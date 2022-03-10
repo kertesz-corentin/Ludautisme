@@ -14,6 +14,9 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {boolean} archived - If the object is archived
  * @property {string} created_at - Date of the registration in DB
  * @property {number} id_ref - ID of the parent reference
+ * @property {string} ref_name - Name of the parent reference
+ * @property {string} cat_id - category ID of the parent reference
+ * @property {string} cat_name - category Name of the parent reference
  */
 /**
  * @typedef {object} Articles
