@@ -56,26 +56,27 @@ const AdminReferences = ({className, ...rest}) => {
                 type: propElt.type,
                 field:prop,
                 headerName:propElt.label,
-                width: propElt.width};
+                width: propElt.width
+            };
 
-                if (propElt.gridDisplay !== "normal"){
-                    switch (propElt.gridDisplay){
-                        case "edit":
-                            config.renderCell = (params) => (
+            if (propElt.gridDisplay !== "normal"){
+                switch (propElt.gridDisplay){
+                    case "edit":
+                        config.renderCell = (params) => (
 
-                                <IconButton
-                                    value={params.value}
-                                    aria-label={`${prop}-${params.row.id}`}
-                                >
-                                    <UpdateReferenceModal params={params} categories={categories} />
-                                </IconButton>
+                            <IconButton
+                                value={params.value}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <UpdateReferenceModal params={params} categories={categories} />
+                            </IconButton>
                         );
-                        break;
+                    break;
 
-                        default:
-                            break;
-                    }
+                    default:
+                        break;
                 }
+            }
             columns.push(config);
         });
         return columns;

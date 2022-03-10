@@ -90,7 +90,10 @@ const Articles = ({params, children, className, ...rest}) => {
                                 id: false,
                                 created_at: false,
                                 id_ref: false,
-                            }
+                            },
+                        },
+                        sorting: {
+                            sortModel: [{field: 'id', sort: 'asc'}],
                         }
                     }}
                 >
