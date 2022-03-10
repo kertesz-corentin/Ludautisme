@@ -94,4 +94,36 @@ module.exports = {
             console.error(err);
         }
     },
+    async findFiltered(arr) {
+        let query = `SELECT * FROM "article"
+        WHERE `;
+        const placeholders = [];
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                query += `${prop}=$${index + 1} AND `;
+            } else {
+                query += `${prop}=$${index + 1}`;
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
+    async update(id, obj) {
+        const props = Object.keys(obj);
+        let query = `UPDATE "article" SET `;
+        const placeholders = [];
+        props.forEach((prop, index) => {
+            placeholders.push(obj[prop]);
+            if (index !== props.length - 1) {
+                query += `${prop}=$${index + 1}, `;
+            } else {
+                query += `${prop}=$${index + 1} WHERE id=$${index + 2} RETURNING *`;
+                placeholders.push(id);
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
+    },
 };

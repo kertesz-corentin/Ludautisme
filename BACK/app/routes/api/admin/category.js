@@ -6,7 +6,7 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 const router = express.Router();
 
 /**
- * POST api/admin/categorie/reference/search
+ * POST api/admin/categorie/search
  * @summary Get category filtered
  * @tags Category
  * @param {Category} request.body.required At least one of these
