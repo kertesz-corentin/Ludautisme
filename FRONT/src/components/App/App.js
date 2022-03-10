@@ -18,7 +18,8 @@ import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';
 import UsefullLinks from '../UsefullLinks/UsefullLinks';
 import './App.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-
+import Error from '../Error/Error';
+import ResetPwd from '../ResetPwd/ResetPwd';
 
 
 
@@ -74,7 +75,8 @@ function App() {
                 <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             </Route>
             <Route path = "/user/articles" element = {<Home children={<MaterialLibrary />} />}></Route>
-            {/* <Route path = "*" element = {<Error />}></Route>  */}
+            <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
+            <Route path = "*" element = {<Error />}></Route>
         </Routes>
     </div>
     );
