@@ -14,6 +14,9 @@ const ChoiceSelection = ({className, ...rest}) => {
     const handleChange = (event) => {
       setAge(event.target.value);
     };
+    function handleClick () {
+        console.log(`Voila la valeur du choix`, MenuItem.value)
+    }
 
     return (
       <Box sx={{ minWidth: 120 }}>
@@ -25,12 +28,14 @@ const ChoiceSelection = ({className, ...rest}) => {
             value={age}
             label="Jeux"
             onChange={handleChange}
+            onClick= {handleClick}
           >
-            <MenuItem value={1}>Jeux</MenuItem>
-            <MenuItem value={2}>Aide à la motricité</MenuItem>
-            <MenuItem value={3}>Apprentissage</MenuItem>
-            <MenuItem value={4}>Montessori</MenuItem>
-            <MenuItem value={5}>Médiathèque</MenuItem>
+            <MenuItem value={1} onClick= {handleClick}>Jeux</MenuItem>
+            <MenuItem value={2}>Apprentissage</MenuItem>
+            <MenuItem value={3}>Autonomie</MenuItem>
+            <MenuItem value={4}>Média</MenuItem>
+            <MenuItem value={5}>Livres</MenuItem>
+            <MenuItem value={6}>Bois</MenuItem>
           </Select>
         </FormControl>
       </Box>
