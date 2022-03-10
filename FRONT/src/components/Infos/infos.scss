@@ -1,0 +1,170 @@
+@import 'src/styles/vars';
+
+.practicalinformations {
+    height: 100%;
+}
+
+.perm {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.présentation-header {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: hsl(178, 100%, 37%, 1);
+
+    &-local {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        margin: 30px;
+        filter: $drop-shadow;
+
+        img {
+            width: fit-content;
+            max-width: 400px;
+        }
+    }
+
+    &-adresse {
+        display: flex;
+        flex-flow: column wrap;
+        text-align: left;
+        color: $font-color-2;
+        font-size: 1.2rem;
+        margin: 30px;
+
+        h2 {
+            display: flex;
+            flex-flow: row nowrap ;
+            align-items:flex-end ;
+            text-shadow: rgb(0 0 0 / 30%) 0px 0px 5px;
+        }
+
+        img {
+            width: 50px;
+            margin-right: 20px;
+            filter: $drop-shadow
+        }
+
+
+
+        a {
+            text-decoration: none;
+            color: $font-color-2;
+
+        }
+    }
+
+    &-permap {
+        display: flex;
+        margin: 30px ;
+        flex-direction: column;
+        flex-wrap: wrap;
+     }
+
+    &-map {
+        margin-top: 30px;
+        border-style: hidden;
+        border-radius: 20px;
+        filter: $drop-shadow;
+    }
+}
+
+.contact {
+    align-items: center;
+    margin-bottom:  30px;
+    width: min-content;
+}
+
+.become {
+    margin: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+
+    &-bénévole-body {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    &-cat{
+        max-width: fit-content;
+        flex: 50%;
+        justify-content: space-between;
+        --clay-background: blanchedalmond;
+        --clay-border-radius: 20px;
+
+    }
+    &-title {
+        margin: 30px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        // justify-content: center;
+        border-radius: 10px;
+        padding: 10px;
+        // border: 5px solid $blue;
+        background-color: $blue;
+
+        h2 {
+
+            color: $font-color-2;
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+        }
+
+        &-img {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+
+        }
+    }
+
+    &-body {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+
+        &-description {
+            margin: 0 30px 0 30px;
+            text-align: left;
+        }
+
+        &-docs {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+
+        &-list {
+            position: relative;
+            left: 20%;
+
+        }
+
+        &-link {
+            display: flex;
+            // flex-flow: row nowrap;
+            flex-direction: row;
+
+            &-button {
+                color: $font-color;
+            }
+        }
+
+        &-modal {
+                position:relative;
+                top: 10%;
+                left: 10%;
+                width: 75vw;
+                height: 75vh;
+                border-radius: 10px;
+            }
+
+    }
+}
