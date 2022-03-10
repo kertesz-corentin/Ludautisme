@@ -1,5 +1,4 @@
-const client = require('../../config/db');
-
+const sqlHandler = require('../../helpers/sqlHandler');
 /**
  * @typedef {object} Reference
  * @property {number} id - Unique identifier
@@ -12,14 +11,14 @@ const client = require('../../config/db');
 
 module.exports = {
     async findAll() {
-        const result = await client.query(
+        const result = await sqlHandler(
             `SELECT
             r."id",
             r."name",
             r."description",
             r."valorisation",
             cat."name" AS mainCategory,
-            json_agg("category"."name") AS tag,
+            json_agg(DISTINCT "category"."name") AS tag,
             json_agg(json_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -38,14 +37,14 @@ module.exports = {
         return result.rows;
     },
     async findOne(id) {
-        const result = await client.query(
+        const result = await sqlHandler(
             `SELECT
             r.id,
             r.name,
             r.description,
             r.valorisation,
             cat.name AS mainCategory,
-            json_agg("category"."name") AS tag,
+            json_agg(DISTINCT "category"."name") AS tag,
             json_agg(json_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -65,5 +64,8 @@ module.exports = {
             [id],
         );
         return result.rows;
+    },
+    async search(obj) {
+        
     },
 };

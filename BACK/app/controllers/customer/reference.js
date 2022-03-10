@@ -17,4 +17,20 @@ module.exports = {
         }
         return res.json(references);
     },
+    async search(req, res) {
+        const {
+            page,
+            npRef,
+            categories,
+            tags,
+            status,
+        } = req.body
+        
+
+        const references = await userReferenceDataMapper.findFiltered(req.body);
+        if (!references[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+        return res.json(references);
+    },
 };
