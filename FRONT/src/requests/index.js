@@ -66,7 +66,14 @@ const api = {
         console.log('logout');
         localStorage.removeItem("user");
         return { message: "logged Out" };
-    }
+    },
+    async resetPassword(path, data) {
+        try {
+        return await connection.post(path, data);
+        } catch (err) {
+            return err.response
+        }
+    },
 
 }
 

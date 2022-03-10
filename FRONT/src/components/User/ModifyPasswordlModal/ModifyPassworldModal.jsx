@@ -12,6 +12,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import api from '../../../requests';
 
 const ModifyPassworldModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
@@ -29,6 +30,7 @@ const ModifyPassworldModal = ({className, ...rest}) => {
         const newPassword = {
             password:passworldValue
         }
+        api.resetPassword('/login/reset-password',newPassword);
         console.log(`New Password to send Back`, newPassword)
         handleClose()
     }
@@ -60,7 +62,6 @@ const ModifyPassworldModal = ({className, ...rest}) => {
             fullWidth
             variant="standard"
             value= {passworldValue}
-            onChange={(event) => handlePasswordChange(event, passworldValue)}
           />
         </DialogContent>
         <DialogActions>
