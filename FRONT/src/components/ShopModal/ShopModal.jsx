@@ -9,11 +9,16 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useState } from 'react';
+import { Divider } from '@mui/material';
+import Reference from '../Reference/Reference';
+import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 
 const ShopModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [counter, setCounter] = useState (0)
 
     return (
       <div>
@@ -32,10 +37,16 @@ const ShopModal = ({className, ...rest}) => {
           <Fade in={open}>
             <Box className="shopmodal">
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Text in a modal
+                Mon panier
               </Typography>
+              <Divider/>
               <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                {counter}/8
+              </Typography>
+              <Divider/>
+              <Typography id="transition-modal-title" variant="h6" component="h2">
+                Voici l'ensemble de vos articles :
+                <ListOfReferences/>
               </Typography>
             </Box>
           </Fade>
