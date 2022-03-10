@@ -8,15 +8,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const ChoiceSelection = ({className, ...rest}) => {
-    const [age, setAge] = React.useState('');
+const ChoiceSelection = ({className,categories, ...rest}) => {
+    const [category, setCategory] = React.useState('');
 
     const handleChange = (event) => {
-      setAge(event.target.value);
+      setCategory(event.target.value);
     };
-    function handleClick () {
-        console.log(`Voila la valeur du choix`, MenuItem.value)
-    }
+    console.log(`Voila l'Id de la catégorie sélectionnée`, category)
+
 
     return (
       <Box sx={{ minWidth: 120 }}>
@@ -25,17 +24,15 @@ const ChoiceSelection = ({className, ...rest}) => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={category}
             label="Jeux"
             onChange={handleChange}
-            onClick= {handleClick}
+
           >
-            <MenuItem value={1} onClick= {handleClick}>Jeux</MenuItem>
-            <MenuItem value={2}>Apprentissage</MenuItem>
-            <MenuItem value={3}>Autonomie</MenuItem>
-            <MenuItem value={4}>Média</MenuItem>
-            <MenuItem value={5}>Livres</MenuItem>
-            <MenuItem value={6}>Bois</MenuItem>
+            {categories.map((category) => {
+                return(
+                <MenuItem value={category.id}> {category.name}</MenuItem>)
+            })}
           </Select>
         </FormControl>
       </Box>

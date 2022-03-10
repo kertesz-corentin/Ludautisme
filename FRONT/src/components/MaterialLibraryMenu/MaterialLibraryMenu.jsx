@@ -6,7 +6,7 @@ import ChoiceSelection from '../Select/ChoiceSelection';
 
 
 
-const MaterialLibraryMenu = ({className, ...rest}) => {
+const MaterialLibraryMenu = ({className,categories, ...rest}) => {
 
    return (
        <div
@@ -14,7 +14,7 @@ const MaterialLibraryMenu = ({className, ...rest}) => {
             {...rest}
          >
             Matériathèque
-            <ChoiceSelection/>
+            <ChoiceSelection categories={categories} />
         </div>
    );
 };
