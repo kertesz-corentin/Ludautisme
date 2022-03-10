@@ -29,20 +29,25 @@ module.exports = {
         delete req.body.limit;
         const obj = req.body;
         const props = Object.keys(obj);
+
         const arr = [];
         props.forEach((prop) => {
-            const value = obj[prop];
+            const array = obj[prop];
             const index = columns.indexOf(prop);
-            if (Number.isNaN(index)) {
-                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
-            }
-            if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
-                throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
-            }
-            if (['available'].includes(columns[index]) && typeof value !== 'boolean') {
-                throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
-            }
-            arr.push({ [aliases[index]]: value });
+            const values = [];
+            array.forEach((value) => {
+                if (Number.isNaN(index)) {
+                    throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
+                }
+                if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
+                    throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
+                }
+                if (['available'].includes(columns[index]) && typeof value !== 'boolean') {
+                    throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
+                }
+                values.push(value);
+            });
+            arr.push({ [aliases[index]]: values });
         });
         const references = await userReferenceDataMapper.findFiltered(arr, offset, limit);
         if (!references[0]) {

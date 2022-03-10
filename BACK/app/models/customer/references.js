@@ -91,11 +91,20 @@ module.exports = {
         const placeholders = [limit, offset, ];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
-            placeholders.push(filter[prop]);
+            console.log(prop);
+            console.log(filter);
+            queryStart += `${prop} IN (`;
+            filter[prop].forEach((filt, indx) => {
+                console.log(filt);
+                if (indx!== filter[prop].length - 1) {
+                    queryStart += `$${placeholders.length + 1}, `;
+                } else {
+                    queryStart += `$${placeholders.length + 1})`;
+                }
+                placeholders.push(filt);
+            });
             if (index !== arr.length - 1) {
-                queryStart += `${prop}=$${index + 3} AND `;
-            } else {
-                queryStart += `${prop}=$${index + 3}`;
+                queryStart += ` AND `;
             }
         });
         const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
