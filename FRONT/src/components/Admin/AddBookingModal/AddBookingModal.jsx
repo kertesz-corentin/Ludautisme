@@ -1,42 +1,15 @@
-import React, { useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { referenceSchema } from '../../../Schemas';
+import { Button, Modal, Box, Typography}
+import classnames from 'classnames';
+import './addbookingmodal.scss';
 
-import './addreferencemodal.scss';
-
-const AddReferenceModal = ({categories, className, ...rest}) => {
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
-    const [category, setCategory] = useState('');
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const reference = {
-            'name': data.get('name'),
-            'description': data.get('description'),
-            'valorisation': data.get('valorisation'),
-            'main_category': data.get('main_category'),
-        };
-
-        console.log('reference', reference);
-        const response = await api.post('/admin/references', reference)
-        if(response.status === 200) {
-            handleClose();
-        }
-        console.log('response', response);
-    }
-
-    const handleChange = (event) => {
-        setCategory(event.target.value);
-    }
-
+const AddBookingModal = ({className, ...rest}) => {
     return (
-        <div>
+        <div
+            className={classnames('addbookingmodal', className)}
+            {...rest}
+        >
             <Button onClick={handleOpen}>Ajouter référence</Button>
             <Modal
                 open={open}
@@ -115,10 +88,10 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     );
 };
 
-AddReferenceModal.propTypes = {
+AddBookingModal.propTypes = {
     className: PropTypes.string,
 };
-AddReferenceModal.defaultProps = {
+AddBookingModal.defaultProps = {
     className: '',
 };
-export default React.memo(AddReferenceModal);
+export default React.memo(AddBookingModal);

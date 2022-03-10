@@ -5,9 +5,6 @@ import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
 const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
-    const showModal = () => {
-        console.log('showModal');
-    };
 
     return (
         <section className='section'>
@@ -23,9 +20,6 @@ const AdminSection = ({ title, rows, columns, path, initialState, children }) =>
                         columns={columns}
                         pageSize={15}
                         rowsPerPageOptions={[15]}
-                        SelectionOnClick
-                        editMode="cell"
-                        onRowDoubleClick={showModal}
                         disableSelectionOnClick
                         localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{

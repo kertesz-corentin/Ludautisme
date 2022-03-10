@@ -1,44 +1,44 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, NativeSelect, FormControl, InputLabel }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { referenceSchema } from '../../../Schemas';
+import Articles from '../../Articles/Articles';
+import AddModal from '../../Articles/AddModal/AddModal';
 
 import './updatereferencemodal.scss';
 
-const UpdateReferenceModal = ({params, className, ...rest}) => {
+const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
+    const [category, setCategory] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+
         const reference = {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
             'main_category': data.get('main_category'),
         };
-
-        console.log('reference', reference);
-        const response = await api.put(`/admin/references/${params.row.id}`, reference)
+        console.log('reference', reference)
+        const response = await api.put(`/admin/references/${params.row.id}`, reference);
         if(response.status === 200) {
             handleClose();
         }
         console.log('response', response);
     }
 
-    const handleDelete = async () => {
-        const response = await api.delete(`/admin/references/${params.row.id}`)
-        if(response.status === 200) {
-            handleClose();
-        }
+    const handleChange = (event) => {
+        console.log(event.target.value);
+        setCategory(event.target.value);
     }
 
+    console.log('params-edit', params);
     return (
         <div>
             <IconButton onClick={handleOpen}>
@@ -51,7 +51,7 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
                     <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Edition Adhérent
+                            Edition Référence
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -91,15 +91,34 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Catégorie'
-                            name='main_category'
-                            type='number'
+                            label='Catégorie Actuelle'
+                            name="actual_category"
+                            type='string'
                             className="modal-inputs-item"
                             defaultValue={params.row.maincategory}
+                            disabled
                         >
                         </TextField>
-
-
+                        <FormControl fullWidth>
+                            <InputLabel id="maincategory-label">Catégorie</InputLabel>
+                            <NativeSelect
+                                labelId="maincategory-label"
+                                id="main_category"
+                                name="main_category"
+                                label="Catégorie"
+                                type='string'
+                                onChange={handleChange}
+                                // defaultValue={params.row.id_maincat}
+                                value={category}
+                            >
+                            <option value={params.row.id_maincat}>{params.row.name_maincat}</option>
+                            {categories.map((category) => {
+                                return (
+                                    <option value={category.id}>{category.name}</option>
+                                )
+                            })}
+                            </NativeSelect>
+                        </FormControl>
                     </div>
                     <div className="modal-footer">
                         <Button
@@ -110,16 +129,11 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                             Mettre à jour
                         </Button>
 
-                        <Button
-                            onClick={handleDelete}
-                            className="modal-footer-submit"
-                            variant="outlined"
-                            startIcon={<DeleteIcon />}
-                        >
-                            Supprimer
-                        </Button>
-
                     </div>
+                    <div className="modal-articles">
+                        <Articles params={params} children={<AddModal reference={params.row.id} />} />
+                    </div>
+
                 </Box>
             </Modal>
 
