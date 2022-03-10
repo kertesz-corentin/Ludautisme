@@ -2,11 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './paypal.scss';
-
 const Paypal = ({className, ...rest}) => {
    return (
        <div className={classnames('paypal', className)}
             {...rest}>
+                    <div className="application">
+
+
+        </div>
+
+
+
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_donations"/>
                     <input type="hidden" name="business" value="ludautisme@gmail.com"/>
@@ -54,50 +60,3 @@ export default React.memo(Paypal);
 
 
 
-
-// <div id="smart-button-container">
-//       <div style="text-align: center;">
-//         <div id="paypal-button-container"></div>
-//       </div>
-//     </div>
-//   <script src="https://www.paypal.com/sdk/js?client-id=AUbfcdEUn8ObFYYdgNpiFJjjqwxFtFSM3ovn-PDCoaqMrZ17C8GIOOHsHYjFE2V4GPi_IhmIE6Uvnh6A&enable-funding=venmo&currency=EUR" data-sdk-integration-source="button-factory"></script>
-//   <script>
-//     function initPayPalButton() {
-//       paypal.Buttons({
-//         style: {
-//           shape: 'rect',
-//           color: 'gold',
-//           layout: 'vertical',
-//           label: 'donate',
-
-//         },
-
-//         createOrder: function(data, actions) {
-//           return actions.order.create({
-//             purchase_units: [{"amount":{"currency_code":"EUR","value":1,"breakdown":{"item_total":{"currency_code":"EUR","value":1}}},"items":[{"name":"item name","unit_amount":{"currency_code":"EUR","value":1},"quantity":"1","category":"DONATION"}]}]
-//           });
-//         },
-
-//         onApprove: function(data, actions) {
-//           return actions.order.capture().then(function(orderData) {
-
-//             // Full available details
-//             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-//             // Show a success message within this page, e.g.
-//             const element = document.getElementById('paypal-button-container');
-//             element.innerHTML = '';
-//             element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-//             // Or go to another URL:  actions.redirect('thank_you.html');
-
-//           });
-//         },
-
-//         onError: function(err) {
-//           console.log(err);
-//         }
-//       }).render('#paypal-button-container');
-//     }
-//     initPayPalButton();
-//   </script>

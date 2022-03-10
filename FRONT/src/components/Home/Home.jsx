@@ -1,21 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
 // Import components
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ContentPage from '../ContentPage/ContentPage';
-
-
 import './home.scss';
 
 const Home = ({className, children}) => {
+
+
+    const HeaderOnTop = {
+            margin: '100px 0 0 0',
+    };
+
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
             <Header/>
+                <div
+                className='mainChildren'
+                style={HeaderOnTop}
+                >
                 {children}
+                </div>
             <Footer/>
         </ContentPage>
         </div>

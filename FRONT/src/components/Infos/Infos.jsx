@@ -24,6 +24,7 @@ const Infos = ({className, ...rest}) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
    return (
     <div className={classnames('practicalinformations', className)}
     {...rest}>
