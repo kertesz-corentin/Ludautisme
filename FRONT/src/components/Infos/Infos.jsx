@@ -18,6 +18,7 @@ import Fade from '@mui/material/Fade';
 import Link from '@mui/material/Link';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import IconButton from '@mui/material/IconButton';
+import Paypal from  '../Paypal/Paypal';
 
 const Infos = ({className, ...rest}) => {
   const [open, setOpen] = React.useState(false);
@@ -67,33 +68,15 @@ const Infos = ({className, ...rest}) => {
         </div>
 
         <div className='paypal-box'>
-            paypal
+            <Paypal />
         </div>
 
         <div className='become'>
-            <div className='clay become-cat1'>
-                <div className='become-title'>
-                    <img className='become-title-img' src={Adhérent} alt="logo-adhérent" />
-                    <h2 className='become-bénévole-title'>
-                        Devenir adhérent
-                    </h2>
-                </div>
-                <div className='become-bénévole-body'>
-                <p> Vous souhaitez nous aider en consacrant un peu de votre temps à l’association. Vous êtes les bienvenus ! <br />
-
-                Nous avons notamment besoin de bénévoles lors des permanences, pour occuper les enfants ainsi que pour nous aider dans l’enregistrement des retours et des emprunts du matériel. <br />
-
-
-                Par ailleurs, si vous souhaitez vous investir dans la gestion de l’association, nous faire profiter d’un de vos talents ou encore nous aider dans l’organisation d’une manifestation, contactez-nous ! <br />
-                </p>
-                </div>
-            </div>
-
             <div className='clay become-cat'>
                 <div className='become-title'>
-                    <img className='become-title-img' src={Bénévole} alt="logo-bénévole" />
+                <img className='become-title-img' src={Adhérent} alt="logo-adhérent" />
                     <h2 className='become-bénévole-title'>
-                        Devenir bénévole
+                        Devenir adhérent
                     </h2>
                 </div>
                 <div className='become-body'>
@@ -128,7 +111,7 @@ const Infos = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal' title='réglement' src={Réglement} frameborder="0"></iframe>
+                                        <iframe className='become-body-pdf-modal1' title='réglement' src={Adhésion} frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                             </div>
@@ -139,7 +122,7 @@ const Infos = ({className, ...rest}) => {
                                 Réglement intérieur
                             </p>
                             <Link className='become-body-link' onClick={handleOpen}>
-                            <IconButton aria-label="adhésion" size="large">
+                            <IconButton aria-label="réglement" size="large">
                                     <OpenInNewRoundedIcon className='become-body-link-button' />
                                     </IconButton>
                                 </Link>
@@ -155,7 +138,7 @@ const Infos = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal' title='adhésion' src={Adhésion} frameborder="0"></iframe>
+                                        <iframe className='become-body-pdf-modal2' title='réglement' src={Réglement} frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                             </div>
@@ -167,7 +150,7 @@ const Infos = ({className, ...rest}) => {
                                 Informations et tarifs
                             </p>
                             <Link className='become-body-link' onClick={handleOpen}>
-                            <IconButton aria-label="adhésion" size="large">
+                            <IconButton aria-label="infos" size="large">
                                     <OpenInNewRoundedIcon className='become-body-link-button' />
                                     </IconButton>
                                 </Link>
@@ -183,12 +166,49 @@ const Infos = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal' title='tarifs' src={Tarifs} frameborder="0"></iframe>
+                                        <iframe className='become-body-pdf-modal3' title='tarifs' src={Tarifs} frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                             </div>
                         </li>
                     </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            <div className='clay become-cat'>
+                <div className='become-title'>
+                <img className='become-title-img' src={Bénévole} alt="logo-bénévole" />
+                    <h2 className='become-bénévole-title'>
+                        Devenir bénévole
+                    </h2>
+                </div>
+                <div className='become-bénévole-body'>
+                <p> Vous souhaitez nous aider en consacrant un peu de votre temps à l’association. Vous êtes les bienvenus ! <br />
+
+                Nous avons notamment besoin de bénévoles lors des permanences, pour occuper les enfants ainsi que pour nous aider dans l’enregistrement des retours et des emprunts du matériel. <br />
+
+
+                Par ailleurs, si vous souhaitez vous investir dans la gestion de l’association, nous faire profiter d’un de vos talents ou encore nous aider dans l’organisation d’une manifestation, contactez-nous ! <br />
+                </p>
+                </div>
+
                 </div>
             </div>
 
@@ -199,7 +219,6 @@ const Infos = ({className, ...rest}) => {
 );
 };
 
-
 Infos.propTypes = {
     className: PropTypes.string,
 };
@@ -207,3 +226,5 @@ Infos.defaultProps = {
     className: '',
 };
 export default React.memo(Infos);
+
+

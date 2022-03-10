@@ -149,7 +149,6 @@
 
         &-link {
             display: flex;
-            // flex-flow: row nowrap;
             flex-direction: row;
 
             &-button {
@@ -157,7 +156,9 @@
             }
         }
 
-        &-modal {
+        &-pdf-modal1 {
+
+
                 position:relative;
                 top: 10%;
                 left: 10%;
