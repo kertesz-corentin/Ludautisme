@@ -1,5 +1,5 @@
 const ApiError = require('../../errors/apiError');
-const { referenceDataMapper, articleDataMapper } = require('../../models/admin');
+const { referenceDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -21,7 +21,7 @@ module.exports = {
         if (!results[0]) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
-        return res.json(results[0]);
+        return res.json(results);
     },
     async addRef(req, res) {
         const reference = await referenceDataMapper.findByName(req.body.name);
