@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const sqlHandler = require('../../helpers/sqlHandler');
 /**
  * @typedef {object} Reference
@@ -7,6 +8,14 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} valorisation - Price of the referrence
  * @property {string} mainCategory - main category of article
  * @property {array<string>} tag - Tag of reference
+ */
+/**
+ * @typedef {object} ParamSearchReference
+ * @property {number} page - Number of the page
+ * @property {number} limit - Limit of reference by page
+ * @property {array<number>} categories - List of main categorie ID
+ * @property {array<number>} tags - List of tags ID
+ * @property {array<boolean>} available - If the references is avalaible
  */
 
 module.exports = {
@@ -88,15 +97,12 @@ module.exports = {
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
         WHERE `;
-        const placeholders = [limit, offset, ];
+        const placeholders = [limit, offset];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
-            console.log(prop);
-            console.log(filter);
             queryStart += `${prop} IN (`;
             filter[prop].forEach((filt, indx) => {
-                console.log(filt);
-                if (indx!== filter[prop].length - 1) {
+                if (indx !== filter[prop].length - 1) {
                     queryStart += `$${placeholders.length + 1}, `;
                 } else {
                     queryStart += `$${placeholders.length + 1})`;

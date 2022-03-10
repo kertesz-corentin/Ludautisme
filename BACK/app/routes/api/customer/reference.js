@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const express = require('express');
 const ApiError = require('../../../errors/apiError');
 const { referenceController } = require('../../../controllers/customer');
@@ -8,7 +9,7 @@ const router = express.Router();
  * POST api/customer/articles/search
  * @summary Get all ref filtered and paginate
  * @tags Reference
- * @param
+ * @param {ParamSearchReference} request.body.required - At least page, limit and one of the three other
  * @returns {allOf|Reference|Pictures} 200 - succes response - application/json
  */
 router.route('/search')
