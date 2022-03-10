@@ -8,22 +8,13 @@ import ContentPage from '../ContentPage/ContentPage';
 import './home.scss';
 
 const Home = ({className, children}) => {
-
-
-    const HeaderOnTop = {
-            margin: '100px 0 0 0',
-    };
-
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
             <Header/>
-                <div
-                className='mainChildren'
-                style={HeaderOnTop}
-                >
+
                 {children}
-                </div>
+
             <Footer/>
         </ContentPage>
         </div>

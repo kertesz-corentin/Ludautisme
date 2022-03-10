@@ -1,7 +1,7 @@
 @import 'src/styles/vars';
 
 .header {
-    position: fixed;
+    position: sticky;
     z-index: 1;
     top: 0;
     // overflow: hidden;
@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: space-between;
     padding: $gutter;
-    background-color: rgba(255, 235, 205, 0.8);
+    background-color: $font-color-2;
     filter: $drop-shadow;
 
     &-logo-img {
