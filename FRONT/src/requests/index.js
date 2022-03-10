@@ -9,19 +9,39 @@ const connection = axios.create({
 
 const api = {
     async get(path) {
-        return connection.get(path, { headers: authHeader() });
+        try {
+        return await connection.get(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async post(path, data) {
-        return connection.post(path, data, { headers: authHeader() });
+        try {
+        return await connection.post(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async patch(path, data) {
-        return connection.patch(path, data, { headers: authHeader() });
+        try {
+        return await connection.patch(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async put(path, data) {
-        return connection.put(path, data, { headers: authHeader() });
+        try {
+        return await connection.put(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async delete(path) {
+        try {
         return connection.delete(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async login(email, password,type) {
         let response = null;
@@ -56,7 +76,7 @@ const authHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (user != null) {
-        return { 'x-access-token': user }
+        return { 'x-access-token': user.token }
     }
 
     //No token

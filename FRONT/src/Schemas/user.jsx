@@ -13,7 +13,7 @@ const userSchema  = {
         width : 100,
     },
     email:{
-        type : "email",
+        type : "string",
         label : "Email",
         gridDisplay : "normal",
         width : 150,

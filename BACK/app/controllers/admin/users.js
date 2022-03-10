@@ -55,6 +55,9 @@ module.exports = {
             { email: req.body.email },
         ]);
         try {
+            if (!['id_role', 'email', 'member_number', 'phone', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
+                throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
+            }
             if (user.length > 0) {
                 throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
             }
@@ -62,7 +65,7 @@ module.exports = {
                 const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
                 req.body.password = hashedPassword;
             }
-            const newUser = await usersDataMapper.insert(req.body);
+            const newUser = await usersDataMapper.addUser(req.body);
             return res.json(newUser);
         } catch (err) {
             return res.json(err, err.message);
