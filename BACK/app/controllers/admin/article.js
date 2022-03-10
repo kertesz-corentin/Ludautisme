@@ -27,7 +27,7 @@ module.exports = {
             if (['id', 'number', 'id_booking', 'id_ref', 'cat_id'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
             }
-            if (['archived','available'].includes(columns[index]) && typeof value !== 'boolean') {
+            if (['archived', 'available'].includes(columns[index]) && typeof value !== 'boolean') {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
             }
             arr.push({ [columns[index]]: value });
@@ -51,5 +51,14 @@ module.exports = {
         const newArticle = await articleDataMapper.create(req.body);
 
         return res.json(newArticle);
+    },
+    async updateArticle(req, res) {
+        const id = [{ id: req.params.id }];
+        const article = await articleDataMapper.findFiltered(id);
+        if (article.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
+        const updatedUser = await articleDataMapper.update(req.params.id, req.body);
+        return res.json(updatedUser);
     },
 };

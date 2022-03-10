@@ -57,4 +57,5 @@ module.exports = {
         }
         return res.json(deletedCategory);
     },
+    
 };
