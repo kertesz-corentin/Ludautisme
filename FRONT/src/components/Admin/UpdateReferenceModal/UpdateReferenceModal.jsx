@@ -5,6 +5,7 @@ import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormCont
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
+import AddModal from '../../Articles/AddModal/AddModal';
 
 import './updatereferencemodal.scss';
 
@@ -141,7 +142,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
 
                     </div>
                     <div className="modal-articles">
-                        <Articles articles={articles} />
+                        <Articles articles={articles} children={<AddModal reference={params.row.id} />} />
                     </div>
 
                 </Box>

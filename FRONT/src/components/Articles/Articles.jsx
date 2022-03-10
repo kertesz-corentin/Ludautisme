@@ -6,7 +6,7 @@ import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../Schemas';
 import { IconButton, ToggleButton } from '@mui/material';
 
-const Articles = ({articles, className, ...rest}) => {
+const Articles = ({articles, children, className, ...rest}) => {
     console.log('articles', articles)
     const columnsBuilder = (() => {
         const columns = [];
@@ -62,6 +62,7 @@ const Articles = ({articles, className, ...rest}) => {
             <div>
                 <h2>Détails des articles</h2>
             </div>
+            {children}
             <div className="articles-grid" style={{ height: 300, width: '100%'}}>
                 <DataGrid
                     rows={articles}
