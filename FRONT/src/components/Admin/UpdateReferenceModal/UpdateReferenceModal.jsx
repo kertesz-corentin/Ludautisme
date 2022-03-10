@@ -4,6 +4,7 @@ import api from '../../../requests';
 import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import Articles from '../../Articles/Articles';
 
 import './updatereferencemodal.scss';
 
@@ -40,7 +41,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
         try {
             const response = await api.get(`/admin/references/${params.row.id}`);
             const data = await response.data;
-            setArticles(data);
+            setArticles(data.articles);
             console.log('articles', data);
         }
         catch (err) {
@@ -139,6 +140,10 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                         </Button>
 
                     </div>
+                    <div className="modal-articles">
+                        <Articles articles={articles} />
+                    </div>
+
                 </Box>
             </Modal>
 
