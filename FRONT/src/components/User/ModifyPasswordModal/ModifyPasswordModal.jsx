@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './modifypassworldmodal.scss';
+import './modifypasswordmodal.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const ModifyPassworldModal = ({className, ...rest}) => {
+const ModifyPasswordModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -27,17 +27,19 @@ const ModifyPassworldModal = ({className, ...rest}) => {
     function handlePasswordSubmit(event){
         event.preventDefault();
         const newPassword = {
-            password:passworldValue
+            password:passwordValue
         }
         console.log(`New Password to send Back`, newPassword)
         handleClose()
     }
-    const [passworldValue, setPasswordValue]= useState()
+
 
     function handlePasswordChange (event) {
         setPasswordValue(event.target.value)
         console.log(`Password`, event.target.value)
     }
+
+    const [passwordValue, setPasswordValue]= useState()
 
     return (
 
@@ -55,12 +57,12 @@ const ModifyPassworldModal = ({className, ...rest}) => {
             autoFocus
             margin="dense"
             id="name"
-            label="Mot de passe"
-            type="password"
+            label="Mon adresse mail"
+            type="string"
             fullWidth
             variant="standard"
-            value= {passworldValue}
-            onChange={(event) => handlePasswordChange(event, passworldValue)}
+            value= {passwordValue}
+            onChange={(event) => handlePasswordChange(event, passwordValue)}
           />
         </DialogContent>
         <DialogActions>
@@ -72,10 +74,10 @@ const ModifyPassworldModal = ({className, ...rest}) => {
     );
 };
 
-ModifyPassworldModal.propTypes = {
+ModifyPasswordModal.propTypes = {
     className: PropTypes.string,
 };
-ModifyPassworldModal.defaultProps = {
+ModifyPasswordModal.defaultProps = {
     className: '',
 };
-export default React.memo(ModifyPassworldModal);
+export default React.memo(ModifyPasswordModal);
