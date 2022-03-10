@@ -65,7 +65,45 @@ module.exports = {
         );
         return result.rows;
     },
-    async search(obj) {
-        
+    async findFiltered(arr, offset, limit) {
+        let queryStart = `SELECT
+        r.id,
+        r.name,
+        r.description,
+        r.valorisation,
+        cat.name AS mainCategory,
+        json_agg(DISTINCT "category"."name") AS tag,
+        json_agg(DISTINCT jsonb_build_object (
+            'id', "image"."id",
+            'url', "image"."url",
+            'name', "image"."title",
+            'text', "image"."alternative_text",
+            'main', "image"."main"
+        )) AS "picture"
+        FROM "reference" AS r
+        LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+        LEFT JOIN "image" ON rti."id_image" = "image"."id"
+        LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+        LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+        LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+        LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+        WHERE `;
+        const placeholders = [limit, offset, ];
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                queryStart += `${prop}=$${index + 3} AND `;
+            } else {
+                queryStart += `${prop}=$${index + 3}`;
+            }
+        });
+        const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
+        LIMIT $1 OFFSET $2 `;
+
+        queryStart += queryEnd;
+
+        const results = await sqlHandler(queryStart, placeholders);
+        return results.rows;
     },
 };

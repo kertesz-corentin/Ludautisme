@@ -20,18 +20,31 @@ module.exports = {
     async search(req, res) {
         const {
             page,
-            nbRef,
-            categories,
-            tags,
-            status,
+            limit,
         } = req.body;
-        const offset = page * nbRef;
-        const obj = {
-            categories,
-            tags,
-            status,
-        };
-        const references = await userReferenceDataMapper.findFiltered(obj, offset, nbRef);
+        const offset = (page * limit) - 10;
+        const columns = ['categories', 'tags', 'available'];
+        const aliases = ['cat.id', 'category.id', 'ar.available'];
+        delete req.body.page;
+        delete req.body.limit;
+        const obj = req.body;
+        const props = Object.keys(obj);
+        const arr = [];
+        props.forEach((prop) => {
+            const value = obj[prop];
+            const index = columns.indexOf(prop);
+            if (Number.isNaN(index)) {
+                throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
+            }
+            if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
+                throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
+            }
+            if (['available'].includes(columns[index]) && typeof value !== 'boolean') {
+                throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
+            }
+            arr.push({ [aliases[index]]: value });
+        });
+        const references = await userReferenceDataMapper.findFiltered(arr, offset, limit);
         if (!references[0]) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
