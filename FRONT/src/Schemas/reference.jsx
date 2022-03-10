@@ -23,9 +23,15 @@ const referenceSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
-    maincategory:{
+    id_maincat:{
         type : "number",
-        label : "Catégorie",
+        label : "Id Catégorie",
+        gridDisplay : "normal",
+        width : 150,
+    },
+    name_maincat:{
+        type : "string",
+        label : "Nom Catégorie",
         gridDisplay : "normal",
         width : 150,
     },

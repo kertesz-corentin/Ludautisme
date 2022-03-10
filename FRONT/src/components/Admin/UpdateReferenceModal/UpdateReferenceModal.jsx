@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, NativeSelect, FormControl, InputLabel }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
@@ -26,7 +26,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
             'main_category': data.get('main_category'),
         };
         console.log('reference', reference)
-        const response = await api.put(`/admin/references/${params.row.id}`, reference)
+        const response = await api.put(`/admin/references/${params.row.id}`, reference);
         if(response.status === 200) {
             handleClose();
         }
@@ -34,9 +34,11 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     }
 
     const handleChange = (event) => {
+        console.log(event.target.value);
         setCategory(event.target.value);
     }
 
+    console.log('params-edit', params);
     return (
         <div>
             <IconButton onClick={handleOpen}>
@@ -99,21 +101,23 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                         </TextField>
                         <FormControl fullWidth>
                             <InputLabel id="maincategory-label">Catégorie</InputLabel>
-                            <Select
+                            <NativeSelect
                                 labelId="maincategory-label"
                                 id="main_category"
                                 name="main_category"
                                 label="Catégorie"
                                 type='string'
                                 onChange={handleChange}
+                                // defaultValue={params.row.id_maincat}
                                 value={category}
                             >
+                            <option value={params.row.id_maincat}>{params.row.name_maincat}</option>
                             {categories.map((category) => {
                                 return (
-                                    <MenuItem value={category.id}>{category.name}</MenuItem>
+                                    <option value={category.id}>{category.name}</option>
                                 )
                             })}
-                            </Select>
+                            </NativeSelect>
                         </FormControl>
                     </div>
                     <div className="modal-footer">
