@@ -87,7 +87,7 @@ module.exports = {
         return result.rows;
     },
 
-    async insert(obj) {
+    async addUser(obj) {
         const props = Object.keys(obj);
         let query = `INSERT INTO "user" (`;
         let columns = ``;

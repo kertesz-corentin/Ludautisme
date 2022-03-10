@@ -48,7 +48,7 @@ module.exports = {
                     role: dbUser[0].name,
                 },
                 process.env.SALT,
-                { expiresIn: '31d'},
+                { expiresIn: '31d' },
             );
             const loggedUser = {
                 id: dbUser[0].id,
@@ -60,6 +60,10 @@ module.exports = {
     },
     async forgotPassword(req, res) {
         const user = await loginDatamapper.getUserWithToken(req.body.email);
+        if (!user) {
+            res.json('Cette adresse email ne corresponds a aucun contact');
+            return;
+        }
         if (user.temptoken) {
             await loginDatamapper.resetUserTempToken(req.body.email);
         }
@@ -83,15 +87,16 @@ module.exports = {
             return;
         }
         const decodedToken = jwt.verify(token, process.env.SALT);
-        console.log(decodedToken);
+        console.log(decodedToken.email);
         const obj = [{ email: decodedToken.email }];
-        const dbUser = await usersDatamapper.findFiltered(obj);
+        const dbUser = await usersDataMapper.findFiltered(obj);
+        console.log(dbUser);
         if (!dbUser) {
             res.json({ status: 'ok' });
             return;
         }
         console.log(dbUser[0]);
-        await usersDatamapper.update(dbUser[0].id, { password: "updated" });
+        //await usersDataMapper.update(dbUser[0].id, { password: "updated" });
         res.json({ status: 'ok' });
     },
 };
