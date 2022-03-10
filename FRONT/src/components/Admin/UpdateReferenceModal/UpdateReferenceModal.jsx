@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton, NativeSelect, FormControl, InputLabel }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
@@ -13,7 +13,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(params.row.id_maincat);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -89,35 +89,23 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             defaultValue={params.row.valorisation}
                         >
                         </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Catégorie Actuelle'
-                            name="actual_category"
-                            type='string'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.maincategory}
-                            disabled
-                        >
-                        </TextField>
                         <FormControl fullWidth>
                             <InputLabel id="maincategory-label">Catégorie</InputLabel>
-                            <NativeSelect
+                            <Select
                                 labelId="maincategory-label"
                                 id="main_category"
                                 name="main_category"
                                 label="Catégorie"
                                 type='string'
                                 onChange={handleChange}
-                                // defaultValue={params.row.id_maincat}
                                 value={category}
                             >
-                            <option value={params.row.id_maincat}>{params.row.name_maincat}</option>
                             {categories.map((category) => {
                                 return (
-                                    <option value={category.id}>{category.name}</option>
+                                    <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                                 )
                             })}
-                            </NativeSelect>
+                            </Select>
                         </FormControl>
                     </div>
                     <div className="modal-footer">
