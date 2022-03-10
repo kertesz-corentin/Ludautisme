@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Button, Modal, Box, Typography, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import api from '../../../requests';
+import BookingArticles from '../BookingArticles/BookingArticles';
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({user, className, ...rest}) => {
+const AddBookingModal = ({user, articles, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -14,10 +15,10 @@ const AddBookingModal = ({user, className, ...rest}) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const booking = {
-            'name': data.get('name'),
-            'description': data.get('description'),
-            'valorisation': data.get('valorisation'),
-            'main_category': data.get('main_category'),
+            // 'name': data.get('name'),
+            // 'description': data.get('description'),
+            // 'valorisation': data.get('valorisation'),
+            // 'main_category': data.get('main_category'),
         };
 
         console.log('booking', booking);
@@ -84,8 +85,8 @@ const AddBookingModal = ({user, className, ...rest}) => {
                         >
                         </TextField>
                     </div>
-                    <div>
-                        Liste des articles
+                    <div className="modal-articles">
+                        <BookingArticles  articles={articles} />
                     </div>
                     <div className="modal-footer">
                         <Button

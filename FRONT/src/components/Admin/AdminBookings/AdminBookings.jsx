@@ -13,6 +13,7 @@ import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
+    const [articles, setArticles] = useState([]);
 
     const path='/admin/booking';
 
@@ -21,15 +22,26 @@ const AdminBookings = ({className, ...rest}) => {
             const response = await api.get(path);
             const data = await response.data;
             setBookings(data);
-            console.log('bookings', bookings);
         }
         catch (err) {
             console.error (err);
         }
     }
 
+    const getAllArticles = async () => {
+        try {
+            const response = await api.get('/admin/articles');
+            const data = await response.data;
+            setArticles(data);
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+
     useEffect(() => {
         getBookings();
+        getAllArticles();
     }, [])
 
     const columnBuilder = (() => {
@@ -101,7 +113,7 @@ const AdminBookings = ({className, ...rest}) => {
                         sortModel: [{field: 'id', sort: 'asc'}],
                     }
                 }}
-                children={<BookingUserChoice />}
+                children={<BookingUserChoice articles={articles} />}
             />
         </div>
     );

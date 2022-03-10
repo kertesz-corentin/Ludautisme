@@ -7,7 +7,7 @@ import AddBookingModal from '../AddBookingModal/AddBookingModal';
 import classnames from 'classnames';
 import './bookinguserchoice.scss';
 
-const BookingUserChoice = ({className, ...rest}) => {
+const BookingUserChoice = ({articles, className, ...rest}) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
@@ -62,7 +62,7 @@ const BookingUserChoice = ({className, ...rest}) => {
                 )}
 
                 {userExist && search && (
-                        <AddBookingModal user={user} />
+                        <AddBookingModal user={user} articles={articles} />
                 )}
 
             </Box>

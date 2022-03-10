@@ -9,7 +9,7 @@ const articleSchema  = {
         type : "number",
         label : "n° Article",
         gridDisplay : "normal",
-        width : 250,
+        width : 150,
     },
     origin:{
         type : "string",
