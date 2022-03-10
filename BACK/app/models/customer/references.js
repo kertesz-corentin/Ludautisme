@@ -45,8 +45,8 @@ module.exports = {
             r.description,
             r.valorisation,
             cat.name AS mainCategory,
-            json_agg("category"."name") AS tag,
-            json_agg(json_build_object (
+            json_agg(DISTINCT "category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
                 'name', "image"."title",
