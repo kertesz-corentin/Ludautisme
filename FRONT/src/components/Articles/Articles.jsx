@@ -15,7 +15,7 @@ const Articles = ({params, children, className, ...rest}) => {
         try {
             const response = await api.get(`/admin/references/${params.row.id}`);
             const data = await response.data;
-            setArticles(data.articles);
+            setArticles(data[0].articles);
             console.log('articles', data);
         }
         catch (err) {

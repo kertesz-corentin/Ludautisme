@@ -28,7 +28,7 @@ module.exports = {
         r.valorisation,
         cat.id AS id_maincat,
         cat.name AS name_maincat,
-        json_agg("category"."name") AS tag
+        json_agg(DISTINCT "category"."name") AS tag
         FROM "reference" AS r
         LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
@@ -67,8 +67,8 @@ module.exports = {
             r.valorisation,
             cat.id AS id_maincat,
             cat.name AS name_maincat,
-            json_agg("category"."name") AS tag,
-            json_agg(json_build_object (
+            json_agg(DISTINCT "category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
                 'title', "image"."title",
