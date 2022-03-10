@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './choiceselect.scss';
+import './choiceselection.scss';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const ChoiceSelect = ({className, ...rest}) => {
+const ChoiceSelection = ({className, ...rest}) => {
     const [age, setAge] = React.useState('');
 
     const handleChange = (event) => {
@@ -26,9 +26,11 @@ const ChoiceSelect = ({className, ...rest}) => {
             label="Jeux"
             onChange={handleChange}
           >
-            <MenuItem value={10}>JeuxA</MenuItem>
-            <MenuItem value={20}>JeuxB</MenuItem>
-            <MenuItem value={30}>JeuxC</MenuItem>
+            <MenuItem value={1}>Jeux</MenuItem>
+            <MenuItem value={2}>Aide à la motricité</MenuItem>
+            <MenuItem value={3}>Apprentissage</MenuItem>
+            <MenuItem value={4}>Montessori</MenuItem>
+            <MenuItem value={5}>Médiathèque</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -41,4 +43,4 @@ Select.propTypes = {
 Select.defaultProps = {
     className: '',
 };
-export default React.memo(ChoiceSelect);
+export default React.memo(ChoiceSelection);
