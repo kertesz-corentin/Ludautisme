@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Home from '../Home/Home';
 import HomePage from '../HomePage/HomePage';
 import {Routes, Route} from 'react-router-dom';
@@ -18,7 +18,8 @@ import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';
 import UsefullLinks from '../UsefullLinks/UsefullLinks';
 import './App.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-
+import Error from '../Error/Error';
+import ResetPwd from '../ResetPwd/ResetPwd';
 
 
 
@@ -40,7 +41,6 @@ function App() {
             <Route path = "/admin/home" element = {<PrivateRoute/>}>
                 <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             </Route>
-
             <Route path = "/admin/users" element = {<PrivateRoute/>}>
                 <Route path = "/admin/users" element = {<AdminPage><AdminUsers /></AdminPage>}></Route>
             </Route>
@@ -74,8 +74,9 @@ function App() {
             <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
                 <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             </Route>
-            {/* <Route path = "/user/articles" element = {<MaterialLibrary />}></Route> */}
-            {/* <Route path = "*" element = {<Error />}></Route>  */}
+            <Route path = "/user/articles" element = {<Home children={<MaterialLibrary />} />}></Route>
+            <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
+            <Route path = "*" element = {<Error />}></Route>
         </Routes>
     </div>
     );

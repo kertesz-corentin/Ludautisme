@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const loginDatamapper = require('../../models/auth/login');
 const { usersDataMapper } = require('../../models/admin');
+const { usersController } = require('../admin');
 const { ApiError } = require('../../helpers/errorHandler');
 /**
  * @typedef {object} login
@@ -48,7 +49,7 @@ module.exports = {
                     role: dbUser[0].name,
                 },
                 process.env.SALT,
-                { expiresIn: '31d'},
+                { expiresIn: '31d' },
             );
             const loggedUser = {
                 id: dbUser[0].id,
@@ -60,6 +61,10 @@ module.exports = {
     },
     async forgotPassword(req, res) {
         const user = await loginDatamapper.getUserWithToken(req.body.email);
+        if (!user) {
+            res.json('Cette adresse email ne corresponds a aucun contact');
+            return;
+        }
         if (user.temptoken) {
             await loginDatamapper.resetUserTempToken(req.body.email);
         }
@@ -71,27 +76,29 @@ module.exports = {
             { expiresIn: '1h' },
         );
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
-        const html = `<a href="http://${req.get('host')}/api/login/reset-password?token=${dbTempToken.temptoken}">Lien</a>`;
+        console.log(req.body);
+        const html = `<a href="${req.body.url}/resetpassword/${dbTempToken.temptoken}">Lien</a>`;
         mailer.send(req.body.email, 'Your token', html);
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
         // FRONT : Read query token and pass it to back
-        const { token } = req.query;
-        if (!token) {
-            res.json({ status: 'ok' });
+        const { token, password } = req.body;
+        if (!token || !password) {
+            res.json({ status: 'pas de token ou pas de mot de passe' });
             return;
         }
         const decodedToken = jwt.verify(token, process.env.SALT);
-        console.log(decodedToken);
         const obj = [{ email: decodedToken.email }];
-        const dbUser = await usersDatamapper.findFiltered(obj);
+        const dbUser = await usersDataMapper.findFiltered(obj);
         if (!dbUser) {
-            res.json({ status: 'ok' });
+            res.json({ status: 'cet utilisateur nexiste pas' });
             return;
         }
-        console.log(dbUser[0]);
-        await usersDatamapper.update(dbUser[0].id, { password: "updated" });
-        res.json({ status: 'ok' });
+
+        req.params.id = dbUser[0].id;
+        delete req.body.token;
+
+        await usersController.update(req, res);
     },
 };

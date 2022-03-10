@@ -20,12 +20,11 @@ const AddReferenceModal = ({className, ...rest}) => {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
-            'mainCategory': data.get('mainCategory'),
-            'tag': data.get('tag'),
+            'main_category': data.get('main_category'),
         };
 
         console.log('reference', reference);
-        const response = await api.post('/admin/reference', reference)
+        const response = await api.post('/admin/references', reference)
         if(response.status === 200) {
             handleClose();
         }
@@ -80,19 +79,12 @@ const AddReferenceModal = ({className, ...rest}) => {
                         <TextField
                             id='outlined'
                             label='Catégorie'
-                            name='mainCategory'
-                            type='string'
+                            name='main_category'
+                            type='number'
                             className="modal-inputs-item"
                         >
                         </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Tag'
-                            name='tag'
-                            type='string'
-                            className="modal-inputs-item"
-                        >
-                        </TextField>
+
                     </div>
                     <div className="modal-footer">
                         <Button

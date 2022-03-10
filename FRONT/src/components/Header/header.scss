@@ -3,14 +3,15 @@
 .header {
     text-decoration: none;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
     padding: $gutter;
+    background-color: $font-color-2;
+    filter: $drop-shadow;
 
     &-logo-img {
-        max-width: 150px;
+        max-width: 60px;
     }
 
     &-nav {
@@ -18,30 +19,27 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        flex: 1;
+
+        flex: 0.7;
 
         &-link {
-
+            font-size: 1.1rem;
+            padding: 10px;
             color: #000000;
             text-decoration: none;
             &--active {
                 transition: 50ms;
-             border-left: 1px solid black;
-             border-right: 1px solid black;
-             padding-left: 10px;
-             padding-right: 10px;
-
+             border-left: 1px solid rgba($color: #000000, $alpha: 0.5);
             }
 
             &:hover {
                 transition: 0.3s;
-                padding: 10px;
-                background-color: rgba($color: #000000, $alpha: 0.3);
-                border-radius: 10%;
-                border-left: 1px solid black;
-             border-right: 1px solid black;
-             padding-left: 10px;
-             padding-right: 10px;
+                border: none;
+                // padding: 10px;
+                background-color:rgba($color: #000000, $alpha: 0.2);
+                border-radius: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
             }
 
         }

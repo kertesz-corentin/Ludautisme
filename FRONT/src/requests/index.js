@@ -9,19 +9,39 @@ const connection = axios.create({
 
 const api = {
     async get(path) {
-        return connection.get(path, { headers: authHeader() });
+        try {
+        return await connection.get(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async post(path, data) {
-        return connection.post(path, data, { headers: authHeader() });
+        try {
+        return await connection.post(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async patch(path, data) {
-        return connection.patch(path, data, { headers: authHeader() });
+        try {
+        return await connection.patch(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async put(path, data) {
-        return connection.put(path, data, { headers: authHeader() });
+        try {
+        return await connection.put(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async delete(path) {
-        return connection.delete(path, { headers: authHeader() });
+        try {
+        return await connection.delete(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async login(email, password,type) {
         let response = null;
@@ -46,7 +66,14 @@ const api = {
         console.log('logout');
         localStorage.removeItem("user");
         return { message: "logged Out" };
-    }
+    },
+    async resetPassword(path, data) {
+        try {
+        return await connection.post(path, data);
+        } catch (err) {
+            return err.response
+        }
+    },
 
 }
 
@@ -54,10 +81,11 @@ export default api;
 
 const authHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const token = user.token;
-    if (token) {
-        return { 'x-access-token': token }
+
+    if (user != null) {
+        return { 'x-access-token': user.token }
     }
+
     //No token
     return {};
 }

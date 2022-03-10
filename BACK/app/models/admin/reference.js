@@ -27,7 +27,7 @@ module.exports = {
         r.description,
         r.valorisation,
         cat.name AS mainCategory,
-        json_agg("category"."name") AS tag
+        json_agg(DISTINCT "category"."name") AS tag
         FROM "reference" AS r
         LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
@@ -45,7 +45,7 @@ module.exports = {
         r.description,
         r.valorisation,
         cat.name AS mainCategory,
-        json_agg("category"."name") AS tag
+        json_agg(DISTINCT "category"."name") AS tag
         FROM "reference" AS r
         LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
@@ -60,49 +60,37 @@ module.exports = {
         try {
             const result = await sqlHandler(
                 `SELECT
-                r.id,
-                r.name,
-                r.description,
-                r.valorisation,
-                cat.name AS mainCategory,
-                category.tag,
-                img.picture,
-                ar.articles
-                FROM "reference" AS r
-                LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
-                LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
-                LEFT JOIN LATERAL ( SELECT
-                    json_agg(DISTINCT "category"."name") AS tag
-                    FROM "category"
-                    WHERE rtc."id_category" = "category"."id"
-                )"category" ON TRUE
-                LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
-                LEFT JOIN LATERAL ( SELECT
-                    json_agg(json_build_object (
-                    'id', ar."id",
-                    'number', ar."number",
-                    'origin', ar."origin",
-                    'date_buy', ar."date_buy",
-                    'available', ar."available",
-                    'archived', ar."archived",
-                    'created_at', ar."created_at"
-                    )) AS "articles"
-                    FROM "article" AS ar
-                    WHERE ar."id_ref" = r."id"
-                ) ar ON TRUE
-                LEFT JOIN LATERAL ( SELECT
-                    json_agg( json_build_object (
-                    'id', img."id",
-                    'url', img."url",
-                    'title', img."title",
-                    'text', img."alternative_text",
-                    'main', img."main"
-                    )) AS "picture"
-                    FROM "image" AS img
-                    WHERE rti."id_image" = img."id"
-                    GROUP BY img.id, img.url, img.title, img.alternative_text, img.main
-                ) img ON TRUE
-                WHERE r.id =$1`,
+            r.id,
+            r.name,
+            r.description,
+            r.valorisation,
+            cat.name AS mainCategory,
+            json_agg(DISTINCT "category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object (
+                'id', "image"."id",
+                'url', "image"."url",
+                'title', "image"."title",
+                'text', "image"."alternative_text",
+                'main', "image"."main"
+                )) AS "picture",
+            json_agg(DISTINCT jsonb_build_object (
+                'id', ar."id",
+                'number', ar."number",
+                'origin', ar."origin",
+                'date_buy', ar."date_buy",
+                'available', ar."available",
+                'archived', ar."archived",
+                'created_at', ar."created_at"
+                )) AS "articles"
+            FROM "reference" AS r
+            LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+            LEFT JOIN "image" ON rti."id_image" = "image"."id"
+            LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+            LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+            LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+            WHERE r.id = $1
+            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
                 [id],
             );
             return result.rows;
@@ -163,36 +151,3 @@ module.exports = {
         return result.rows[0];
     },
 };
-/* `SELECT
-            r.id,
-            r.name,
-            r.description,
-            r.valorisation,
-            cat.name AS mainCategory,
-            json_agg(DISTINCT "category"."name") AS tag,
-            json_agg( json_build_object (
-                'id', "image"."id",
-                'url', "image"."url",
-                'title', "image"."title",
-                'text', "image"."alternative_text",
-                'main', "image"."main"
-                )) AS "picture",
-            json_agg(json_build_object (
-                'id', ar."id",
-                'number', ar."number",
-                'origin', ar."origin",
-                'date_buy', ar."date_buy",
-                'available', ar."available",
-                'archived', ar."archived",
-                'created_at', ar."created_at"
-                )) AS "articles"
-            FROM "reference" AS r
-            LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
-            LEFT JOIN "image" ON rti."id_image" = "image"."id"
-            LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
-            LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
-            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
-            LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
-            WHERE r.id = $1
-            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
-                [id], */
