@@ -23,9 +23,6 @@ const AdminSection = ({ title, rows, columns, path, initialState, children }) =>
                         columns={columns}
                         pageSize={15}
                         rowsPerPageOptions={[15]}
-                        SelectionOnClick
-                        editMode="cell"
-                        onRowDoubleClick={showModal}
                         disableSelectionOnClick
                         localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{

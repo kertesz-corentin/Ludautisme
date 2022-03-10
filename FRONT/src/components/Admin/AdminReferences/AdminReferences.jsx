@@ -14,16 +14,29 @@ import './adminreferences.scss';
 
 const AdminReferences = ({className, ...rest}) => {
     const [references, setReferences] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     // config path for api route
     const path = '/admin/references';
 
     const getReferences = async () => {
         try {
-            const response = await api.get('admin/references');
+            const response = await api.get('/admin/references');
             const data = await response.data;
             setReferences(data);
-            console.log(response.data);
+            console.log('references', data);
+        }
+        catch (err) {
+            console.error (err);
+        }
+    }
+
+    const getMainCategories = async () => {
+        try {
+            const response = await api.post('/admin/categorie/search', {"main": true});
+            const data = await response.data;
+            setCategories(data);
+            console.log('categories', data)
         }
         catch (err) {
             console.error (err);
@@ -32,6 +45,7 @@ const AdminReferences = ({className, ...rest}) => {
 
     useEffect(() => {
         getReferences();
+        getMainCategories();
     }, []);
 
     const columnBuilder = (() => {
@@ -53,7 +67,7 @@ const AdminReferences = ({className, ...rest}) => {
                                     value={params.value}
                                     aria-label={`${prop}-${params.row.id}`}
                                 >
-                                    <UpdateReferenceModal params={params} />
+                                    <UpdateReferenceModal params={params} categories={categories} />
                                 </IconButton>
                         );
                         break;
@@ -88,7 +102,7 @@ const AdminReferences = ({className, ...rest}) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                children={<AddReferenceModal />}
+                children={<AddReferenceModal categories={categories} />}
             />
         </div>
    );
