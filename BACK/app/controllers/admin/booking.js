@@ -102,7 +102,7 @@ module.exports = {
         }
     },
     async updateBooking(req, res) {
-        const userId = Number(req.params.UserId);
+        const userId = Number(req.params.id);
         const { refIds } = req.body;
 
         // Check if too much articles are booked
@@ -131,11 +131,18 @@ module.exports = {
 
         // Check if articles are available
         const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
+        const newRefs = bookingExist.borrowed_articles.filter((ref) => !refIds.includes(ref.id));
+        console.log("test",refAvailability);
+        if (refAvailability.length !== refIds.length) {
+            const unknownRef = refIds.filter((refId) => !refAvailability.map(ref=> ref.id).includes(refId));
+            throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
+        }
         if (!refAvailability.every((ref) => ref.article_available)) {
             const unavailableRef = refAvailability.filter((ref) => ref.article_available === false);
             const errorString = unavailableRef.map((ref) => `[ ${ref.id} ${ref.name} ]`);
             throw new ApiError(400, `Ce ou ces articles sont indisponibles : ${errorString}`);
         }
+        console.log(refAvailability);
         try {
             res.json({ test: 'coucou' });
         } catch (err) {

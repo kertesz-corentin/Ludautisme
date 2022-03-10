@@ -52,6 +52,8 @@ const AdminUsers = ({className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const response = await api.put(`/admin/users/${params.row.id}`, {[prop] : !params.value});
+                                    const newData = await getUsers();
+                                    setUsers(newData.data);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >

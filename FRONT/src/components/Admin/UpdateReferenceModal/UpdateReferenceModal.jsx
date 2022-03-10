@@ -1,18 +1,19 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { referenceSchema } from '../../../Schemas';
+import Articles from '../../Articles/Articles';
+import AddModal from '../../Articles/AddModal/AddModal';
 
 import './updatereferencemodal.scss';
 
-const UpdateReferenceModal = ({params, className, ...rest}) => {
+const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
+    const [category, setCategory] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -32,11 +33,8 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
         console.log('response', response);
     }
 
-    const handleDelete = async () => {
-        const response = await api.delete(`/admin/references/${params.row.id}`)
-        if(response.status === 200) {
-            handleClose();
-        }
+    const handleChange = (event) => {
+        setCategory(event.target.value);
     }
 
     return (
@@ -51,7 +49,7 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
                     <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Edition Adhérent
+                            Edition Référence
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -91,15 +89,30 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Catégorie'
-                            name='main_category'
-                            type='number'
+                            label='Catégorie Actuelle'
+                            type='string'
                             className="modal-inputs-item"
                             defaultValue={params.row.maincategory}
+                            disabled
                         >
                         </TextField>
-
-
+                        <FormControl fullWidth>
+                            <InputLabel id="maincategory-label">Catégorie</InputLabel>
+                            <Select
+                                labelId="maincategory-label"
+                                id="main_category"
+                                name="main_category"
+                                label="Catégorie"
+                                onChange={handleChange}
+                                value={category}
+                            >
+                            {categories.map((category) => {
+                                return (
+                                    <MenuItem value={category.id}>{category.name}</MenuItem>
+                                )
+                            })}
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className="modal-footer">
                         <Button
@@ -110,16 +123,11 @@ const UpdateReferenceModal = ({params, className, ...rest}) => {
                             Mettre à jour
                         </Button>
 
-                        <Button
-                            onClick={handleDelete}
-                            className="modal-footer-submit"
-                            variant="outlined"
-                            startIcon={<DeleteIcon />}
-                        >
-                            Supprimer
-                        </Button>
-
                     </div>
+                    <div className="modal-articles">
+                        <Articles params={params} children={<AddModal reference={params.row.id} />} />
+                    </div>
+
                 </Box>
             </Modal>
 

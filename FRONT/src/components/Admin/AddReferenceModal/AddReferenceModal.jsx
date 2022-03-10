@@ -1,17 +1,17 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FromGroup, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { referenceSchema } from '../../../Schemas';
 
 import './addreferencemodal.scss';
 
-const AddReferenceModal = ({className, ...rest}) => {
+const AddReferenceModal = ({categories, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [checked, setChecked] = useState(false);
+    const [category, setCategory] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,6 +29,10 @@ const AddReferenceModal = ({className, ...rest}) => {
             handleClose();
         }
         console.log('response', response);
+    }
+
+    const handleChange = (event) => {
+        setCategory(event.target.value);
     }
 
     return (
@@ -76,14 +80,23 @@ const AddReferenceModal = ({className, ...rest}) => {
                             className="modal-inputs-item"
                         >
                         </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Catégorie'
-                            name='main_category'
-                            type='number'
-                            className="modal-inputs-item"
-                        >
-                        </TextField>
+                        <FormControl fullWidth>
+                            <InputLabel id="maincategory-label">Catégorie</InputLabel>
+                            <Select
+                                labelId="maincategory-label"
+                                id="main_category"
+                                name="main_category"
+                                label="Catégorie"
+                                onChange={handleChange}
+                                value={category}
+                            >
+                            {categories.map((category) => {
+                                return (
+                                    <MenuItem value={category.id}>{category.name}</MenuItem>
+                                )
+                            })}
+                            </Select>
+                        </FormControl>
 
                     </div>
                     <div className="modal-footer">
