@@ -21,6 +21,15 @@ router.route('/')
  * @return {booking} 200 - success response - application/json
  */
 
+/**
+ * PUT /api/admin/booking/:id
+ * @summary Update a booking
+ * @tags Booking
+ * @param {number} request.params.required - At least one of these params
+ * @param {number} request.body.required - Array of ids
+ * @return {booking} 200 - success response - application/json
+ */
+
 router.route('/:id')
     .get(controllerHandler(bookingController.getOne))
     .put(controllerHandler(bookingController.updateBooking));
