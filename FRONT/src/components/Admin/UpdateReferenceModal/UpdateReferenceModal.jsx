@@ -18,14 +18,14 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+
         const reference = {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
             'main_category': data.get('main_category'),
         };
-
-        console.log('reference', reference);
+        console.log('reference', reference)
         const response = await api.put(`/admin/references/${params.row.id}`, reference)
         if(response.status === 200) {
             handleClose();
@@ -90,6 +90,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                         <TextField
                             id='outlined'
                             label='Catégorie Actuelle'
+                            name="actual_category"
                             type='string'
                             className="modal-inputs-item"
                             defaultValue={params.row.maincategory}
@@ -103,6 +104,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                                 id="main_category"
                                 name="main_category"
                                 label="Catégorie"
+                                type='string'
                                 onChange={handleChange}
                                 value={category}
                             >
