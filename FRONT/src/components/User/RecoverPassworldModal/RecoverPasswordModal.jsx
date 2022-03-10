@@ -35,9 +35,10 @@ const RecoverPasswordModal = ({className, ...rest}) => {
 const handleMailSubmit = async(event) => {
     event.preventDefault();
         const mail = {
-            email:mailValue
+            email:mailValue,
+            url:window.location.origin
         }
-        console.log(`Mail where send newPassword`, mail)
+        console.log(`Mail where send newPassword`, mail);
         const response = await api.post('/login/forgot-password',mail)
         console.log(response);
         handleClose();

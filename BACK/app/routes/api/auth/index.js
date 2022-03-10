@@ -46,7 +46,7 @@ router.route('/forgot-password')
  * @return {login} 200 - success response - application/json
  */
 router.route('/reset-password')
-    .get(controllerHandler(loginController.resetPassword));
+    .post(controllerHandler(loginController.resetPassword));
 
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
