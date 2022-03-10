@@ -20,14 +20,18 @@ module.exports = {
     async search(req, res) {
         const {
             page,
-            npRef,
+            nbRef,
             categories,
             tags,
             status,
-        } = req.body
-        
-
-        const references = await userReferenceDataMapper.findFiltered(req.body);
+        } = req.body;
+        const offset = page * nbRef;
+        const obj = {
+            categories,
+            tags,
+            status,
+        };
+        const references = await userReferenceDataMapper.findFiltered(obj, offset, nbRef);
         if (!references[0]) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
