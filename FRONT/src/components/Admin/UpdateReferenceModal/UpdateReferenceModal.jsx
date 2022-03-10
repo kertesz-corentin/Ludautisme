@@ -14,7 +14,6 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState('');
-    const [articles, setArticles] = useState([]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,22 +36,6 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     const handleChange = (event) => {
         setCategory(event.target.value);
     }
-
-    const getReferenceWithArticles = async () => {
-        try {
-            const response = await api.get(`/admin/references/${params.row.id}`);
-            const data = await response.data;
-            setArticles(data.articles);
-            console.log('articles', data);
-        }
-        catch (err) {
-            console.error(err);
-        }
-    }
-
-    useEffect(() => {
-        getReferenceWithArticles();
-    }, [])
 
     return (
         <div>
@@ -142,7 +125,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
 
                     </div>
                     <div className="modal-articles">
-                        <Articles articles={articles} children={<AddModal reference={params.row.id} />} />
+                        <Articles params={params} children={<AddModal reference={params.row.id} />} />
                     </div>
 
                 </Box>

@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './articles.scss';
 import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../Schemas';
-import { IconButton, ToggleButton } from '@mui/material';
+import { ToggleButton } from '@mui/material';
 import api from '../../requests';
 
-const Articles = ({articles, children, className, ...rest}) => {
-    console.log('articles', articles)
+const Articles = ({params, children, className, ...rest}) => {
+
+    const [articles, setArticles] = useState([]);
+
+    const getReferenceWithArticles = async () => {
+        try {
+            const response = await api.get(`/admin/references/${params.row.id}`);
+            const data = await response.data;
+            setArticles(data.articles);
+            console.log('articles', data);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        getReferenceWithArticles();
+    }, [])
+
     const columnsBuilder = (() => {
         const columns = [];
         Object.keys(articleSchema).forEach(prop => {
@@ -21,17 +39,6 @@ const Articles = ({articles, children, className, ...rest}) => {
             }
             if(propElt.gridDisplay !== "normal"){
                 switch (propElt.gridDisplay){
-                    case "edit":
-                        config.renderCell = (params) => (
-
-                            <IconButton
-                                value={params.value}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                {/* <UpdateReferenceModal params={params} categories={categories} /> */}
-                            </IconButton>
-                        );
-                        break;
                     case "toggle":
                         config.renderCell = (params) => (
                             <ToggleButton
@@ -39,6 +46,8 @@ const Articles = ({articles, children, className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const response = await api.put(`/admin/articles/${params.row.id}`, {[prop] : !params.value});
+                                    const newData = await getReferenceWithArticles();
+                                    setArticles(newData.data);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
