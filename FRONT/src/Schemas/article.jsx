@@ -1,13 +1,13 @@
 const articleSchema  = {
     id:{
         type: "number",
-        label: "Modifier référence",
-        gridDisplay: "edit",
+        label: "Id",
+        gridDisplay: "normal",
         width: 125
     },
     number:{
         type : "number",
-        label : "n° d'article",
+        label : "n° Article",
         gridDisplay : "normal",
         width : 250,
     },
@@ -29,24 +29,24 @@ const articleSchema  = {
         gridDisplay : "toggle",
         width : 150,
     },
-    archived:[{
+    archived:{
         type : "boolean",
         label : "Archivé",
         gridDisplay : "toggle",
         width : 150,
-    }],
-    created_at:[{
+    },
+    created_at:{
         type : "string",
         label : "Date d'enregistrement",
         gridDisplay : "normal",
         width : 150,
-    }],
-    id_ref:[{
+    },
+    id_ref:{
         type : "number",
         label : "id de la référence",
         gridDisplay : "normal",
         width : 150,
-    }],
+    },
 }
 
 export {articleSchema}

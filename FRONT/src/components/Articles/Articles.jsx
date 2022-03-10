@@ -5,6 +5,7 @@ import './articles.scss';
 import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../Schemas';
 import { IconButton, ToggleButton } from '@mui/material';
+import api from '../../requests';
 
 const Articles = ({articles, children, className, ...rest}) => {
     console.log('articles', articles)
@@ -37,7 +38,7 @@ const Articles = ({articles, children, className, ...rest}) => {
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
-                                    // const response = await api.put(`/admin/users/${params.row.id}`, {[prop] : !params.value});
+                                    const response = await api.put(`/admin/articles/${params.row.id}`, {[prop] : !params.value});
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
@@ -77,6 +78,7 @@ const Articles = ({articles, children, className, ...rest}) => {
                     initialState={{
                         columns: {
                             columnVisibilityModel: {
+                                id: false,
                                 created_at: false,
                                 id_ref: false,
                             }

@@ -21,7 +21,7 @@ const AddModal = ({reference, className, ...rest}) => {
             'date_buy': data.get('date_buy'),
             'id_ref': `${reference}`,
         };
-
+        console.log('addArticle', article);
         console.log('reference', article);
         const response = await api.post('/admin/references/article', article)
         if(response.status === 200) {
@@ -53,25 +53,24 @@ const AddModal = ({reference, className, ...rest}) => {
                     <div className="modal-inputs">
                         <TextField
                             id='outlined'
-                            label='Nom'
-                            name='name'
+                            label='n° article'
+                            name='number'
+                            type='number'
+                            className="modal-inputs-item"
+                        >
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            label='Origine'
+                            name='origin'
                             type='string'
                             className="modal-inputs-item"
                         >
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Description'
-                            name='description'
-                            type='textarea'
-                            className="modal-inputs-item"
-                        >
-                        </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Valorisation'
-                            name='valorisation'
-                            type='number'
+                            name='date_buy'
+                            type='date'
                             className="modal-inputs-item"
                         >
                         </TextField>
