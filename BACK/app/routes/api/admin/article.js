@@ -7,14 +7,14 @@ const router = express.Router();
 /**
  * GET /api/admin/articles/:id
  * @summary Get one article
- * @tags Article
+ * @tags [ADMIN] Article
  * @param {number} request.params.required - ID of the article
  * @return {Article} 200 - success response - application/json
  */
 /**
  * PUT /api/admin/articles/:id
  * @summary Update one article
- * @tags Article
+ * @tags [ADMIN] Article
  * @param {number} request.params.required - ID of the article
  * @param {ParamArticleCreate} request.body.required - At least one of these
  * @return {Article} 200 - success response - application/json
@@ -25,7 +25,7 @@ router.route('/:id')
 /**
  * POST /api/admin/articles/search
  * @summary Get article filtered
- * @tags Article
+ * @tags [ADMIN] Article
  * @param {ParamArticleCreate} request.body.required - At least one of these
  * @return {array<Article>} 200 - success response - application/json
  */
@@ -35,7 +35,7 @@ router.route('/search')
 /**
  * GET /api/admin/articles
  * @summary Get all articles
- * @tags Article
+ * @tags [ADMIN] Article
  * @return {Article} 200 - success response - application/json
  */
 router.route('/')

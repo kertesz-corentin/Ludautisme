@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * GET /api/admin/booking/active/:id
  * @summary Get a single booking
- * @tags Booking
+ * @tags [CUSTOMER] Booking
  * @return {booking} 200 - success response - application/json
  */
 
@@ -18,7 +18,7 @@ router.route('/active/:id')
 /**
  * GET /api/admin/booking/history/:id
  * @summary Get all past Booking
- * @tags Booking
+ * @tags [CUSTOMER] Booking
  * @return {booking} 200 - success response - application/json
  */
 
@@ -28,7 +28,7 @@ router.route('/history/:id')
 /**
  * POST /api/customer/booking/add
  * @summary Add new Booking
- * @tags Category Booking
+ * @tags [CUSTOMER] Booking
  * @return {string} 200 - success response - application/json
  */
 
