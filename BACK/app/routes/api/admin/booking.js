@@ -33,7 +33,7 @@ router.route('/:id')
  * @return {booking} 200 - success response - application/json
  */
 router.route('/add/:UserId')
-    .post(controllerHandler(bookingController.addBooking));
+    .post(controllerHandler(bookingController.addBookingByArticle));
 /**
  * POST /api/admin/booking/search
  * @summary Get detailed booking with details
