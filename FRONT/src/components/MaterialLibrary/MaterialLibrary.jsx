@@ -44,7 +44,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
         <MaterialLibraryMenu categories={categoriesData} />
             <div classnames= "allReferences">
                 <NextPages/>
-                <ListOfReferences/>
+                <ListOfReferences references= {referencesData}/>
                 <NextPages/>
             </div>
         </div>

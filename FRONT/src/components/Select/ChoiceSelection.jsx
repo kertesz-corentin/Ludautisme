@@ -14,8 +14,8 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
     const handleChange = (event) => {
       setCategory(event.target.value);
     };
-    console.log(`Voila l'Id de la catégorie sélectionnée`, category)
-
+    console.log(category)
+    console.log(categories)
 
     return (
       <Box sx={{ minWidth: 120 }}>
@@ -27,11 +27,10 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
             value={category}
             label="Jeux"
             onChange={handleChange}
-
           >
-            {categories.map((category) => {
+             {categories.map((category) => {
                 return(
-                <MenuItem value={category.id}> {category.name}</MenuItem>)
+                <MenuItem key={category.id} value={category.id}> {category.name}</MenuItem>)
             })}
           </Select>
         </FormControl>
