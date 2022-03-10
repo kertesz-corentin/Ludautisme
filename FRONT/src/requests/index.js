@@ -9,20 +9,39 @@ const connection = axios.create({
 
 const api = {
     async get(path) {
+        try {
         return await connection.get(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async post(path, data) {
-        await console.log(authHeader());
+        try {
         return await connection.post(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async patch(path, data) {
+        try {
         return await connection.patch(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async put(path, data) {
+        try {
         return await connection.put(path, data, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async delete(path) {
+        try {
         return connection.delete(path, { headers: authHeader() });
+        } catch (err) {
+            return err.response
+        }
     },
     async login(email, password,type) {
         let response = null;
