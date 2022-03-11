@@ -25,7 +25,7 @@ const articleSchema  = {
     },
     available:{
         type : "boolean",
-        label : "Disponibilité",
+        label : "Disponible",
         gridDisplay : "toggle",
         width : 150,
     },

@@ -5,6 +5,7 @@ import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests';
 import { bookingSchema } from '../../../Schemas';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
+import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
 
 import './adminbookings.scss';
 import { IconButton, ToggleButton } from '@mui/material';
@@ -63,7 +64,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <EditIcon />
+                                <UpdateBookingModal params={params} article={params.row.articles}/>
                             </IconButton>
                         );
                     break;

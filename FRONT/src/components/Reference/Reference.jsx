@@ -24,7 +24,7 @@ const Reference = ({
             <CardMedia
                 component="img"
                 height="140"
-                image={picture}
+                image={picture[0].url}
                 alt="image about the article"
             />
             <CardContent>
@@ -35,7 +35,7 @@ const Reference = ({
                     name={name}
                     description={description}
                     maincategory={maincategory}
-                    picture={picture}
+                    picture={picture[0].url}
                     tag={tag}
                     valorisation={valorisation}
                 />

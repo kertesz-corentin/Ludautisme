@@ -13,10 +13,14 @@ const Articles = ({params, children, className, ...rest}) => {
 
     const getReferenceWithArticles = async () => {
         try {
-            const response = await api.get(`/admin/references/${params.row.id}`);
+            console.log("ref",params.row);
+            const settings = {
+                "id_ref":params.row.id,
+            }
+            const response = await api.post(`/admin/articles/search`,settings);
             const data = await response.data;
-            setArticles(data[0].articles);
-            console.log('articles', data);
+            console.log('article', data);
+            setArticles(data);
         }
         catch (err) {
             console.error(err);
