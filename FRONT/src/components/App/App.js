@@ -25,14 +25,10 @@ import { useState } from 'react';
 export const FunctionContext= React.createContext();
 
 function App() {
-    let [itemsToShop, setItemsToShop] = useState(0);
-
-
-    const addItemsToShop = () => {
-        console.log(`Hello`);
-        const newQuantity = itemsToShop+ 1
-        console.log(newQuantity)
-        setItemsToShop(newQuantity);
+    let [itemsToCart, setItemsToCart] = useState([]);
+    const addItemsToCart = (newCart) => {
+        const newQuantity = setItemsToCart(itemsToCart => [...itemsToCart, newCart]);
+        console.log(itemsToCart)
         return newQuantity;
     };
 
@@ -45,11 +41,11 @@ function App() {
             <Route path = "/about" element = {<Home children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home children={<FunctionContext.Provider value ={addItemsToShop}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
-
+            ItemsToShop
             <Route path = "/admin/home" element = {<PrivateRoute/>}>
                 <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             </Route>
@@ -78,7 +74,7 @@ function App() {
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             <Route path = "/user/account" element = {<PrivateRoute/>}>
-                <Route path = "/user/account" element = {<UserMyAccount />}></Route>
+                <Route path = "/user/account" element = {<UserMyAccount />}></Route>ItemsToShop
             </Route>
             <Route path = "/user/bookings" element = {<PrivateRoute/>}>
                 <Route path = "/user/bookings" element = {<Home children= {<UserBookings/>}/>}></Route>
@@ -89,7 +85,7 @@ function App() {
             <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
                 <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             </Route>
-            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToShop}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
             <Route path = "*" element = {<Error />}></Route>
         </Routes>

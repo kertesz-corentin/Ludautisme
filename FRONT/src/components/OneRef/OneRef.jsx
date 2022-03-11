@@ -29,25 +29,34 @@ const OneRef = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const add = useContext(FunctionContext)
+    const add = useContext(FunctionContext);
+    let cartToAdd = {
+    id,
+    name,
+    description,
+    maincategory,
+    picture,
+    tag,
+    valorisation
+    }
+    console.log(cartToAdd);
 
     let [counter, setCounter] = useState(4);
 
 //each time i add article to my booking, delete one on quantity
-
-    function handleClick () {
-        console.log(`add this article to my booking`);
-        setCounter (counter > 0 ? counter -=1 : counter);
-        add();
+// ICI ESSAI DE PASSER CE QUE CONTIENT LA LIGNE 33
+    function handleClick (cartToAdd) {
+        console.log(`add this article to my booking`,cartToAdd);
+        add(cartToAdd);
     }
-
-
 // console.log(`function pour setItems`, FunctionContext.Consumer.addItemsToShop)
-
-
     return (
         <div>
           <Button onClick={handleOpen}>description</Button>
+          <Button
+                    onClick={handleClick}>
+                        <AddShoppingCartIcon/>
+                    </Button>
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -87,10 +96,7 @@ const OneRef = ({
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité: {counter}
                 </Typography>
-                    <Button
-                    onClick={handleClick}>
-                        <AddShoppingCartIcon/>
-                    </Button>
+
               </Box>
             </Fade>
           </Modal>

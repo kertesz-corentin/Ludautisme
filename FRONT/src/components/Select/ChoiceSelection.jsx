@@ -22,7 +22,7 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Jeux</InputLabel>
-          {/* <Select
+          <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={category}
@@ -33,7 +33,7 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
                 return(
                 <MenuItem key={category.id} value={category.id}> {category.name}</MenuItem>)
             })}
-          </Select> */}
+          </Select>
         </FormControl>
       </Box>
 

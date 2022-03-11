@@ -7,16 +7,10 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import NextPages from '../NextPages/NextPages';
 import api from '../../requests';
 import Loader from '../Loader/Loader';
-import { FunctionContext } from '../App/App';
+
 
 
 const MaterialLibrary = ({className, ...rest}) => {
-
-
-
-
-
-
 
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
 
