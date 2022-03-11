@@ -17,7 +17,10 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {array<number>} tags - List of tags ID
  * @property {array<boolean>} available - If the references is avalaible
  */
-
+/**
+ * @typedef {object} Stock
+ * @property {number} stock - Number of available article for this reference
+ */
 module.exports = {
     async findAll() {
         const result = await sqlHandler(
@@ -54,6 +57,7 @@ module.exports = {
             r.valorisation,
             cat.name AS mainCategory,
             json_agg(DISTINCT "category"."name") AS tag,
+            COUNT (ar."id") FILTER (WHERE ar.available =true) AS "stock",
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
