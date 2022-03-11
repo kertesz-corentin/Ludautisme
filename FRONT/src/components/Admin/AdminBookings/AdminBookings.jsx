@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
 import api from '../../../requests';
 import { bookingSchema } from '../../../Schemas';
+import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
+import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
 
 import './adminbookings.scss';
 import { IconButton, ToggleButton } from '@mui/material';
@@ -12,6 +14,7 @@ import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
+    const [articles, setArticles] = useState([]);
 
     const path='/admin/booking';
 
@@ -20,15 +23,26 @@ const AdminBookings = ({className, ...rest}) => {
             const response = await api.get(path);
             const data = await response.data;
             setBookings(data);
-            console.log('bookings', bookings);
         }
         catch (err) {
             console.error (err);
         }
     }
 
+    const getAllArticles = async () => {
+        try {
+            const response = await api.get('/admin/articles');
+            const data = await response.data;
+            setArticles(data);
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+
     useEffect(() => {
         getBookings();
+        getAllArticles();
     }, [])
 
     const columnBuilder = (() => {
@@ -50,7 +64,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <EditIcon />
+                                <UpdateBookingModal params={params} article={params.row.articles}/>
                             </IconButton>
                         );
                     break;
@@ -100,7 +114,7 @@ const AdminBookings = ({className, ...rest}) => {
                         sortModel: [{field: 'id', sort: 'asc'}],
                     }
                 }}
-                children
+                children={<BookingUserChoice articles={articles} />}
             />
         </div>
     );

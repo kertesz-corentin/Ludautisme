@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
-import ChoiceSelect from '../Select/ChoiceSelect';
+import ChoiceSelection from '../Select/ChoiceSelection';
 
-const MaterialLibraryMenu = ({className, ...rest}) => {
+
+
+const MaterialLibraryMenu = ({className,categories, ...rest}) => {
+
    return (
        <div
             className={classnames('materiallibrarymenu', className)}
             {...rest}
          >
             Matériathèque
-            <ChoiceSelect/>
-            <ChoiceSelect/>
-            <ChoiceSelect/>
-            <ChoiceSelect/>
-            <ChoiceSelect/>
+{/* ChoiceSelection belongs to case named "Select" */}
+            <ChoiceSelection categories={categories} />
         </div>
    );
 };

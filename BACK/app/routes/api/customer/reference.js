@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * POST api/customer/articles/search
  * @summary Get all ref filtered and paginate
- * @tags Reference
+ * @tags [CUSTOMER] Reference
  * @param {ParamSearchReference} request.body.required - At least page, limit and one of the three other
  * @returns {allOf|Reference|Pictures} 200 - succes response - application/json
  */
@@ -18,14 +18,14 @@ router.route('/search')
  * GET api/customer/articles/:id
  * @summary Get One reference with picture
  * @tags Reference
- * @returns {allOf|Reference|Pictures} 200 - success response - application/json
+ * @returns {allOf|Reference|Stock|Pictures} 200 - success response - application/json
  */
 router.route('/:id')
     .get(controllerHandler(referenceController.getOne));
 /**
 * GET api/customer/articles
 * @summary Get all references with picture
-* @tags Reference
+* @tags [CUSTOMER] Reference
 * @return {allOf|Reference|Pictures} 200 - success response - application/json
 */
 router.route('/')

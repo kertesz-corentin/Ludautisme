@@ -17,7 +17,10 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {array<number>} tags - List of tags ID
  * @property {array<boolean>} available - If the references is avalaible
  */
-
+/**
+ * @typedef {object} Stock
+ * @property {number} stock - Number of available article for this reference
+ */
 module.exports = {
     async findAll() {
         const result = await sqlHandler(
@@ -27,7 +30,7 @@ module.exports = {
             r."description",
             r."valorisation",
             cat."name" AS mainCategory,
-            json_agg(DISTINCT "category"."name") AS tag,
+            json_agg("category"."name") AS tag,
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -54,6 +57,7 @@ module.exports = {
             r.valorisation,
             cat.name AS mainCategory,
             json_agg(DISTINCT "category"."name") AS tag,
+            COUNT (ar."id") FILTER (WHERE ar.available =true) AS "stock",
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -96,23 +100,26 @@ module.exports = {
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
-        WHERE `;
+        `;
         const placeholders = [limit, offset];
-        arr.forEach((filter, index) => {
-            const prop = Object.keys(filter)[0];
-            queryStart += `${prop} IN (`;
-            filter[prop].forEach((filt, indx) => {
-                if (indx !== filter[prop].length - 1) {
-                    queryStart += `$${placeholders.length + 1}, `;
-                } else {
-                    queryStart += `$${placeholders.length + 1})`;
+        if (arr.length > 0 ){
+            queryStart += ` WHERE `
+            arr.forEach((filter, index) => {
+                const prop = Object.keys(filter)[0];
+                queryStart += `${prop} IN (`;
+                filter[prop].forEach((filt, indx) => {
+                    if (indx !== filter[prop].length - 1) {
+                        queryStart += `$${placeholders.length + 1}, `;
+                    } else {
+                        queryStart += `$${placeholders.length + 1})`;
+                    }
+                    placeholders.push(filt);
+                });
+                if (index !== arr.length - 1) {
+                    queryStart += ` AND `;
                 }
-                placeholders.push(filt);
             });
-            if (index !== arr.length - 1) {
-                queryStart += ` AND `;
-            }
-        });
+        }
         const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
         LIMIT $1 OFFSET $2 `;
 

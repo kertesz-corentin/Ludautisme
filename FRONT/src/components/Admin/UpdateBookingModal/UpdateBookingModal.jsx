@@ -1,50 +1,75 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import Articles from '../../Articles/Articles';
+import AddModal from '../../Articles/AddModal/AddModal';
 
-import './addreferencemodal.scss';
+import './updatebookingmodal.scss';
 
-const AddReferenceModal = ({categories, className, ...rest}) => {
+const UpdateBookingModal = ({params, articles, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [category, setCategory] = useState('');
+    //const [articles,setArticles] = useState([]);
+    console.log("detail_Réservation",params.row.articles,articles);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const reference = {
-            'name': data.get('name'),
-            'description': data.get('description'),
-            'valorisation': data.get('valorisation'),
-            'main_category': data.get('main_category'),
-        };
+        // const data = new FormData(event.currentTarget);
 
-        console.log('reference', reference);
-        const response = await api.post('/admin/references', reference)
-        if(response.status === 200) {
-            handleClose();
-        }
-        console.log('response', response);
+        // const reference = {
+        //     'name': data.get('name'),
+        //     'description': data.get('description'),
+        //     'valorisation': data.get('valorisation'),
+        //     'main_category': data.get('main_category'),
+        // };
+        // console.log('reference', reference)
+        // const response = await api.put(`/admin/references/${params.row.id}`, reference);
+        // if(response.status === 200) {
+        //     handleClose();
+        // }
+        // console.log('response', response);
+    }
+
+    const getArticles = async () => {
+
+    //     const settings = {
+    //         id_booking:params.row.id
+    //     }
+    //     const response = await api.post(`/admin/articles/search`, settings);
+    //     const data = await response.data;
+    //     console.log("data articles",data);
+    //     setArticles(data);
+    //     if(response.status === 200) {
+    //         handleClose();
+    //     }
+    //     console.log('response', response);
     }
 
     const handleChange = (event) => {
-        setCategory(event.target.value);
     }
+
+    useEffect(() => {
+        getArticles();
+    }, [])
 
     return (
         <div>
-            <Button onClick={handleOpen}>Ajouter référence</Button>
+            <IconButton onClick={handleOpen}>
+                {`# ${params.value}`}
+                <EditIcon />
+            </IconButton>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
+                    {/* <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Nouvelle Référence
+                            Edition Référence
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -61,14 +86,16 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             name='name'
                             type='string'
                             className="modal-inputs-item"
+                            defaultValue={params.row.name}
                         >
                         </TextField>
                         <TextField
                             id='outlined'
                             label='Description'
                             name='description'
-                            type='textarea'
+                            type='string'
                             className="modal-inputs-item"
+                            defaultValue={params.row.description}
                         >
                         </TextField>
                         <TextField
@@ -77,6 +104,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             name='valorisation'
                             type='number'
                             className="modal-inputs-item"
+                            defaultValue={params.row.valorisation}
                         >
                         </TextField>
                         <FormControl fullWidth>
@@ -86,27 +114,32 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                                 id="main_category"
                                 name="main_category"
                                 label="Catégorie"
+                                type='string'
                                 onChange={handleChange}
                                 value={category}
                             >
                             {categories.map((category) => {
                                 return (
-                                    <MenuItem value={category.id}>{category.name}</MenuItem>
+                                    <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                                 )
                             })}
                             </Select>
-                        </FormControl>
-
-                    </div>
+                        </FormControl> */}
+                    {/* </div> */}
                     <div className="modal-footer">
                         <Button
                             type='submit'
                             className="modal-footer-submit"
                             variant="contained"
                         >
-                            Valider
+                            Mettre à jour
                         </Button>
+
                     </div>
+                    <div className="modal-articles">
+                        <Articles params={params} children={<AddModal reference={articles} />} />
+                    </div>
+
                 </Box>
             </Modal>
 
@@ -114,10 +147,10 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     );
 };
 
-AddReferenceModal.propTypes = {
+UpdateBookingModal.propTypes = {
     className: PropTypes.string,
 };
-AddReferenceModal.defaultProps = {
+UpdateBookingModal.defaultProps = {
     className: '',
 };
-export default React.memo(AddReferenceModal);
+export default React.memo(UpdateBookingModal);

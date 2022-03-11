@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * POST api/admin/categorie/search
  * @summary Get category filtered
- * @tags Category
+ * @tags [ADMIN] Category
  * @param {Category} request.body.required At least one of these
  * @return {array<Category>} 200 - succes response - application/json
  */
@@ -17,7 +17,7 @@ router.route('/search')
 /**
  * PUT api/admin/categorie/:id
  * @summary Update one category
- * @tags Category
+ * @tags [ADMIN] Category
  * @param {number} request.params.id.required - Id of category
  * @param {ParamCreateCat} request.body.required - At least one of these
  * @return {Category} 200 - succes response - application/json
@@ -25,7 +25,7 @@ router.route('/search')
 /**
  * DELETE api/admin/categorie/:id
  * @summary Delete on category
- * @tags Category
+ * @tags [ADMIN] Category
  * @param {number} request.params.requires - Id of category
  * @return {Category} 200 - succes response - application/json
  */
@@ -35,13 +35,13 @@ router.route('/:id')
 /**
  * GET api/admin/categorie
  * @summary Get all category
- * @tags Category
+ * @tags [ADMIN] Category
  * @return {array<Category>} 200 - succes response - application/json
  */
 /**
  * POST api/admin/categorie
  * @summary Add new category
- * @tags Category
+ * @tags [ADMIN] Category
  * @param {ParamCreateCat} request.body.required - At least name
  * @return {Category} 200 - succes response - application/json
  */

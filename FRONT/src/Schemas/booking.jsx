@@ -17,6 +17,12 @@ const bookingSchema  = {
         gridDisplay : "toggle",
         width : 125,
     },
+    overdue:{
+        type : "boolean",
+        label : "Retard",
+        gridDisplay : "toggle-icon-inverted",
+        width : 150,
+    },
     id_user:{
         type : "string",
         label : "identifiant adhérent",
@@ -57,12 +63,6 @@ const bookingSchema  = {
         type : "string",
         label : "Date permanence",
         gridDisplay : "normal",
-        width : 150,
-    },
-    overdue:{
-        type : "boolean",
-        label : "Prolongation",
-        gridDisplay : "toggle",
         width : 150,
     },
 }

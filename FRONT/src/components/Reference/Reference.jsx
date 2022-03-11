@@ -9,21 +9,36 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import ReferenceModal from '../ReferenceModal/ReferenceModal';
 
-const Reference = ({className, ...rest}) => {
+const Reference = ({
+    className,
+    name,
+    description,
+    maincategory,
+    picture,
+    tag,
+    valorisation
+     }) => {
    return (
 
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
                 height="140"
-                image="../../public/legosfix.png"
+                image={picture[0].url}
                 alt="image about the article"
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                Réference 1
+                {name}
                 </Typography>
-                <ReferenceModal/>
+                <ReferenceModal
+                    name={name}
+                    description={description}
+                    maincategory={maincategory}
+                    picture={picture[0].url}
+                    tag={tag}
+                    valorisation={valorisation}
+                />
             </CardContent>
         </Card>
    );

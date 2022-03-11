@@ -98,9 +98,16 @@ module.exports = {
         }
     },
     async findFiltered(arr) {
-        let query = `SELECT * FROM "article"
+        let query = `
+        SELECT
+        *,
+        "booking"."id" AS "id_booking"
+        FROM "article"
+        INNER JOIN "article_to_booking" ON "article"."id" = "article_to_booking"."id_article"
+        INNER JOIN "booking" ON "article_to_booking"."id_booking" = "booking"."id"
         WHERE `;
         const placeholders = [];
+        console.log(arr);
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];
             placeholders.push(filter[prop]);

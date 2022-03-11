@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, Box, Typography}
-import classnames from 'classnames';
+import { Button, Modal, Box, Typography, TextField } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import api from '../../../requests';
+import BookingArticles from '../BookingArticles/BookingArticles';
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({className, ...rest}) => {
+const AddBookingModal = ({user, articles, className, ...rest}) => {
+    const [open, setOpen] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const booking = {
+            // 'name': data.get('name'),
+            // 'description': data.get('description'),
+            // 'valorisation': data.get('valorisation'),
+            // 'main_category': data.get('main_category'),
+        };
+
+        console.log('booking', booking);
+        const response = await api.post('/admin/references', booking)
+        if(response.status === 200) {
+            handleClose();
+        }
+        console.log('response', response);
+    }
+
+    console.log('user', user[0]);
     return (
-        <div
-            className={classnames('addbookingmodal', className)}
-            {...rest}
-        >
-            <Button onClick={handleOpen}>Ajouter référence</Button>
+        <div>
+            <Button
+                onClick={handleOpen}
+                variant="contained"
+            >
+                Continuer
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -18,7 +45,7 @@ const AddBookingModal = ({className, ...rest}) => {
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
                     <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Nouvelle Référence
+                            Nouvelle Réservation
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -31,46 +58,35 @@ const AddBookingModal = ({className, ...rest}) => {
                     <div className="modal-inputs">
                         <TextField
                             id='outlined'
-                            label='Nom'
-                            name='name'
+                            name='first_name'
                             type='string'
+                            disabled
+                            defaultValue={user[0].first_name}
                             className="modal-inputs-item"
                         >
-                        </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Description'
-                            name='description'
-                            type='textarea'
-                            className="modal-inputs-item"
-                        >
-                        </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Valorisation'
-                            name='valorisation'
-                            type='number'
-                            className="modal-inputs-item"
-                        >
-                        </TextField>
-                        <FormControl fullWidth>
-                            <InputLabel id="maincategory-label">Catégorie</InputLabel>
-                            <Select
-                                labelId="maincategory-label"
-                                id="main_category"
-                                name="main_category"
-                                label="Catégorie"
-                                onChange={handleChange}
-                                value={category}
-                            >
-                            {categories.map((category) => {
-                                return (
-                                    <MenuItem value={category.id}>{category.name}</MenuItem>
-                                )
-                            })}
-                            </Select>
-                        </FormControl>
 
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            name='last_name'
+                            type='string'
+                            disabled
+                            defaultValue={user[0].last_name}
+                            className="modal-inputs-item"
+                        >
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            name='email'
+                            type='string'
+                            disabled
+                            defaultValue={user[0].email}
+                            className="modal-inputs-item"
+                        >
+                        </TextField>
+                    </div>
+                    <div className="modal-articles">
+                        <BookingArticles  articles={articles} />
                     </div>
                     <div className="modal-footer">
                         <Button

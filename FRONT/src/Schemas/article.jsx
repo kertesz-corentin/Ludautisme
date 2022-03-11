@@ -9,7 +9,7 @@ const articleSchema  = {
         type : "number",
         label : "n° Article",
         gridDisplay : "normal",
-        width : 250,
+        width : 150,
     },
     origin:{
         type : "string",
@@ -25,7 +25,7 @@ const articleSchema  = {
     },
     available:{
         type : "boolean",
-        label : "Disponibilité",
+        label : "Disponible",
         gridDisplay : "toggle",
         width : 150,
     },

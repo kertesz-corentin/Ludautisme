@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * GET /api/admin/booking
  * @summary Get all detailed booking
- * @tags Booking
+ * @tags [ADMIN] Booking
  * @param {paramSearch} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
@@ -16,7 +16,7 @@ router.route('/')
 /**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
- * @tags Booking
+ * @tags [ADMIN] Booking
  * @param {number} request.params.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
@@ -24,7 +24,7 @@ router.route('/')
 /**
  * PUT /api/admin/booking/:id
  * @summary Update a booking
- * @tags Booking
+ * @tags [ADMIN] Booking
  * @param {number} request.params.required - At least one of these params
  * @param {number} request.body.required - Array of ids
  * @return {booking} 200 - success response - application/json
@@ -37,7 +37,7 @@ router.route('/:id')
 /**
  * POST /api/admin/booking/add/:UserId
  * @summary Add a new booking
- * @tags Booking
+ * @tags [ADMIN] Booking
  * @param {paramAddBooking} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
@@ -46,7 +46,7 @@ router.route('/add/:UserId')
 /**
  * POST /api/admin/booking/search
  * @summary Get detailed booking with details
- * @tags Booking
+ * @tags [ADMIN] Booking
  * @param {paramSearchBooking} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */

@@ -20,6 +20,8 @@ const theme = createTheme();
  export default function SignIn() {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(false);
+
     const onToggleOpen = () => {
         setIsOpen(!isOpen)
     }
@@ -29,13 +31,19 @@ const theme = createTheme();
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
         const password = data.get('password');
-
-        const response = await api.login(email, password);
-        console.log(response);
-        if(response.status === 200) {
-            navigate('/admin/home');
+        try {
+            const response = await api.login(email, password);
+            console.log(response);
+            if(response.status === 200) {
+                navigate('/admin/users');
+                setAlertMessage(false);
+            }
         }
-    };
+        catch (err) {
+            setAlertMessage(true);
+            console.error(err)
+        }
+    }
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -69,10 +77,12 @@ const theme = createTheme();
                     <Typography component="h1" variant="h5">
                         Se connecter
                     </Typography>
-                    <Alert variant="outlined"
+                    {alertMessage && (
+                        <Alert variant="outlined"
                             severity="error">
-                                This is an error alert — check it out!
-                    </Alert>
+                                Email ou mot de passe invalide!
+                        </Alert>
+                    )}
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                         margin="normal"

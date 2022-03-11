@@ -12,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
 
 const UserBookingsHistory = ({className, ...rest}) => {
+    // Add request api.get ('admin/booking/history/:id)
    return (
     <div> MON HISTORIQUE DE RESERVATIONS
     <Permanency/>
