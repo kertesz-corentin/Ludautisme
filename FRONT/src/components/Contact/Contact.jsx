@@ -5,6 +5,7 @@ import './contact.scss';
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import MessageLogo from '../public/icones/un-message.png'
 
 const Contact = ({className, ...rest}) => {
    return (
@@ -18,7 +19,8 @@ const Contact = ({className, ...rest}) => {
                     }}
                     noValidate
                     autoComplete="off">
-                        <div>
+                        <div className='contact-header'>
+                            <img src={MessageLogo} alt="contact-logo" />
                             <h2 className="contact-form-title">
                                 Nous écrire
                             </h2>

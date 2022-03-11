@@ -1,13 +1,18 @@
 @import 'src/styles/vars';
 
 .header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    // overflow: hidden;
+    width: calc(100vw - 52px);
     text-decoration: none;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
     padding: $gutter;
-    background-color: $font-color-2;
+    background-color: rgba(255, 251, 236, 0.8);
     filter: $drop-shadow;
 
     &-logo-img {
