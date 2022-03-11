@@ -17,7 +17,7 @@ const ListOfReferences = ({
     }) => {
         console.log(references)
     return (
-
+        references ?
         <React.Fragment>
           <CssBaseline />
           <Container maxWidth="70%">
@@ -37,8 +37,14 @@ const ListOfReferences = ({
             )}
           </Container>
         </React.Fragment>
+        :
+        <React.Fragment>
+          <CssBaseline />
+          <Container maxWidth="70%">
+            <Box className= "lisofreferences" />
 
-
+          </Container>
+        </React.Fragment>
       );
 };
 
