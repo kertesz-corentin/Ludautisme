@@ -96,23 +96,26 @@ module.exports = {
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
-        WHERE `;
+        `;
         const placeholders = [limit, offset];
-        arr.forEach((filter, index) => {
-            const prop = Object.keys(filter)[0];
-            queryStart += `${prop} IN (`;
-            filter[prop].forEach((filt, indx) => {
-                if (indx !== filter[prop].length - 1) {
-                    queryStart += `$${placeholders.length + 1}, `;
-                } else {
-                    queryStart += `$${placeholders.length + 1})`;
+        if (arr.length > 0 ){
+            queryStart += ` WHERE `
+            arr.forEach((filter, index) => {
+                const prop = Object.keys(filter)[0];
+                queryStart += `${prop} IN (`;
+                filter[prop].forEach((filt, indx) => {
+                    if (indx !== filter[prop].length - 1) {
+                        queryStart += `$${placeholders.length + 1}, `;
+                    } else {
+                        queryStart += `$${placeholders.length + 1})`;
+                    }
+                    placeholders.push(filt);
+                });
+                if (index !== arr.length - 1) {
+                    queryStart += ` AND `;
                 }
-                placeholders.push(filt);
             });
-            if (index !== arr.length - 1) {
-                queryStart += ` AND `;
-            }
-        });
+        }
         const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
         LIMIT $1 OFFSET $2 `;
 
