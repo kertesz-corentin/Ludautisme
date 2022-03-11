@@ -64,7 +64,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateBookingModal params={params} article={params.row.articles}/>
+                                <UpdateBookingModal params={params} allArticles={articles}/>
                             </IconButton>
                         );
                     break;

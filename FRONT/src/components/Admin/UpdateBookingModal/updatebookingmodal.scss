@@ -1,0 +1,14 @@
+.modal {
+
+    &-articles {
+        display: flex;
+        flex-direction: row;
+
+        &--book {
+            width: 100%;
+        }
+        &--available {
+            width: 100%;
+        }
+    }
+}

@@ -30,7 +30,7 @@ const BookingArticles = ({articles, className, ...rest}) => {
             <div>
                 <h2>Liste des articles</h2>
             </div>
-            <div className="articles-grid" style={{ height: 350, width: '100%'}}>
+            <div className="articles-grid" style={{ height: 325, width: '90%'}}>
                 <DataGrid
                     rows={articles}
                     columns={columnsBuilder}

@@ -6,15 +6,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
 import AddModal from '../../Articles/AddModal/AddModal';
+import BookingArticles from '../BookingArticles/BookingArticles';
 
 import './updatebookingmodal.scss';
 
-const UpdateBookingModal = ({params, articles, className, ...rest}) => {
+const UpdateBookingModal = ({params, className, allArticles, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    //const [articles,setArticles] = useState([]);
-    console.log("detail_Réservation",params.row.articles,articles);
+    const [articles,setArticles] = useState([]);
+
+    console.log("detail_Réservation", params.row.articles);
+    console.log('params', params);
+    console.log('articles', articles);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,17 +40,17 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
 
     const getArticles = async () => {
 
-    //     const settings = {
-    //         id_booking:params.row.id
-    //     }
-    //     const response = await api.post(`/admin/articles/search`, settings);
-    //     const data = await response.data;
-    //     console.log("data articles",data);
-    //     setArticles(data);
-    //     if(response.status === 200) {
-    //         handleClose();
-    //     }
-    //     console.log('response', response);
+        const settings = {
+            id_booking:params.row.id
+        }
+        const response = await api.post(`/admin/articles/search`, settings);
+        const data = await response.data;
+        console.log("data articles",data);
+        setArticles(data);
+        if(response.status === 200) {
+            handleClose();
+        }
+        console.log('response', response);
     }
 
     const handleChange = (event) => {
@@ -67,9 +71,9 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
                 onClose={handleClose}
             >
                 <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    {/* <div className="modal-header">
+                    <div className="modal-header">
                         <Typography className='modal-header-title'>
-                            Edition Référence
+                            Détails Réservation
                         </Typography>
                         <Button
                             className='modal-header-close'
@@ -80,6 +84,36 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
                         </Button>
                     </div>
                     <div className="modal-inputs">
+                        <TextField
+                            id='outlined'
+                            name='first_name'
+                            type='string'
+                            disabled
+                            defaultValue={params.row.first_name}
+                            className="modal-inputs-item"
+                        >
+
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            name='last_name'
+                            type='string'
+                            disabled
+                            defaultValue={params.row.last_name}
+                            className="modal-inputs-item"
+                        >
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            name='email'
+                            type='string'
+                            disabled
+                            defaultValue={params.row.email}
+                            className="modal-inputs-item"
+                        >
+                        </TextField>
+                    </div>
+                    {/*<div className="modal-inputs">
                         <TextField
                             id='outlined'
                             label='Nom'
@@ -136,8 +170,13 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
                         </Button>
 
                     </div>
-                    <div className="modal-articles">
-                        <Articles params={params} children={<AddModal reference={articles} />} />
+                    <div class="modal-articles">
+                        <div className="modal-articles--book">
+                            <Articles params={params} name='Réservés' />
+                        </div>
+                        <div className="modal-articles--available">
+                            <BookingArticles  articles={allArticles} />
+                        </div>
                     </div>
 
                 </Box>

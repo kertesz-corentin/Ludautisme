@@ -64,7 +64,6 @@ const AddBookingModal = ({user, articles, className, ...rest}) => {
                             defaultValue={user[0].first_name}
                             className="modal-inputs-item"
                         >
-
                         </TextField>
                         <TextField
                             id='outlined'
@@ -99,7 +98,6 @@ const AddBookingModal = ({user, articles, className, ...rest}) => {
                     </div>
                 </Box>
             </Modal>
-
         </div>
     );
 };

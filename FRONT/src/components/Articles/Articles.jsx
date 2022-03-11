@@ -7,7 +7,7 @@ import { articleSchema } from '../../Schemas';
 import { ToggleButton } from '@mui/material';
 import api from '../../requests';
 
-const Articles = ({params, children, className, ...rest}) => {
+const Articles = ({params, children, name, className, ...rest}) => {
 
     const [articles, setArticles] = useState([]);
 
@@ -74,10 +74,10 @@ const Articles = ({params, children, className, ...rest}) => {
             {...rest}
          >
             <div>
-                <h2>Détails des articles</h2>
+                <h2>Liste des articles - {name}</h2>
             </div>
             {children}
-            <div className="articles-grid" style={{ height: 300, width: '100%'}}>
+            <div className="articles-grid" style={{ height: 325, width: '90%'}}>
                 <DataGrid
                     rows={articles}
                     columns={columnsBuilder}
@@ -101,7 +101,6 @@ const Articles = ({params, children, className, ...rest}) => {
                         }
                     }}
                 >
-
                 </DataGrid>
             </div>
         </section>
