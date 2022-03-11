@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import ReferenceModal from '../OneRef/OneRef';
+import OneRef from '../OneRef/OneRef';
 
 const Reference = ({
     className,
@@ -31,7 +31,7 @@ const Reference = ({
                 <Typography gutterBottom variant="h5" component="div">
                 {name}
                 </Typography>
-                <ReferenceModal
+                <OneRef
                     name={name}
                     description={description}
                     maincategory={maincategory}

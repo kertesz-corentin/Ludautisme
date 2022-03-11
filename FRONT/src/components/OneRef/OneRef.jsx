@@ -15,8 +15,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
 
-const ReferenceModal = ({
+const OneRef = ({
     className,
+    id,
     name,
     description,
     maincategory,
@@ -59,7 +60,7 @@ const ReferenceModal = ({
             }}
           >
             <Fade in={open}>
-              <Box className="referencemodal">
+              <Box className="oneref">
                 <Typography id="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
@@ -97,10 +98,10 @@ const ReferenceModal = ({
       );
 };
 
-ReferenceModal.propTypes = {
+OneRef.propTypes = {
     className: PropTypes.string,
 };
-ReferenceModal.defaultProps = {
+OneRef.defaultProps = {
     className: '',
 };
-export default React.memo(ReferenceModal);
+export default React.memo(OneRef);
