@@ -4,9 +4,10 @@ import { Button, Modal, Box, Typography, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import api from '../../../requests';
 import BookingArticles from '../BookingArticles/BookingArticles';
+import Articles from '../../Articles/Articles';
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({user, articles, className, ...rest}) => {
+const AddBookingModal = ({user, allArticles, bookArticles, params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -85,7 +86,12 @@ const AddBookingModal = ({user, articles, className, ...rest}) => {
                         </TextField>
                     </div>
                     <div className="modal-articles">
-                        <BookingArticles  articles={articles} />
+                        <div className="modal-articles--book">
+                            <Articles params={params} name='Réservés' />
+                        </div>
+                        <div className="modal-articles--available">
+                            <BookingArticles  articles={allArticles} />
+                        </div>
                     </div>
                     <div className="modal-footer">
                         <Button
