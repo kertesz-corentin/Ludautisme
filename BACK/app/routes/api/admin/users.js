@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * GET /api/admin/users/:id
  * @summary Get information for one user
- * @tags Users
+ * @tags [ADMIN] Users
  * @param {number} request.params.id.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
@@ -15,7 +15,7 @@ const router = express.Router();
 /**
  * PUT /api/admin/users/:id
  * @summary Modify information for one user
- * @tags Users
+ * @tags [ADMIN] Users
  * @param {number} request.params.id.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
@@ -23,7 +23,7 @@ const router = express.Router();
 /**
  * DELETE /api/admin/users/:id
  * @summary Delete One user
- * @tags Users
+ * @tags [ADMIN] Users
  * @param {number} request.params.id.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
@@ -36,7 +36,7 @@ router.route('/:id')
 /**
  * POST /api/admin/users/search
  * @summary Get filtered users detailed informations
- * @tags Users
+ * @tags [ADMIN] Users
  * @param {paramSearch} request.body.required - At least one of these params
  * @return {users} 200 - success response - application/json
  */
@@ -47,14 +47,14 @@ router.route('/search')
 /**
  * GET /api/admin/users
  * @summary Get all users detailed informations
- * @tags Users
+ * @tags [ADMIN] Users
  * @return {users} 200 - success response - application/json
  */
 
 /**
  * POST /api/admin/users
  * @summary Create a new user
- * @tags Users
+ * @tags [ADMIN] Users
  * @param {paramUserCreate} request.body.required
  * @return {users} 200 - success response - application/json
  */

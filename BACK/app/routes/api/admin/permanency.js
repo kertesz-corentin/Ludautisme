@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * GET api/permanency
  * @summary Get all permanencies
- * @tags Permanency
+ * @tags [ADMIN] Permanency
  * @return {permanency} 200 - success response - application/json
  */
 router.route('/')
@@ -16,7 +16,7 @@ router.route('/')
 /**
  * GET api/permanency/active
  * @summary Get active and next permanency
- * @tags Permanency
+ * @tags [ADMIN] Permanency
  * @return {permanency} 200 - success response - application/json
  */
 router.route('/active')
@@ -24,7 +24,7 @@ router.route('/active')
 /**
  * GET api/permanency/close
  * @summary Close actual permanency and créate a new one without date
- * @tags Permanency
+ * @tags [ADMIN] Permanency
  * @return {permanency} 200 - success response - application/json
  */
 router.route('/active/close')
@@ -32,7 +32,7 @@ router.route('/active/close')
 /**
  * PATCH api/admin/next
  * @summary Set date of next permanency
- * @tags Permanency
+ * @tags [ADMIN] Permanency
  * @return {permanency} 200 - success response - application/json
  */
 router.route('/next')

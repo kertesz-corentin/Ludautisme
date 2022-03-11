@@ -5,9 +5,6 @@ import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
 const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
-    const showModal = () => {
-        console.log('showModal');
-    };
 
     return (
         <section className='section'>

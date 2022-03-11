@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * POST /api/login/user
  * @summary Login one user
- * @tags Login
+ * @tags [AUTH] Login
  * @param {paramLogin} request.body.required
  * @return {login} 200 - success response - application/json
  */
@@ -19,7 +19,7 @@ router.route('/user')
 /**
  * POST /api/login/admin
  * @summary Login for admin
- * @tags Login
+ * @tags [AUTH] Login
  * @param {paramLogin} request.body.required
  * @return {login} 200 - success response - application/json
  */
@@ -30,7 +30,7 @@ router.route('/admin')
 /**
  * POST /api/login/forgot-password
  * @summary Send an email to user with temp token
- * @tags Login
+ * @tags [AUTH] Login
  * @param {paramForgotPwd} request.body.required
  * @return {string} 200 - success response - application/json
  */
@@ -41,7 +41,7 @@ router.route('/forgot-password')
 /**
  * GET /api/login/reset-password
  * @summary Reset password if user got an email
- * @tags Login
+ * @tags [AUTH] Login
  * @param {paramResetPwd} request.body.required
  * @return {login} 200 - success response - application/json
  */

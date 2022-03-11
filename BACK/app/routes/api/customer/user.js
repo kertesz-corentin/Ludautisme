@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * GET /api/customer/users/:id
  * @summary Get information for one user
- * @tags Customer Users
+ * @tags [CUSTOMER] User
  * @param {number} request.params.id.required - At least one of these params
  * @return {customerUsers} 200 - success response - application/json
  */
@@ -16,7 +16,7 @@ const router = express.Router();
 /**
  * PUT /api/customer/users/:id
  * @summary Modify information for one user
- * @tags Customer Users
+ * @tags [CUSTOMER] User
  * @param {number} request.params.id.required - At least one of these params
  * @return {customerUsers} 200 - success response - application/json
  */

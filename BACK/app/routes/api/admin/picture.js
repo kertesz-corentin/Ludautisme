@@ -9,7 +9,7 @@ const router = express.Router();
 /**
  * PUT api/admin/picture/:id
  * @summary Update one picture
- * @tags Picture
+ * @tags [ADMIN] Picture
  * @param {number} request.params.id.required - ID of the picture to update
  * @param {ParamsUpdatePicture} request.body.required - At least one of these
  * @returns {Picture} 201 - succes response - application/json
@@ -17,7 +17,7 @@ const router = express.Router();
 /**
  * DELETE api/admin/picture/:id
  * @summary Delete one picture
- * @tags Picture
+ * @tags [ADMIN] Picture
  * @param {number} request.params.id.required - ID of the picture tu update
  * @returns {string} 200 - succes response - application/json
  */
@@ -28,7 +28,7 @@ router.route('/:id')
 /**
  * POST api/admin/picture
  * @summary Add one picture to one article
- * @tags Picture
+ * @tags [ADMIN] Picture
  * @param {ParamsCreatePicture} request.body.required
  * @return {Picture} 201 - create - application/json
  */
