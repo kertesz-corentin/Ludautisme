@@ -9,16 +9,20 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState } from 'react';
 import { Divider } from '@mui/material';
 import Reference from '../Reference/Reference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
+import { useState } from 'react';
+
 
 const ShopModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [counter, setCounter] = useState (0)
+
+
+
 
     return (
       <div>

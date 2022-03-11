@@ -12,7 +12,8 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import { CardMedia, Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { FunctionContext } from '../App/App';
 
 const ReferenceModal = ({
     className,
@@ -27,13 +28,28 @@ const ReferenceModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    <FunctionContext.Consumer>
+        {
+                addItemsToShop => {
+                    return addItemsToShop
+                }
+        }
+    </FunctionContext.Consumer>
+    console.log(FunctionContext)
+
     let [counter, setCounter] = useState(4);
 
 //each time i add article to my booking, delete one on quantity
+
     function handleClick () {
-        console.log(`add this article to my booking`)
-        setCounter (counter > 0 ? counter -=1 : counter)
+        console.log(`add this article to my booking`);
+        setCounter (counter > 0 ? counter -=1 : counter);
+
     }
+const setShopsItems = useContext(FunctionContext)
+console.log(`Function pour setItems`, setShopsItems)
+
+// console.log(`function pour setItems`, FunctionContext.Consumer.addItemsToShop)
 
 
     return (

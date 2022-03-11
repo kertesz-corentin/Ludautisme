@@ -20,10 +20,14 @@ import './App.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Error from '../Error/Error';
 import ResetPwd from '../ResetPwd/ResetPwd';
+import { useState } from 'react';
 
-
+export const FunctionContext= React.createContext();
 
 function App() {
+
+    const addItemsToShop = 'add this item to shop'
+
 
     // Client Application
     return (
@@ -77,7 +81,7 @@ function App() {
             <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
                 <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
             </Route>
-            <Route path = "/user/articles" element = {<Home children={<MaterialLibrary />} />}></Route>
+            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToShop}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
             <Route path = "*" element = {<Error />}></Route>
         </Routes>
