@@ -25,8 +25,16 @@ import { useState } from 'react';
 export const FunctionContext= React.createContext();
 
 function App() {
+    let [itemsToShop, setItemsToShop] = useState(0);
 
-    const addItemsToShop = 'add this item to shop'
+
+    const addItemsToShop = () => {
+        console.log(`Hello`);
+        const newQuantity = itemsToShop+ 1
+        console.log(newQuantity)
+        setItemsToShop(newQuantity);
+        return newQuantity;
+    };
 
 
     // Client Application
@@ -37,7 +45,7 @@ function App() {
             <Route path = "/about" element = {<Home children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home children={<MaterialLibrary />} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home children={<FunctionContext.Provider value ={addItemsToShop}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
