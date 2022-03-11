@@ -2,31 +2,31 @@ import React, {useState}from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import './shop.scss';
-import ShopModal from '../ShopModal/ShopModal';
+import './cart.scss';
+import OneRef from '../OneRef/OneRef';
 
 
-const Shop = ({className, ...rest}) => {
-   const [shopItems, setShopItems] = useState()
+const Cart = ({className, ...rest}) => {
+   const [cartItems, setCartItems] = useState()
    function handleShopBtnClick (event) {
     event.preventDefault();
     console.log(`ouverture de la modale mon panier`)
    }
    return (
        <button
-            className={classnames('shop', className)}
+            className={classnames('cart', className)}
             {...rest}
             onClick= {handleShopBtnClick}
          >
-            <ShopModal/>
+            <OneRef/>
         </button>
    );
 };
 
-Shop.propTypes = {
+Cart.propTypes = {
     className: PropTypes.string,
 };
-Shop.defaultProps = {
+Cart.defaultProps = {
     className: '',
 };
-export default React.memo(Shop);
+export default React.memo(Cart);

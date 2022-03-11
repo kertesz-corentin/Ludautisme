@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
-import Shop from '../Shop/Shop';
 import './header.scss';
 import { NavLink } from 'react-router-dom';
+import ShopModal from '../CartModal/CartModal';
 
 
 const Header = ({className, ...rest}) => {
@@ -16,6 +16,7 @@ const Header = ({className, ...rest}) => {
             <div className="header-logo">
                 <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
+
             <nav className="header-nav">
                 <NavLink
                     to="/"
@@ -49,7 +50,7 @@ const Header = ({className, ...rest}) => {
                 </NavLink>
             </nav>
 
-            <Shop />
+            <ShopModal />
             <LoginUser />
         </header>
    );

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './shopmodal.scss';
+import './cartmodal.scss';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -15,7 +15,7 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import { useState } from 'react';
 
 
-const ShopModal = ({className, ...rest}) => {
+const CartModal = ({className, ...rest}) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -59,10 +59,10 @@ const ShopModal = ({className, ...rest}) => {
     );
 };
 
-ShopModal.propTypes = {
+CartModal.propTypes = {
     className: PropTypes.string,
 };
-ShopModal.defaultProps = {
+CartModal.defaultProps = {
     className: '',
 };
-export default React.memo(ShopModal);
+export default React.memo(CartModal);
