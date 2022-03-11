@@ -14,6 +14,7 @@ const MaterialLibraryMenu = ({className,categories, ...rest}) => {
             {...rest}
          >
             Matériathèque
+{/* ChoiceSelection belongs to case named "Select" */}
             <ChoiceSelection categories={categories} />
         </div>
    );

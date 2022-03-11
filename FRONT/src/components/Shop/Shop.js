@@ -6,8 +6,9 @@ import './shop.scss';
 import ShopModal from '../ShopModal/ShopModal';
 
 const Shop = ({className, ...rest}) => {
-   function handleShopBtnClick () {
-       console.log(`ouverture de la modale mon panier`)
+   function handleShopBtnClick (event) {
+    event.preventDefault();
+    console.log(`ouverture de la modale mon panier`)
    }
    return (
        <button

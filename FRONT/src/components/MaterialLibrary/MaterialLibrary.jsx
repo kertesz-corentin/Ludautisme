@@ -6,6 +6,8 @@ import MaterialLibraryMenu from '../MaterialLibraryMenu/MaterialLibraryMenu';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import NextPages from '../NextPages/NextPages';
 import api from '../../requests';
+import Loader from '../Loader/Loader';
+
 
 
 const MaterialLibrary = ({className, ...rest}) => {
@@ -38,6 +40,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
         console.log('Voila les données à passer en props', categoriesData)
     }
    return (
+       categoriesData && referencesData ?
         <div            className={classnames('materiallibrary', className)}
             {...rest}
         >
@@ -48,6 +51,8 @@ const [categoriesData, setCategoriesDatas] = useState('')
                 <NextPages/>
             </div>
         </div>
+        :
+        <Loader/>
    );
 };
 

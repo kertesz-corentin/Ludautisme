@@ -17,11 +17,12 @@ const ListOfReferences = ({
     }) => {
         console.log(references)
     return (
+
         <React.Fragment>
           <CssBaseline />
           <Container maxWidth="70%">
             <Box className= "lisofreferences" />
-              {references.map((reference)=>
+                {references.map((reference)=>
                 (
                     <Reference
                         key = {reference.id}
@@ -34,9 +35,10 @@ const ListOfReferences = ({
                     />
                 )
             )}
-
           </Container>
         </React.Fragment>
+
+
       );
 };
 

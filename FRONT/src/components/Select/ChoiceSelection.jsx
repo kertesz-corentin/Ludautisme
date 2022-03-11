@@ -18,6 +18,7 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
     console.log(categories)
 
     return (
+
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Jeux</InputLabel>
@@ -28,13 +29,15 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
             label="Jeux"
             onChange={handleChange}
           >
-             {categories.map((category) => {
+                {categories.map((category) => {
                 return(
                 <MenuItem key={category.id} value={category.id}> {category.name}</MenuItem>)
             })}
           </Select>
         </FormControl>
       </Box>
+
+
     )
 };
 
