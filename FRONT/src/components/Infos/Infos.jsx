@@ -5,13 +5,13 @@ import './infos.scss';
 import Permanency from '../Permanency/Permanency';
 import Contact from '../Contact/Contact';
 import PhotoLudo from '../public/icones/photo.png'
-import Cafe from '../public/icones/cafe.png'
+import Epingler from '../public/icones/epingler.png'
 import Lettre from '../public/icones/lettre.png'
 import Adhérent from '../public/icones/adhérent.png'
 import Bénévole from '../public/icones/bénévole.png'
-import Adhésion from '../public/DocumentsPdf/adhésion.pdf'
-import Réglement from '../public/DocumentsPdf/règlementIntérieur.pdf'
-import Tarifs from '../public/DocumentsPdf/tarifs.pdf'
+import Adhésion from '../public/DocumentsPdf/Fiche d_adhésion Lud_autisme.pdf'
+import Réglement from '../public/DocumentsPdf/Règlement intérieur Lud_autisme.pdf'
+import Tarifs from '../public/DocumentsPdf/Flyer Lud_autisme.pdf'
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -40,7 +40,7 @@ const Infos = ({className, ...rest}) => {
             <div className="infos-header-adresse">
                 <p>
                     <h2>
-                        <img src={Cafe} alt="café" />
+                        <img src={Epingler} alt="permanence" />
                         Venir aux permanences
                     </h2>
                     <b> Maison Pour Tous / Maison des Familles </b> <br />
@@ -109,7 +109,7 @@ const Infos = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal1' title='réglement' src={Adhésion} frameborder="0"></iframe>
+                                        <iframe className='become-body-pdf-modal' title='réglement' src={Adhésion} frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                             </div>
@@ -137,7 +137,7 @@ const Infos = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal2' title='réglement' src={Réglement} frameborder="0"></iframe>
+                                        <iframe className='become-body-pdf-modal' title='réglement' src={Réglement} frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                             </div>
@@ -166,7 +166,7 @@ const Infos = ({className, ...rest}) => {
                                     }}
                                     >
                                     <Fade in={open}>
-                                            <iframe className='become-body-pdf-modal3' title='tarifs' src={Tarifs} frameborder="0"></iframe>
+                                            <iframe className='become-body-pdf-modal' title='tarifs' src={Tarifs} frameborder="0"></iframe>
                                     </Fade>
                                 </Modal>
                                 </div>

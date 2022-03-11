@@ -28,6 +28,7 @@ CREATE TABLE "user" (
 CREATE TABLE "permanency" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "perm_date" DATE,
+    "active" BOOLEAN DEFAULT false,
     "published" BOOLEAN DEFAULT false
 );
 
@@ -53,19 +54,21 @@ CREATE TABLE "reference" (
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "valorisation" INT,
-    "id_category" INT REFERENCES "category"("id")
+    "main_category" INT REFERENCES "category"("id")
 );
 
 CREATE TABLE "image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "url" TEXT NOT NULL,
-    "alternative_text" TEXT
+    "title" TEXT,
+    "alternative_text" TEXT,
+    "main" BOOLEAN
 );
 
 CREATE TABLE "reference_to_image" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "id_ref" INT REFERENCES "reference"("id"),
-    "id_image" INT REFERENCES "image"("id")
+    "id_ref" INT REFERENCES "reference"("id") NOT NULL,
+    "id_image" INT NOT NULL REFERENCES "image"("id")  ON DELETE CASCADE
 );
 
 CREATE TABLE "reference_to_category" (
@@ -76,12 +79,11 @@ CREATE TABLE "reference_to_category" (
 
 CREATE TABLE "article" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "ref_number" INT NOT NULL UNIQUE,
+    "number" INT NOT NULL UNIQUE,
     "origin" TEXT,
     "date_buy" DATE,
     "available" BOOLEAN DEFAULT true,
     "archived" BOOLEAN DEFAULT false,
-    "id_booking" INT REFERENCES "booking"("id"),
     "id_ref" INT REFERENCES "reference"("id") NOT NULL,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
@@ -93,8 +95,15 @@ CREATE TABLE "temptoken"(
 
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "refnum_article" INT REFERENCES "article"("ref_number"),
+    "id_article" INT REFERENCES "article"("id"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
+
+DROP VIEW IF EXISTS "full_perm";
+CREATE OR REPLACE VIEW "full_perm" AS
+SELECT * ,
+    LEAD(id,1) OVER(ORDER BY id) AS next_id,
+    LEAD(perm_date,1) OVER(ORDER BY perm_date) AS next_date
+    FROM "permanency";
 
 COMMIT;

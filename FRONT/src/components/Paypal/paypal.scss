@@ -1,5 +1,12 @@
 .paypalButton {
-    height: 30px;
-    background-color: rgb(255, 196, 57) ;
-    border-radius: 10px;
+        &-icon {
+        padding: 0 100px 0 100px;
+        height: 60px;
+        background-color: rgb(255, 196, 57);
+        border-radius: 10px;
+
+        &:hover {
+            filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+        }
+    }
 }

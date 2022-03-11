@@ -108,7 +108,6 @@
         max-width: fit-content;
         flex: 50%;
         justify-content: space-between;
-        background-color: $font-color-2;
         border: 3px solid $blue;
         border-radius: 20px;
         transition: filter 0.5s;
@@ -220,11 +219,7 @@
             }
         }
 
-
-
-        &-pdf-modal1 {
-
-
+        &-pdf-modal {
                 position:relative;
                 top: 10%;
                 left: 10%;
@@ -238,19 +233,13 @@
 
 .infos-bottom {
     padding: 50px;
-    border-radius: 20px;
     background-color: $font-color-2;
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.3));
-    margin: 50px;
+    margin: 50px 0 50px 0 ;
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
     flex-wrap: wrap;
-
-    &-contact {
-        grid-column: 1/2;
-        grid-row: 1;
-    }
 
     &-right {
         display: flex;

@@ -1,27 +1,42 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Box, Typography, Modal, Button } from '@mui/material';
+import api from '../../../requests';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
+import { userSchema } from '../../../Schemas'
+import { gridVisibleSortedRowEntriesSelector } from '@mui/x-data-grid';
 
-const AdminModal = ({name, fields, request, token, className, ...rest}) => {
+const AdminModal = ({name, fields, path, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
+    const [checked, setChecked] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const user = {}
 
-        const response = await request(data, token)
+        for (var entrie of data.entries()) {
+            const prop = entrie[0];
+            const value = entrie[1];
+            user[prop]=value;
+         }
+        console.log('user', user);
+
+        const response = await api.post(path, user);
+        console.log('response', response);
         if(response.status === 200) {
-            console.log(data);
+            console.log('data', response.data);
             handleClose();
         }
 
     }
 
-    const date = new Date();
+    const handleCheckBoxChange = (event) => {
+        setChecked(event.target.checked)
+    }
 
     return (
         <div>
@@ -44,28 +59,54 @@ const AdminModal = ({name, fields, request, token, className, ...rest}) => {
                         </Button>
                     </div>
                     <div className="modal-inputs">
-                        {fields.map((field) => {
+
+                    {Object.keys(userSchema).map((prop) => {
+                        const element = userSchema[prop];
+                        console.log(element)
+                        if(element.type === "number"){
                             return (
                                 <TextField
-                                    key={field.id}
                                     id='outlined'
-                                    label={field.headerName}
-                                    name={field.field}
+                                    label={element.label}
+                                    name={userSchema}
+                                    type={element.type}
                                     className="modal-inputs-item"
-                                    required
                                 >
                                 </TextField>
                             )
-                        })}
-
-                        <TextField
-                            id='outlined'
-                            value={date}
-                            disabled
-                            className="modal-inputs-item"
-                        >
-
-                        </TextField>
+                        }
+                        if(element.type === "string"){
+                            return (
+                                <TextField
+                                    id='outlined'
+                                    label={element.label}
+                                    name={userSchema}
+                                    type={element.type}
+                                    className="modal-inputs-item"
+                                >
+                                </TextField>
+                            )
+                        }
+                        if(element.type === "email"){
+                            return (
+                                <TextField
+                                    id='outlined'
+                                    label={element.label}
+                                    name={userSchema}
+                                    type={element.type}
+                                    className="modal-inputs-item"
+                                >
+                                </TextField>
+                            )
+                        }
+                        if(element.type === "boolean"){
+                            return (
+                                <FormGroup>
+                                    <FormControlLabel control={<Checkbox onChange={handleCheckBoxChange} />} label={element.label} />
+                                </FormGroup>
+                            )
+                        }
+                    })}
                     </div>
                     <div className="modal-footer">
                         <Button

@@ -1,4 +1,4 @@
-import React,{ useState }from 'react';
+import React,{ useEffect, useState }from 'react';
 import PropTypes from 'prop-types';
 
 import './usermyaccount.scss';
@@ -11,20 +11,48 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import api from '../../../requests';
 
+
+//Prochaine étape, coder la requete pour envoyer les infos à l'api
 
 
 const UserMyAccount = ({
     className,
      ...rest
     }) => {
+// Each time page is loading, want to call requestGetDatasOneUser
+    useEffect(() => {requestGetDatasOneUser()},[])
 
-    const [firstNameValue,setFirstNameValue] = useState('Michel');
-    const [lastNameValue,setLastNameValue] = useState('Michel');
-    const [addressValue,setAdressValue] = useState('France');
-    const [mailValue,setMailValue] = useState('michel@michel');
-    const [phoneValue,setPhoneValue] = useState('0000000000');
-    const [passwordValue, setPasswordValue]= useState('coucou');
+//This const get id, role  from API when user is logged
+    const userAllDatas= JSON.parse(localStorage.getItem('user'));
+    console.log(`Données de l'utilisateur`, userAllDatas)
+
+//This function takes id, role and token, send them to API in order to get back every user's infos
+ async function requestGetDatasOneUser ()  {
+        console.log(`fonction qui envoi l'id, le rôle `)
+        const  response = await api.get(`/customer/user/${userAllDatas.id}`)
+        console.log(`expected user's datas`, response.data)
+        setFirstNameValue (response.data.first_name)
+        setLastNameValue (response.data.last_name)
+        setMailValue (response.data.email)
+        setPhoneValue (response.data.phone)
+        setAdressNumberValue(response.data.adress_number)
+        setAdressStreetValue(response.data.adress_street)
+        setAdressZipCodeValue(response.data.adress_zipcode)
+        setAdressCityValue(response.data.adress_city)
+        setPassworldValue(response.data.password)
+    }
+
+    const [firstNameValue,setFirstNameValue] = useState();
+    const [lastNameValue,setLastNameValue] = useState();
+    const [addressNumberValue,setAdressNumberValue] = useState();
+    const [addressStreetValue,setAdressStreetValue] = useState();
+    const [addressZipCodeValue,setAdressZipCodeValue] = useState();
+    const [addressCityValue,setAdressCityValue] = useState();
+    const [mailValue,setMailValue] = useState();
+    const [phoneValue,setPhoneValue] = useState();
+    const [passworldValue, setPassworldValue]= useState();
         // Here i create ButtonModify's state in order to make appear differents elements ( <span><TableContainre> OR <form><TextField>)
         //This state will be modify when clicking ButtonModify with function names handleClickModifyBtn.
     const [modifyBtn, setModifyBtn]=  useState(true);
@@ -33,12 +61,25 @@ const UserMyAccount = ({
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
     }
-    function handleSubmit (event) {
+    async function handleSubmit (event) {
         event.preventDefault()
-        const newUserDatas = {firstNameValue,lastNameValue,addressValue,mailValue,phoneValue,passwordValue}
+        const newUserDatas = {
+         first_name:   firstNameValue,
+         last_name:   lastNameValue,
+         adress_number:   addressNumberValue,
+         adress_street:   addressStreetValue,
+         adress_zipcode:   addressZipCodeValue,
+         adress_city:   addressCityValue,
+         email:   mailValue,
+         phone:   phoneValue,
+         password:   passworldValue
+        }
+// Ici c'est la requête pour envoyer les données modifiés au back, problème pour le moment je recois une erreur 500.
+        const response = await api.put(`/customer/user/${userAllDatas.id}`, newUserDatas)
         setModifyBtn(!modifyBtn)
         console.log(modifyBtn)
         console.log(`Voila les données à envoyer au back:`, newUserDatas)
+        console.log(response)
     }
     function handleFirstNameChange (event) {
         setFirstNameValue(event.target.value)
@@ -48,9 +89,21 @@ const UserMyAccount = ({
         setLastNameValue(event.target.value)
         console.log(`LastName`, event.target.value)
     }
-    function handleAdressChange (event) {
-        setAdressValue(event.target.value)
-        console.log(`Adresse`, event.target.value)
+    function handleAdressNumberChange (event) {
+        setAdressNumberValue(event.target.value)
+        console.log(`AdresseNumber`, event.target.value)
+    }
+    function handleAdressStreetChange (event) {
+        setAdressStreetValue(event.target.value)
+        console.log(`AdresseStreet`, event.target.value)
+    }
+    function handleAdressZipCodeChange (event) {
+        setAdressZipCodeValue(event.target.value)
+        console.log(`AdresseZipCode`, event.target.value)
+    }
+    function handleAdressCityChange (event) {
+        setAdressCityValue(event.target.value)
+        console.log(`AdresseCity`, event.target.value)
     }
     function handleMailChange (event) {
         setMailValue(event.target.value)
@@ -60,23 +113,28 @@ const UserMyAccount = ({
         setPhoneValue(event.target.value)
         console.log(`Phone`, event.target.value)
     }
-    function handlePasswordChange (event) {
-        setPasswordValue(event.target.value)
+    function handlePassworldChange (event) {
+        setPassworldValue(event.target.value)
         console.log(`Password`, event.target.value)
     }
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
+    function createData(label, content) {
+        return {label, content };
+      }
+
       const rows = [
-        createData('Nom:', firstNameValue),
-        createData('Prenom:', lastNameValue ),
-        createData('Adresse:', addressValue ),
+        createData('Prénom:', firstNameValue),
+        createData('Nom:', lastNameValue ),
+        createData('Numéro de rue:', addressNumberValue ),
+        createData('Nom de rue:', addressStreetValue ),
+        createData('Code Postale:', addressZipCodeValue ),
+        createData('Ville:', addressCityValue ),
         createData('Mail:', mailValue),
         createData('Telephone:', phoneValue),
+        createData('Mot de passe:', passworldValue),
       ];
 
    return (
-       <div > Bienvenue Michel
+       <div > Bienvenue {firstNameValue}
          <Permanency/>
                 <div className= "home-user">
                 <MenuUser/>
@@ -88,13 +146,13 @@ const UserMyAccount = ({
                                     <TableBody>
                                     {rows.map((row) => (
                                         <TableRow
-                                        key={row.name}
+                                        key={row.label}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
                                             <TableCell component="th" scope="row">
-                                            {row.name}
+                                            {row.label}
                                             </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
+                                        <TableCell align="right">{row.content}</TableCell>
                                         </TableRow>
                                     ))}
                                     </TableBody>
@@ -107,28 +165,46 @@ const UserMyAccount = ({
                     :
                         <form className="loginuser-form" onSubmit={handleSubmit}>
                             <TextField
-                                label= "Nom"
+                                label= "Nom:"
                                 type="text"
                                 value= {firstNameValue}
                                 onChange={(event) => handleFirstNameChange(event, firstNameValue)}
                             />
                             <TextField
-                                label= "Prénom"
+                                label= "Prénom:"
                                 type="text"
                                 value= {lastNameValue}
                                 onChange={(event) => handleLastNameChange(event, lastNameValue)}
                             />
                             <TextField
-                                label= "Adresse"
+                                label= "Numéro de rue:"
                                 type="text"
-                                value= {addressValue}
-                                onChange={(event) => handleAdressChange(event, addressValue)}
+                                value= {addressNumberValue}
+                                onChange={(event) => handleAdressNumberChange(event, addressNumberValue)}
+                            />
+                            <TextField
+                                label= "Nom de rue:"
+                                type="text"
+                                value= {addressStreetValue}
+                                onChange={(event) => handleAdressStreetChange(event, addressStreetValue)}
+                            />
+                            <TextField
+                                label= "Code Postale:"
+                                type="text"
+                                value= {addressZipCodeValue}
+                                onChange={(event) => handleAdressZipCodeChange(event, addressZipCodeValue)}
+                            />
+                            <TextField
+                                label= "Ville"
+                                type="text"
+                                value= {addressCityValue}
+                                onChange={(event) => handleAdressCityChange(event, addressCityValue)}
                             />
                             <TextField
                                 label= "Mail"
                                 type="text"
                                 value= {mailValue}
-                                onChange={(event) => handleMailChange(event, 'mail')}
+                                onChange={(event) => handleMailChange(event, mailValue)}
                             />
                             <TextField
                                 label= "telephone"
@@ -137,11 +213,12 @@ const UserMyAccount = ({
                                 onChange={(event) => handlePhoneChange(event, phoneValue)}
                             />
                             <TextField
-                                label="Mot de passe"
-                                type="password"
-                                value={passwordValue}
-                                onChange={(event) => handlePasswordChange(event, passwordValue)}
+                                label= "mot de passe"
+                                type="passworld"
+                                value= {passworldValue}
+                                onChange={(event) => handlePassworldChange(event, passworldValue)}
                             />
+
                             <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
                                 Valider
                             </button>

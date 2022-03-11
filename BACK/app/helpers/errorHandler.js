@@ -1,5 +1,6 @@
 // const logger = require('./logger');
 const ApiError = require('../errors/apiError');
+const SqlError = require('../errors/sqlError');
 // const WebsiteError = require('../errors/websiteError');
 
 /**
@@ -19,9 +20,9 @@ const errorHandler = (err, res) => {
     } */
 
     // Si l'application n'est pas en développement on reste vague sur l'erreur serveur
-    if (statusCode === 500 && res.app.get('env') !== 'development') {
-        message = 'Internal Server Error';
-    }
+    // if (statusCode === 500 && !['dev', 'front'].includes(res.app.get('env')) !== 'development') {
+    //     message = 'Internal Server Error';
+    // }
 
     res.status(statusCode).json({
         status: 'error',
@@ -32,5 +33,6 @@ const errorHandler = (err, res) => {
 
 module.exports = {
     ApiError,
+    SqlError,
     errorHandler,
 };

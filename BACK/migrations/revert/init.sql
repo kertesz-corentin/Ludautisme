@@ -2,28 +2,31 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "article_to_booking";
+DROP VIEW IF EXISTS "full_perm" CASCADE;
 
-DROP TABLE IF EXISTS "article";
+DROP TABLE IF EXISTS "temptoken" CASCADE;
 
-DROP TABLE IF EXISTS "reference_to_category";
+DROP TABLE IF EXISTS "article_to_booking" CASCADE;
 
-DROP TABLE IF EXISTS "reference_to_image";
+DROP TABLE IF EXISTS "article" CASCADE;
 
-DROP TABLE IF EXISTS "image";
+DROP TABLE IF EXISTS "reference_to_category" CASCADE;
 
-DROP TABLE IF EXISTS "reference";
+DROP TABLE IF EXISTS "reference_to_image" CASCADE;
 
-DROP TABLE IF EXISTS "category";
+DROP TABLE IF EXISTS "image" CASCADE;
 
-DROP TABLE IF EXISTS "booking";
+DROP TABLE IF EXISTS "reference" CASCADE;
 
-DROP TABLE IF EXISTS "permanency";
+DROP TABLE IF EXISTS "category" CASCADE;
 
-DROP TABLE IF EXISTS "temptoken";
+DROP TABLE IF EXISTS "booking" CASCADE;
 
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "permanency" CASCADE;
 
-DROP TABLE IF EXISTS "role";
+DROP TABLE IF EXISTS "user" CASCADE;
+
+DROP TABLE IF EXISTS "role" CASCADE;
+
 
 COMMIT;

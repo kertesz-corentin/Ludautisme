@@ -2,28 +2,26 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import AdminSection from '../AdminSection/AdminSection';
-import api from '../../../requests';
-import { getLocalBearerToken } from '../../../requests';
-import { addUser } from '../../../requests/requestsAdmin/crudUsers';
-
+import api from '../../../requests/index';
+import { userSchema } from '../../../Schemas';
+import { ToggleButton, IconButton } from '@mui/material';
+import AddUserModal from '../AddUserModal/AddUserModal';
+import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
+// import {CheckIcon} from '@material-ui/icons';
 import './adminusers.scss';
+import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
-    const adminToken = getLocalBearerToken();
 
+    // config path for api route
+    const path = '/admin/users';
 
     const getUsers = async () => {
         try {
-            const response = await api.get('/admin/users', {
-                headers: {
-                    Authorization: `bearer ${adminToken}`
-                }
-            });
+            const response = await api.get('/admin/users');
             const data = await response.data;
-
             setUsers(data);
-
         }
         catch (err) {
             console.error(err);
@@ -34,51 +32,58 @@ const AdminUsers = ({className, ...rest}) => {
         getUsers();
     }, []);
 
-    const columnsData = [
-        {field: 'first_name', headerName: 'Prenom', width: 125},
-        {field: 'last_name', headerName: 'Nom', width: 125},
-        {field: 'email', headerName: 'Email', width: 200},
-        {field: 'phone', headerName: 'Telephone', width: 200},
-        {field: 'adress_number', headerName: 'n°', width: 50},
-        {field: 'adress_street', headerName: 'Rue', width: 200},
-        {field: 'adress_zipcode', headerName: 'Code Postal', width: 125},
-        {field: 'adress_city', headerName: 'Ville', width: 200},
-    ]
+    console.log("schemas",userSchema);
+    const columnBuilder = (() => {
+        const columns = [];
+        Object.keys(userSchema).forEach(prop => {
+            const propElt = userSchema[prop];
+            const config = {
+                type: propElt.type,
+                field:prop,
+                headerName:propElt.label,
+                width: propElt.width};
 
-    // const rows = [
-    //     {
-    //         id: 1,
-    //         member_number: 1,
-    //         first_name: 'Xavier',
-    //         last_name: 'LEPLATRE',
-    //         email: 'test@mail.com',
-    //         phone: '06 xx xx xx xx',
-    //         adress_number: '1',
-    //         adress_street: 'rue de la Liberté',
-    //         adress_zipcode: '75000',
-    //         adress_city: 'PARIS',
-    //         created_at: '01-01-2022',
-    //     }
-    // ]
+            if (propElt.gridDisplay !== "normal"){
+                switch (propElt.gridDisplay){
+                    case "toggle":
+                        config.renderCell = (params) => (
+                            <ToggleButton
+                                value={params.value}
+                                selected={params.value}
+                                onChange={async () => {
+                                    const response = await api.put(`/admin/users/${params.row.id}`, {[prop] : !params.value});
+                                    const newData = await getUsers();
+                                    setUsers(newData.data);
+                                }}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <GridCheckIcon />
+                            </ToggleButton>
+                    );
+                    break;
+                    case "edit":
+                        config.renderCell = (params) => (
 
-    const rowData = users.map(user => {
-        return {
-            id: user.id,
-            phone: user.phone,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            adress_number: user.adress_number,
-            adress_street: user.adress_street,
-            adress_zipcode: user.adress_zipcode,
-            adress_city: user.adress_city,
-            cotisation_status: user.cotisation_status,
-            cotisation_expiration : user.cotisation_expiration,
-            caution_status: user.caution_status,
-            caution_expiration : user.caution_expiration,
-            created_at: user.created_at,
-        }
-    })
+                            <IconButton
+                                value={params.value}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <UpdateUserModal params={params} />
+                            </IconButton>
+                    );
+                    break;
+
+                    default:
+                        break;
+                }
+            }
+            columns.push(config);
+        });
+        return columns;
+    })();
+
+    console.log("colbuild",columnBuilder);
+
 
     return (
         <div
@@ -87,10 +92,23 @@ const AdminUsers = ({className, ...rest}) => {
         >
             <AdminSection
                 title="Adhérent"
-                rows={rowData}
-                columns={columnsData}
-                request={addUser}
-                token={adminToken}
+                rows={users}
+                columns={columnBuilder}
+                path={path}
+                initialState={{
+                    columns: {
+                      columnVisibilityModel: {
+                        // Hide columns <column name>, the other columns will remain visible
+                        id_role: false,
+                        cotisation_expiration: false,
+                        caution_expiration: false,
+                      },
+                    },
+                    sorting: {
+                        sortModel: [{ field: 'id', sort: 'asc' }],
+                    },
+                }}
+                children={<AddUserModal />}
             />
         </div>
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './paypal.scss';
 import Button from '@mui/material/Button';
-import PaypalButton from '../public/icones/paypalsvg.svg'
+import PaypalButton from '../public/icones/paypalicon.png'
 
 
 const Paypal = ({className, ...rest}) => {
@@ -17,7 +17,7 @@ const Paypal = ({className, ...rest}) => {
 
 
 
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <form className="PaypalButton"action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_donations"/>
                     <input type="hidden" name="business" value="ludautisme@gmail.com"/>
                     <input type="hidden" name="lc" value="FR"/>
@@ -25,10 +25,7 @@ const Paypal = ({className, ...rest}) => {
                     <input type="hidden" name="no_note" value="0"/>
                     <input type="hidden" name="currency_code" value="EUR"/>
                     <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest"/>
-
-                    <input className='paypalButton' type="image" src={PaypalButton}name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></input>
-
-                    <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1"/>
+                    <input className='paypalButton-icon' type="image" src={PaypalButton}name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !"></input>
                 </form>
         </div>
    );

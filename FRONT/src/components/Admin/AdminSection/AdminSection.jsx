@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
 import AdminModal from '../AdminModal/AdminModal';
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, request, token }) => {
-    const showModal = () => {
-        console.log('showModal');
-    };
+const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
 
     return (
         <section className='section'>
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            <AdminModal name={title} fields={columns} request={request} token={token} />
+            {/* <AdminModal name={title} fields={columns} path={path} /> */}
+            {children}
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 600, width: '100%'}}>
                     <DataGrid
@@ -22,13 +20,12 @@ const AdminSection = ({ title, rows, columns, request, token }) => {
                         columns={columns}
                         pageSize={15}
                         rowsPerPageOptions={[15]}
-                        SelectionOnClick
-                        editMode="cell"
-                        onRowDoubleClick={showModal}
                         disableSelectionOnClick
+                        localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{
                             Toolbar: GridToolbar,
                         }}
+                        initialState = {initialState}
                     />
                 </div>
             </div>
