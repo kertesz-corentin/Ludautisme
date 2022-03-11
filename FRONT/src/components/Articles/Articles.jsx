@@ -74,10 +74,10 @@ const Articles = ({params, children, name, className, ...rest}) => {
             {...rest}
          >
             <div>
-                <h2>Liste des articles - {name}</h2>
+                <h2>Liste des articles</h2>
             </div>
             {children}
-            <div className="articles-grid" style={{ height: 325, width: '90%'}}>
+            <div className="articles-grid" style={{ height: 300, width: '100%'}}>
                 <DataGrid
                     rows={articles}
                     columns={columnsBuilder}

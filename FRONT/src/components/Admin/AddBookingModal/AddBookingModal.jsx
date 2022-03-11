@@ -87,9 +87,6 @@ const AddBookingModal = ({user, allArticles, bookArticles, params, className, ..
                     </div>
                     <div className="modal-articles">
                         <div className="modal-articles--book">
-                            <Articles params={params} name='Réservés' />
-                        </div>
-                        <div className="modal-articles--available">
                             <BookingArticles  articles={allArticles} />
                         </div>
                     </div>
