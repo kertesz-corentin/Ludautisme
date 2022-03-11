@@ -28,14 +28,14 @@ const ReferenceModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    <FunctionContext.Consumer>
-        {
-                addItemsToShop => {
-                    return addItemsToShop
-                }
-        }
-    </FunctionContext.Consumer>
-    console.log(FunctionContext)
+    // <FunctionContext.Consumer>
+    //     {
+    //             addItemsToShop => {
+    //                 return addItemsToShop
+    //             }
+    //     }
+    // </FunctionContext.Consumer>
+    // console.log(FunctionContext)
 
     let [counter, setCounter] = useState(4);
 
