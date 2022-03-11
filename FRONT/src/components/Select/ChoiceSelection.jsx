@@ -1,37 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './choiceselect.scss';
+import './choiceselection.scss';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const ChoiceSelect = ({className, ...rest}) => {
-    const [age, setAge] = React.useState('');
+const ChoiceSelection = ({className,categories, ...rest}) => {
+    const [category, setCategory] = React.useState('');
 
     const handleChange = (event) => {
-      setAge(event.target.value);
+      setCategory(event.target.value);
     };
+    console.log(category)
+    console.log(categories)
 
     return (
+
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Jeux</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={category}
             label="Jeux"
             onChange={handleChange}
           >
-            <MenuItem value={10}>JeuxA</MenuItem>
-            <MenuItem value={20}>JeuxB</MenuItem>
-            <MenuItem value={30}>JeuxC</MenuItem>
+                {categories.map((category) => {
+                return(
+                <MenuItem key={category.id} value={category.id}> {category.name}</MenuItem>)
+            })}
           </Select>
         </FormControl>
       </Box>
+
+
     )
 };
 
@@ -41,4 +47,4 @@ Select.propTypes = {
 Select.defaultProps = {
     className: '',
 };
-export default React.memo(ChoiceSelect);
+export default React.memo(ChoiceSelection);

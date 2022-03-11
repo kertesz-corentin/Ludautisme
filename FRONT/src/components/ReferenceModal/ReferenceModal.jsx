@@ -14,7 +14,15 @@ import { CardMedia, Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState } from 'react';
 
-const ReferenceModal = ({className, ...rest}) => {
+const ReferenceModal = ({
+    className,
+    name,
+    description,
+    maincategory,
+    picture,
+    tag,
+    valorisation
+}) => {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -45,26 +53,27 @@ const ReferenceModal = ({className, ...rest}) => {
             <Fade in={open}>
               <Box className="referencemodal">
                 <Typography id="transition-modal-title" variant="h6" component="h2">
-                  Nom de l'article
+                  {name}
                 </Typography>
                 <Divider/>
                 <Typography id="transition-modal-title" variant="h6" component="h5">
-                  description de l'article: blablabla
+                  {description}
                 </Typography>
                 {counter > 0 ? <Available/> : <Unavailable/>}
                 <Typography id="transition-modal-title" variant="h6" component="h5">
-                  Prix:
+                Prix: {valorisation}
                 </Typography>
                 <Divider/>
                 <CardMedia
                 component="img"
                 height="140"
-                image="../../public/legosfix.png"
+                image={picture}
                 alt="image about the article"
                 className= "cardmedia"
             />
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Catégorie: Jeux
+                 <p> Categorie: {maincategory} </p>
+                 <p> Sous catégories:{tag} </p>
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité: {counter}

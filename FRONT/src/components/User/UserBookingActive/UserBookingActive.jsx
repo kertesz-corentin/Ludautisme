@@ -12,6 +12,8 @@ import MenuUser from '../MenuUser/MenuUser';
 import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
 
 const UserBookingActive = ({className, ...rest}) => {
+
+// Add request api.get ('admin/booking/active/:id)
    return (
         <div> MA RESERVATIONS EN COURS
             <Permanency/>

@@ -10,16 +10,39 @@ import NextPages from '../NextPages/NextPages';
 
 
 
-const ListOfReferences = ({className, ...rest}) => {
+const ListOfReferences = ({
+    className,
+    references,
+     ...rest
+    }) => {
+        console.log(references)
     return (
+        references ?
         <React.Fragment>
           <CssBaseline />
           <Container maxWidth="70%">
             <Box className= "lisofreferences" />
-            <Reference/>
-            <Reference/>
-            <Reference/>
-            <Reference/>
+                {references.map((reference)=>
+                (
+                    <Reference
+                        key = {reference.id}
+                        name={reference.name}
+                        description={reference.description}
+                        maincategory={reference.maincategory}
+                        picture={reference.picture}
+                        tag={reference.tag}
+                        valorisation={reference.valorisation}
+                    />
+                )
+            )}
+          </Container>
+        </React.Fragment>
+        :
+        <React.Fragment>
+          <CssBaseline />
+          <Container maxWidth="70%">
+            <Box className= "lisofreferences" />
+
           </Container>
         </React.Fragment>
       );
