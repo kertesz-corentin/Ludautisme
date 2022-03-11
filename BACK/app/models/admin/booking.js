@@ -39,7 +39,27 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} request.param.id.required - Array of articles Id
  * @property {number} request.body.articleId.required - Array of articles Id
  */
-
+/**
+ * @typedef {object} BookingArticles
+ * @property {number} id - Unique identifier
+ * @property {number} number - Physique code of object
+ * @property {string} origin - Origin of object
+ * @property {string} date_buy - Date of the object is buy
+ * @property {boolean} available - If the object is available for booking
+ * @property {boolean} archived - If the object is archived
+ * @property {string} created_at - Date of the registration in DB
+ * @property {number} id_article - Foreign key to article
+ * @property {number} id_booking - Foreign key to booking
+ * @property {boolean} delivered - If the booking is delivered
+ * @property {boolean} closed - If the articles is return
+ * @property {number} nb_prolongation - Number of prolongation in this booking
+ * @property {number} id_permanency - Id of the parent permanency
+ * @property {number} id_user - Id of the booking owner
+ * @property {string} name.required - The name of the reference
+ * @property {string} description - The description of the reference
+ * @property {number} valorisation - The price of the reference
+ * @property {number} main_category - Id of the main category of the reference
+ */
 module.exports = {
     async findAll() {
         const query = `

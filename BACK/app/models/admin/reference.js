@@ -7,7 +7,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} name.required - The name of the reference
  * @property {string} description - The description of the reference
  * @property {number} valorisation - The price of the reference
- * @property {number} id_category - Id of the main category of the reference
+ * @property {number} main_category - Id of the main category of the reference
  */
 /**
  * @typedef {object} RefUpdate
@@ -15,7 +15,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} name - Name of the reference
  * @property {string} description - Description of the reference
  * @property {number} valorisation - Price of the reference
- * @property {number} id_category - Id if the main category
+ * @property {number} main_category - Id if the main category
  */
 module.exports = {
     async findAll() {
