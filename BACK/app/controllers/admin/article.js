@@ -32,6 +32,7 @@ module.exports = {
             }
             arr.push({ [columns[index]]: value });
         });
+        console.log(arr);
         const articles = await articleDataMapper.findFiltered(arr);
         if (articles.length < 1) {
             throw new ApiError(400, 'Nous n\'avons rien trouvé avec ces critères');
