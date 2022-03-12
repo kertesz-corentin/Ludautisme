@@ -12,10 +12,12 @@ const Home = ({className, children}) => {
         <div className={classnames('home', className)}>
         <ContentPage>
             <Header/>
-
+                <div className='chidrenBody'>
                 {children}
-
+                </div>
+            <div className='footerBody'>
             <Footer/>
+            </div>
         </ContentPage>
         </div>
     );
