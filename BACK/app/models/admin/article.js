@@ -105,6 +105,7 @@ module.exports = {
         FROM "article"
         INNER JOIN "article_to_booking" ON "article"."id" = "article_to_booking"."id_article"
         INNER JOIN "booking" ON "article_to_booking"."id_booking" = "booking"."id"
+        INNER JOIN "reference" ON "article"."id_ref"="reference"."id"
         WHERE `;
         const placeholders = [];
         console.log(arr);
