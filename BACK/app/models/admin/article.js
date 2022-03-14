@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
@@ -100,8 +101,17 @@ module.exports = {
     async findFiltered(arr) {
         let query = `
         SELECT
-        *,
-        "booking"."id" AS "id_booking"
+        "article"."id",
+		"article"."number",
+		"reference"."name" AS "name_ref",
+		"reference"."main_category" AS "main_cat_ref",
+		"article"."origin",
+		"article"."date_buy",
+		"article"."available",
+		"article"."archived",
+		"article"."id_ref",
+		"article_to_booking"."id_booking",
+		"booking"."id_user"
         FROM "article"
         INNER JOIN "article_to_booking" ON "article"."id" = "article_to_booking"."id_article"
         INNER JOIN "booking" ON "article_to_booking"."id_booking" = "booking"."id"
