@@ -31,32 +31,37 @@ const AddModal = ({reference, className, ...rest}) => {
     }
 
     return (
-        <div>
-            <Button onClick={handleOpen}>Ajouter article</Button>
+        <div className="addarticle-modal--open">
+            <Button
+                onClick={handleOpen}
+                variant='outlined'
+            >
+                Ajouter article
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="addarticle-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="addarticle-modal-header">
+                        <Typography className='addarticle-modal-header-title'>
                             Nouveau article
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='addarticle-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="addarticle-modal-inputs">
                         <TextField
                             id='outlined'
                             label='n° article'
                             name='number'
                             type='number'
-                            className="modal-inputs-item"
+                            className="addarticle-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -64,21 +69,21 @@ const AddModal = ({reference, className, ...rest}) => {
                             label='Origine'
                             name='origin'
                             type='string'
-                            className="modal-inputs-item"
+                            className="addarticle-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
                             id='outlined'
                             name='date_buy'
                             type='date'
-                            className="modal-inputs-item"
+                            className="addarticle-modal-inputs-item"
                         >
                         </TextField>
                     </div>
-                    <div className="modal-footer">
+                    <div className="addarticle-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="addarticle-modal-footer-submit"
                             variant="contained"
                         >
                             Valider

@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
 import AddModal from '../../Articles/AddModal/AddModal';
+import BookingArticles from '../BookingArticles/BookingArticles';
 
 import './updatebookingmodal.scss';
 
-const UpdateBookingModal = ({params, articles, className, ...rest}) => {
+const UpdateBookingModal = ({params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    //const [articles,setArticles] = useState([]);
-    console.log("detail_Réservation",params.row.articles,articles);
+
+    const [closed, setClosed] = useState(params.row.closed);
+    const [delivered, setDelivered] = useState(params.row.delivered);
+    console.log('params', params.row);
+    // console.log("detail_Réservation", params.row.articles);
+    // console.log('params', params);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,18 +40,18 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
     }
 
     const getArticles = async () => {
+        console.log(params.row.borrowed_articles);
 
-    //     const settings = {
-    //         id_booking:params.row.id
-    //     }
-    //     const response = await api.post(`/admin/articles/search`, settings);
-    //     const data = await response.data;
-    //     console.log("data articles",data);
-    //     setArticles(data);
-    //     if(response.status === 200) {
-    //         handleClose();
-    //     }
-    //     console.log('response', response);
+        // const settings = {
+        //     'id': params.row.id
+        // }
+        // const response = await api.post(`/admin/articles/search`, settings);
+        // const data = await response.data;
+        // console.log("data articles",data);
+        // setArticles(data);
+        // if(response.status === 200) {
+        //     handleClose();
+        // }
     }
 
     const handleChange = (event) => {
@@ -66,39 +71,66 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    {/* <div className="modal-header">
-                        <Typography className='modal-header-title'>
-                            Edition Référence
+                <Box className="update-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="update-modal-header">
+                        <Typography className='update-modal-header-title'>
+                            Détails Réservation
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='update-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="update-modal-inputs">
                         <TextField
                             id='outlined'
-                            label='Nom'
-                            name='name'
+                            name='first_name'
                             type='string'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.name}
+                            disabled
+                            defaultValue={params.row.first_name}
+                            className="update-modal-inputs-item"
+                        >
+
+                        </TextField>
+                        <TextField
+                            id='outlined'
+                            name='last_name'
+                            type='string'
+                            disabled
+                            defaultValue={params.row.last_name}
+                            className="update-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Description'
-                            name='description'
+                            name='email'
                             type='string'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.description}
+                            disabled
+                            defaultValue={params.row.email}
+                            className="update-modal-inputs-item"
                         >
                         </TextField>
-                        <TextField
+                    </div>
+                    <div className="update-modal-status">
+                            {closed && (
+                                <Chip
+                                variant='contained'
+                                label='Délivrée'
+                                className="update-modal-status--item"
+                            />
+                            )}
+                            {delivered && (
+                                <Chip
+                                variant='contained'
+                                label='Clôturée'
+                                className="update-modal-status--item"
+                            />
+                            )}
+                        </div>
+                        {/*<TextField
                             id='outlined'
                             label='Valorisation'
                             name='valorisation'
@@ -126,18 +158,20 @@ const UpdateBookingModal = ({params, articles, className, ...rest}) => {
                             </Select>
                         </FormControl> */}
                     {/* </div> */}
-                    <div className="modal-footer">
+                    <div className="update-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="update-modal-footer-submit"
                             variant="contained"
                         >
                             Mettre à jour
                         </Button>
 
                     </div>
-                    <div className="modal-articles">
-                        <Articles params={params} children={<AddModal reference={articles} />} />
+                    <div class="update-modal-articles">
+                        <div className="update-modal-articles--book">
+                            <BookingArticles  list={params.row.borrowed_articles} />
+                        </div>
                     </div>
 
                 </Box>

@@ -58,7 +58,7 @@ const theme = createTheme();
 
   return (
 
-    <div className="loginuser">
+    <div className="admin-login">
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -109,6 +109,7 @@ const theme = createTheme();
                         type="submit"
                         fullWidth
                         variant="contained"
+                        className="admin-login-submit"
                         sx={{ mt: 1, mb: 2 }}
                         >
                         Se connecter

@@ -1,0 +1,85 @@
+@import 'src/styles/vars';
+
+.addbook-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: auto;
+    padding: $gutter;
+    width: 70%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    outline: none;
+
+    &-header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+
+
+        &-title {
+            flex: 1;
+            text-align: left;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        &-close {
+
+
+        }
+    }
+
+    &-inputs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 80%;
+        padding: $gutter;
+
+        &-item {
+            width: 45%;
+        }
+    }
+
+    &-articles {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        border-top: 1px solid #c5c5c5;
+
+        &--add {
+            width: 45%;
+            display: flex;
+            flex-direction: row;
+            margin: $gutter;
+            align-items: center;
+            justify-content: space-around;
+
+        }
+
+        &--book {
+            width: 100%;
+        }
+    }
+
+
+    &-footer {
+        margin-top: $gutter;
+    }
+}
+
+.article-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+}

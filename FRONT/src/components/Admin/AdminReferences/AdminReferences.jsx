@@ -88,14 +88,14 @@ const AdminReferences = ({className, ...rest}) => {
             {...rest}
          >
             <AdminSection
-                title="Référence"
+                title="Références"
                 rows={references}
                 columns={columnBuilder}
                 path={path}
                 initialState={{
                     columns: {
                       columnVisibilityModel: {
-                        // Hide columns <column name>, the other columns will remain visible
+                        id_maincat: false,
 
                       },
                     },

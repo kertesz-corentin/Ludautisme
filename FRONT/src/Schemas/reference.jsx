@@ -3,7 +3,7 @@ const referenceSchema  = {
         type: "number",
         label: "Modifier référence",
         gridDisplay: "edit",
-        width: 125
+        width: 200
     },
     name:{
         type : "string",
@@ -35,12 +35,12 @@ const referenceSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
-    tag:[{
+    tag:{
         type : "string",
         label : "tag",
         gridDisplay : "normal",
-        width : 150,
-    }],
+        width : 250,
+    },
 }
 
 export {referenceSchema}

@@ -63,7 +63,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     }
 
     return (
-        <div>
+        <div className="updateuser">
             <IconButton onClick={handleOpen}>
                 <EditIcon />
             </IconButton>
@@ -71,9 +71,9 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="updateuser-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="updateuser-modal-header">
+                        <Typography className='updateuser-modal-header-title'>
                             Edition Adhérent
                         </Typography>
                         <Button
@@ -84,13 +84,13 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="updateuser-modal-inputs">
                         <TextField
                             id='outlined'
                             label='n° adhérent'
                             name='member_number'
                             type='number'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.member_number}
                         >
                         </TextField>
@@ -99,7 +99,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Email'
                             name='email'
                             type='email'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.email}
                         >
                         </TextField>
@@ -108,7 +108,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Prénom'
                             name='first_name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.first_name}
                         >
                         </TextField>
@@ -117,7 +117,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Nom'
                             name='last_name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.last_name}
                         >
                         </TextField>
@@ -126,7 +126,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Téléphone'
                             name='phone'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.phone}
                         >
                         </TextField>
@@ -135,7 +135,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='n° de rue'
                             name='adress_number'
                             type='number'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_number}
                         >
                         </TextField>
@@ -144,7 +144,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Nom de rue'
                             name='adress_street'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_street}
                         >
                         </TextField>
@@ -153,7 +153,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Code Postal'
                             name='adress_zipcode'
                             type='number'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_zipcode}
                         >
                         </TextField>
@@ -162,7 +162,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             label='Ville'
                             name='adress_city'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_city}
                         >
                         </TextField>
@@ -172,10 +172,10 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />
                         </FormGroup>
                     </div>
-                    <div className="modal-footer">
+                    <div className="updateuser-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="updateuser-modal-footer-submit"
                             variant="contained"
                         >
                             Mettre à jour
@@ -183,7 +183,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                         {archivedChecked && (
                             <Button
                                 onClick={handleDelete}
-                                className="modal-footer-submit"
+                                className="updateuser-modal-footer-submit"
                                 variant="outlined"
                                 startIcon={<DeleteIcon />}
                             >

@@ -91,7 +91,7 @@ const AdminUsers = ({className, ...rest}) => {
             {...rest}
         >
             <AdminSection
-                title="Adhérent"
+                title="Adhérents"
                 rows={users}
                 columns={columnBuilder}
                 path={path}
