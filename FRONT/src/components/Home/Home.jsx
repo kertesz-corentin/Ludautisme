@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
 // Import components
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ContentPage from '../ContentPage/ContentPage';
-
-
 import './home.scss';
 
 const Home = ({
@@ -22,6 +19,7 @@ const Home = ({
         <ContentPage>
             <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
                 {children}
+
             <Footer/>
         </ContentPage>
         </div>

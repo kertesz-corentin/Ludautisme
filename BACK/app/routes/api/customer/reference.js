@@ -17,8 +17,8 @@ router.route('/search')
 /**
  * GET api/customer/articles/:id
  * @summary Get One reference with picture
- * @tags [CUSTOMER] Reference
- * @returns {allOf|Reference|Pictures} 200 - success response - application/json
+ * @tags Reference
+ * @returns {allOf|Reference|Stock|Pictures} 200 - success response - application/json
  */
 router.route('/:id')
     .get(controllerHandler(referenceController.getOne));
