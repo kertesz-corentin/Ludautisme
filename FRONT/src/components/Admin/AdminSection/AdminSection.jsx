@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, frFR, GridColDef, GridColumnsPanel } from '@mui/x-data-grid';
 import './adminsection.scss';
 
 const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
@@ -19,6 +19,7 @@ const AdminSection = ({ title, rows, columns, path, initialState, children }) =>
                         pageSize={15}
                         rowsPerPageOptions={[15]}
                         disableSelectionOnClick
+                        GridColDef='center'
                         localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{
                             Toolbar: GridToolbar,

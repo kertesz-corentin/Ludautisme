@@ -95,7 +95,7 @@ const AdminReferences = ({className, ...rest}) => {
                 initialState={{
                     columns: {
                       columnVisibilityModel: {
-                        // Hide columns <column name>, the other columns will remain visible
+                        id_maincat: false,
 
                       },
                     },

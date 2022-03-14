@@ -107,7 +107,6 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                     </div>
                 </Box>
             </Modal>
-
         </div>
     );
 };
