@@ -32,7 +32,7 @@ const BookingArticles = ({list, className, ...rest}) => {
             </div>
             <div className="articles-grid" style={{ height: 325, width: '100%'}}>
                 <DataGrid
-                    getRowId={(row) => row.id_article}
+                    getRowId={(row) => row.id}
                     rows={list}
                     columns={columnsBuilder}
                     pageSize={10}
@@ -42,28 +42,38 @@ const BookingArticles = ({list, className, ...rest}) => {
                     components={{
                         Toolbar: GridToolbar,
                     }}
-                    // initialState={{
-                    //     columns: {
-                    //         columnVisibilityModel: {
-                    //             id: false,
-                    //             created_at: false,
-                    //             id_ref: false,
-                    //             id_booking: false,
-                    //             archived: false,
-                    //         },
-                    //     },
-                    //     sorting: {
-                    //         sortModel: [{field: 'number', sort: 'asc'}],
-                    //     },
-                    //     filter: {
-                    //         filterModel: {
-                    //             items: [
-                    //                 {columnField: 'archived', value: false},
-                    //                 {columnField: 'available', value: true},
-                    //             ]
-                    //         }
-                    //     }
-                    // }}
+                    initialState={{
+                        columns: {
+                            columnVisibilityModel: {
+                                id: false,
+                                id_article: false,
+                                origin: false,
+                                created_at: false,
+                                main_category: false,
+                                valorisation: false,
+                                archived: false,
+                                delivered: false,
+                                closed: false,
+                                id_ref: false,
+                                id_booking: false,
+                                date_buy: false,
+                                nb_prolongation: false,
+                                id_permanency: false,
+                                id_user: false,
+                            },
+                        },
+                        sorting: {
+                            sortModel: [{field: 'number', sort: 'asc'}],
+                        },
+                        filter: {
+                            filterModel: {
+                                items: [
+                                    {columnField: 'archived', value: false},
+                                    {columnField: 'available', value: true},
+                                ]
+                            }
+                        }
+                    }}
                 >
 
                 </DataGrid>

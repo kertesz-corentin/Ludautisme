@@ -17,7 +17,7 @@ const articleSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
-    name:{
+    name_ref:{
         type : "string",
         label : "Nom",
         gridDisplay : "normal",

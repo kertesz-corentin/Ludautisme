@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../../Articles/Articles';
@@ -14,11 +14,12 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
-    const [articles, setArticles] = useState([]);
 
+    const [closed, setClosed] = useState(params.row.closed);
+    const [delivered, setDelivered] = useState(params.row.delivered);
+    console.log('params', params.row);
     // console.log("detail_Réservation", params.row.articles);
     // console.log('params', params);
-    console.log('articles', articles);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -39,18 +40,18 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     }
 
     const getArticles = async () => {
-        console.log(params.row);
-    //     const settings = {
-    //         'id_booking': params.row.id
-    //     }
-    //     const response = await api.post(`/admin/articles/search`, settings);
-    //     const data = await response.data;
-    //     console.log("data articles",data);
-    //     setArticles(data);
-    //     if(response.status === 200) {
-    //         handleClose();
-    //     }
-    //     console.log('response', response);
+        console.log(params.row.borrowed_articles);
+
+        // const settings = {
+        //     'id': params.row.id
+        // }
+        // const response = await api.post(`/admin/articles/search`, settings);
+        // const data = await response.data;
+        // console.log("data articles",data);
+        // setArticles(data);
+        // if(response.status === 200) {
+        //     handleClose();
+        // }
     }
 
     const handleChange = (event) => {
@@ -113,26 +114,23 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         >
                         </TextField>
                     </div>
-                    {/*<div className="modal-inputs">
-                        <TextField
-                            id='outlined'
-                            label='Nom'
-                            name='name'
-                            type='string'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.name}
-                        >
-                        </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Description'
-                            name='description'
-                            type='string'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.description}
-                        >
-                        </TextField>
-                        <TextField
+                    <div className="modal-status">
+                            {closed && (
+                                <Chip
+                                variant='contained'
+                                label='Délivrée'
+                                className="modal-status--item"
+                            />
+                            )}
+                            {delivered && (
+                                <Chip
+                                variant='contained'
+                                label='Clôturée'
+                                className="modal-status--item"
+                            />
+                            )}
+                        </div>
+                        {/*<TextField
                             id='outlined'
                             label='Valorisation'
                             name='valorisation'
@@ -172,7 +170,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                     </div>
                     <div class="modal-articles">
                         <div className="modal-articles--book">
-                            <BookingArticles  list={articles} />
+                            <BookingArticles  list={params.row.borrowed_articles} />
                         </div>
                     </div>
 
