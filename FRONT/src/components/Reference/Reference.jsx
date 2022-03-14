@@ -35,6 +35,7 @@ const Reference = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const add = useContext(FunctionContext);
+    const userToken = JSON.parse(localStorage.getItem('user'));
 
     let itemToAdd = {
     id,
@@ -79,10 +80,13 @@ const Reference = ({
                     valorisation={valorisation}
                 /> */}
                 <Button onClick={handleOpen}>description</Button>
-          <Button
+                {userToken &&
+                    <Button
                     onClick={handleClick}>
                         <AddShoppingCartIcon/>
-                    </Button>
+                </Button>
+                }
+
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"

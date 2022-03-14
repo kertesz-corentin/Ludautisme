@@ -13,6 +13,8 @@ import { Divider } from '@mui/material';
 import Reference from '../Reference/Reference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import { useState } from 'react';
+import Loader from '../Loader/Loader';
+
 
 
 const CartModal = ({
@@ -24,6 +26,7 @@ const CartModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const userToken = JSON.parse(localStorage.getItem('user'));
     let counter = currentItemsNumber;
     console.log(counter)
     console.log(`HELLO FROM CART MODAL VOILA LE TABLEAU `, currentItems)
@@ -52,9 +55,16 @@ const CartModal = ({
               <Divider/>
               {counter === 0
                 ?
+                    userToken ?
                     <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                     Actuellement votre panier est vide
                     </Typography>
+
+                    :
+                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                    Veuillez vous connecter pour réserver un article
+                    </Typography>
+
                 :
                     <div>
                     {/* //Ajouter ici pour faire en sorte que le compteur ne puisse pas aller au dessus de 8 */}
@@ -66,8 +76,11 @@ const CartModal = ({
                         }
                     </Typography>
                     <Divider/>
-                    <Typography id="transition-modal-title" variant="h6" component="h2">
+
+                    {currentItems ?
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
                         Voici l'ensemble de vos articles :
+
                         {currentItems.map((currentItem)=>(
 
                     <Reference
@@ -80,9 +93,13 @@ const CartModal = ({
                         tag={currentItem.tag}
                         valorisation={currentItem.valorisation}
                     />
-
                         ))}
                     </Typography>
+
+                    :
+                    <Loader/>}
+
+
                     </div>
               }
             </Box>

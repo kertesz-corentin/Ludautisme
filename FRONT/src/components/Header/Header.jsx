@@ -13,6 +13,8 @@ const Header = ({
     currentItemsNumber,
     currentItems,
      ...rest}) => {
+
+
     return (
        <header
             className={classnames('header', className)}
