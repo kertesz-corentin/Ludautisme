@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './reference.scss';
+import './currentreference.scss';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,12 +16,11 @@ import Button from '@mui/material/Button';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import {  Divider } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const Reference = ({
+const CurrentReference = ({
     className,
     id,
     name,
@@ -34,10 +33,10 @@ const Reference = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const add = useContext(FunctionContext);
+    const remove = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
 
-    let itemToAdd = {
+    let itemToRemove = {
         id,
         name,
         description,
@@ -52,11 +51,11 @@ const Reference = ({
 
 //each time i add article to my booking, delete one on quantity
 
-    function handleClick () {
-        add(
-            itemToAdd
-        );
-        console.log(`Au click je veux envoyer cet article dans mon Cart`, itemToAdd)
+    function handleRemoveClick () {
+         remove(
+              itemToRemove
+          )
+        console.log(`REMOVE THIS ARTICLE`, itemToRemove)
     }
    return (
 
@@ -74,12 +73,10 @@ const Reference = ({
 
                 <Button onClick={handleOpen}>description</Button>
                 {userToken &&
-
-                <Button
-                    onClick={handleClick}>
-                        <AddShoppingCartIcon/>
-                </Button>
-
+                    <Button
+                    onClick={handleRemoveClick}>
+                        <RemoveIcon/>
+                    </Button>
                 }
 
           <Modal
@@ -130,10 +127,10 @@ const Reference = ({
    );
 };
 
-Reference.propTypes = {
+CurrentReference.propTypes = {
     className: PropTypes.string,
 };
-Reference.defaultProps = {
+CurrentReference.defaultProps = {
     className: '',
 };
-export default React.memo(Reference);
+export default React.memo(CurrentReference);

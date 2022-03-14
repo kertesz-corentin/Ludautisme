@@ -15,6 +15,7 @@ const ListOfReferences = ({
     references,
      ...rest
     }) => {
+        console.log(references, `REFERENCES`)
 
     return (
         references ?

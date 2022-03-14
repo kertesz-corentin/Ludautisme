@@ -27,11 +27,13 @@ export const FunctionContext= React.createContext();
 
 function App() {
     let [itemsToCart, setItemsToCart] = useState([]);
+
     const addItemsToCart = (itemToAdd) => {
          setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
     };
-    console.log(`ICI j'attend un tableau de tout les artcles que j'ajoute`, itemsToCart)
-     console.log(`Nombre de mes bookings en cours`, itemsToCart.length)
+    const removeItemsToCart = (itemToRemoves) => {
+        setItemsToCart(itemsToCart => [...itemsToCart, itemToRemoves]);
+   };
     // Client Application
     return (
     <div className="App">
@@ -40,7 +42,7 @@ function App() {
             <Route path = "/about" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart} remove= {removeItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
@@ -67,23 +69,23 @@ function App() {
 
 
 
-            <Route path = "/user/account" element = {<PrivateRoute/>}>
-                <Route path = "/user/account" element = {<Home children={<UserMyAccount />} />}></Route>
+            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
+                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
-            <Route path = "/user/account" element = {<PrivateRoute/>}>
-                <Route path = "/user/account" element = {<UserMyAccount />}></Route>ItemsToShop
+            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
+                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
-            <Route path = "/user/bookings" element = {<PrivateRoute/>}>
-                <Route path = "/user/bookings" element = {<Home children= {<UserBookings/>}/>}></Route>
+            <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
+                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
-            <Route path = "/user/booking/active" element = {<PrivateRoute/>}>
-                <Route path = "/user/booking/active" element = {<UserBookingActive />}></Route>
+            <Route path = "/user/booking/active" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
+                <Route path = "/user/booking/active" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
-            <Route path = "/user/bookings/history" element = {<PrivateRoute/>}>
-                <Route path = "/user/bookings/history" element = {<UserBookingsHistory />}></Route>
+            <Route path = "/user/bookings/history" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
+                <Route path = "/user/bookings/history" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
-            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart} remove= {removeItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
             <Route path = "*" element = {<Error />}></Route>
         </Routes>
