@@ -26,8 +26,8 @@ router.route('/:id')
  * POST /api/admin/articles/search
  * @summary Get article filtered
  * @tags [ADMIN] Article
- * @param {ParamArticleCreate} request.body.required - At least one of these
- * @return {array<Article>} 200 - success response - application/json
+ * @param {paramSearchBooking} request.body.required - At least one of these
+ * @return {array<BookingArticles>} 200 - success response - application/json
  */
 router.route('/search')
     .post(controllerHandler(articleController.getFiltered));

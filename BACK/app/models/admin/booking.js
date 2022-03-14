@@ -39,7 +39,27 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} request.param.id.required - Array of articles Id
  * @property {number} request.body.articleId.required - Array of articles Id
  */
-
+/**
+ * @typedef {object} BookingArticles
+ * @property {number} id - Unique identifier
+ * @property {number} number - Physique code of object
+ * @property {string} origin - Origin of object
+ * @property {string} date_buy - Date of the object is buy
+ * @property {boolean} available - If the object is available for booking
+ * @property {boolean} archived - If the object is archived
+ * @property {string} created_at - Date of the registration in DB
+ * @property {number} id_article - Foreign key to article
+ * @property {number} id_booking - Foreign key to booking
+ * @property {boolean} delivered - If the booking is delivered
+ * @property {boolean} closed - If the articles is return
+ * @property {number} nb_prolongation - Number of prolongation in this booking
+ * @property {number} id_permanency - Id of the parent permanency
+ * @property {number} id_user - Id of the booking owner
+ * @property {string} name.required - The name of the reference
+ * @property {string} description - The description of the reference
+ * @property {number} valorisation - The price of the reference
+ * @property {number} main_category - Id of the main category of the reference
+ */
 module.exports = {
     async findAll() {
         const query = `
@@ -60,7 +80,7 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'number', ar."id",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
@@ -94,15 +114,19 @@ module.exports = {
         	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
             json_agg(json_build_object (
                 'id', borrowed."id",
-                'number', borrowed."id",
+                'number', borrowed."number",
                 'available', borrowed."available",
-                'archived', borrowed."archived"
+                'archived', borrowed."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description"
                 )) AS "borrowed_articles"
         FROM "booking" AS b
 	    INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         INNER JOIN "user" ON "user"."id"="b"."id_user"
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
+        INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
 		GROUP BY b.id, "user"."id",
                 "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
         )
@@ -113,7 +137,7 @@ module.exports = {
         console.log(arr);
         try {
             arr.forEach((filter, index) => {
-                const prop = Object.keys(filter)[0];
+                let prop = Object.keys(filter)[0];
                 console.log(prop);
                 placeholders.push(filter[prop]);
                 if (index !== arr.length - 1) {
@@ -148,7 +172,7 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'number', ar."id",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
