@@ -17,15 +17,24 @@ const AddBookingModal = ({user, params, className, ...rest}) => {
 
     const handleSubmitBooking = async (event) => {
         event.preventDefault();
+        const listIds = {
+            "artIds": articleId
+        }
 
-        console.log('Validation réservation');
+        console.log('id', listIds);
+        const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
+        if(response.status === 200){
+            handleClose();
+            console.log('Réservation validée');
+        }
+
     }
 
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
 
         const data = new FormData(event.currentTarget);
-        const article_number = Number(data.get('number'));
+        const article_number = (data.get('number'));
         // on récupère les données de l'article avant insertion dans le state
         const settings = {
             number: article_number
@@ -36,8 +45,7 @@ const AddBookingModal = ({user, params, className, ...rest}) => {
         setListArticle(state => [...state, newArticle[0]]);
         setArticleId(state => [...state, newArticle[0].id]);
     }
-    console.log('IDarticle', articleId);
-    console.log('Listarticle', listArticle);
+
     return (
         <div>
             <Button
@@ -120,7 +128,7 @@ const AddBookingModal = ({user, params, className, ...rest}) => {
                             </Box>
                         </div>
                         <div className="addbook-modal-articles--book">
-                            <BookingArticles  list={listArticle} idArticles={articleId} />
+                            <BookingArticles  list={listArticle} />
                         </div>
                     </div>
                     <div className="addbook-modal-footer">

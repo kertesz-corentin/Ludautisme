@@ -22,12 +22,10 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
             'main_category': data.get('main_category'),
         };
 
-        console.log('reference', reference);
         const response = await api.post('/admin/references', reference)
         if(response.status === 200) {
             handleClose();
         }
-        console.log('response', response);
     }
 
     const handleChange = (event) => {
