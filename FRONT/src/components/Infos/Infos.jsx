@@ -212,7 +212,7 @@ const Infos = ({className, ...rest}) => {
                         Suivre nos actualités
                     </h2>
                     <button className='infos-bottom-facebook-button'>
-                        <a href="https://www.facebook.com/Ludautisme-344242315626617/">
+                        <a target="_blank" rel="noreferrer" href="https://www.facebook.com/Ludautisme-344242315626617/">
                             <img className='infos-bottom-facebook-logo'src={Facebook} alt="facebook logo" />
                             Page Facebook de Lud'Autisme
                         </a>

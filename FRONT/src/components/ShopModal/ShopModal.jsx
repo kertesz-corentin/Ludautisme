@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import './shopmodal.scss';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState } from 'react';
 import { Divider } from '@mui/material';
-import Reference from '../Reference/Reference';
+// import Reference from '../Reference/Reference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 
 const ShopModal = ({className, ...rest}) => {

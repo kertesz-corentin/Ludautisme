@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+// import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,7 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import api from '../../../requests/index';
 import './loginuser.scss';
 import {useNavigate} from "react-router-dom";
-import AccountMenu from '../AccountMenu/AccountMenu';
+// import AccountMenu from '../AccountMenu/AccountMenu';
 import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
 
 

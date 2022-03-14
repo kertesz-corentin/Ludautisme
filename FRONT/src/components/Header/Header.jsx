@@ -47,9 +47,12 @@ const Header = ({className, ...rest}) => {
                 >
                     Liens utiles
                 </NavLink>
+
+                <Shop />
+            {/* <LoginUser /> */}
             </nav>
 
-            <Shop />
+            {/* <Shop /> */}
             <LoginUser />
         </header>
    );
