@@ -24,15 +24,14 @@ import { useState } from 'react';
 
 export const FunctionContext= React.createContext();
 
+
 function App() {
     let [itemsToCart, setItemsToCart] = useState([]);
     const addItemsToCart = (newCart) => {
         const newQuantity = setItemsToCart(itemsToCart => [...itemsToCart, newCart]);
-        console.log(itemsToCart)
         return newQuantity;
     };
-
-
+     console.log(`Nombre de mes bookings en cours`, itemsToCart.length)
     // Client Application
     return (
     <div className="App">
@@ -41,11 +40,10 @@ function App() {
             <Route path = "/about" element = {<Home children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
-            ItemsToShop
             <Route path = "/admin/home" element = {<PrivateRoute/>}>
                 <Route path = "/admin/home" element = {<AdminPage><AdminHome /></AdminPage>}></Route>
             </Route>

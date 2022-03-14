@@ -26,9 +26,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
    async function getAllReferences () {
         const response = await api.get('/customer/articles');
-        console.log(`Voila toute les references`, response);
         setReferencesDatas(response.data)
-        console.log('Voila les données à passer en props', referencesData)
 
    }
    async function oneReference () {
@@ -38,9 +36,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
     async function getAllCategories () {
         const response = await api.get('/customer/category');
-        console.log(`Voila toutes les catégories`, response);
         setCategoriesDatas(response.data)
-        console.log('Voila les données à passer en props', categoriesData)
     }
    return (
 

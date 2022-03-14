@@ -15,11 +15,18 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import { useState } from 'react';
 
 
-const CartModal = ({className, ...rest}) => {
+const CartModal = ({
+    className,
+    currentItemsNumber,
+     ...rest
+    }) => {
+    console.log(`FROM CART MODAL`, currentItemsNumber)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [counter, setCounter] = useState (0)
+    let counter = currentItemsNumber;
+
+
 
 
 

@@ -1,16 +1,14 @@
 import React, {useState, useContext}from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './cart.scss';
-import OneRef from '../OneRef/OneRef';
-import { FunctionContext } from '../App/App';
+import Reference from '../Reference/Reference';
 
 
 const Cart = ({className, ...rest}) => {
 
    const [cartItems, setCartItems] = useState([])
-   function handleShopBtnClick (event) {
+   function handleCartBtnClick (event) {
     event.preventDefault();
     console.log(`ouverture de la modale mon panier`)
    }
@@ -18,9 +16,9 @@ const Cart = ({className, ...rest}) => {
        <button
             className={classnames('cart', className)}
             {...rest}
-            onClick= {handleShopBtnClick}
+            onClick= {handleCartBtnClick}
          >
-            <OneRef/>
+            <Reference/>
         </button>
    );
 };

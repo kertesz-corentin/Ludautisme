@@ -10,11 +10,17 @@ import ContentPage from '../ContentPage/ContentPage';
 
 import './home.scss';
 
-const Home = ({className, children}) => {
+const Home = ({
+    className,
+    children,
+    currentItemsNumber,
+
+}) => {
+    console.log(`Résa en cours depuis HOME`, currentItemsNumber)
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
-            <Header/>
+            <Header currentItemsNumber={currentItemsNumber} />
                 {children}
             <Footer/>
         </ContentPage>

@@ -5,10 +5,14 @@ import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
 import './header.scss';
 import { NavLink } from 'react-router-dom';
-import ShopModal from '../CartModal/CartModal';
+import CartModal from '../CartModal/CartModal';
 
 
-const Header = ({className, ...rest}) => {
+const Header = ({
+    className,
+    currentItemsNumber,
+     ...rest}) => {
+         console.log(`depuis HEADER`, currentItemsNumber)
     return (
        <header
             className={classnames('header', className)}
@@ -50,7 +54,7 @@ const Header = ({className, ...rest}) => {
                 </NavLink>
             </nav>
 
-            <ShopModal />
+            <CartModal currentItemsNumber = {currentItemsNumber} />
             <LoginUser />
         </header>
    );
