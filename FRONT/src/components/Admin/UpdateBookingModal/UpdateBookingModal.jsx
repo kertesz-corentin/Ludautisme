@@ -39,18 +39,18 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     }
 
     const getArticles = async () => {
-
-        const settings = {
-            'id_booking': params.row.id
-        }
-        const response = await api.post(`/admin/articles/search`, settings);
-        const data = await response.data;
-        console.log("data articles",data);
-        setArticles(data);
-        if(response.status === 200) {
-            handleClose();
-        }
-        console.log('response', response);
+        console.log(params.row);
+    //     const settings = {
+    //         'id_booking': params.row.id
+    //     }
+    //     const response = await api.post(`/admin/articles/search`, settings);
+    //     const data = await response.data;
+    //     console.log("data articles",data);
+    //     setArticles(data);
+    //     if(response.status === 200) {
+    //         handleClose();
+    //     }
+    //     console.log('response', response);
     }
 
     const handleChange = (event) => {

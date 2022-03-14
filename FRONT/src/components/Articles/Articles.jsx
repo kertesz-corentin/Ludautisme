@@ -13,7 +13,7 @@ const Articles = ({params, children, name, className, ...rest}) => {
 
     const getReferenceWithArticles = async () => {
         try {
-            console.log("ref",params.row);
+
             const settings = {
                 "id_ref":params.row.id,
             }
@@ -80,8 +80,8 @@ const Articles = ({params, children, name, className, ...rest}) => {
             </div>
             {children}
             <div className="articles-grid" style={{ height: 300, width: '100%'}}>
-                <DataGrid 
-                    getRowId={(row) => row.id_article}
+                <DataGrid
+                    getRowId={(row) => row.id}
                     rows={articles}
                     columns={columnsBuilder}
                     pageSize={10}
