@@ -25,6 +25,7 @@ const CartModal = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let counter = currentItemsNumber;
+    console.log(counter)
 
 
 
@@ -51,14 +52,22 @@ const CartModal = ({
                 Mon panier
               </Typography>
               <Divider/>
+              {counter === 0 ?
+                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                Actuellement votre panier est vide
+              </Typography>
+              :
+              <div>
               <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                {counter}/8
+                {counter}/8 (Nombre d'articles pouvant être reservés)
               </Typography>
               <Divider/>
               <Typography id="transition-modal-title" variant="h6" component="h2">
                 Voici l'ensemble de vos articles :
                 <ListOfReferences/>
               </Typography>
+              </div>
+              }
             </Box>
           </Fade>
         </Modal>
