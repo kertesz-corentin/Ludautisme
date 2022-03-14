@@ -6,8 +6,6 @@ import LoginUser from '../User/LoginUser/LoginUser'
 import Shop from '../Shop/Shop';
 import './header.scss';
 import { NavLink } from 'react-router-dom';
-import {Helmet} from "react-helmet";
-
 
 const Header = ({className, ...rest}) => {
     return (

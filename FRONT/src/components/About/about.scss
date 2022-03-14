@@ -1,1 +1,205 @@
 @import 'src/styles/vars';
+
+.who {
+    background-color: $orange;
+    margin: 30px auto;
+    padding: 30px;
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.2));
+
+    &-title {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 3px solid $font-color-2 ;
+        padding-bottom: 20px;
+        width: 60vw;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        color: $font-color-2;
+        font-size: 1.5rem;
+
+
+        &-logo {
+            width: 50px;
+            margin-right: 30px;
+            filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.3));
+        }
+    }
+
+    p {
+        font-size: 1.3rem;
+        margin: 0 auto;
+        width: 60vw;
+        color: $font-color-2;
+    }
+}
+
+.about-arrow {
+    width: 50px;
+    transform: rotate(90deg);
+}
+
+.content-actions{
+    background-color: $font-color-2;
+    padding: 30px;
+}
+
+.actions {
+    display: flex;
+    flex-flow: column wrap;
+    width: 50vw;
+    margin: 0 auto;
+
+    &-title {
+        color: $font-color;
+        border-bottom: 3px solid $font-color;
+        padding-bottom: 20px;
+    }
+
+    &-li{
+        margin: 20px 0 20px 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: baseline;
+
+
+        p {
+            color: $font-color;
+            margin: 0;
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        &-icons {
+            filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.3));
+            margin-right: 20px;
+            width: 60px;
+        }
+    }
+}
+
+.about-philo {
+    display: flex;
+    flex-flow: column wrap;
+    background-color: $blue;
+
+    &-title {
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 3px solid $font-color-2 ;
+        padding-bottom: 20px;
+        width: 60vw;
+        margin: 30px auto;
+        margin-bottom: 20px;
+        color: $font-color-2;
+        font-size: 1.5rem;
+    }
+
+    &-icon {
+        margin-bottom: -5px;
+    }
+
+    p {
+        align-items: center;
+        font-weight: 600;
+        margin: 0 auto;
+        padding-bottom: 30px;
+        width: 70vw;
+        color: $font-color-2;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+}
+
+.nuage {
+    img{
+    width: 35%;
+    }
+}
+
+.actions-passées {
+
+
+    &-title{
+        border-bottom: 3px solid $font-color ;
+        padding-bottom: 20px;
+        width: 50vw;
+        margin: 30px auto;
+        margin-bottom: 20px;
+        color: $font-color;
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-weight: 600;
+        margin: 0 auto;
+        padding-bottom: 30px;
+        width: 50vw;
+        color: $font-color;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    &-diapos {
+
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row wrap;
+        width: 40%;
+        justify-content: center;
+    }
+
+    &-body {
+        margin: 10px;
+        width: 250px;
+        --clay-background: rgb(250, 150, 0);
+        --clay-border-radius: 10px;
+        padding: 5px;
+        text-decoration: none!important;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: rgb(255, 178, 62);
+        }
+
+    &-link {
+        text-decoration: none!important;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+
+        p {
+            padding: 0;
+            text-transform: uppercase;
+            color: $font-color;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        &-button {
+            color: $font-color-2;
+        }
+    }
+
+    &-pdf-modal {
+            position:relative;
+            top: 10%;
+            left: 10%;
+            width: 75vw;
+            height: 75vh;
+            border-radius: 10px;
+        }
+    }
+}
+
+
+

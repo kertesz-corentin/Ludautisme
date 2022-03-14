@@ -4,14 +4,13 @@
     position: sticky;
     z-index: 1;
     top: 0;
-    // overflow: hidden;
-    width: calc(100vw - 52px);
     text-decoration: none;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
-    padding: $gutter;
+    padding-left: $gutter;
+    padding-right: $gutter;
     background-color: rgba(255, 251, 236, 0.8);
     filter: $drop-shadow;
 
@@ -20,6 +19,7 @@
     }
 
     &-nav {
+        position: relative;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -28,6 +28,7 @@
         flex: 0.7;
 
         &-link {
+
             font-size: 1.1rem;
             padding: 10px;
             color: #000000;

@@ -517,7 +517,7 @@ const UsefullLinks = ({className, ...rest}) => {
 
                                 <Accordion className="UsefullLinks-links-box" expanded={expanded === 'panel12'} onChange={handleChange('panel12')}>
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                                <p className='UsefullLinks-links-title'>Magasines</p>
+                                <p className='UsefullLinks-links-title'>Magazines</p>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                 <Typography>

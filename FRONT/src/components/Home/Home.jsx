@@ -16,7 +16,7 @@ const Home = ({className, children}) => {
                 {children}
                 </div>
             <div className='footerBody'>
-            <Footer/>
+            <Footer />
             </div>
         </ContentPage>
         </div>
