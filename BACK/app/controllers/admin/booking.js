@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 const ApiError = require('../../errors/apiError');
-const { bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper } = require('../../models/admin');
+const {
+    bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper,
+} = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {
@@ -74,7 +76,7 @@ module.exports = {
         const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
         console.log(refAvailability);
         if (refAvailability.length !== refIds.length) {
-            const unknownRef = refIds.filter((refId) => !refAvailability.map(ref => ref.id).includes(refId));
+            const unknownRef = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
         }
         if (!refAvailability.every((ref) => ref.article_available)) {
@@ -152,58 +154,57 @@ module.exports = {
             const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, artIds);
             // Update availability on each article booked to false
             await bookingDataMapper.updateArticlesAvailability(artIds);
-            console.log(articlesBooked);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);
         }
     },
-    async updateBooking(req, res) {
+    async addToBooking(req, res) {
         const userId = Number(req.params.id);
-        const { refIds } = req.body;
+        const { articleNumber } = req.body;
 
-        // Check if too much articles are booked
-        if (!refIds || refIds.length > 7) {
-            throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
+        if (!articleNumber) {
+            throw new ApiError(400, 'La réservation ne peut pas être vide');
         }
 
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
-        if (user.length !== 1) {
+        if (user[0].name === 'DatabaseError') {
             throw new ApiError(400, 'Cet utilisateur n\'existe pas');
         }
-
-        //  Get active perm id and next perm id
         const activePerm = await permanencyDataMapper.findActive();
-        //  Check exisiting booking for this permanency
+
         const getCurrentParams = [
             { id_permanency: activePerm[0].next_id },
             { id_user: userId },
         ];
+        //  Check exisiting booking for this permanency
         const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
         if (bookingExist.length !== 1) {
             throw new ApiError(400, 'Cet utilisateur n\'as pas de réservation ou en a trop');
         }
-        console.log(bookingExist);
-
-        // Check if articles are available
-        const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
-        const newRefs = bookingExist.borrowed_articles.filter((ref) => !refIds.includes(ref.id));
-        console.log("test", refAvailability);
-        if (refAvailability.length !== refIds.length) {
-            const unknownRef = refIds.filter((refId) => !refAvailability.map(ref => ref.id).includes(refId));
-            throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
+        const article = await articleDataMapper.getArticleAvaibility(articleNumber);
+        if (!article) {
+            throw new ApiError(400, 'Cet article n\'existe pas');
         }
-        if (!refAvailability.every((ref) => ref.article_available)) {
-            const unavailableRef = refAvailability.filter((ref) => ref.article_available === false);
-            const errorString = unavailableRef.map((ref) => `[ ${ref.id} ${ref.name} ]`);
-            throw new ApiError(400, `Ce ou ces articles sont indisponibles : ${errorString}`);
+        if (article.returned === false) {
+            throw new ApiError(400, 'Cet article est dans une réservation');
+        } else if (article.archived === true) {
+            throw new ApiError(400, 'Cet article est archivé');
+        } else if (article.available === false) {
+            throw new ApiError(400, 'Cet article n\'est pas disponible');
         }
-        console.log(refAvailability);
-        try {
-            res.json({ test: 'coucou' });
-        } catch (err) {
-            res.json(err);
+        const newArticle = [article.id];
+        const newArticleBooking = await bookingDataMapper.addArticlesToBooking(bookingExist[0].id, newArticle);
+        if (newArticleBooking.name === 'DatabaseError') {
+            throw new ApiError(500, 'Echec de la création de la réservation');
         }
+        await bookingDataMapper.updateArticlesAvailability(newArticle);
+        const confirm = {
+            article: articleNumber,
+            reservation: bookingExist[0].id,
+            message: 'Article ajouté',
+        };
+        return res.json(confirm);
     },
 };
