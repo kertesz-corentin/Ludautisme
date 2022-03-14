@@ -62,7 +62,7 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
                 )}
 
                 {userExist && search && (
-                        <AddBookingModal user={user} params={params} allArticles={articles} />
+                        <AddBookingModal user={user} params={params} />
                 )}
 
             </Box>

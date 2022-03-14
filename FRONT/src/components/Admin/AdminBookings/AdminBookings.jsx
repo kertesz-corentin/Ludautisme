@@ -116,7 +116,7 @@ const AdminBookings = ({className, ...rest}) => {
                         sortModel: [{field: 'id', sort: 'asc'}],
                     }
                 }}
-                children={<BookingUserChoice articles={articles} />}
+                children={<BookingUserChoice />}
             />
         </div>
     );

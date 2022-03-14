@@ -71,27 +71,27 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="update-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="update-modal-header">
+                        <Typography className='update-modal-header-title'>
                             Détails Réservation
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='update-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="update-modal-inputs">
                         <TextField
                             id='outlined'
                             name='first_name'
                             type='string'
                             disabled
                             defaultValue={params.row.first_name}
-                            className="modal-inputs-item"
+                            className="update-modal-inputs-item"
                         >
 
                         </TextField>
@@ -101,7 +101,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             type='string'
                             disabled
                             defaultValue={params.row.last_name}
-                            className="modal-inputs-item"
+                            className="update-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -110,23 +110,23 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             type='string'
                             disabled
                             defaultValue={params.row.email}
-                            className="modal-inputs-item"
+                            className="update-modal-inputs-item"
                         >
                         </TextField>
                     </div>
-                    <div className="modal-status">
+                    <div className="update-modal-status">
                             {closed && (
                                 <Chip
                                 variant='contained'
                                 label='Délivrée'
-                                className="modal-status--item"
+                                className="update-modal-status--item"
                             />
                             )}
                             {delivered && (
                                 <Chip
                                 variant='contained'
                                 label='Clôturée'
-                                className="modal-status--item"
+                                className="update-modal-status--item"
                             />
                             )}
                         </div>
@@ -158,18 +158,18 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             </Select>
                         </FormControl> */}
                     {/* </div> */}
-                    <div className="modal-footer">
+                    <div className="update-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="update-modal-footer-submit"
                             variant="contained"
                         >
                             Mettre à jour
                         </Button>
 
                     </div>
-                    <div class="modal-articles">
-                        <div className="modal-articles--book">
+                    <div class="update-modal-articles">
+                        <div className="update-modal-articles--book">
                             <BookingArticles  list={params.row.borrowed_articles} />
                         </div>
                     </div>
