@@ -24,6 +24,10 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} message - Description of confirmed action
  */
 /**
+ * @typedef {object} BookingParam
+ * @property {number} articleNumber - Number of concerned article
+ */
+/**
  * @typedef {object} paramSearchBooking
  * @property {number} id - Unique identifier
  * @property {boolean} delivered - User got games
@@ -277,6 +281,13 @@ module.exports = {
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
+    async deleteArticle(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "article_to_booking"
+        WHERE "id_article" = $1
+        RETURNING *`, [id]);
         return result.rows;
     },
 };

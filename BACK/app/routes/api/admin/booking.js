@@ -18,11 +18,19 @@ router.route('/')
  * @summary Add one article to booking
  * @tags [ADMIN] Booking
  * @param {number} request.params.required - ID of user
- * @param {number} request.body.required - ID of article
+ * @param {BookingParam} request.body.required - ID of article
+ * @return {Confirm} 200 - success response - application/json
+ */
+/**
+ * DELETE /api/admin/booking/article/:id
+ * @summary Remove one article to booking
+ * @tags [ADMIN] Booking
+ * @param {number} request.params.required - ID of article
  * @return {Confirm} 200 - success response - application/json
  */
 router.route('/article/:id')
-    .put(controllerHandler(bookingController.addToBooking));
+    .put(controllerHandler(bookingController.addToBooking))
+    .delete(controllerHandler(bookingController.removeToBooking));
 
 /**
  * GET /api/admin/booking/:id

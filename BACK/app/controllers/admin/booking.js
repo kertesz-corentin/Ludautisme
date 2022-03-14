@@ -207,4 +207,22 @@ module.exports = {
         };
         return res.json(confirm);
     },
+    async removeToBooking(req, res) {
+        const articleId = Number(req.params.id);
+        if (!articleId) {
+            throw new ApiError(400, 'Cet article n\'existe pas');
+        }
+        const oldBooking = await bookingDataMapper.deleteArticle(articleId);
+        if (!oldBooking[0]) {
+            throw new ApiError(404, 'L\'article n\'est dans aucune réservation');
+        }
+        const obj = { available: true };
+        await articleDataMapper.update(articleId, obj);
+        const confirm = {
+            article: articleId,
+            reservation: oldBooking[0].id_booking,
+            message: 'Article retiré',
+        }
+        return res.json(confirm);
+    },
 };
