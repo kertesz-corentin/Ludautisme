@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './userbookings.scss';
@@ -9,6 +9,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import api from '../../../requests';
+import ListOfArticles from '../../ListsOfArticles/ListOfArticles';
 
 
 
@@ -16,6 +18,32 @@ import ListItemText from '@mui/material/ListItemText';
 
 
 const UserBookings = ({className, ...rest}) => {
+    const [bookings, setBookings] = useState([]);
+    const [activeBooking, setActiveBooking] = useState([]);
+    const [idUser,setIdUser] = useState(0);
+
+
+    const getBookings = async() => {
+        try {
+            const { id } = await JSON.parse(localStorage.getItem('user'));
+            const response = await api.get(`/customer/booking/history/${id}`);
+            const data = await response.data;
+            setBookings(data);
+            const activeFilter = (data) ?
+            await data.filter((booking)=> booking.active_permanency)
+            :
+            [];
+            setActiveBooking(activeFilter);
+        }
+        catch (err) {
+            console.error (err);
+        }
+    }
+
+    useEffect(() => {
+        getBookings();
+    }, []);
+
    return (
     <div> MES RESERVATIONS
         <Permanency/>
@@ -27,39 +55,16 @@ const UserBookings = ({className, ...rest}) => {
                     <div className = "list">
                         <h2>En cours</h2>
                         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                            <nav aria-label="main mailbox folders">
-                                <List className = "list">
-                                    <ListItem disablePadding>
-                                        <ListItemButton component="a" href="/user/booking/active">
-                                            <ListItemText primary="N ° 45611" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                </List>
-                            </nav>
+                            { (activeBooking[0]) ?
+                                <ListOfArticles articles= {activeBooking[0].articles}/>
+                            :
+                            <div>WAIT</div>}
+                            {console.log('test',activeBooking[0])}
                         </Box>
                     </div>
                     <div className = "list">
                         <h2>Historique</h2>
                         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                            <nav aria-label="main mailbox folders">
-                            {/* From now links redirect to userAccount Page but will be change with bookings number later */}
-                                <List >
-                                    <ListItem disablePadding>
-                                        <ListItemButton component="a" href="/user/bookings/history">
-                                            <ListItemText primary="N ° 45611" />
-                                        </ListItemButton>
-                                        <ListItemButton component="a" href="/user/bookings/history">
-                                            <ListItemText primary="N ° 51664" />
-                                        </ListItemButton>
-                                        <ListItemButton component="a" href="/user/bookings/history">
-                                            <ListItemText primary="N ° 65514" />
-                                        </ListItemButton>
-                                        <ListItemButton component="a" href="/user/bookings/history">
-                                            <ListItemText primary="N ° 16315" />
-                                        </ListItemButton>
-                                    </ListItem>
-                                </List>
-                            </nav>
                         </Box>
                     </div>
             </div>

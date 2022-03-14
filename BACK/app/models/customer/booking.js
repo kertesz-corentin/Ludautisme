@@ -23,7 +23,7 @@ module.exports = {
 		"perm"."perm_date" AS date_permanency,
         "perm"."next_id" AS return_id_permanency,
         "perm"."next_date" AS return_date_permanency,
-		"perm"."active" AS active_permanency,
+		"perm"."active" AS current_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
@@ -60,21 +60,31 @@ module.exports = {
         "perm"."next_id" AS return_id_permanency,
         "perm"."next_date" AS return_date_permanency,
 		"perm"."active" AS active_permanency,
+        (perm."perm_date" > CURRENT_DATE) AS is_next_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
                 'number', ar."id",
                 'available', ar."available",
-                'archived', ar."archived"
+                'archived', ar."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description",
+				'id_picture_ref', "image"."id",
+				'url_picture_ref', "image"."url",
+				'text_picture_ref',"image"."alternative_text"
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
-		LEFT JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        LEFT JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
-		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
-        WHERE "user"."id"=$1 AND "perm"."active"=false AND CURRENT_DATE > "perm"."perm_date"
+		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
+        INNER JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
+		INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
+        INNER JOIN "reference" ON "reference"."id" = ar."id_ref"
+		JOIN "reference_to_image" AS rti ON "reference"."id" = rti."id_ref"
+        JOIN "image" ON rti."id_image" = "image"."id"
+		WHERE "image"."main" = TRUE AND "user"."id"=$1
         GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
+                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
