@@ -17,8 +17,8 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     const [articles, setArticles] = useState([]);
 
     // console.log("detail_Réservation", params.row.articles);
-    console.log('params', params);
-    // console.log('articles', articles);
+    // console.log('params', params);
+    console.log('articles', articles);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -41,7 +41,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     const getArticles = async () => {
 
         const settings = {
-            id_booking: params.row.id
+            'id_booking': params.row.id
         }
         const response = await api.post(`/admin/articles/search`, settings);
         const data = await response.data;
@@ -172,7 +172,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                     </div>
                     <div class="modal-articles">
                         <div className="modal-articles--book">
-                            <BookingArticles  articles={articles} />
+                            <BookingArticles  list={articles} />
                         </div>
                     </div>
 

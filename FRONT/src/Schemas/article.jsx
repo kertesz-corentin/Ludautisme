@@ -1,7 +1,7 @@
 const articleSchema  = {
-    id:{
+    id_article:{
         type: "number",
-        label: "Id",
+        label: "Id article",
         gridDisplay: "normal",
         width: 125
     },
@@ -41,11 +41,17 @@ const articleSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
+    id_booking:{
+        type: "number",
+        label: "Id booking",
+        gridDisplay: "normal",
+        width: 125
+    },
     id_ref:{
-        type : "number",
-        label : "id de la référence",
-        gridDisplay : "normal",
-        width : 150,
+        type: "number",
+        label: "Id ref",
+        gridDisplay: "normal",
+        width: 125
     },
 }
 

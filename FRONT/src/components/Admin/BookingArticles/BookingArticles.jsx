@@ -5,7 +5,7 @@ import './bookingarticles.scss';
 import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../../Schemas';
 
-const BookingArticles = ({articles, className, ...rest}) => {
+const BookingArticles = ({list, className, ...rest}) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -32,7 +32,7 @@ const BookingArticles = ({articles, className, ...rest}) => {
             </div>
             <div className="articles-grid" style={{ height: 325, width: '100%'}}>
                 <DataGrid
-                    rows={articles}
+                    rows={list}
                     columns={columnsBuilder}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
@@ -41,27 +41,28 @@ const BookingArticles = ({articles, className, ...rest}) => {
                     components={{
                         Toolbar: GridToolbar,
                     }}
-                    initialState={{
-                        columns: {
-                            columnVisibilityModel: {
-                                id: false,
-                                created_at: false,
-                                id_ref: false,
-                                archived: false,
-                            },
-                        },
-                        sorting: {
-                            sortModel: [{field: 'id', sort: 'asc'}],
-                        },
-                        filter: {
-                            filterModel: {
-                                items: [
-                                    {columnField: 'archived', value: false},
-                                    {columnField: 'available', value: true},
-                                ]
-                            }
-                        }
-                    }}
+                    // initialState={{
+                    //     columns: {
+                    //         columnVisibilityModel: {
+                    //             id: false,
+                    //             created_at: false,
+                    //             id_ref: false,
+                    //             id_booking: false,
+                    //             archived: false,
+                    //         },
+                    //     },
+                    //     sorting: {
+                    //         sortModel: [{field: 'number', sort: 'asc'}],
+                    //     },
+                    //     filter: {
+                    //         filterModel: {
+                    //             items: [
+                    //                 {columnField: 'archived', value: false},
+                    //                 {columnField: 'available', value: true},
+                    //             ]
+                    //         }
+                    //     }
+                    // }}
                 >
 
                 </DataGrid>
