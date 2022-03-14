@@ -28,6 +28,11 @@ body {
   -moz-osx-font-smoothing: grayscale ;
   padding-right: 0;
   overflow: visible;
+
+}
+
+*, *::before, *::after {
+    box-sizing: border-box !important;
 }
 
 footer {
