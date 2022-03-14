@@ -15,8 +15,8 @@ const Footer = ({className, ...rest}) => {
              <p>Lud'Autisme© - 2022 </p>
              </div>
              <div className='footer-mid'>
-                <a className="footer-texte" href="/mentions légales">mentions légales</a>
-                <a className="footer-texte"href="politique de confidentialité">politique de confidentialité</a>
+                <a className="footer-texte" href="/mentions légales">Mentions légales</a>
+                <a className="footer-texte"href="politique de confidentialité">Politique de confidentialité</a>
              </div>
              <a href="https://fr-fr.facebook.com/pages/category/Community/Ludautisme-344242315626617/" target="_blank" rel="noreferrer"><img className="footer-facebook-logo"src={facebookLogo} alt="logo facebook" /></a>
         </footer>

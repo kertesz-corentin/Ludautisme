@@ -12,6 +12,7 @@ const Header = ({className, ...rest}) => {
     return (
        <header
             className={classnames('header', className)}
+            id="myHeader"
             {...rest}>
             <div className="header-logo">
                 <img src={Logo} className="header-logo-img" alt="Logo" />

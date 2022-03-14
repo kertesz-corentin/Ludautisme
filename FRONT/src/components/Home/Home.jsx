@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
 // Import components
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ContentPage from '../ContentPage/ContentPage';
-
-
 import './home.scss';
 
 const Home = ({className, children}) => {
@@ -15,7 +12,9 @@ const Home = ({className, children}) => {
         <div className={classnames('home', className)}>
         <ContentPage>
             <Header/>
+
                 {children}
+
             <Footer/>
         </ContentPage>
         </div>
