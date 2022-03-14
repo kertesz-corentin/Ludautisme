@@ -32,6 +32,7 @@ const BookingArticles = ({list, className, ...rest}) => {
             </div>
             <div className="articles-grid" style={{ height: 325, width: '100%'}}>
                 <DataGrid
+                    getRowId={(row) => row.id_article}
                     rows={list}
                     columns={columnsBuilder}
                     pageSize={10}

@@ -19,7 +19,7 @@ const Articles = ({params, children, name, className, ...rest}) => {
             }
             const response = await api.post(`/admin/articles/search`,settings);
             const data = await response.data;
-            console.log('article', data);
+
             setArticles(data);
         }
         catch (err) {
@@ -68,6 +68,8 @@ const Articles = ({params, children, name, className, ...rest}) => {
         return columns;
     })();
 
+    console.log('article', articles);
+
    return (
        <section
             className={classnames('articles', className)}
@@ -78,7 +80,8 @@ const Articles = ({params, children, name, className, ...rest}) => {
             </div>
             {children}
             <div className="articles-grid" style={{ height: 300, width: '100%'}}>
-                <DataGrid
+                <DataGrid 
+                    getRowId={(row) => row.id_article}
                     rows={articles}
                     columns={columnsBuilder}
                     pageSize={10}
@@ -91,13 +94,12 @@ const Articles = ({params, children, name, className, ...rest}) => {
                     initialState={{
                         columns: {
                             columnVisibilityModel: {
-                                id: false,
                                 created_at: false,
                                 id_ref: false,
                             },
                         },
                         sorting: {
-                            sortModel: [{field: 'id', sort: 'asc'}],
+                            sortModel: [{field: 'number', sort: 'asc'}],
                         }
                     }}
                 >
