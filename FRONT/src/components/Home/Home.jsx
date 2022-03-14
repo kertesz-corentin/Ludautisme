@@ -14,13 +14,13 @@ const Home = ({
     className,
     children,
     currentItemsNumber,
+    currentItems
 
 }) => {
-    console.log(`Résa en cours depuis HOME`, currentItemsNumber)
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
-            <Header currentItemsNumber={currentItemsNumber} />
+            <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
                 {children}
             <Footer/>
         </ContentPage>

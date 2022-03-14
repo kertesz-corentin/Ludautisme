@@ -27,20 +27,20 @@ export const FunctionContext= React.createContext();
 
 function App() {
     let [itemsToCart, setItemsToCart] = useState([]);
-    const addItemsToCart = (newCart) => {
-        const newQuantity = setItemsToCart(itemsToCart => [...itemsToCart, newCart]);
-        return newQuantity;
+    const addItemsToCart = (itemToAdd) => {
+         setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
     };
+    console.log(`ICI j'attend un tableau de tout les artcles que j'ajoute`, itemsToCart)
      console.log(`Nombre de mes bookings en cours`, itemsToCart.length)
     // Client Application
     return (
     <div className="App">
         <Routes>
-            <Route path = "/" element = {<Home children={<HomePage />} />}></Route>
-            <Route path = "/about" element = {<Home children={<About />} />}></Route>
-            <Route path = "/infos" element = {<Home children={<Infos />} />}></Route>
-            <Route path = "/usefulllinks" element = {<Home children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<HomePage />} />}></Route>
+            <Route path = "/about" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<About />} />}></Route>
+            <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<Infos />} />}></Route>
+            <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UsefullLinks />} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>

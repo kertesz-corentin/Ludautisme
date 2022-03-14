@@ -36,7 +36,8 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const add = useContext(FunctionContext);
 
-    let cartToAdd = {
+    let itemToAdd = {
+    id,
     name,
     description,
     maincategory,
@@ -51,10 +52,10 @@ const Reference = ({
 //each time i add article to my booking, delete one on quantity
 
     function handleClick () {
-        console.log(`add this article to my booking`,`id:`, id,`name:`,name,  `description:`, description,`valorisation:`, valorisation, `maincategory:`, maincategory, `tag:`, tag);
-//ICI je récupère bien le bon article au click et ca c'est cool!!!
-//Maintenant il faut faire en sorte que ça ne me consolelog qu'une carte!
-        add(id, name, description, valorisation, maincategory, tag);
+        add(
+            itemToAdd
+        );
+        console.log(`Au click je veux envoyer cet article dans mon Cart`, itemToAdd)
     }
    return (
 

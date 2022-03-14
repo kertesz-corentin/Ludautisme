@@ -11,8 +11,8 @@ import CartModal from '../CartModal/CartModal';
 const Header = ({
     className,
     currentItemsNumber,
+    currentItems,
      ...rest}) => {
-         console.log(`depuis HEADER`, currentItemsNumber)
     return (
        <header
             className={classnames('header', className)}
@@ -54,7 +54,7 @@ const Header = ({
                 </NavLink>
             </nav>
 
-            <CartModal currentItemsNumber = {currentItemsNumber} />
+            <CartModal currentItemsNumber = {currentItemsNumber}  currentItems = {currentItems}/>
             <LoginUser />
         </header>
    );
