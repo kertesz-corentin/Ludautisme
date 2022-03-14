@@ -39,7 +39,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
     }
 
     return (
-        <div>
+        <div className="updatereference">
             <IconButton onClick={handleOpen}>
                 <EditIcon />
             </IconButton>
@@ -47,26 +47,26 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="updatereference-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="updatereference-modal-header">
+                        <Typography className='updatereference-modal-header-title'>
                             Edition Référence
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='updatereference-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="updatereference-modal-inputs">
                         <TextField
                             id='outlined'
                             label='Nom'
                             name='name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updatereference-modal-inputs-item"
                             defaultValue={params.row.name}
                         >
                         </TextField>
@@ -75,7 +75,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             label='Description'
                             name='description'
                             type='string'
-                            className="modal-inputs-item"
+                            className="updatereference-modal-inputs-item"
                             defaultValue={params.row.description}
                         >
                         </TextField>
@@ -84,7 +84,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             label='Valorisation'
                             name='valorisation'
                             type='number'
-                            className="modal-inputs-item"
+                            className="updatereference-modal-inputs-item"
                             defaultValue={params.row.valorisation}
                         >
                         </TextField>
@@ -107,17 +107,17 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             </Select>
                         </FormControl>
                     </div>
-                    <div className="modal-footer">
+                    <div className="updatereference-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="updatereference-modal-footer-submit"
                             variant="contained"
                         >
                             Mettre à jour
                         </Button>
 
                     </div>
-                    <div className="modal-articles">
+                    <div className="updatereference-modal-articles">
                         <Articles params={params} children={<AddModal reference={params.row.id} />} />
                     </div>
 
