@@ -80,7 +80,7 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'number', ar."id",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
@@ -114,7 +114,7 @@ module.exports = {
         	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
             json_agg(json_build_object (
                 'id', borrowed."id",
-                'number', borrowed."id",
+                'number', borrowed."number",
                 'available', borrowed."available",
                 'archived', borrowed."archived"
                 )) AS "borrowed_articles"
@@ -168,7 +168,7 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'number', ar."id",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived"
                 )) AS "articles"
