@@ -44,32 +44,32 @@ const AddUserModal = ({className, ...rest}) => {
     }
 
     return (
-        <div>
-            <Button onClick={handleOpen}>Ajouter adhérent</Button>
+        <div className="adduser-modal--open">
+            <Button onClick={handleOpen} variant='outlined'>Ajouter adhérent</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="adduser-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="adduser-modal-header">
+                        <Typography className='adduser-modal-header-title'>
                             Nouvel Adhérent
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='adduser-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="adduser-modal-inputs">
                         <TextField
                             id='outlined'
                             label='n° adhérent'
                             name='member_number'
                             type='number'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -77,7 +77,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Email'
                             name='email'
                             type='email'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -85,7 +85,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Prénom'
                             name='first_name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -93,7 +93,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Nom'
                             name='last_name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -101,7 +101,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Téléphone'
                             name='phone'
                             type='string'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -109,7 +109,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='n° de rue'
                             name='adress_number'
                             type='number'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -117,7 +117,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Nom de rue'
                             name='adress_street'
                             type='string'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -125,7 +125,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Code Postal'
                             name='adress_zipcode'
                             type='number'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <TextField
@@ -133,7 +133,7 @@ const AddUserModal = ({className, ...rest}) => {
                             label='Ville'
                             name='adress_city'
                             type='string'
-                            className="modal-inputs-item"
+                            className="adduser-modal-inputs-item"
                         >
                         </TextField>
                         <FormGroup >
@@ -142,10 +142,10 @@ const AddUserModal = ({className, ...rest}) => {
                             <FormControlLabel control={<Checkbox name='archived' onChange={handleCheckBoxChange} />} label="Archivé" />
                         </FormGroup>
                     </div>
-                    <div className="modal-footer">
+                    <div className="adduser-modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="adduser-modal-footer-submit"
                             variant="contained"
                         >
                             Valider

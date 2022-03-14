@@ -32,7 +32,12 @@ const AddModal = ({reference, className, ...rest}) => {
 
     return (
         <div>
-            <Button onClick={handleOpen}>Ajouter article</Button>
+            <Button
+                onClick={handleOpen}
+                variant='outlined'
+            >
+                Ajouter article
+            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}

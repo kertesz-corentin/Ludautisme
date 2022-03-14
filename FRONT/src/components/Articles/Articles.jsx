@@ -96,6 +96,19 @@ const Articles = ({params, children, name, className, ...rest}) => {
                             columnVisibilityModel: {
                                 created_at: false,
                                 id_ref: false,
+                                id: false,
+                                id_article: false,
+                                name_ref: false,
+                                delivered: false,
+                                closed: false,
+                                nb_prolongation: false,
+                                id_booking: false,
+                                id_permanency: false,
+                                id_user: false,
+                                main_category: false,
+                                valorisation: false,
+                                description: false,
+
                             },
                         },
                         sorting: {

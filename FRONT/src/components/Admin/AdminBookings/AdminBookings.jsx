@@ -101,7 +101,7 @@ const AdminBookings = ({className, ...rest}) => {
             {...rest}
         >
             <AdminSection
-                title="Réservation"
+                title="Réservations"
                 rows={bookings}
                 columns={columnBuilder}
                 path={path}

@@ -88,7 +88,7 @@ const AdminReferences = ({className, ...rest}) => {
             {...rest}
          >
             <AdminSection
-                title="Référence"
+                title="Références"
                 rows={references}
                 columns={columnBuilder}
                 path={path}
