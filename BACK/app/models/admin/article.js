@@ -33,30 +33,36 @@ const sqlHandler = require('../../helpers/sqlHandler');
 module.exports = {
     async findAll() {
         const query = `
-            SELECT
-            article.*,
-            reference.id AS ref_id,
-            reference.name AS ref_name,
-            category.id AS cat_id,
-            category.name AS cat_name
-            FROM "article"
-            INNER JOIN "reference" ON "article"."id_ref" = "reference"."id"
-            INNER JOIN "category" ON "reference"."main_category" = "category"."id"`;
+        SELECT
+        "article"."id",
+		"article"."number",
+		"reference"."name" AS "name_ref",
+		"reference"."main_category" AS "main_cat_ref",
+		"article"."origin",
+		"article"."date_buy",
+		"article"."available",
+		"article"."archived",
+		"article"."id_ref"
+        FROM "article"
+        INNER JOIN "reference" ON "article"."id_ref"="reference"."id"`;
         const result = await sqlHandler(query);
         return result.rows;
     },
     async findOne(id) {
         console.log(id);
         const query = `
-            SELECT
-            article.*,
-            reference.id AS ref_id,
-            reference.name AS ref_name,
-            category.id AS cat_id,
-            category.name AS cat_name
-            FROM "article"
-            INNER JOIN "reference" ON "article"."id_ref" = "reference"."id"
-            INNER JOIN "category" ON "reference"."main_category" = "category"."id"
+        SELECT
+        "article"."id",
+		"article"."number",
+		"reference"."name" AS "name_ref",
+		"reference"."main_category" AS "main_cat_ref",
+		"article"."origin",
+		"article"."date_buy",
+		"article"."available",
+		"article"."archived",
+		"article"."id_ref"
+        FROM "article"
+        INNER JOIN "reference" ON "article"."id_ref"="reference"."id"
             WHERE "article"."id" = $1
             `;
         const placeholders = [id];
@@ -109,19 +115,16 @@ module.exports = {
 		"article"."date_buy",
 		"article"."available",
 		"article"."archived",
-		"article"."id_ref",
-		"article_to_booking"."id_booking",
-		"booking"."id_user"
+		"reference"."id" AS "id_ref"
         FROM "article"
-        INNER JOIN "article_to_booking" ON "article"."id" = "article_to_booking"."id_article"
-        INNER JOIN "booking" ON "article_to_booking"."id_booking" = "booking"."id"
         INNER JOIN "reference" ON "article"."id_ref"="reference"."id"
         WHERE `;
         const placeholders = [];
         console.log(arr);
         arr.forEach((filter, index) => {
-            const prop = Object.keys(filter)[0];
+            let prop = Object.keys(filter)[0];
             placeholders.push(filter[prop]);
+            prop = (prop !== "id") ? prop : `"article"."id"`;
             if (index !== arr.length - 1) {
                 query += `${prop}=$${index + 1} AND `;
             } else {

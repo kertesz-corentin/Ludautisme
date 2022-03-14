@@ -116,13 +116,17 @@ module.exports = {
                 'id', borrowed."id",
                 'number', borrowed."number",
                 'available', borrowed."available",
-                'archived', borrowed."archived"
+                'archived', borrowed."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description"
                 )) AS "borrowed_articles"
         FROM "booking" AS b
 	    INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         INNER JOIN "user" ON "user"."id"="b"."id_user"
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
+        INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
 		GROUP BY b.id, "user"."id",
                 "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
         )
@@ -133,7 +137,7 @@ module.exports = {
         console.log(arr);
         try {
             arr.forEach((filter, index) => {
-                const prop = Object.keys(filter)[0];
+                let prop = Object.keys(filter)[0];
                 console.log(prop);
                 placeholders.push(filter[prop]);
                 if (index !== arr.length - 1) {
