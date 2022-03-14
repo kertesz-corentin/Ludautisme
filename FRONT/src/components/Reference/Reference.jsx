@@ -19,7 +19,7 @@ import {  Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
-import RemoveIcon from '@mui/icons-material/Remove';
+
 
 const Reference = ({
     className,
@@ -35,6 +35,8 @@ const Reference = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const add = useContext(FunctionContext);
+    console.log(FunctionContext)
+    console.log(add, `ICI`)
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     let itemToAdd = {
@@ -74,7 +76,6 @@ const Reference = ({
 
                 <Button onClick={handleOpen}>description</Button>
                 {userToken &&
-
                 <Button
                     onClick={handleClick}>
                         <AddShoppingCartIcon/>

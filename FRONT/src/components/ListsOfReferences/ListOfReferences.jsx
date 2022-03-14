@@ -7,7 +7,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import NextPages from '../NextPages/NextPages';
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper } from '@mui/material';
+import { useContext } from 'react';
+
+
 
 
 const ListOfReferences = ({
@@ -15,6 +18,7 @@ const ListOfReferences = ({
     references,
      ...rest
     }) => {
+
         console.log(references, `REFERENCES`)
 
     return (

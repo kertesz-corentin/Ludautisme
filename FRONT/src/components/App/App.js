@@ -27,13 +27,11 @@ export const FunctionContext= React.createContext();
 
 function App() {
     let [itemsToCart, setItemsToCart] = useState([]);
-
     const addItemsToCart = (itemToAdd) => {
          setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
     };
-    const removeItemsToCart = (itemToRemoves) => {
-        setItemsToCart(itemsToCart => [...itemsToCart, itemToRemoves]);
-   };
+
+
     // Client Application
     return (
     <div className="App">
@@ -42,7 +40,7 @@ function App() {
             <Route path = "/about" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart} remove= {removeItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
@@ -85,7 +83,7 @@ function App() {
             <Route path = "/user/bookings/history" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
                 <Route path = "/user/bookings/history" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
-            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart} remove= {removeItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
             <Route path = "*" element = {<Error />}></Route>
         </Routes>

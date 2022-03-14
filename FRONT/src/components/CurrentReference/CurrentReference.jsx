@@ -17,7 +17,6 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import {  Divider } from '@mui/material';
 import { useState, useContext } from 'react';
-import { FunctionContext } from '../App/App';
 import RemoveIcon from '@mui/icons-material/Remove';
 
 const CurrentReference = ({
@@ -33,7 +32,6 @@ const CurrentReference = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const remove = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     let itemToRemove = {
@@ -49,13 +47,9 @@ const CurrentReference = ({
 
     let [counter, setCounter] = useState(2);
 
-//each time i add article to my booking, delete one on quantity
 
-    function handleRemoveClick () {
-         remove(
-              itemToRemove
-          )
-        console.log(`REMOVE THIS ARTICLE`, itemToRemove)
+    function handleRemoveClick (itemToRemove){
+
     }
    return (
 
