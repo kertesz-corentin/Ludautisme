@@ -6,7 +6,7 @@ import LoginUser from '../User/LoginUser/LoginUser'
 import './header.scss';
 import { NavLink } from 'react-router-dom';
 import CartModal from '../CartModal/CartModal';
-
+import Cart from '../Cart/Cart';
 
 
 
@@ -59,8 +59,10 @@ const Header = ({
                     Liens utiles
                 </NavLink>
             </nav>
-            {userToken ?  <CartModal currentItemsNumber = {currentItemsNumber}  currentItems = {currentItems}/> : "" }
-            <LoginUser />
+
+                <Cart currentItems = {currentItems}/>
+
+            <LoginUser  />
         </header>
    );
 };

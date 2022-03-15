@@ -26,6 +26,7 @@ import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal
 
 const theme = createTheme();
 export default function SignIn() {
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const onToggleOpen = () => {
@@ -67,6 +68,7 @@ export default function SignIn() {
         console.log(`should disconnect`,)
         setIsOpen(!isOpen)
         navigate('/')
+        window.location.reload()
     }
 
 // Use to recover password
@@ -79,7 +81,6 @@ export default function SignIn() {
 //Here if user is not connecting, render l78 to 187
     !userToken ?
     <div className={classnames('loginuser', { 'loginuser-isActive': isOpen })}>
-
         <button
         className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
@@ -93,8 +94,6 @@ export default function SignIn() {
                  <AccountCircle fontSize="large" />
                  }
       </button>
-
-
 {/* //Here even is this condition looks useless, she's not and delete her will make a secound btn appears whe user not connected. */}
         {!userToken
             ?

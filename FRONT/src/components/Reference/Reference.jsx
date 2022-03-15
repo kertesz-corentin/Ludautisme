@@ -31,6 +31,8 @@ const Reference = ({
     tag,
     valorisation,
     article,
+    nb_available,
+    nb_total
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -45,9 +47,9 @@ const Reference = ({
         maincategory,
         picture,
         tag,
-        valorisation
+        valorisation,
     }
-    let [quantity, setQuantity] = useState(2);
+    let [quantity, setQuantity] = useState(nb_available);
 //each time i add article to my booking, delete one on quantity
 
     function handleClick () {
@@ -97,7 +99,7 @@ const Reference = ({
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                   {description}
                 </Typography>
-                {quantity > 0 ? <Available/> : <Unavailable/>}
+                {nb_available > 0 ? <Available/> : <Unavailable/>}
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                 Prix: {valorisation}
                 </Typography>
@@ -114,7 +116,7 @@ const Reference = ({
                  <p> Sous catégories:{tag} </p>
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Quantité: {quantity}
+                 Quantité disponible: {nb_available} sur {nb_total}
                 </Typography>
 
               </Box>

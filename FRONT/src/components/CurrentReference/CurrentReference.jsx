@@ -17,7 +17,7 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import {  Divider } from '@mui/material';
 import { useState, useContext } from 'react';
-import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const CurrentReference = ({
     className,
@@ -58,7 +58,7 @@ const CurrentReference = ({
                 {userToken &&
                     <Button
                     onClick={handleRemoveClick}>
-                        <RemoveIcon/>
+                        <DeleteIcon/>
                     </Button>
                 }
             </CardContent>

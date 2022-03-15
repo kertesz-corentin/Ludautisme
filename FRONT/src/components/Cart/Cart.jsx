@@ -1,25 +1,44 @@
-import React, {useState, useContext}from 'react';
+import React, {useState, useEffect}from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './cart.scss';
 import Reference from '../Reference/Reference';
+import CartModal from '../CartModal/CartModal';
+import { Box } from '@mui/material';
 
 
-const Cart = ({className, ...rest}) => {
+const Cart = ({
+    className,
+    currentItems,
+     ...rest}) => {
 
-   const [cartItems, setCartItems] = useState([])
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const [userToken, setUserToken] = useState ();
+    const [userId, setUserId] = useState ();
+
+    if (user && !userToken && !userId){
+        setUserToken(user.token) ;
+        setUserId(user.id);
+    }
+
    function handleCartBtnClick (event) {
     event.preventDefault();
     console.log(`ouverture de la modale mon panier`)
    }
    return (
+       <Box>
+       {userToken &&
        <button
             className={classnames('cart', className)}
             {...rest}
             onClick= {handleCartBtnClick}
          >
-            <Reference/>
+            <CartModal userId = {userId} currentItems = {currentItems}/>
+            {/* <Reference/> */}
         </button>
+       }
+        </Box>
    );
 };
 

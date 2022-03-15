@@ -41,6 +41,8 @@ const ListOfReferences = ({
                         picture={reference.picture}
                         tag={reference.tag}
                         valorisation={reference.valorisation}
+                        nb_available={reference.nb_available}
+                        nb_total={reference.nb_total}
                     />
                     </Grid>
                 )

@@ -22,10 +22,10 @@ const CartModal = ({
     className,
     currentItemsNumber,
     currentItems,
+    userId,
      ...rest
     }) => {
-    //ID USER
-    let userId = userToken.id;
+
 
     //ACTUAL CART STATE
     console.log(`Mon Panier`,currentItems);
@@ -48,8 +48,7 @@ const CartModal = ({
         event.preventDefault();
         const refIds = {
             refIds : currentItems.map((item)=>{return item.id}),
-        }
-
+        };
         const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
         if (response.status === 200){
         }else{

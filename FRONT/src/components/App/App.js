@@ -26,6 +26,8 @@ export const FunctionContext= React.createContext();
 
 
 function App() {
+
+
     let [itemsToCart, setItemsToCart] = useState([]);
     const addItemsToCart = (itemToAdd) => {
         console.log("itemToAdd",itemToAdd);
@@ -38,7 +40,7 @@ function App() {
     return (
     <div className="App">
         <Routes>
-            <Route path = "/" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<HomePage />} />}></Route>
+            <Route path = "/" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<HomePage />} />}></Route>
             <Route path = "/about" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<About />} />}></Route>
             <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UsefullLinks />} />}></Route>
@@ -69,21 +71,21 @@ function App() {
 
 
 
-            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
+            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} />}>
+                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
             <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
+                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserBookings />} />}></Route>
+                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserBookings /></FunctionContext.Provider>} />}></Route>
             </Route>
             <Route path = "/user/booking/active" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/booking/active" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
+                <Route path = "/user/booking/active" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             <Route path = "/user/bookings/history" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/bookings/history" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
+                <Route path = "/user/bookings/history" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
