@@ -222,7 +222,28 @@ module.exports = {
             article: articleId,
             reservation: oldBooking[0].id_booking,
             message: 'Article retiré',
+        };
+        return res.json(confirm);
+    },
+    async returnArticle(req, res) {
+        const { id } = req.params;
+
+        const returnArticle = await bookingDataMapper.return(id);
+
+        if (!returnArticle[0]) {
+            throw new ApiError(404, 'L\'article n\'est dans aucune réservation');
         }
+        const obj = { available: true };
+        const availableArticle = await articleDataMapper.update(id, obj);
+
+        if (!availableArticle) {
+            throw new ApiError(404, 'L\'article n\'existe pas');
+        }
+        const confirm = {
+            article: returnArticle[0].id_article,
+            reservation: returnArticle[0].id_booking,
+            message: 'Article rendu',
+        };
         return res.json(confirm);
     },
 };

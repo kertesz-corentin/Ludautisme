@@ -290,4 +290,12 @@ module.exports = {
         RETURNING *`, [id]);
         return result.rows;
     },
+    async return(id) {
+        const result = await sqlHandler(`
+        UPDATE "article_to_booking"
+        SET "returned"='true'
+        WHERE "id_article"=$1
+        RETURNING *`, [id]);
+        return result.rows;
+    },
 };
