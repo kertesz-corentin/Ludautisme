@@ -10,6 +10,7 @@ import api from '../../../requests';
 import AdminSection from '../AdminSection/AdminSection';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
+import AlertMessage from '../../AlertMessage/AlertMessage';
 import { bookingSchema } from '../../../Schemas';
 
 // import mui components
@@ -22,13 +23,18 @@ const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
     const [articles, setArticles] = useState([]);
 
+    const [alertMessage, setAlertMessage] = useState();
+
     const getBookings = async() => {
         try {
             const response = await api.get('/admin/booking');
             const data = await response.data;
-            setBookings(data);
+            if(response.status === 200){
+                setBookings(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message);
             console.error (err);
         }
     }
@@ -37,9 +43,12 @@ const AdminBookings = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/articles');
             const data = await response.data;
-            setArticles(data);
+            if(response.status === 200){
+                setArticles(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message)
             console.error(err)
         }
     }
@@ -107,6 +116,9 @@ const AdminBookings = ({className, ...rest}) => {
             className={classnames('adminbookings', className)}
             {...rest}
         >
+            {alertMessage && (
+                <AlertMessage message={alertMessage} />
+            )}
             <AdminSection
                 title="Réservations"
                 rows={bookings}

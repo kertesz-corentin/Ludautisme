@@ -1,9 +1,15 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
+
+// import requests
 import api from '../../../requests';
+
+// import react components
+import AlertMessage from '../../AlertMessage/AlertMessage';
+
+// import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FromGroup, FormGroup }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { userSchema } from '../../../Schemas';
 
 import './addusermodal.scss';
 
@@ -12,10 +18,16 @@ const AddUserModal = ({className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [checked, setChecked] = useState(false);
+    const [role, setRole] = useState(1)
+
+    const [alertMessage, setAlertMessage] = useState();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        if(data.get('id_role' === true)){
+            setRole(2);
+        }
         const user = {
             'member_number': data.get('member_number'),
             'email': data.get('email'),
@@ -29,14 +41,22 @@ const AddUserModal = ({className, ...rest}) => {
             'cotisation_status': data.get('cotisation_status'),
             'caution_status': data.get('caution_status'),
             'archived': data.get('archived'),
+            'id_role': role,
         };
 
         console.log('user', user);
-        const response = await api.post('/admin/users', user)
-        if(response.status === 200) {
-            handleClose();
+        try{
+            const response = await api.post('/admin/users', user)
+            if(response.status === 200) {
+                handleClose();
+                console.log('response', response)
+            }
         }
-        console.log('response', response);
+        catch (err) {
+            setAlertMessage(err.response.data.message);
+            console.error(err)
+        }
+
     }
 
     const handleCheckBoxChange = (event) => {
@@ -45,6 +65,9 @@ const AddUserModal = ({className, ...rest}) => {
 
     return (
         <div className="adduser-modal--open">
+            {alertMessage && (
+                <AlertMessage message={alertMessage} />
+            )}
             <Button onClick={handleOpen} variant='outlined'>Ajouter adhérent</Button>
             <Modal
                 open={open}
@@ -52,6 +75,7 @@ const AddUserModal = ({className, ...rest}) => {
             >
                 <Box className="adduser-modal" component="form" onSubmit={handleSubmit}>
                     <div className="adduser-modal-header">
+
                         <Typography className='adduser-modal-header-title'>
                             Nouvel Adhérent
                         </Typography>
@@ -156,6 +180,7 @@ const AddUserModal = ({className, ...rest}) => {
                             <FormControlLabel control={<Checkbox name='cotisation_status' onChange={handleCheckBoxChange} />} label="Cotisation" />
                             <FormControlLabel control={<Checkbox name='caution_status' onChange={handleCheckBoxChange} />} label="Caution" />
                             <FormControlLabel control={<Checkbox name='archived' onChange={handleCheckBoxChange} />} label="Archivé" />
+                            <FormControlLabel control={<Checkbox name='id_role' onChange={handleCheckBoxChange} />} label="Admin" />
                         </FormGroup>
                     </div>
                     <div className="adduser-modal-footer">
