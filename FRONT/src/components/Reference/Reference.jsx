@@ -51,10 +51,8 @@ const Reference = ({
 //each time i add article to my booking, delete one on quantity
 
     function handleClick () {
-        add(
-            itemToAdd
-        );
-        console.log(`Au click je veux envoyer cet article dans mon Cart`, itemToAdd)
+        add(itemToAdd);
+        console.log(`envoi de l'item au cart`, itemToAdd)
     }
    return (
 

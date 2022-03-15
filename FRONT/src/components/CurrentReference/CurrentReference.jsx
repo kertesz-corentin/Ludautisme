@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-
+import Loader from '../Loader/Loader';
 
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -21,13 +21,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 const CurrentReference = ({
     className,
-    id,
-    name,
-    description,
-    maincategory,
-    picture,
-    tag,
-    valorisation,
+    currentItem,
     removeItem,
      }) => {
 
@@ -35,17 +29,20 @@ const CurrentReference = ({
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     function handleRemoveClick (){
+        removeItem(currentItem.id);
         console.log(`ARTICLE TO DELETE`)
     }
    return (
-
+    !currentItem ?
+        <Loader/>
+    :
         <Card className = "cartCard" >
             <CardMedia
                 component="img"
                 height="140"
-                image={picture[0].url}
+                image={currentItem.picture[0].url}
                 alt="image about the article"
-                sx={{ maxWidth: 345 }}
+                sx={{ maxWidth: 345}}
             />
             <CardContent className = "cardContent">
                 <Typography
@@ -54,7 +51,7 @@ const CurrentReference = ({
                     variant="h5"
                     component="div"
                 >
-                {name}
+                {currentItem.name}
                 </Typography>
                 {userToken &&
                     <Button

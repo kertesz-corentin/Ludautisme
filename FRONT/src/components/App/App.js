@@ -28,7 +28,9 @@ export const FunctionContext= React.createContext();
 function App() {
     let [itemsToCart, setItemsToCart] = useState([]);
     const addItemsToCart = (itemToAdd) => {
+        console.log("itemToAdd",itemToAdd);
          setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
+         console.log("après ajout",itemsToCart);
     };
 
 

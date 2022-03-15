@@ -19,8 +19,6 @@ const ListOfReferences = ({
      ...rest
     }) => {
 
-        console.log(references, `REFERENCES`)
-
     return (
         references ?
         <React.Fragment>

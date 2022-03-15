@@ -16,12 +16,12 @@
 .cartCard {
     width: 100%;
     display: flex;
+    margin-bottom: 15px;
 }
 
 .cardContent {
     width: 100%;
-}
-
-.cardTitle {
-    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

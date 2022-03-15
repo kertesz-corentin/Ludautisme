@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './cartmodal.scss';
@@ -12,7 +12,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Divider } from '@mui/material';
 import CurrentReference from '../CurrentReference/CurrentReference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
-import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import api from '../../requests/index';
 const userToken = JSON.parse(localStorage.getItem('user'));
@@ -26,12 +25,16 @@ const CartModal = ({
      ...rest
     }) => {
     //ID USER
-    let currentId = userToken.id;
-    console.log(`Looking for ID`, currentId);
+    let userId = userToken.id;
 
     //ACTUAL CART STATE
     const [currentCart,setCurrentCart] = useState(currentItems);
     console.log(`Mon Panier`, currentCart);
+
+    useEffect(()=> {
+        setCurrentCart(currentItems);
+        countSentence();
+        },[currentCart]);
 
     //OPEN MODAL
     const [open, setOpen] = React.useState(false);
@@ -40,13 +43,16 @@ const CartModal = ({
 
     //COUNT ITEM IN CART
     let counter = currentItemsNumber;
-    console.log(`Ensemble des articles en cours`, currentCart);
 
     //CLICK ON VALIDATE CART
-    const handleSubmit =  async (event, currentItems) => {
+    const handleSubmit =  async (event) => {
         event.preventDefault();
-        console.log(`envoi du cart au back`,currentItems);
-        const response =  await api.post(`/customer/booking/add/${currentId}`, currentItems)
+        const refIds = {
+            refIds : currentItems.map((item)=>{return item.id}),
+        }
+        console.log(`envoi du cart au back`, refIds);
+
+        const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
         if (response.status === 200){
         }else{
             console.log(`Une erreur est survenue`, response)
@@ -54,12 +60,25 @@ const CartModal = ({
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
     const removeItem = (item) =>{
-        const deleteIndex = currentCart.indexOf(item);
-        if (deleteIndex){
-            setCurrentCart(currentCart.splice(item,1));
+        console.log(item,currentCart,currentItems);
+        const deleteIndex = currentItems.findIndex((currentItem) => currentItem.id === item);
+        console.log("index",deleteIndex)
+        if (deleteIndex !== -1){
+            setCurrentCart(currentItems.splice(deleteIndex,1));
+            console.log("after Delete",currentCart);
         } else {
             console.log("index de l'item non trouvé dans currentCart");
         }
+    }
+
+    const countSentence = ()=>{
+        if (counter === 0 || !counter){
+            return `Votre panier est vide`
+         } else if (counter > 8) {
+             return `Vous ne pouvez pas réserver plus de 8 articles`
+         } else {
+             return `Vous pouvez encore réserver ${8 - counter} articles`
+         }
     }
 
     return (
@@ -85,41 +104,20 @@ const CartModal = ({
               <Divider/>
               <Box className="cartDetails">
                 <Box className = "cartCount">
-                {counter === 0 || counter === undefined
-                ?
-                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                    Actuellement votre panier est vide
-                    </Typography>
-                :
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            {counter}/8 { counter >=8 ?
-                                                        <p>Vous avez atteint le nombre d'articles maximum </p>
-                                                    :
-                                                        <p>Nombre d'articles pouvant être reservés</p>
-                            }
-                        </Typography>
-                }
+                <Typography>{countSentence()}</Typography>
                 </Box>
                 <Divider/>
-                {currentItems &&
+                {(currentItems && currentItems.length > 0) &&
                 <Box className = "cartItems">
-
-
                             <Typography id="transition-modal-title" variant="h6" component="h2">
                             Voici l'ensemble de vos articles :
                             </Typography>
                             <Box className="cartListItems">
-                            {currentItems.map((currentItem)=>(
+                            {currentItems.map((currentItem,index)=>(
                             <CurrentReference
-                                key = {currentItem.id}
-                                id={currentItem.id}
-                                name={currentItem.name}
-                                description={currentItem.description}
-                                maincategory={currentItem.maincategory}
-                                picture={currentItem.picture}
-                                tag={currentItem.tag}
-                                valorisation={currentItem.valorisation}
+                                key = {index}
                                 removeItem = {removeItem}
+                                currentItem = {currentItem}
                             />
                                 ))}
                             </Box>
