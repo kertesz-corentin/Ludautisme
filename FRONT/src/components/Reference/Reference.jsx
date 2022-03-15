@@ -46,10 +46,7 @@ const Reference = ({
         tag,
         valorisation
     }
-
-
     let [quantity, setQuantity] = useState(2);
-
 //each time i add article to my booking, delete one on quantity
 
     function handleClick () {

@@ -15,6 +15,7 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import api from '../../requests/index';
+const userToken = JSON.parse(localStorage.getItem('user'));
 
 
 
@@ -24,23 +25,29 @@ const CartModal = ({
     currentItems,
      ...rest
     }) => {
+    //Need current id for request
+    let currentId = userToken.id;
+    console.log(`Looking for ID`, currentId);
     //Need a new const cause when i delete item from CartModal , i want to work on a local state
-
-    const currentCart = currentItems;
+    const [currentCart,setCurrentCart] = useState(currentItems);
     console.log(`Mon Panier`, currentCart);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let counter = currentItemsNumber;
     console.log(`Ensemble des articles en cours`, currentCart);
+
 //Récupérer l'id du user pour parametrer la route
-    const handleSubmit =  async (event) => {
+
+
+    const handleSubmit =  async (event, currentItems) => {
         event.preventDefault();
-        console.log(`envoi du cart au back`);
-        const response =  await api.post('/customer/booking/add', currentItems)
+        console.log(`envoi du cart au back`,currentItems);
+        const response =  await api.post(`/customer/booking/add/${currentId}`, currentItems)
         if (response.status === 200){
+        }else{
+            console.log(`Une erreur est survenue`, response)
         };
-        console.log(response)
     }
 
     return (
