@@ -77,7 +77,7 @@ function App() {
                 <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
             </Route>
             <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>
+                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserBookings />} />}></Route>
             </Route>
             <Route path = "/user/booking/active" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
                 <Route path = "/user/booking/active" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserMyAccount />} />}></Route>

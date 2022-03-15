@@ -28,13 +28,11 @@ const CartModal = ({
     let userId = userToken.id;
 
     //ACTUAL CART STATE
-    const [currentCart,setCurrentCart] = useState(currentItems);
-    console.log(`Mon Panier`, currentCart);
+    console.log(`Mon Panier`,currentItems);
 
     useEffect(()=> {
-        setCurrentCart(currentItems);
         countSentence();
-        },[currentCart]);
+        },[currentItems]);
 
     //OPEN MODAL
     const [open, setOpen] = React.useState(false);
@@ -60,24 +58,25 @@ const CartModal = ({
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
     const removeItem = (item) =>{
-        console.log(item,currentCart,currentItems);
+        console.log(item,currentItems);
         const deleteIndex = currentItems.findIndex((currentItem) => currentItem.id === item);
         console.log("index",deleteIndex)
         if (deleteIndex !== -1){
-            setCurrentCart(currentItems.splice(deleteIndex,1));
-            console.log("after Delete",currentCart);
+            currentItems.splice(deleteIndex,1);
+            countSentence();
+            console.log("after Delete",currentItems);
         } else {
             console.log("index de l'item non trouvé dans currentCart");
         }
     }
 
     const countSentence = ()=>{
-        if (counter === 0 || !counter){
+        if (currentItems.length){
             return `Votre panier est vide`
-         } else if (counter > 8) {
+         } else if (currentItems.length > 8) {
              return `Vous ne pouvez pas réserver plus de 8 articles`
          } else {
-             return `Vous pouvez encore réserver ${8 - counter} articles`
+             return `Vous pouvez encore réserver ${8 - currentItems.length} articles`
          }
     }
 
