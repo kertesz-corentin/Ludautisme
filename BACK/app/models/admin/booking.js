@@ -283,12 +283,26 @@ module.exports = {
         RETURNING *`, [id]);
         return result.rows;
     },
-    async return(id) {
-        const result = await sqlHandler(`
-        UPDATE "article_to_booking"
-        SET "returned"='true'
-        WHERE "id_article"=$1
-        RETURNING *`, [id]);
+    async return(arr) {
+        let queryStart = `UPDATE "article_to_booking"
+                            SET "returned"='true'`;
+
+        const placeholders = [];
+        if (arr.length > 0) {
+            queryStart += ` WHERE "id_article" IN (`
+            arr.forEach((id, indx) => {
+                if (indx !== arr.length - 1) {
+                    queryStart += `$${placeholders.length + 1}, `;
+                } else {
+                    queryStart += `$${placeholders.length + 1})`;
+                }
+                placeholders.push(id);
+            });
+        }
+        const queryEnd = ` RETURNING *`;
+        queryStart += queryEnd;
+        console.log(placeholders);
+        const result = await sqlHandler(queryStart, placeholders);
         return result.rows;
     },
     async close(id) {

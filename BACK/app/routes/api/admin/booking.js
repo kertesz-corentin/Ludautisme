@@ -18,7 +18,6 @@ router.route('/')
  @summary Close one booking
  @tags [ADMIN] Booking
  @param {number} request.params.id.required - ID of booking
- @param {array<number>} request.body.id.required - ID of articles
  @return {Confirm} 200 - success response - application/json
  */
 router.route('/close/:id')
@@ -35,7 +34,7 @@ router.route('/close/:id')
  * DELETE /api/admin/booking/article/:id
  * @summary Remove one article to booking
  * @tags [ADMIN] Booking
- * @param {number} request.params.required - ID of article
+ * @param {array<number>} request.params.required - ID of article
  * @return {Confirm} 200 - success response - application/json
  */
 router.route('/article/:id')
