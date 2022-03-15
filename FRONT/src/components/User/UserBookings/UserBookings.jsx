@@ -87,7 +87,7 @@ const UserBookings = ({className, ...rest}) => {
                         <h2>Réservation prochaine permanence</h2>
                         <Permanency/>
                         <Box sx={{ bgcolor: 'background.paper' }}>
-                            { (nextBooking) ?
+                            { (nextBooking[0]) ?
                                 <ListOfReferences references= {nextBooking[0].references}/>
                             :
                             <div>WAIT</div>}
