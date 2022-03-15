@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
-import Shop from '../Shop/Shop';
 import './header.scss';
 import { NavLink } from 'react-router-dom';
+import CartModal from '../CartModal/CartModal';
 
 
-const Header = ({className, ...rest}) => {
+
+
+const Header = ({
+    className,
+    currentItemsNumber,
+    currentItems,
+     ...rest}) => {
+    const userToken = JSON.parse(localStorage.getItem('user'));
+    useEffect(() => {}, [userToken])
+
     return (
        <header
             className={classnames('header', className)}
@@ -17,6 +26,7 @@ const Header = ({className, ...rest}) => {
             <div className="header-logo">
                 <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
+
             <nav className="header-nav">
                 <NavLink
                     to="/"
@@ -49,8 +59,7 @@ const Header = ({className, ...rest}) => {
                     Liens utiles
                 </NavLink>
             </nav>
-
-            <Shop />
+            {userToken ?  <CartModal currentItemsNumber = {currentItemsNumber}  currentItems = {currentItems}/> : "" }
             <LoginUser />
         </header>
    );
