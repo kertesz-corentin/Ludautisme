@@ -92,6 +92,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='number'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.member_number}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -101,6 +102,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='email'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.email}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -110,6 +112,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.first_name}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -119,6 +122,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.last_name}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -128,6 +132,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.phone}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -137,6 +142,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='number'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_number}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -146,6 +152,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_street}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -155,6 +162,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='number'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_zipcode}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -164,9 +172,17 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_city}
+                            sx={{mb: 2}}
                         >
                         </TextField>
-                        <FormGroup >
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                width: '40%',
+                                flexDirection: 'row',
+                                justifyContent: 'space-around'
+                            }}
+                        >
                             <FormControlLabel control={<Checkbox name='cotisation_status' checked={cotisationChecked} onChange={handleCotisationCheck} />} label="Cotisation" />
                             <FormControlLabel control={<Checkbox name='caution_status' checked={cautionChecked} onChange={handleCautionCheck} />} label="Caution" />
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />

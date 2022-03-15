@@ -68,6 +68,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             type='string'
                             className="updatereference-modal-inputs-item"
                             defaultValue={params.row.name}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -77,6 +78,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             type='string'
                             className="updatereference-modal-inputs-item"
                             defaultValue={params.row.description}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -86,6 +88,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             type='number'
                             className="updatereference-modal-inputs-item"
                             defaultValue={params.row.valorisation}
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <FormControl fullWidth>

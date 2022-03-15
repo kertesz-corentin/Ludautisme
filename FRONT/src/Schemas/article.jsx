@@ -7,8 +7,8 @@ const articleSchema  = {
     },
     id_article:{
         type: "number",
-        label: "Id article",
-        gridDisplay: "normal",
+        label: "Suppression",
+        gridDisplay: "delete",
         width: 125
     },
     number:{

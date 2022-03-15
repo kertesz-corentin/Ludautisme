@@ -8,7 +8,7 @@ CREATE TABLE "user" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "email" TEXT NOT NULL UNIQUE,
     "member_number" INT NOT NULL UNIQUE,
-    "phone" TEXT NOT NULL,
+    "phone" TEXT,
     "first_name" TEXT,
     "last_name" TEXT,
     "adress_number" TEXT NOT NULL,
@@ -95,6 +95,7 @@ CREATE TABLE "temptoken"(
 
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "returned" BOOLEAN DEFAULT true,
     "id_article" INT REFERENCES "article"("id"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );

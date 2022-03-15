@@ -8,6 +8,9 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} valorisation - Price of the referrence
  * @property {string} mainCategory - main category of article
  * @property {array<string>} tag - Tag of reference
+ * @property {number} nb_total - Sum of all articles
+ * @property {number} nb_available - Sum of availables articles
+ *
  */
 /**
  * @typedef {object} ParamSearchReference
@@ -30,7 +33,9 @@ module.exports = {
             r."description",
             r."valorisation",
             cat."name" AS mainCategory,
-            json_agg("category"."name") AS tag,
+            json_agg(DISTINCT"category"."name") AS tag,
+			COUNT(DISTINCT "article"."id") AS nb_total,
+			COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -44,6 +49,7 @@ module.exports = {
             JOIN "category" AS cat ON r."main_category" = cat."id"
             JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             JOIN "category" ON rtc."id_category" = "category"."id"
+			JOIN "article" ON "article"."id_ref" = "r"."id"
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
         );
         return result.rows;
@@ -51,29 +57,30 @@ module.exports = {
     async findOne(id) {
         const result = await sqlHandler(
             `SELECT
-            r.id,
-            r.name,
-            r.description,
-            r.valorisation,
-            cat.name AS mainCategory,
-            json_agg(DISTINCT "category"."name") AS tag,
-            COUNT (ar."id") FILTER (WHERE ar.available =true) AS "stock",
+            r."id",
+            r."name",
+            r."description",
+            r."valorisation",
+            cat."name" AS mainCategory,
+            json_agg(DISTINCT"category"."name") AS tag,
+			COUNT(DISTINCT "article"."id") AS nb_total,
+			COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
-                'name', "image"."title",
+                'title', "image"."title",
                 'text', "image"."alternative_text",
                 'main', "image"."main"
             )) AS "picture"
             FROM "reference" AS r
-            LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
-            LEFT JOIN "image" ON rti."id_image" = "image"."id"
-            LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
-            LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
-            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
-            LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
-            WHERE r.id = $1
-            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
+            JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+            JOIN "image" ON rti."id_image" = "image"."id"
+            JOIN "category" AS cat ON r."main_category" = cat."id"
+            JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+            JOIN "category" ON rtc."id_category" = "category"."id"
+			JOIN "article" ON "article"."id_ref" = "r"."id"
+            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
+            WHERE r."id"=$1`,
             [id],
         );
         return result.rows;
@@ -102,7 +109,7 @@ module.exports = {
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
         `;
         const placeholders = [limit, offset];
-        if (arr.length > 0 ){
+        if (arr.length > 0) {
             queryStart += ` WHERE `
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];

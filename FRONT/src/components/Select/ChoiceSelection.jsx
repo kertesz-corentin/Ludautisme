@@ -14,11 +14,7 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
     const handleChange = (event) => {
       setCategory(event.target.value);
     };
-    console.log(category)
-    console.log(categories)
-
     return (
-
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Jeux</InputLabel>
@@ -36,8 +32,6 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
           </Select>
         </FormControl>
       </Box>
-
-
     )
 };
 
