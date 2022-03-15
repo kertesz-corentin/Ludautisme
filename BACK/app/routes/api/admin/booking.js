@@ -42,6 +42,7 @@ router.route('/article/:id')
     .delete(controllerHandler(bookingController.removeToBooking));
 /**
  * POST /api/admin/booking/return/:id
+ * @summary Return one article of booking
  * @tags [ADMIN] Booking
  * @param {number} request.params.required - ID of article
  * @return {Confirm} 200 - success response - applcation/json
