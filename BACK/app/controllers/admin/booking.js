@@ -251,7 +251,7 @@ module.exports = {
         }
         const listArticle = [];
         // I take each article noy returned for this booking
-        booking[0].articles.forEach(async (article) => {
+        booking[0].borrowed_articles.forEach(async (article) => {
             if (article.available === false) {
                 listArticle.push(article.id);
             }
