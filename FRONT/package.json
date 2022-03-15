@@ -16,6 +16,7 @@
     "axios": "^0.26.0",
     "classnames": "^2.3.1",
     "concurrently": "^7.0.0",
+    "moment": "^2.29.1",
     "postcss-place": "^7.0.4",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",

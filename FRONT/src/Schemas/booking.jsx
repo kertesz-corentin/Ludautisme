@@ -62,7 +62,7 @@ const bookingSchema  = {
     date_permanency:{
         type : "string",
         label : "Date permanence",
-        gridDisplay : "normal",
+        gridDisplay : "date",
         width : 150,
     },
 }
