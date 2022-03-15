@@ -1,0 +1,27 @@
+@import 'src/styles/vars';
+
+.ref{
+    background-color: aqua;
+    position: absolute;
+    margin-top:22%;
+    margin-left:45%;
+    max-width: 80%;
+    border: 2px solid black;
+    padding:2rem;
+}
+.cardmedia{
+    background-color: aquamarine;
+}
+
+.cartCard {
+    width: 100%;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.cardContent {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,20 @@
+@import 'src/styles/vars';
+
+.shopmodal{
+    background-color: whitesmoke;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:600px;
+    border: hidden;
+    border-radius: 20px;
+    padding:2rem;
+}
+
+.currentItem{
+    background-color: aquamarine;
+}
+
+.cartListItems {
+}

@@ -1,0 +1,21 @@
+@import 'src/styles/vars';
+
+.cart {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    transition: 50ms;
+
+    :hover {
+        transition: 0.3s;
+        background-color: rgba($color: #cfcfcf, $alpha: 1);
+        border-radius: 5px;
+    }
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+    color: $font-color;
+}
+
+
