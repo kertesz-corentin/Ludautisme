@@ -31,9 +31,8 @@ const CurrentReference = ({
 
     function handleRemoveClick (){
         removeItem(currentItem.id);
-        console.log(`ARTICLE TO DELETE`);
         changeCounter()
-        //Ici je dois passer mon counter qui vient de cartModal et ajouter 1 à chaque click
+
     }
    return (
     !currentItem ?

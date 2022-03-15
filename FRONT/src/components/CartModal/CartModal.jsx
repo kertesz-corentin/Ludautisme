@@ -38,14 +38,10 @@ const CartModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    let [counter, setCounter] = useState(8)
+    let [counter, setCounter] = useState(currentItems.length)
     function handleRemoveItemClick  () {
-        setCounter( counter -=1)
-        console.log(`Passage dans le handleRemoveClick L44`,counter)
+        setCounter(currentItems.length)
     }
-
-    //COUNT ITEM IN CART
-    // let counter = currentItemsNumber;
 
     //CLICK ON VALIDATE CART
     const handleSubmit =  async (event) => {
@@ -53,7 +49,6 @@ const CartModal = ({
         const refIds = {
             refIds : currentItems.map((item)=>{return item.id}),
         }
-        console.log(`envoi du cart au back`, refIds);
 
         const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
         if (response.status === 200){
@@ -68,8 +63,7 @@ const CartModal = ({
         console.log("index",deleteIndex)
         if (deleteIndex !== -1){
             currentItems.splice(deleteIndex,1);
-            countSentence();
-            console.log("after Delete",currentItems);
+            setCounter(currentItems.length)
         } else {
             console.log("index de l'item non trouvé dans currentCart");
         }
@@ -105,7 +99,7 @@ const CartModal = ({
           <Fade in={open}>
             <Box className="shopmodal">
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Mon panier {counter}
+                Mon panier
               </Typography>
               <Divider/>
               <Box className="cartDetails">
