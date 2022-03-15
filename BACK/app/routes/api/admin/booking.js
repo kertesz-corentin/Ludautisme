@@ -5,14 +5,14 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
 /**
- * GET /api/admin/booking
- * @summary Get all detailed booking
+ * POST /api/admin/booking/deliver/:id
+ * @summary Deliver on booking
  * @tags [ADMIN] Booking
- * @param {paramSearch} request.body.required - At least one of these params
- * @return {booking} 200 - success response - application/json
+ * @param {number} request.param.id.required - ID of booking
+ * @return {Confirm} 200 - success response - applcation/json
  */
-router.route('/')
-    .get(controllerHandler(bookingController.getAll));
+router.route('/deliver')
+    .post(controllerHandler(bookingController.deliver));
 /**
  *POST /api/admin/booking/close/:id
  @summary Close one booking
@@ -78,6 +78,15 @@ router.route('/add/:UserId')
  */
 router.route('/search')
     .post(controllerHandler(bookingController.getFiltered));
+/**
+ * GET /api/admin/booking
+ * @summary Get all detailed booking
+ * @tags [ADMIN] Booking
+ * @param {paramSearch} request.body.required - At least one of these params
+ * @return {booking} 200 - success response - application/json
+ */
+router.route('/')
+    .get(controllerHandler(bookingController.getAll));
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
 });

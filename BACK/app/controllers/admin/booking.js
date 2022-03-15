@@ -286,4 +286,11 @@ module.exports = {
         };
         return res.json(confirm);
     },
+    async deliver(req, res) {
+        const { id } = req.params;
+
+        const deliver = await bookingDataMapper.deliver(id);
+
+        return res.json(deliver);
+    },
 };
