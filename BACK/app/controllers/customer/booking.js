@@ -44,9 +44,9 @@ module.exports = {
 
         // Check if articles are available
         const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
-        console.log(refAvailability);
+        console.log("refsAvail",refAvailability);
         if (refAvailability.length !== refIds.length) {
-            const unknownRef = refIds.filter((refId) => !refAvailability.map(ref => ref.id).includes(refId));
+            const unknownRef = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
         }
         if (!refAvailability.every((ref) => ref.article_available)) {
