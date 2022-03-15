@@ -16,7 +16,8 @@ const Reference = ({
     maincategory,
     picture,
     tag,
-    valorisation
+    valorisation,
+    article,
      }) => {
    return (
 
