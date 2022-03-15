@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import moment from 'moment';
 
 // import requests
 import api from '../../../requests';
@@ -16,7 +17,6 @@ import { IconButton, ToggleButton } from '@mui/material';
 import { GridCheckIcon } from '@mui/x-data-grid';
 
 import './adminbookings.scss';
-
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
@@ -87,6 +87,11 @@ const AdminBookings = ({className, ...rest}) => {
                                 <GridCheckIcon />
                             </ToggleButton>
                     );
+                    break;
+                    case "date":
+                        config.renderCell = (params) => (
+                            moment(params.value).format('DD MMMM YYYY')
+                        );
                     break;
                     default:
                         break;

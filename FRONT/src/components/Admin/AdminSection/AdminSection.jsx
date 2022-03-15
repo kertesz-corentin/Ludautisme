@@ -5,6 +5,8 @@ import './adminsection.scss';
 
 const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
 
+    console.log('rows', rows);
+
     return (
         <section className='section'>
             <div className="section-element">
