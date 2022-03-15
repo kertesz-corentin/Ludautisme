@@ -11,15 +11,18 @@ import BookingArticles from '../BookingArticles/BookingArticles';
 import './updatebookingmodal.scss';
 
 const UpdateBookingModal = ({params, className, ...rest}) => {
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);
 
+    const [articles, setArticles] = useState(params.row.borrowed_articles);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(articles);
         // const data = new FormData(event.currentTarget);
 
         // const reference = {
@@ -35,28 +38,6 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
         // }
         // console.log('response', response);
     }
-
-    const getArticles = async () => {
-        console.log(params.row.borrowed_articles);
-
-        // const settings = {
-        //     'id': params.row.id
-        // }
-        // const response = await api.post(`/admin/articles/search`, settings);
-        // const data = await response.data;
-        // console.log("data articles",data);
-        // setArticles(data);
-        // if(response.status === 200) {
-        //     handleClose();
-        // }
-    }
-
-    const handleChange = (event) => {
-    }
-
-    useEffect(() => {
-        getArticles();
-    }, [])
 
     return (
         <div>

@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './bookingarticles.scss';
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+
+// import react components
+import DeleteArticleModal from '../DeleteArticleModal/DeleteArticleModal';
 import { articleSchema } from '../../../Schemas';
+
+// import material ui components
+import { IconButton } from '@mui/material';
+import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+
+import './bookingarticles.scss';
 
 const BookingArticles = ({list, className, ...rest}) => {
 
@@ -28,7 +33,7 @@ const BookingArticles = ({list, className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <DeleteIcon />
+                                <DeleteArticleModal params={params} />
                             </IconButton>
                         );
                     break;
