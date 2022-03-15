@@ -164,4 +164,26 @@ module.exports = {
         `, [number]);
         return result.rows[0];
     },
+    async return(arr) {
+        let queryStart = `UPDATE "article"
+                            SET "available"='true'
+                            WHERE "id" IN (`;
+
+        const placeholders = [];
+        if (arr.length > 0) {
+            arr.forEach((id, indx) => {
+                if (indx !== arr.length - 1) {
+                    queryStart += `$${placeholders.length + 1}, `;
+                } else {
+                    queryStart += `$${placeholders.length + 1})`;
+                }
+                placeholders.push(id);
+            });
+        }
+        const queryEnd = ` RETURNING *`;
+        queryStart += queryEnd;
+        console.log(placeholders);
+        const result = await sqlHandler(queryStart, placeholders);
+        return result.rows;
+    },
 };

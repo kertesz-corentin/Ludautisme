@@ -74,7 +74,6 @@ module.exports = {
 
         // Check if articles are available
         const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
-        console.log(refAvailability);
         if (refAvailability.length !== refIds.length) {
             const unknownRef = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
@@ -97,7 +96,6 @@ module.exports = {
             const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
             // Update availability on each article booked to false
             await bookingDataMapper.updateArticlesAvailability(articlesIds);
-            console.log(articlesBooked);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);
@@ -106,7 +104,6 @@ module.exports = {
     async addBookingByArticle(req, res) {
         const userId = Number(req.params.UserId);
         const { artIds } = req.body;
-        console.log(artIds);
         // Check if too much articles are booked
         if (!artIds || artIds.length > 7) {
             throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
@@ -132,7 +129,6 @@ module.exports = {
 
         // Check if articles are available
         const artAvailability = await bookingDataMapper.getArticlesAvailability(artIds);
-        console.log(artAvailability);
         if (artAvailability.length !== artIds.length) {
             const unknownRef = artIds.filter((artId) => !artAvailability.map((art) => art.id).includes(artId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
@@ -222,7 +218,72 @@ module.exports = {
             article: articleId,
             reservation: oldBooking[0].id_booking,
             message: 'Article retiré',
+        };
+        return res.json(confirm);
+    },
+    async returnArticle(req, res) {
+        const { id } = req.params;
+
+        const returnArticle = await bookingDataMapper.return([id]);
+
+        if (!returnArticle[0]) {
+            throw new ApiError(404, 'L\'article n\'est dans aucune réservation');
         }
+        const obj = { available: true };
+        const availableArticle = await articleDataMapper.update(id, obj);
+
+        if (!availableArticle) {
+            throw new ApiError(404, 'L\'article n\'existe pas');
+        }
+        const confirm = {
+            article: returnArticle[0].id_article,
+            reservation: returnArticle[0].id_booking,
+            message: 'Article rendu',
+        };
+        return res.json(confirm);
+    },
+    async close(req, res) {
+        const { id } = req.params;
+        // I take the booking
+        const booking = await bookingDataMapper.findOne(id);
+        // If booking not exist error
+        if (!booking[0]) {
+            throw new ApiError(404, `La réservation n°${id} n'existe pas`);
+        }
+        const listArticle = [];
+        // I take each article noy returned for this booking
+        booking[0].articles.forEach(async (article) => {
+            if (article.available === false) {
+                listArticle.push(article.id);
+            }
+        });
+        // If has article in the listArticle
+        if (listArticle[0]) {
+            // I write this article is returned in dynamic table
+            const returned = await bookingDataMapper.return(listArticle);
+            returned.forEach((article) => {
+                if (article.returned !== true) {
+                    throw new ApiError(500, `Impossible de marquer l\'article n°${article.id} comme retourné`);
+                }
+            });
+            // And i make the article available
+            const getAvailable = await articleDataMapper.return(listArticle);
+            getAvailable.forEach((article) => {
+                if (article.available !== true) {
+                    throw new ApiError(500, `Impossible de marquer l\'article n°${article.id} comme disponible`);
+                }
+            });
+        }
+        // And i close the booking
+        const closedBooking = await bookingDataMapper.close(id);
+        if (closedBooking[0].closed !== true) {
+            throw new ApiError(500, 'Impossible de cloturer la réservation');
+        }
+        const confirm = {
+            articles: listArticle,
+            reservation: id,
+            message: 'Réservation cloturé avec succés',
+        };
         return res.json(confirm);
     },
 };
