@@ -8,13 +8,13 @@ const bookingSchema  = {
     delivered:{
         type : "boolean",
         label : "Délivrée",
-        gridDisplay : "toggle",
+        gridDisplay : "delivered",
         width : 125,
     },
     closed:{
         type : "boolean",
         label : "Clôturée",
-        gridDisplay : "toggle",
+        gridDisplay : "closed",
         width : 125,
     },
     overdue:{

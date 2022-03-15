@@ -146,6 +146,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         </div>
                     </div>
                     <div className="update-modal-footer">
+                    {!closed && (
                         <Button
                             type='submit'
                             className="update-modal-footer-submit"
@@ -153,6 +154,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         >
                             Valider
                         </Button>
+                    )}
                     </div>
                 </Box>
             </Modal>
