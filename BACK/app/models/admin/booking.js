@@ -149,26 +149,19 @@ module.exports = {
         FROM booking_full
         WHERE `;
         const placeholders = [];
-        console.log(arr);
-        try {
-            arr.forEach((filter, index) => {
-                let prop = Object.keys(filter)[0];
-                console.log(prop);
-                placeholders.push(filter[prop]);
-                if (index !== arr.length - 1) {
-                    query += `"${prop}"=$${index + 1} AND `;
-                } else {
-                    query += `"${prop}"=$${index + 1} `;
-                }
-            });
-            const result = await sqlHandler(query, placeholders);
-            return result.rows;
-        } catch (err) {
-            console.error(err);
-        }
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                query += `"${prop}"=$${index + 1} AND `;
+            } else {
+                query += `"${prop}"=$${index + 1} `;
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
     async findOne(id) {
-        console.log(id);
         const query = `
         WITH booking_full AS(
 			SELECT
@@ -304,6 +297,38 @@ module.exports = {
         DELETE FROM "article_to_booking"
         WHERE "id_article" = $1
         RETURNING *`, [id]);
+        return result.rows;
+    },
+    async return(arr) {
+        let queryStart = `UPDATE "article_to_booking"
+                            SET "returned"='true'`;
+
+        const placeholders = [];
+        if (arr.length > 0) {
+            queryStart += ` WHERE "id_article" IN (`
+            arr.forEach((id, indx) => {
+                if (indx !== arr.length - 1) {
+                    queryStart += `$${placeholders.length + 1}, `;
+                } else {
+                    queryStart += `$${placeholders.length + 1})`;
+                }
+                placeholders.push(id);
+            });
+        }
+        const queryEnd = ` RETURNING *`;
+        queryStart += queryEnd;
+        console.log(placeholders);
+        const result = await sqlHandler(queryStart, placeholders);
+        return result.rows;
+    },
+    async close(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "closed"='true',
+            "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
         return result.rows;
     },
 };
