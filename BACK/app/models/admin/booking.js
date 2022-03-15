@@ -17,7 +17,16 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} date_permanency - Permanency's booking
  * @property {boolean} overdue - overdue returning game
  */
-
+/**
+ * @typedef {object} Confirm
+ * @property {number} article - Number of concerned article
+ * @property {number} reservation - Id of conderned reservation
+ * @property {string} message - Description of confirmed action
+ */
+/**
+ * @typedef {object} BookingParam
+ * @property {number} articleNumber - Number of concerned article
+ */
 /**
  * @typedef {object} paramSearchBooking
  * @property {number} id - Unique identifier
@@ -33,11 +42,9 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} return_permanency - Return expected Date
  * @property {boolean} overdue - overdue returning game
  */
-
 /**
  * @typedef {object} paramAddBooking
- * @property {number} request.param.id.required - Array of articles Id
- * @property {number} request.body.articleId.required - Array of articles Id
+ * @property {array<number>} artIds - Array of articles Id
  */
 /**
  * @typedef {object} BookingArticles
@@ -290,6 +297,13 @@ module.exports = {
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
+    async deleteArticle(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "article_to_booking"
+        WHERE "id_article" = $1
+        RETURNING *`, [id]);
         return result.rows;
     },
 };

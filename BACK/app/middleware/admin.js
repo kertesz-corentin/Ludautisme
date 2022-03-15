@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     if (role !== 'admin') {
         res.json({ status: 'error', statusCode: 403, message: 'Ce profil n\'est pas administrateur' });
     } else if (req.body.userId && req.body.userId !== userId) {
-        res.json({ status: 'error', statusCode: 403, message: 'Identification invalide2' });
+        res.json({ status: 'error', statusCode: 403, message: 'Identification invalide' });
     } else {
         next();
     }
