@@ -25,21 +25,24 @@ const CartModal = ({
     currentItems,
      ...rest
     }) => {
-    //Need current id for request
+    //ID USER
     let currentId = userToken.id;
     console.log(`Looking for ID`, currentId);
-    //Need a new const cause when i delete item from CartModal , i want to work on a local state
+
+    //ACTUAL CART STATE
     const [currentCart,setCurrentCart] = useState(currentItems);
     console.log(`Mon Panier`, currentCart);
+
+    //OPEN MODAL
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    //COUNT ITEM IN CART
     let counter = currentItemsNumber;
     console.log(`Ensemble des articles en cours`, currentCart);
 
-//Récupérer l'id du user pour parametrer la route
-
-
+    //CLICK ON VALIDATE CART
     const handleSubmit =  async (event, currentItems) => {
         event.preventDefault();
         console.log(`envoi du cart au back`,currentItems);
@@ -48,6 +51,15 @@ const CartModal = ({
         }else{
             console.log(`Une erreur est survenue`, response)
         };
+    }
+    //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
+    const removeItem = (item) =>{
+        const deleteIndex = currentCart.indexOf(item);
+        if (deleteIndex){
+            setCurrentCart(currentCart.splice(item,1));
+        } else {
+            console.log("index de l'item non trouvé dans currentCart");
+        }
     }
 
     return (
@@ -71,14 +83,14 @@ const CartModal = ({
                 Mon panier
               </Typography>
               <Divider/>
-              {counter === 0 || counter === undefined
+              <Box className="cartDetails">
+                <Box className = "cartCount">
+                {counter === 0 || counter === undefined
                 ?
                     <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                     Actuellement votre panier est vide
                     </Typography>
                 :
-                    <div>
-                        {/* //Ajouter ici pour faire en sorte que le compteur ne puisse pas aller au dessus de 8 */}
                         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                             {counter}/8 { counter >=8 ?
                                                         <p>Vous avez atteint le nombre d'articles maximum </p>
@@ -86,11 +98,17 @@ const CartModal = ({
                                                         <p>Nombre d'articles pouvant être reservés</p>
                             }
                         </Typography>
-                        <Divider/>
-                        {currentItems &&
-                        <div>
+                }
+                </Box>
+                <Divider/>
+                {currentItems &&
+                <Box className = "cartItems">
+
+
                             <Typography id="transition-modal-title" variant="h6" component="h2">
                             Voici l'ensemble de vos articles :
+                            </Typography>
+                            <Box className="cartListItems">
                             {currentItems.map((currentItem)=>(
                             <CurrentReference
                                 key = {currentItem.id}
@@ -101,18 +119,18 @@ const CartModal = ({
                                 picture={currentItem.picture}
                                 tag={currentItem.tag}
                                 valorisation={currentItem.valorisation}
+                                removeItem = {removeItem}
                             />
                                 ))}
-                            </Typography>
+                            </Box>
                             <Button
                             onClick={handleSubmit}
                             >
                             Valider le panier
                             </Button>
-                        </div>
-                        }
-                    </div>
-              }
+                </Box>
+                }
+              </Box>
             </Box>
           </Fade>
         </Modal>

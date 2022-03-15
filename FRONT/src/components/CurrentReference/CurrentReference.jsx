@@ -27,84 +27,41 @@ const CurrentReference = ({
     maincategory,
     picture,
     tag,
-    valorisation
+    valorisation,
+    removeItem,
      }) => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+    //GET USER ID
     const userToken = JSON.parse(localStorage.getItem('user'));
-    const [currentReferences, setCurrentReferences] = useState ([])
-    console.log(currentReferences)
-
-
-
 
     function handleRemoveClick (){
         console.log(`ARTICLE TO DELETE`)
     }
    return (
 
-        <Card sx={{ maxWidth: 345 }}>
+        <Card className = "cartCard" >
             <CardMedia
                 component="img"
                 height="140"
                 image={picture[0].url}
                 alt="image about the article"
+                sx={{ maxWidth: 345 }}
             />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+            <CardContent className = "cardContent">
+                <Typography
+                    className='cartTitle'
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                >
                 {name}
                 </Typography>
-
-                <Button onClick={handleOpen}>description</Button>
                 {userToken &&
                     <Button
                     onClick={handleRemoveClick}>
                         <RemoveIcon/>
                     </Button>
                 }
-
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <Box className="ref">
-                <Typography id="transition-modal-title" variant="h6" component="h2">
-                  {name}
-                </Typography>
-                <Divider/>
-                <Typography id="transition-modal-title" variant="h6" component="h5">
-                  {description}
-                </Typography>
-                <Typography id="transition-modal-title" variant="h6" component="h5">
-                Prix: {valorisation}
-                </Typography>
-                <Divider/>
-                <CardMedia
-                component="img"
-                height="140"
-                image={picture[0].url}
-                alt="image about the article"
-                className= "cardmedia"
-            />
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 <p> Categorie: {maincategory} </p>
-                 <p> Sous catégories:{tag} </p>
-                </Typography>
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                </Typography>
-
-              </Box>
-            </Fade>
-          </Modal>
             </CardContent>
         </Card>
    );
