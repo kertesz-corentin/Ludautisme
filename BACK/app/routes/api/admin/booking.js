@@ -14,6 +14,32 @@ const router = express.Router();
 router.route('/')
     .get(controllerHandler(bookingController.getAll));
 /**
+ * PUT /api/admin/booking/article/:userId
+ * @summary Add one article to booking
+ * @tags [ADMIN] Booking
+ * @param {number} request.params.required - ID of user
+ * @param {BookingParam} request.body.required - ID of article
+ * @return {Confirm} 200 - success response - application/json
+ */
+/**
+ * DELETE /api/admin/booking/article/:id
+ * @summary Remove one article to booking
+ * @tags [ADMIN] Booking
+ * @param {number} request.params.required - ID of article
+ * @return {Confirm} 200 - success response - application/json
+ */
+router.route('/article/:id')
+    .put(controllerHandler(bookingController.addToBooking))
+    .delete(controllerHandler(bookingController.removeToBooking));
+/**
+ * POST /api/admin/booking/returned/:id
+ * @summary Retune one article
+ * @param {number} request.params.required - ID of article
+ * @return {Confirm} 200 - succes response - application/json
+ */
+router.route('/returned/:id')
+    .post(controllerHandler(bookingController.returneArticle));
+/**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
  * @tags [ADMIN] Booking
@@ -21,23 +47,14 @@ router.route('/')
  * @return {booking} 200 - success response - application/json
  */
 
-/**
- * PUT /api/admin/booking/:id
- * @summary Update a booking
- * @tags [ADMIN] Booking
- * @param {number} request.params.required - At least one of these params
- * @param {number} request.body.required - Array of ids
- * @return {booking} 200 - success response - application/json
- */
-
 router.route('/:id')
     .get(controllerHandler(bookingController.getOne))
-    .put(controllerHandler(bookingController.updateBooking));
-
+    .put(controllerHandler(bookingController.addToBooking));
 /**
  * POST /api/admin/booking/add/:UserId
  * @summary Add a new booking
  * @tags [ADMIN] Booking
+ * @param {number} request.params.id.required - Id of user
  * @param {paramAddBooking} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
