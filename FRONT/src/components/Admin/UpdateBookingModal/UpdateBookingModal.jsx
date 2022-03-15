@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import api from '../../../requests';
+
+// import react components
+import BookingArticles from '../BookingArticles/BookingArticles';
+
+// import material ui components
 import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import Articles from '../../Articles/Articles';
-import AddModal from '../../Articles/AddModal/AddModal';
-import BookingArticles from '../BookingArticles/BookingArticles';
 
 import './updatebookingmodal.scss';
 
@@ -22,7 +23,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(articles);
+        handleClose();
         // const data = new FormData(event.currentTarget);
 
         // const reference = {
@@ -147,7 +148,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             className="update-modal-footer-submit"
                             variant="contained"
                         >
-                            Mettre à jour
+                            Valider
                         </Button>
                     </div>
                 </Box>
