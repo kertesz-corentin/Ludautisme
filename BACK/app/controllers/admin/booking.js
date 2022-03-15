@@ -84,7 +84,6 @@ module.exports = {
             const errorString = unavailableRef.map((ref) => `[ ${ref.id} ${ref.name} ]`);
             throw new ApiError(400, `Ce ou ces articles sont indisponibles : ${errorString}`);
         }
-
         try {
             const newBooking = {
                 id_permanency: activePerm[0].next_id,
@@ -224,5 +223,8 @@ module.exports = {
             message: 'Article retiré',
         }
         return res.json(confirm);
+    },
+    async returnedArticle(req,res) {
+        const { id } = req.params;
     },
 };

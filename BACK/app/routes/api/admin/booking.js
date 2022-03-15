@@ -31,7 +31,14 @@ router.route('/')
 router.route('/article/:id')
     .put(controllerHandler(bookingController.addToBooking))
     .delete(controllerHandler(bookingController.removeToBooking));
-
+/**
+ * POST /api/admin/booking/returned/:id
+ * @summary Retune one article
+ * @param {number} request.params.required - ID of article
+ * @return {Confirm} 200 - succes response - application/json
+ */
+router.route('/returned/:id')
+    .post(controllerHandler(bookingController.returneArticle));
 /**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
