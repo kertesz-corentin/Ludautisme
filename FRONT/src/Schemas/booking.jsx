@@ -20,7 +20,7 @@ const bookingSchema  = {
     overdue:{
         type : "boolean",
         label : "Retard",
-        gridDisplay : "toggle-icon-inverted",
+        gridDisplay : "overdue",
         width : 150,
     },
     id_user:{

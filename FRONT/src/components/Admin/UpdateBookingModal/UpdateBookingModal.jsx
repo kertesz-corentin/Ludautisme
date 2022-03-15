@@ -18,6 +18,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
 
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);
+    const [overdue, setOverdue] = useState(params.row.overdue);
 
     const [articles, setArticles] = useState(params.row.borrowed_articles);
 
@@ -97,19 +98,27 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         </TextField>
                     </div>
                     <div className="update-modal-status">
-                            {closed && (
+                            {delivered && (
                                 <Chip
                                 variant='contained'
                                 label='Délivrée'
                                 className="update-modal-status--item"
-                            />
+                                />
                             )}
-                            {delivered && (
+                            {overdue && (
+                                <Chip
+                                variant='contained'
+                                color='secondary'
+                                label='Retard'
+                                className="update-modal-status--item"
+                                />
+                            )}
+                            {closed && (
                                 <Chip
                                 variant='contained'
                                 label='Clôturée'
                                 className="update-modal-status--item"
-                            />
+                                />
                             )}
                         </div>
                         {/*<TextField
@@ -142,7 +151,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                     {/* </div> */}
                     <div class="update-modal-articles">
                         <div className="update-modal-articles--book">
-                            <BookingArticles  list={params.row.borrowed_articles} />
+                            <BookingArticles  list={params.row.borrowed_articles} closed={closed} />
                         </div>
                     </div>
                     <div className="update-modal-footer">
