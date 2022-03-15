@@ -7,12 +7,17 @@ import Footer from '../Footer/Footer';
 import ContentPage from '../ContentPage/ContentPage';
 import './home.scss';
 
-const Home = ({className, children}) => {
+const Home = ({
+    className,
+    children,
+    currentItemsNumber,
+    currentItems
+
+}) => {
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
-            <Header/>
-
+            <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
                 {children}
 
             <Footer/>
