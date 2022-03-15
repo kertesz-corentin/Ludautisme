@@ -38,9 +38,14 @@ const CartModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    let [counter, setCounter] = useState(8)
+    function handleRemoveItemClick  () {
+        setCounter( counter -=1)
+        console.log(`Passage dans le handleRemoveClick L44`,counter)
+    }
 
     //COUNT ITEM IN CART
-    let counter = currentItemsNumber;
+    // let counter = currentItemsNumber;
 
     //CLICK ON VALIDATE CART
     const handleSubmit =  async (event) => {
@@ -71,7 +76,7 @@ const CartModal = ({
     }
 
     const countSentence = ()=>{
-        if (currentItems.length){
+        if (currentItems.length ===0){
             return `Votre panier est vide`
          } else if (currentItems.length > 8) {
              return `Vous ne pouvez pas réserver plus de 8 articles`
@@ -79,6 +84,8 @@ const CartModal = ({
              return `Vous pouvez encore réserver ${8 - currentItems.length} articles`
          }
     }
+
+
 
     return (
       <div>
@@ -98,7 +105,7 @@ const CartModal = ({
           <Fade in={open}>
             <Box className="shopmodal">
               <Typography id="transition-modal-title" variant="h6" component="h2">
-                Mon panier
+                Mon panier {counter}
               </Typography>
               <Divider/>
               <Box className="cartDetails">
@@ -115,6 +122,7 @@ const CartModal = ({
                             {currentItems.map((currentItem,index)=>(
                             <CurrentReference
                                 key = {index}
+                                changeCounter = {handleRemoveItemClick}
                                 removeItem = {removeItem}
                                 currentItem = {currentItem}
                             />
