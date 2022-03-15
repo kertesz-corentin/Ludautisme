@@ -14,6 +14,16 @@ const router = express.Router();
 router.route('/')
     .get(controllerHandler(bookingController.getAll));
 /**
+ *POST /api/admin/booking/close/:id
+ @summary Close one booking
+ @tags [ADMIN] Booking
+ @param {number} request.params.id.required - ID of booking
+ @param {array<number>} request.body.id.required - ID of articles
+ @return {Confirm} 200 - success response - application/json
+ */
+router.route('/close/:id')
+    .post(controllerHandler(bookingController.close));
+/**
  * PUT /api/admin/booking/article/:userId
  * @summary Add one article to booking
  * @tags [ADMIN] Booking

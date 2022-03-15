@@ -141,26 +141,19 @@ module.exports = {
         FROM booking_full
         WHERE `;
         const placeholders = [];
-        console.log(arr);
-        try {
-            arr.forEach((filter, index) => {
-                let prop = Object.keys(filter)[0];
-                console.log(prop);
-                placeholders.push(filter[prop]);
-                if (index !== arr.length - 1) {
-                    query += `"${prop}"=$${index + 1} AND `;
-                } else {
-                    query += `"${prop}"=$${index + 1} `;
-                }
-            });
-            const result = await sqlHandler(query, placeholders);
-            return result.rows;
-        } catch (err) {
-            console.error(err);
-        }
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                query += `"${prop}"=$${index + 1} AND `;
+            } else {
+                query += `"${prop}"=$${index + 1} `;
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
     async findOne(id) {
-        console.log(id);
         const query = `
         SELECT
 	    b.id,
@@ -296,6 +289,16 @@ module.exports = {
         SET "returned"='true'
         WHERE "id_article"=$1
         RETURNING *`, [id]);
+        return result.rows;
+    },
+    async close(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "closed"='true',
+            "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
         return result.rows;
     },
 };

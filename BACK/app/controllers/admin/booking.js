@@ -74,7 +74,6 @@ module.exports = {
 
         // Check if articles are available
         const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
-        console.log(refAvailability);
         if (refAvailability.length !== refIds.length) {
             const unknownRef = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
@@ -97,7 +96,6 @@ module.exports = {
             const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
             // Update availability on each article booked to false
             await bookingDataMapper.updateArticlesAvailability(articlesIds);
-            console.log(articlesBooked);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);
@@ -106,7 +104,6 @@ module.exports = {
     async addBookingByArticle(req, res) {
         const userId = Number(req.params.UserId);
         const { artIds } = req.body;
-        console.log(artIds);
         // Check if too much articles are booked
         if (!artIds || artIds.length > 7) {
             throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
@@ -132,7 +129,6 @@ module.exports = {
 
         // Check if articles are available
         const artAvailability = await bookingDataMapper.getArticlesAvailability(artIds);
-        console.log(artAvailability);
         if (artAvailability.length !== artIds.length) {
             const unknownRef = artIds.filter((artId) => !artAvailability.map((art) => art.id).includes(artId));
             throw new ApiError(400, `Référence(s) inconnues : [ ${unknownRef} ]`);
@@ -245,5 +241,33 @@ module.exports = {
             message: 'Article rendu',
         };
         return res.json(confirm);
+    },
+    async close(req, res) {
+        const { id } = req.params;
+        const booking = await bookingDataMapper.findOne(id);
+        const obj = { available: true };
+        try {
+            booking[0].articles.forEach(async (article) => {
+                console.log(article);
+                if (article.available === false) {
+                    const getAvailable = await articleDataMapper.update(article.id, obj);
+                    if (getAvailable.available !== true) {
+                        throw new ApiError(500, `Impossible de rendre l'article n°${article.id} disponible 1`);
+                    } else {
+                        const returned = await bookingDataMapper.return(article.id);
+                        if (returned.returned !== true) {
+                            throw new ApiError(500, `Impossible de rendre l'article n°${article.id} disponible 2`);
+                        }
+                    }
+                }
+            });
+            
+            const closedBooking = await bookingDataMapper.close(id);
+            console.log(closedBooking);
+
+            return res.json(closedBooking);
+        } catch (err) {
+            console.error(err);
+        }
     },
 };
