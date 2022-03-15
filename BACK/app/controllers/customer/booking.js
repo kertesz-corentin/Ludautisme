@@ -14,6 +14,7 @@ module.exports = {
         const booking = await bookingDataMapper.findHistory(idUser);
         return res.json(booking);
     },
+
     async addBookingByRef(req, res) {
         const userId = Number(req.params.UserId);
         const { refIds } = req.body;

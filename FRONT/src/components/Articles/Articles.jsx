@@ -7,19 +7,19 @@ import { articleSchema } from '../../Schemas';
 import { ToggleButton } from '@mui/material';
 import api from '../../requests';
 
-const Articles = ({params, children, className, ...rest}) => {
+const Articles = ({params, children, name, className, ...rest}) => {
 
     const [articles, setArticles] = useState([]);
 
     const getReferenceWithArticles = async () => {
         try {
-            console.log("ref",params.row);
+
             const settings = {
                 "id_ref":params.row.id,
             }
             const response = await api.post(`/admin/articles/search`,settings);
             const data = await response.data;
-            console.log('article', data);
+
             setArticles(data);
         }
         catch (err) {
@@ -68,17 +68,20 @@ const Articles = ({params, children, className, ...rest}) => {
         return columns;
     })();
 
+    console.log('article', articles);
+
    return (
        <section
             className={classnames('articles', className)}
             {...rest}
          >
             <div>
-                <h2>Détails des articles</h2>
+                <h2>Liste des articles</h2>
             </div>
             {children}
             <div className="articles-grid" style={{ height: 300, width: '100%'}}>
                 <DataGrid
+                    getRowId={(row) => row.id}
                     rows={articles}
                     columns={columnsBuilder}
                     pageSize={10}
@@ -91,17 +94,15 @@ const Articles = ({params, children, className, ...rest}) => {
                     initialState={{
                         columns: {
                             columnVisibilityModel: {
-                                id: false,
                                 created_at: false,
                                 id_ref: false,
                             },
                         },
                         sorting: {
-                            sortModel: [{field: 'id', sort: 'asc'}],
+                            sortModel: [{field: 'number', sort: 'asc'}],
                         }
                     }}
                 >
-
                 </DataGrid>
             </div>
         </section>

@@ -16,6 +16,8 @@ const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
     const [articles, setArticles] = useState([]);
 
+    console.log('article-API', articles);
+
     const path='/admin/booking';
 
     const getBookings = async() => {
@@ -64,7 +66,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateBookingModal params={params} article={params.row.articles}/>
+                                <UpdateBookingModal params={params} />
                             </IconButton>
                         );
                     break;
@@ -114,7 +116,7 @@ const AdminBookings = ({className, ...rest}) => {
                         sortModel: [{field: 'id', sort: 'asc'}],
                     }
                 }}
-                children={<BookingUserChoice articles={articles} />}
+                children={<BookingUserChoice />}
             />
         </div>
     );

@@ -5,7 +5,7 @@ import './bookingarticles.scss';
 import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../../Schemas';
 
-const BookingArticles = ({articles, className, ...rest}) => {
+const BookingArticles = ({list, className, ...rest}) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -30,9 +30,10 @@ const BookingArticles = ({articles, className, ...rest}) => {
             <div>
                 <h2>Liste des articles</h2>
             </div>
-            <div className="articles-grid" style={{ height: 350, width: '100%'}}>
+            <div className="articles-grid" style={{ height: 325, width: '100%'}}>
                 <DataGrid
-                    rows={articles}
+                    getRowId={(row) => row.id}
+                    rows={list}
                     columns={columnsBuilder}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
@@ -45,13 +46,24 @@ const BookingArticles = ({articles, className, ...rest}) => {
                         columns: {
                             columnVisibilityModel: {
                                 id: false,
+                                id_article: false,
+                                origin: false,
                                 created_at: false,
-                                id_ref: false,
+                                main_category: false,
+                                valorisation: false,
                                 archived: false,
+                                delivered: false,
+                                closed: false,
+                                id_ref: false,
+                                id_booking: false,
+                                date_buy: false,
+                                nb_prolongation: false,
+                                id_permanency: false,
+                                id_user: false,
                             },
                         },
                         sorting: {
-                            sortModel: [{field: 'id', sort: 'asc'}],
+                            sortModel: [{field: 'number', sort: 'asc'}],
                         },
                         filter: {
                             filterModel: {

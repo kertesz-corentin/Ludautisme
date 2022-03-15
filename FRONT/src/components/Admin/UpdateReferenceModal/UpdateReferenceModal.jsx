@@ -38,7 +38,6 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
         setCategory(event.target.value);
     }
 
-    console.log('params-edit', params);
     return (
         <div>
             <IconButton onClick={handleOpen}>

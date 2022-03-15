@@ -70,34 +70,42 @@ const sqlHandler = require('../../helpers/sqlHandler');
 module.exports = {
     async findAll() {
         const query = `
-        SELECT
-	    b.id,
-	    b.delivered,
-	    b.closed,
-	    b.id_permanency,
-	    "user"."id" AS id_user,
-        "user"."member_number" AS member_number,
-	    "user"."first_name",
-	    "user"."last_name",
-        "user"."email",
-		"perm"."perm_date" AS date_permanency,
-        "perm"."next_id" AS return_id_permanency,
-        "perm"."next_date" AS return_date_permanency,
-		"perm"."active" AS active_permanency,
-        (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
-	    json_agg(json_build_object (
-                'id', ar."id",
-                'number', ar."number",
-                'available', ar."available",
-                'archived', ar."archived"
-                )) AS "articles"
+        WITH booking_full AS(
+			SELECT
+            b.id,
+            b.delivered,
+            b.closed,
+            b.id_permanency,
+            "user"."id" AS id_user,
+        	"user"."member_number" AS member_number,
+            "user"."first_name",
+            "user"."last_name",
+        	"user"."email",
+            "perm"."perm_date" AS date_permanency,
+        	"perm"."next_id" AS return_id_permanency,
+        	"perm"."next_date" AS return_date_permanency,
+            "perm"."active" AS active_permanency,
+        	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+            json_agg(json_build_object (
+                'id', borrowed."id",
+                'number', borrowed."number",
+                'available', borrowed."available",
+                'archived', borrowed."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description"
+                )) AS "borrowed_articles"
         FROM "booking" AS b
+	    INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         INNER JOIN "user" ON "user"."id"="b"."id_user"
-		LEFT JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        LEFT JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
-		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
-        GROUP BY b.id, "user"."id",
-            "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
+        LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
+        LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
+        INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
+		GROUP BY b.id, "user"."id",
+                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+        )
+        SELECT *
+        FROM booking_full`;
         const result = await sqlHandler(query);
         return result.rows;
     },
@@ -162,35 +170,43 @@ module.exports = {
     async findOne(id) {
         console.log(id);
         const query = `
-        SELECT
-	    b.id,
-	    b.delivered,
-	    b.closed,
-	    b.id_permanency,
-	    "user"."id" AS id_user,
-        "user"."member_number" AS member_number,
-	    "user"."first_name",
-	    "user"."last_name",
-        "user"."email",
-		"perm"."perm_date" AS date_permanency,
-        "perm"."next_id" AS return_id_permanency,
-        "perm"."next_date" AS return_date_permanency,
-		"perm"."active" AS active_permanency,
-        (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
-	    json_agg(json_build_object (
-                'id', ar."id",
-                'number', ar."number",
-                'available', ar."available",
-                'archived', ar."archived"
-                )) AS "articles"
+        WITH booking_full AS(
+			SELECT
+            b.id,
+            b.delivered,
+            b.closed,
+            b.id_permanency,
+            "user"."id" AS id_user,
+        	"user"."member_number" AS member_number,
+            "user"."first_name",
+            "user"."last_name",
+        	"user"."email",
+            "perm"."perm_date" AS date_permanency,
+        	"perm"."next_id" AS return_id_permanency,
+        	"perm"."next_date" AS return_date_permanency,
+            "perm"."active" AS active_permanency,
+        	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+            json_agg(json_build_object (
+                'id', borrowed."id",
+                'number', borrowed."number",
+                'available', borrowed."available",
+                'archived', borrowed."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description"
+                )) AS "borrowed_articles"
         FROM "booking" AS b
+	    INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         INNER JOIN "user" ON "user"."id"="b"."id_user"
-		LEFT JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
-        LEFT JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
-		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
-        WHERE b.id=$1
-        GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
+        LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
+        LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
+        INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
+		GROUP BY b.id, "user"."id",
+                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+        )
+        SELECT *
+        FROM booking_full
+        WHERE  "id"=$1`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
