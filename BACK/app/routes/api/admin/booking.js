@@ -14,6 +14,15 @@ const router = express.Router();
 router.route('/')
     .get(controllerHandler(bookingController.getAll));
 /**
+ *POST /api/admin/booking/close/:id
+ @summary Close one booking
+ @tags [ADMIN] Booking
+ @param {number} request.params.id.required - ID of booking
+ @return {Confirm} 200 - success response - application/json
+ */
+router.route('/close/:id')
+    .post(controllerHandler(bookingController.close));
+/**
  * PUT /api/admin/booking/article/:userId
  * @summary Add one article to booking
  * @tags [ADMIN] Booking
@@ -25,20 +34,21 @@ router.route('/')
  * DELETE /api/admin/booking/article/:id
  * @summary Remove one article to booking
  * @tags [ADMIN] Booking
- * @param {number} request.params.required - ID of article
+ * @param {array<number>} request.params.required - ID of article
  * @return {Confirm} 200 - success response - application/json
  */
 router.route('/article/:id')
     .put(controllerHandler(bookingController.addToBooking))
     .delete(controllerHandler(bookingController.removeToBooking));
 /**
- * POST /api/admin/booking/returned/:id
- * @summary Retune one article
+ * POST /api/admin/booking/return/:id
+ * @summary Return one article of booking
+ * @tags [ADMIN] Booking
  * @param {number} request.params.required - ID of article
- * @return {Confirm} 200 - succes response - application/json
+ * @return {Confirm} 200 - success response - applcation/json
  */
-router.route('/returned/:id')
-    .post(controllerHandler(bookingController.returneArticle));
+router.route('/return/:id')
+    .post(controllerHandler(bookingController.returnArticle));
 /**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
