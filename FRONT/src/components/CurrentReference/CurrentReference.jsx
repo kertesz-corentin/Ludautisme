@@ -33,23 +33,14 @@ const CurrentReference = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const userToken = JSON.parse(localStorage.getItem('user'));
-
-    let itemToRemove = {
-        id,
-        name,
-        description,
-        maincategory,
-        picture,
-        tag,
-        valorisation
-    }
+    const [currentReferences, setCurrentReferences] = useState ([])
+    console.log(currentReferences)
 
 
-    let [counter, setCounter] = useState(2);
 
 
-    function handleRemoveClick (itemToRemove){
-
+    function handleRemoveClick (){
+        console.log(`ARTICLE TO DELETE`)
     }
    return (
 
@@ -93,7 +84,6 @@ const CurrentReference = ({
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                   {description}
                 </Typography>
-                {counter > 0 ? <Available/> : <Unavailable/>}
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                 Prix: {valorisation}
                 </Typography>
@@ -110,7 +100,6 @@ const CurrentReference = ({
                  <p> Sous catégories:{tag} </p>
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Quantité: {counter}
                 </Typography>
 
               </Box>

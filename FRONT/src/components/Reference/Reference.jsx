@@ -35,8 +35,6 @@ const Reference = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const add = useContext(FunctionContext);
-    console.log(FunctionContext)
-    console.log(add, `ICI`)
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     let itemToAdd = {
@@ -50,7 +48,7 @@ const Reference = ({
     }
 
 
-    let [counter, setCounter] = useState(2);
+    let [quantity, setQuantity] = useState(2);
 
 //each time i add article to my booking, delete one on quantity
 
@@ -103,7 +101,7 @@ const Reference = ({
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                   {description}
                 </Typography>
-                {counter > 0 ? <Available/> : <Unavailable/>}
+                {quantity > 0 ? <Available/> : <Unavailable/>}
                 <Typography id="transition-modal-title" variant="h6" component="h5">
                 Prix: {valorisation}
                 </Typography>
@@ -120,7 +118,7 @@ const Reference = ({
                  <p> Sous catégories:{tag} </p>
                 </Typography>
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Quantité: {counter}
+                 Quantité: {quantity}
                 </Typography>
 
               </Box>

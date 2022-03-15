@@ -14,6 +14,7 @@ import CurrentReference from '../CurrentReference/CurrentReference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
+import api from '../../requests/index';
 
 
 
@@ -23,10 +24,24 @@ const CartModal = ({
     currentItems,
      ...rest
     }) => {
+    //Need a new const cause when i delete item from CartModal , i want to work on a local state
+
+    const currentCart = currentItems;
+    console.log(`Mon Panier`, currentCart);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let counter = currentItemsNumber;
+    console.log(`Ensemble des articles en cours`, currentCart);
+//Récupérer l'id du user pour parametrer la route
+    const handleSubmit =  async (event) => {
+        event.preventDefault();
+        console.log(`envoi du cart au back`);
+        const response =  await api.post('/customer/booking/add', currentItems)
+        if (response.status === 200){
+        };
+        console.log(response)
+    }
 
     return (
       <div>
@@ -66,6 +81,7 @@ const CartModal = ({
                         </Typography>
                         <Divider/>
                         {currentItems &&
+                        <div>
                             <Typography id="transition-modal-title" variant="h6" component="h2">
                             Voici l'ensemble de vos articles :
                             {currentItems.map((currentItem)=>(
@@ -81,6 +97,12 @@ const CartModal = ({
                             />
                                 ))}
                             </Typography>
+                            <Button
+                            onClick={handleSubmit}
+                            >
+                            Valider le panier
+                            </Button>
+                        </div>
                         }
                     </div>
               }
