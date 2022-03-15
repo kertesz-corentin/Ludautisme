@@ -11,7 +11,7 @@ const router = express.Router();
  * @param {number} request.param.id.required - ID of booking
  * @return {Confirm} 200 - success response - applcation/json
  */
-router.route('/deliver')
+router.route('/deliver/:id')
     .post(controllerHandler(bookingController.deliver));
 /**
  *POST /api/admin/booking/close/:id

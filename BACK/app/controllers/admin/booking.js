@@ -290,7 +290,9 @@ module.exports = {
         const { id } = req.params;
 
         const deliver = await bookingDataMapper.deliver(id);
-
+        if (!deliver[0]) {
+            throw new ApiError(404, 'Impossible de trouver cette reservation');
+        }
         return res.json(deliver);
     },
 };

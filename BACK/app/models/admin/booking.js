@@ -330,4 +330,13 @@ module.exports = {
         `, [id]);
         return result.rows;
     },
+    async deliver(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
+        return result.rows;
+    },
 };
