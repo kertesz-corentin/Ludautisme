@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './bookingarticles.scss';
-import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 import { articleSchema } from '../../../Schemas';
 
 const BookingArticles = ({list, className, ...rest}) => {
@@ -16,6 +18,24 @@ const BookingArticles = ({list, className, ...rest}) => {
                 field: prop,
                 headerName: propElt.label,
                 width: propElt.width,
+            };
+            if (propElt.gridDisplay !== "normal"){
+                switch (propElt.gridDisplay){
+                    case "delete":
+                        config.renderCell = (params) => (
+
+                            <IconButton
+                                value={params.value}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                        );
+                    break;
+
+                    default:
+                        break;
+                }
             }
             columns.push(config);
         });
@@ -46,7 +66,6 @@ const BookingArticles = ({list, className, ...rest}) => {
                         columns: {
                             columnVisibilityModel: {
                                 id: false,
-                                id_article: false,
                                 origin: false,
                                 created_at: false,
                                 main_category: false,

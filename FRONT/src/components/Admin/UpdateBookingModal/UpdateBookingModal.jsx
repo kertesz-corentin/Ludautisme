@@ -17,9 +17,6 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
 
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);
-    console.log('params', params.row);
-    // console.log("detail_Réservation", params.row.articles);
-    // console.log('params', params);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -64,7 +61,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     return (
         <div>
             <IconButton onClick={handleOpen}>
-                {`# ${params.value}`}
+                {/* {`# ${params.value}`} */}
                 <EditIcon />
             </IconButton>
             <Modal
@@ -158,6 +155,11 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             </Select>
                         </FormControl> */}
                     {/* </div> */}
+                    <div class="update-modal-articles">
+                        <div className="update-modal-articles--book">
+                            <BookingArticles  list={params.row.borrowed_articles} />
+                        </div>
+                    </div>
                     <div className="update-modal-footer">
                         <Button
                             type='submit'
@@ -166,14 +168,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         >
                             Mettre à jour
                         </Button>
-
                     </div>
-                    <div class="update-modal-articles">
-                        <div className="update-modal-articles--book">
-                            <BookingArticles  list={params.row.borrowed_articles} />
-                        </div>
-                    </div>
-
                 </Box>
             </Modal>
 
