@@ -131,6 +131,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].first_name}
                             className="addbook-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -140,6 +141,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].last_name}
                             className="addbook-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -149,6 +151,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].email}
                             className="addbook-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                     </div>
@@ -175,6 +178,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             </Box>
                         </div>
                         <div className="addbook-modal-articles--book">
+                            <h2>Liste des articles</h2>
                             <div className="articles-grid" style={{ height: 325, width: '100%'}}>
                                 <DataGrid
                                     getRowId={(row) => row.id}

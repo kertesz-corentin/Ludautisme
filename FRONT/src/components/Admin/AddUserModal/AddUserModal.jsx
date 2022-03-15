@@ -70,6 +70,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='member_number'
                             type='number'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -78,6 +79,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='email'
                             type='email'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -86,6 +88,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='first_name'
                             type='string'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -94,6 +97,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='last_name'
                             type='string'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -102,6 +106,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='phone'
                             type='string'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -110,6 +115,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='adress_number'
                             type='number'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -118,6 +124,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='adress_street'
                             type='string'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -126,6 +133,7 @@ const AddUserModal = ({className, ...rest}) => {
                             name='adress_zipcode'
                             type='number'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -134,9 +142,17 @@ const AddUserModal = ({className, ...rest}) => {
                             name='adress_city'
                             type='string'
                             className="adduser-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
-                        <FormGroup >
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                width: '40%',
+                                flexDirection: 'row',
+                                justifyContent: 'space-around'
+                            }}
+                        >
                             <FormControlLabel control={<Checkbox name='cotisation_status' onChange={handleCheckBoxChange} />} label="Cotisation" />
                             <FormControlLabel control={<Checkbox name='caution_status' onChange={handleCheckBoxChange} />} label="Caution" />
                             <FormControlLabel control={<Checkbox name='archived' onChange={handleCheckBoxChange} />} label="Archivé" />

@@ -71,6 +71,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.first_name}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
 
                         </TextField>
@@ -81,6 +82,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.last_name}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -90,6 +92,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.email}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                     </div>
