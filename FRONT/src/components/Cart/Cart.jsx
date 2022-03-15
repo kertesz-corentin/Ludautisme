@@ -44,6 +44,26 @@ const Cart = ({
 
 Cart.propTypes = {
     className: PropTypes.string,
+    currentItems: PropTypes.arrayOf(
+        PropTypes.shape({
+            description: PropTypes.string,
+            id: PropTypes.number.isRequired,
+            maincategory: PropTypes.string,
+            name:PropTypes.string.isRequired,
+            picture:PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.number.isRequired,
+                    url: PropTypes.string.isRequired
+                }).isRequired
+            ),
+            tag:PropTypes.arrayOf(
+                PropTypes.shape({
+                  index:PropTypes.string
+                })
+            ),
+            valorisation: PropTypes.number.isRequired
+        })
+    )
 };
 Cart.defaultProps = {
     className: '',
