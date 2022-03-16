@@ -98,60 +98,54 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                         </TextField>
                     </div>
                     <div className="update-modal-status">
-                            {delivered && (
-                                <Chip
-                                variant='contained'
-                                label='Délivrée'
-                                className="update-modal-status--item"
-                                />
-                            )}
-                            {overdue && (
-                                <Chip
-                                variant='contained'
-                                color='secondary'
-                                label='Retard'
-                                className="update-modal-status--item"
-                                />
-                            )}
-                            {closed && (
-                                <Chip
-                                variant='contained'
-                                label='Clôturée'
-                                className="update-modal-status--item"
-                                />
-                            )}
+                        {delivered && (
+                            <Chip
+                            variant='contained'
+                            label='Délivrée'
+                            className="update-modal-status--item"
+                            />
+                        )}
+                        {overdue && (
+                            <Chip
+                            variant='contained'
+                            color='secondary'
+                            label='Retard'
+                            className="update-modal-status--item"
+                            />
+                        )}
+                        {closed && (
+                            <Chip
+                            variant='contained'
+                            label='Clôturée'
+                            className="update-modal-status--item"
+                            />
+                        )}
+                    </div>
+                    {!closed && !delivered && (
+                        <div className="updatebook-modal-articles--add">
+                            <Box className='article-search' component="form" onSubmit>
+                                <TextField
+                                    id='outlined'
+                                    label='n° article'
+                                    name='number'
+                                    type='number'
+                                    className="article-search-item"
+                                >
+                                </TextField>
+
+                                <Button
+                                type='submit'
+                                className="article-search-submit"
+                                variant="outlined"
+                                >
+                                    Ajouter à la liste
+                                </Button>
+                            </Box>
                         </div>
-                        {/*<TextField
-                            id='outlined'
-                            label='Valorisation'
-                            name='valorisation'
-                            type='number'
-                            className="modal-inputs-item"
-                            defaultValue={params.row.valorisation}
-                        >
-                        </TextField>
-                        <FormControl fullWidth>
-                            <InputLabel id="maincategory-label">Catégorie</InputLabel>
-                            <Select
-                                labelId="maincategory-label"
-                                id="main_category"
-                                name="main_category"
-                                label="Catégorie"
-                                type='string'
-                                onChange={handleChange}
-                                value={category}
-                            >
-                            {categories.map((category) => {
-                                return (
-                                    <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-                                )
-                            })}
-                            </Select>
-                        </FormControl> */}
-                    {/* </div> */}
+                    )}
                     <div class="update-modal-articles">
                         <div className="update-modal-articles--book">
-                            <BookingArticles  list={params.row.borrowed_articles} closed={closed} />
+                            <BookingArticles  list={params.row.borrowed_articles} closed={closed} delivered={delivered} />
                         </div>
                     </div>
                     <div className="update-modal-footer">

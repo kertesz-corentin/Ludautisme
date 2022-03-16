@@ -31,6 +31,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
             handleClose();
         }
         console.log('response', response);
+
     }
 
     const handleChange = (event) => {
