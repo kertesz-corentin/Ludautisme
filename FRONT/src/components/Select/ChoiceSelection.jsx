@@ -7,12 +7,24 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import api from '../../requests';
 
-const ChoiceSelection = ({className,categories, ...rest}) => {
+const ChoiceSelection = ({
+    className,
+    categories,
+    getAllPickedRef,
+     ...rest})=> {
     const [category, setCategory] = React.useState('');
 
-    const handleChange = (event) => {
+    const handleChange = async (event) => {
       setCategory(event.target.value);
+      const response = await api.post('/customer/articles/search',{
+          "page": 1,
+          "limit":10,
+          "categories": [event.target.value]
+        })
+        getAllPickedRef(response.data);
+      console.log(response.data)
     };
     return (
       <Box sx={{ minWidth: 120 }}>
@@ -27,7 +39,7 @@ const ChoiceSelection = ({className,categories, ...rest}) => {
           >
                 {categories.map((category) => {
                 return(
-                <MenuItem key={category.id} value={category.id}> {category.name}</MenuItem>)
+                <MenuItem key={category.id} value={category.id} > {category.name}</MenuItem>)
             })}
           </Select>
         </FormControl>

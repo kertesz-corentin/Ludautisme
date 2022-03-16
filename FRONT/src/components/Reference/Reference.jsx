@@ -53,13 +53,17 @@ const Reference = ({
         valorisation,
     }
     let [quantity, setQuantity] = useState(nb_available);
-
+    //Need newQuantity to compare with quantity and know if article has been click already
+    let [newQuantity, setNewQuantity] = useState(quantity);
+    console.log(quantity, newQuantity)
 
     function handleClick () {
         add(itemToAdd);
         console.log(`envoi de l'item au cart`, itemToAdd)
+        setNewQuantity(newQuantity -= 1 )
         modifyIsClick()
     }
+
     function modifyIsClick () {
         setIsClick(!isClick)
     }
@@ -80,7 +84,7 @@ const Reference = ({
                 </Typography>
 
                 <Button onClick={handleOpen}>description</Button>
-                {userToken && quantity>0 && !isClick &&
+                {userToken && quantity>0 && quantity === newQuantity &&
                     <Box>
                     <Button
                         onClick={handleClick}>
@@ -88,7 +92,7 @@ const Reference = ({
                     </Button>
                     </Box>
                 }
-                {userToken && isClick &&
+                 {userToken && quantity !== newQuantity &&
                     <Box>
                     <Button
                         onClick={handleClick} disabled>
@@ -107,7 +111,7 @@ const Reference = ({
                     </Button>
                     <Typography gutterBottom variant="p" component="div">
                         <BlockIcon/>
-                                Article indisponible
+                                Actuellement indisponible
                     </Typography>
                     </Box>
                 }
@@ -151,7 +155,6 @@ const Reference = ({
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité disponible: {nb_available} sur {nb_total}
                 </Typography>
-
               </Box>
             </Fade>
           </Modal>
