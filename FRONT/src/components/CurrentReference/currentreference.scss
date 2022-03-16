@@ -1,6 +1,6 @@
 @import 'src/styles/vars';
 
-.referencemodal{
+.ref{
     background-color: aqua;
     position: absolute;
     margin-top:22%;
@@ -11,4 +11,17 @@
 }
 .cardmedia{
     background-color: aquamarine;
+}
+
+.cartCard {
+    width: 100%;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.cardContent {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

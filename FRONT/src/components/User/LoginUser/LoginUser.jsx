@@ -20,7 +20,7 @@ import './loginuser.scss';
 import {useNavigate} from "react-router-dom";
 import AccountMenu from '../AccountMenu/AccountMenu';
 import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
-
+import AlertMessage from '../../AlertMessage/AlertMessage';
 
 
 
@@ -32,22 +32,27 @@ export default function SignIn() {
       setIsOpen(!isOpen)
   }
 
+  const [alertMessage, setAlertMessage] = useState();
+
+
     //Use to send Datas
   const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData (event.currentTarget);
-    const email = data.get('email');
-    const password =  data.get ('password');
-    const response = await api.login(email,password,"user");
-    if(response.status === 200) {
-        navigate('/user/account')
-        setIsOpen(!isOpen)
+    try {
+        const data = new FormData (event.currentTarget);
+        const email = data.get('email');
+        const password =  data.get ('password');
+        const response = await api.login(email,password,"user");
+        console.log(response);
+        if(response.status === 200) {
+            navigate('/user/account')
+            setIsOpen(!isOpen)
+        }
+    } catch (err) {
+        setAlertMessage(err.response.data.message);
+        console.error(err.response);
+
     }
-    else{navigate('/')}
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -155,6 +160,12 @@ export default function SignIn() {
                                     >
                                     Se connecter
                                     </Button>
+                                    {alertMessage && (
+                                        <AlertMessage
+                                            message={alertMessage}
+                                        >
+                                        </AlertMessage>
+                                    )}
                                     <Grid container className= "gridContainer">
                                         <Grid item xs>
                                         <RecoverPassworldModal/>

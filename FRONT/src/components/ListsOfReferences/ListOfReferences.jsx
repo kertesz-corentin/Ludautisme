@@ -7,7 +7,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import NextPages from '../NextPages/NextPages';
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper } from '@mui/material';
+import { useContext } from 'react';
+
+
 
 
 const ListOfReferences = ({
@@ -15,21 +18,27 @@ const ListOfReferences = ({
     references,
      ...rest
     }) => {
-        console.log("ref",references)
+
     return (
         references ?
         <React.Fragment>
           <CssBaseline />
           <Container maxWidth="70%">
           <Grid
-            container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
+            className = "gridList"
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
         >
 
                 {references.map((reference,index)=>
                 (
-                    <Grid item xs={2} sm={4} md={4} key={index}>
+
                     <Reference
                         key = {reference.id}
+                        id={reference.id}
+                        result= {reference.id}
                         name={reference.name}
                         description={reference.description}
                         maincategory={reference.maincategory}
@@ -37,9 +46,10 @@ const ListOfReferences = ({
                         tag={reference.tag}
                         valorisation={reference.valorisation}
                     />
-                    </Grid>
-                ))
-                }
+
+                )
+
+            )}
             </Grid>
           </Container>
         </React.Fragment>

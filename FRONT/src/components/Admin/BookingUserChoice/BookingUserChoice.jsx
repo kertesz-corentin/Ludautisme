@@ -11,6 +11,7 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
+    const [value, setValue] = useState('');
 
     const handleSearch = () => setSearch(true);
 
@@ -29,8 +30,13 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
             console.log('response-member', searchUser);
             setUser(searchUser);
             setUserExist(true);
-
         }
+    }
+
+    const handleChange = (event) => {
+        console.log(event.target.value)
+        setValue(event.target.value)
+        setUserExist(false);
     }
 
     return (
@@ -38,7 +44,7 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
             className={classnames('booking', className)}
             {...rest}
         >
-            <Button onClick={handleSearch}>Ajouter réservation</Button>
+            <Button onClick={handleSearch} variant='outlined'>Ajouter réservation</Button>
             <Box className='booking-search' component="form" onSubmit={handleSubmit}>
                 {search && (
                     <TextField
@@ -46,7 +52,9 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
                         label='n° Adhérent'
                         name='member_number'
                         type='number'
-                        className="modal-inputs-item"
+                        value={value}
+                        onChange={handleChange}
+                        className="booking-search-element"
                     >
                     </TextField>
                 )}
@@ -54,7 +62,7 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
                 {!userExist && search &&(
                     <Button
                     type='submit'
-                    className="modal-footer-submit"
+                    className="booking-search-element"
                     variant="outlined"
                     >
                         Valider

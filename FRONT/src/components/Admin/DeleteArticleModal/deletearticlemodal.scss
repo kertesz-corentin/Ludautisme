@@ -1,6 +1,6 @@
 @import 'src/styles/vars';
 
-.adduser-modal {
+.delete-modal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -47,13 +47,5 @@
         &-item {
             width: 45%;
         }
-    }
-
-    &-footer {
-        margin-top: $gutter;
-    }
-
-    &--open {
-        margin: $gutter;
     }
 }

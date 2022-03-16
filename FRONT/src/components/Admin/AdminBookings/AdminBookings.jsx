@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import AdminSection from '../AdminSection/AdminSection';
+import moment from 'moment';
+
+// import requests
 import api from '../../../requests';
-import { bookingSchema } from '../../../Schemas';
+
+// import react components
+import AdminSection from '../AdminSection/AdminSection';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
+import { bookingSchema } from '../../../Schemas';
+
+// import mui components
+import { IconButton, ToggleButton } from '@mui/material';
+import { GridCheckIcon } from '@mui/x-data-grid';
 
 import './adminbookings.scss';
-import { IconButton, ToggleButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
     const [articles, setArticles] = useState([]);
 
-    console.log('article-API', articles);
-
-    const path='/admin/booking';
-
     const getBookings = async() => {
         try {
-            const response = await api.get(path);
+            const response = await api.get('/admin/booking');
             const data = await response.data;
             setBookings(data);
         }
@@ -86,6 +88,11 @@ const AdminBookings = ({className, ...rest}) => {
                             </ToggleButton>
                     );
                     break;
+                    case "date":
+                        config.renderCell = (params) => (
+                            moment(params.value).format('DD MMMM YYYY')
+                        );
+                    break;
                     default:
                         break;
                 }
@@ -101,10 +108,10 @@ const AdminBookings = ({className, ...rest}) => {
             {...rest}
         >
             <AdminSection
-                title="Réservation"
+                title="Réservations"
                 rows={bookings}
                 columns={columnBuilder}
-                path={path}
+                path={'/admin/booking'}
                 initialState={{
                     columns: {
                         columnVisibilityModel: {

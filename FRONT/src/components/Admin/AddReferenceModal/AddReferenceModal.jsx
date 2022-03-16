@@ -22,12 +22,10 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
             'main_category': data.get('main_category'),
         };
 
-        console.log('reference', reference);
         const response = await api.post('/admin/references', reference)
         if(response.status === 200) {
             handleClose();
         }
-        console.log('response', response);
     }
 
     const handleChange = (event) => {
@@ -35,32 +33,33 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     }
 
     return (
-        <div>
-            <Button onClick={handleOpen}>Ajouter référence</Button>
+        <div className="addreference-modal--open">
+            <Button onClick={handleOpen} variant='outlined'>Ajouter référence</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="modal" component="form" onSubmit={handleSubmit}>
-                    <div className="modal-header">
-                        <Typography className='modal-header-title'>
+                <Box className="addreference-modal" component="form" onSubmit={handleSubmit}>
+                    <div className="addreference-modal-header">
+                        <Typography className='addreference-modal-header-title'>
                             Nouvelle Référence
                         </Typography>
                         <Button
-                            className='modal-header-close'
+                            className='addreference-modal-header-close'
                             onClick={handleClose}
                             variant="contained"
                         >
                             <CloseIcon />
                         </Button>
                     </div>
-                    <div className="modal-inputs">
+                    <div className="addreference-modal-inputs">
                         <TextField
                             id='outlined'
                             label='Nom'
                             name='name'
                             type='string'
-                            className="modal-inputs-item"
+                            className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -68,7 +67,8 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             label='Description'
                             name='description'
                             type='textarea'
-                            className="modal-inputs-item"
+                            className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -76,7 +76,8 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             label='Valorisation'
                             name='valorisation'
                             type='number'
-                            className="modal-inputs-item"
+                            className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <FormControl fullWidth>
@@ -101,7 +102,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                     <div className="modal-footer">
                         <Button
                             type='submit'
-                            className="modal-footer-submit"
+                            className="addreference-modal-footer-submit"
                             variant="contained"
                         >
                             Valider
@@ -109,7 +110,6 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                     </div>
                 </Box>
             </Modal>
-
         </div>
     );
 };

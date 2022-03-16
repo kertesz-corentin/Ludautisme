@@ -56,7 +56,6 @@ const ResetPwd = ({className, ...rest}) => {
             Valider
         </Button>
     </Box>
-
    );
 };
 

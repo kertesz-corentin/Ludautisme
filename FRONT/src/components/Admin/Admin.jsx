@@ -10,7 +10,7 @@ const Admin = ({className, ...rest}) => {
             className={classnames('admin', className)}
             {...rest}
         >
-            <h1>Bienvenue sur le portail de connexion administrateur</h1>
+            <h1 className="admin-title">Bienvenue sur le portail de connexion administrateur</h1>
             <AdminLogin />
         </div>
     );

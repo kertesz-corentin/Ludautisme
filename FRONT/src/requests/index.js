@@ -12,35 +12,35 @@ const api = {
         try {
         return await connection.get(path, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async post(path, data) {
         try {
         return await connection.post(path, data, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async patch(path, data) {
         try {
         return await connection.patch(path, data, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async put(path, data) {
         try {
         return await connection.put(path, data, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async delete(path) {
         try {
         return await connection.delete(path, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async login(email, password,type) {

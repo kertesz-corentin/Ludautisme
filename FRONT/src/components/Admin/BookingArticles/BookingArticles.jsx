@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './bookingarticles.scss';
-import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
+
+// import react components
+import DeleteArticleModal from '../DeleteArticleModal/DeleteArticleModal';
 import { articleSchema } from '../../../Schemas';
+
+// import material ui components
+import { IconButton } from '@mui/material';
+import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+
+import './bookingarticles.scss';
 
 const BookingArticles = ({list, className, ...rest}) => {
 
@@ -16,6 +23,24 @@ const BookingArticles = ({list, className, ...rest}) => {
                 field: prop,
                 headerName: propElt.label,
                 width: propElt.width,
+            };
+            if (propElt.gridDisplay !== "normal"){
+                switch (propElt.gridDisplay){
+                    case "delete":
+                        config.renderCell = (params) => (
+
+                            <IconButton
+                                value={params.value}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <DeleteArticleModal params={params} />
+                            </IconButton>
+                        );
+                    break;
+
+                    default:
+                        break;
+                }
             }
             columns.push(config);
         });
@@ -46,7 +71,6 @@ const BookingArticles = ({list, className, ...rest}) => {
                         columns: {
                             columnVisibilityModel: {
                                 id: false,
-                                id_article: false,
                                 origin: false,
                                 created_at: false,
                                 main_category: false,

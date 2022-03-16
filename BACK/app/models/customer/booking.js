@@ -198,10 +198,10 @@ module.exports = {
             "article"."id" AS "article_id" ,
             "article"."available" AS "article_available",
             "article"."archived" AS "article_archived",
-            ROW_NUMBER() OVER(PARTITION BY "reference"."id") AS row_number
+            ROW_NUMBER() OVER(PARTITION BY ("reference"."id")) AS row_number
             FROM "reference"
             INNER JOIN "article" ON "reference"."id" = "article"."id_ref"
-            WHERE "reference"."id" IN (`;
+            WHERE ("article"."available"='true' AND "article"."archived"='false') AND"reference"."id" IN (`;
         const placeholders = [];
         arr.forEach((articleId, index) => {
             query += `$${index + 1}`;
@@ -215,9 +215,10 @@ module.exports = {
             "name",
             "article_id" ,
             "article_available",
-            "article_archived"
+            "article_archived",
+			row_number
         FROM add_row_number
-        WHERE ("article_available"='true' AND "article_archived"='false' AND row_number=1)
+        WHERE (row_number=1)
         `;
         const result = await sqlHandler(query, placeholders);
         return result.rows;

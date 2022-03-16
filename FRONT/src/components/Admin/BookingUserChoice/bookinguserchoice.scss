@@ -4,10 +4,18 @@
     display: flex;
     flex-direction: row;
     width: 40%;
+    margin: $gutter;
     justify-content: space-between;
 
     &-search {
         display: flex;
         justify-content: space-around;
+        align-items: center;
+        height: 37px;
+
+        &-element {
+            width: calc( 50% - $gutter );
+
+        }
     }
 }

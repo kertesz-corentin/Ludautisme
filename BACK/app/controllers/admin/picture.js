@@ -10,6 +10,7 @@ module.exports = {
             refId,
             main,
         } = req.body;
+        // I create the correct url for the front
         const oldUrl = req.file.path.split('/');
         const filteredUrl = oldUrl.filter((value) => value !== 'FRONT');
         const url = filteredUrl.join('/');
@@ -39,18 +40,22 @@ module.exports = {
     },
     async deletePicture(req, res) {
         const { id } = req.params;
+        // I verify if picture exist
         const picture = await pictureDataMapper.getById(id);
         if (picture.length < 1) {
             throw new ApiError(404, 'L\'image demandé n\'existe pas');
         }
+        // I create the correct url for remove the picture
         const arrayUrl = picture[0].url.split('/');
         const name = arrayUrl[arrayUrl.length - 1];
         const path = `../FRONT/public/pictures/${name}`;
+        // I try to remove the picture
         try {
             fs.unlink(path, (async (err) => {
                 if (err) {
                     throw new ApiError(500, err);
                 } else {
+                    // If the picture is delete i delete this way in database
                     const deletePict = await pictureDataMapper.deletePicture(id);
                     if (deletePict) {
                         res.json(`${name} a bien été supprimé`);
