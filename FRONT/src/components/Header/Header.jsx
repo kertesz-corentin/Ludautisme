@@ -58,6 +58,9 @@ const Header = ({
                 >
                     Liens utiles
                 </NavLink>
+
+                {/* <Shop /> */}
+            {/* <LoginUser /> */}
             </nav>
 
                 <Cart currentItems = {currentItems}/>

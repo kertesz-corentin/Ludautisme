@@ -1,5 +1,35 @@
 @import 'src/styles/vars';
 
-.menuUser{
-    background-color:rgb(191, 219, 219);
+.home-user {
+    background-color: whitesmoke;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0 30px 0;
+}
+
+
+.css-s7d5x3-MuiButtonGroup-root {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    border-radius: 4px;
+    box-shadow: none !important;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.menu-user-button1  {
+    text-decoration: none;
+}
+
+.css-s7d5x3-MuiButtonGroup-root .MuiButtonGroup-grouped {
+    margin-bottom: 20px;
+    min-width: 40px;
+    width: 300px;
+    box-shadow: none;
 }

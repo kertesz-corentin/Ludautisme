@@ -14,6 +14,8 @@ import CurrentReference from '../CurrentReference/CurrentReference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import Loader from '../Loader/Loader';
 import api from '../../requests/index';
+import AlertMessage from '../AlertMessage/AlertMessage';
+
 const userToken = JSON.parse(localStorage.getItem('user'));
 
 
@@ -26,9 +28,9 @@ const CartModal = ({
      ...rest
     }) => {
 
-
+    const [alertMessage, setAlertMessage] = useState();
     //ACTUAL CART STATE
-    console.log(`Mon Panier`,currentItems);
+
 
     useEffect(()=> {
         countSentence();
@@ -50,10 +52,13 @@ const CartModal = ({
         const refIds = {
             refIds : currentItems.map((item)=>{return item.id}),
         };
-        const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
-        if (response.status === 200){
-        }else{
-            console.log(`Une erreur est survenue`, response)
+            const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
+        if (response.status === 200){ console.log(`Réservation envoyée`)
+        }
+        else
+        {
+            setAlertMessage(response.data.message)
+            console.log(`Une erreur est survenue`, response.data)
         };
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
@@ -127,6 +132,12 @@ const CartModal = ({
                             >
                             Valider le panier
                             </Button>
+                            {alertMessage && (
+                                <AlertMessage
+                                    message={alertMessage}
+                                >
+                                </AlertMessage>
+                            )}
                 </Box>
                 }
               </Box>

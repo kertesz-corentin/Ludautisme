@@ -10,7 +10,23 @@
 
 }
 .loginuser-form {
-    max-width: 15rem;
+
+    padding: 30px;
+    border-radius: 10px;
+    width: 25rem;
     margin: auto;
+    background-color: rgba(255, 0, 0, 0.13);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+    margin-bottom: 20px;
     background-color: white;
+}
+
+.loginuser-submit {
+    height: 40px;
+    font-size: 1.1rem;
 }

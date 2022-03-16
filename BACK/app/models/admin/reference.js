@@ -100,6 +100,55 @@ module.exports = {
             console.error(err);
         }
     },
+    async findManyWithRefId(arr) {
+        try {
+            let query = `
+            SELECT
+            r.id,
+            r.name,
+            r.description,
+            r.valorisation,
+            cat.id AS id_maincat,
+            cat.name AS name_maincat,
+            json_agg(DISTINCT "category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object (
+                'id', "image"."id",
+                'url', "image"."url",
+                'title', "image"."title",
+                'text', "image"."alternative_text",
+                'main', "image"."main"
+                )) AS "picture",
+            json_agg(DISTINCT jsonb_build_object (
+                'id', ar."id",
+                'number', ar."number",
+                'origin', ar."origin",
+                'date_buy', ar."date_buy",
+                'available', ar."available",
+                'archived', ar."archived",
+                'created_at', ar."created_at"
+                )) AS "articles"
+            FROM "reference" AS r
+            LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+            LEFT JOIN "image" ON rti."id_image" = "image"."id"
+            LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+            LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+            LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+            LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+            WHERE r.id IN (`;
+            const placeholders = [];
+            arr.forEach((articleId, index) => {
+                query += `$${index + 1}`;
+                query += (index < arr.length - 1) ? `,` : `)`;
+                placeholders.push(articleId);
+            });
+
+            query += ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, cat.id`;
+            const result = await sqlHandler(query, placeholders);
+            return result.rows;
+        } catch (err) {
+            console.error(err);
+        }
+    },
     async create(obj) {
         try {
             const props = Object.keys(obj);

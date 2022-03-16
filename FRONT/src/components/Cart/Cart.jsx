@@ -24,7 +24,7 @@ const Cart = ({
 
    function handleCartBtnClick (event) {
     event.preventDefault();
-    console.log(`ouverture de la modale mon panier`)
+
    }
    return (
        <Box>

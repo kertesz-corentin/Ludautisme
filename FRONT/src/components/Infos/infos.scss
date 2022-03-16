@@ -112,11 +112,6 @@
         border-radius: 20px;
         transition: filter 0.5s;
 
-        &:hover {
-
-            filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
-        }
-
     }
     &-title {
 
@@ -190,7 +185,7 @@
                 transition: background-color 0.3s;
 
                 &:hover {
-                    background-color: $blue;
+                    background-color: rgb(241, 18, 10);
                 }
             }
 
@@ -235,7 +230,6 @@
     padding: 50px;
     background-color: $font-color-2;
     filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.3));
-    margin: 50px 0 50px 0 ;
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;

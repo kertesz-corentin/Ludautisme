@@ -7501,6 +7501,11 @@
   dependencies:
     "safe-buffer" "^5.1.0"
 
+"randomcolor@^0.6.2":
+  "integrity" "sha512-Mn6TbyYpFgwFuQ8KJKqf3bqqY9O1y37/0jgSK/61PUxV4QfIMv0+K2ioq8DfOjkBslcjwSzRfIDEXfzA9aCx7A=="
+  "resolved" "https://registry.npmjs.org/randomcolor/-/randomcolor-0.6.2.tgz"
+  "version" "0.6.2"
+
 "range-parser@^1.2.1", "range-parser@~1.2.1":
   "integrity" "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
@@ -7681,6 +7686,16 @@
   "integrity" "sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ=="
   "resolved" "https://registry.npmjs.org/react-side-effect/-/react-side-effect-2.1.1.tgz"
   "version" "2.1.1"
+
+"react-tagcloud@^2.2.0":
+  "integrity" "sha512-5nFYetGdCUmpwTwzuJyg0/rIFkW4atssIHNXrrQNAQfENk1Tov1CNgAtFERXqTUNjgzAu/OSgDMhzOL1Zpc/lw=="
+  "resolved" "https://registry.npmjs.org/react-tagcloud/-/react-tagcloud-2.2.0.tgz"
+  "version" "2.2.0"
+  dependencies:
+    "prop-types" "^15.6.2"
+    "randomcolor" "^0.6.2"
+    "seedrandom" "^3.0.5"
+    "shuffle-array" "^1.0.1"
 
 "react-transition-group@^4.4.0", "react-transition-group@^4.4.2":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="
@@ -8043,6 +8058,11 @@
     "ajv" "^6.12.2"
     "ajv-keywords" "^3.4.1"
 
+"seedrandom@^3.0.5":
+  "integrity" "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg=="
+  "resolved" "https://registry.npmjs.org/seedrandom/-/seedrandom-3.0.5.tgz"
+  "version" "3.0.5"
+
 "select-hose@^2.0.0":
   "integrity" "sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo="
   "resolved" "https://registry.npmjs.org/select-hose/-/select-hose-2.0.0.tgz"
@@ -8161,6 +8181,11 @@
   "integrity" "sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw=="
   "resolved" "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.3.tgz"
   "version" "1.7.3"
+
+"shuffle-array@^1.0.1":
+  "integrity" "sha1-xP88/nTRb5NzBZIwGyXmV3sSiYs="
+  "resolved" "https://registry.npmjs.org/shuffle-array/-/shuffle-array-1.0.1.tgz"
+  "version" "1.0.1"
 
 "side-channel@^1.0.4":
   "integrity" "sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw=="
