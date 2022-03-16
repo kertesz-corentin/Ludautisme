@@ -285,7 +285,13 @@ module.exports = {
         };
         return res.json(confirm);
     },
-    async returnedArticle(req,res) {
+    async deliver(req, res) {
         const { id } = req.params;
+
+        const deliver = await bookingDataMapper.deliver(id);
+        if (!deliver[0]) {
+            throw new ApiError(404, 'Impossible de trouver cette reservation');
+        }
+        return res.json(deliver);
     },
 };
