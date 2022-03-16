@@ -43,7 +43,9 @@ const CartModal = ({
     let [counter, setCounter] = useState(currentItems.length)
 
     function handleRemoveItemClick  () {
-        setCounter(currentItems.length)
+        setCounter(currentItems.length);
+        console.log(`Nombre d'article en cours`, counter);
+        (currentItems.length === 0) && handleClose() ;
     }
 
     //CLICK ON VALIDATE CART
@@ -124,6 +126,7 @@ const CartModal = ({
                                 changeCounter = {handleRemoveItemClick}
                                 removeItem = {removeItem}
                                 currentItem = {currentItem}
+                                handleClose={handleClose}
                             />
                                 ))}
                             </Box>

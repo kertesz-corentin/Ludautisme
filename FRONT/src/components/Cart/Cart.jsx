@@ -35,7 +35,6 @@ const Cart = ({
             onClick= {handleCartBtnClick}
          >
             <CartModal userId = {userId} currentItems = {currentItems}/>
-            {/* <Reference/> */}
         </button>
        }
         </Box>

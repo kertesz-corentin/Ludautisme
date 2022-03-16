@@ -20,6 +20,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import BlockIcon from '@mui/icons-material/Block';
 
 const Reference = ({
     className,
@@ -52,12 +53,14 @@ const Reference = ({
         valorisation,
     }
     let [quantity, setQuantity] = useState(nb_available);
-//each time i add article to my booking, delete one on quantity
 
 
     function handleClick () {
         add(itemToAdd);
         console.log(`envoi de l'item au cart`, itemToAdd)
+        modifyIsClick()
+    }
+    function modifyIsClick () {
         setIsClick(!isClick)
     }
 
@@ -77,19 +80,36 @@ const Reference = ({
                 </Typography>
 
                 <Button onClick={handleOpen}>description</Button>
-                {userToken &&
-                    !isClick ?
+                {userToken && quantity>0 && !isClick &&
+                    <Box>
                     <Button
                         onClick={handleClick}>
                             <AddShoppingCartIcon/>
                     </Button>
-                    :
+                    </Box>
+                }
+                {userToken && isClick &&
+                    <Box>
                     <Button
                         onClick={handleClick} disabled>
                             <BookmarkAddedIcon/>
                     </Button>
+                    <Typography gutterBottom variant="p" component="div">
+                                (Article ajouté)
+                    </Typography>
+                    </Box>
+                }
+                {userToken && quantity == 0 &&
+                    <Box>
+                    <Button
+                        onClick={handleClick} disabled>
 
-
+                    </Button>
+                    <Typography gutterBottom variant="p" component="div">
+                        <BlockIcon/>
+                                Article indisponible
+                    </Typography>
+                    </Box>
                 }
 
           <Modal
