@@ -17,6 +17,10 @@
             font-size: $font-size * 3;
         }
 
+        &-modal {
+            display: flex;
+        }
+
         &-add {
             width: 100px;
             height: 50px;
