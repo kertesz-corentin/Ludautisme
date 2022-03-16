@@ -32,6 +32,7 @@ const CurrentReference = ({
     function handleRemoveClick (){
         removeItem(currentItem.id);
         changeCounter()
+        console.log(`taille du tableau`, currentItem)
 
     }
    return (
