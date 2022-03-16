@@ -4,9 +4,11 @@
         height: 60px;
         background-color: rgb(255, 196, 57);
         border-radius: 10px;
+        transition: filter 0.3s;
 
         &:hover {
             filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+            };
         }
     }
-}
+

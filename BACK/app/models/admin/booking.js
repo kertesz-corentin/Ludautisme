@@ -317,7 +317,6 @@ module.exports = {
         }
         const queryEnd = ` RETURNING *`;
         queryStart += queryEnd;
-        console.log(placeholders);
         const result = await sqlHandler(queryStart, placeholders);
         return result.rows;
     },
@@ -326,6 +325,15 @@ module.exports = {
         UPDATE "booking"
         SET "closed"='true',
             "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
+        return result.rows;
+    },
+    async deliver(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "delivered"='true'
         WHERE "id"=$1
         RETURNING *
         `, [id]);

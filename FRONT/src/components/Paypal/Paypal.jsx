@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './paypal.scss';
-import Button from '@mui/material/Button';
 import PaypalButton from '../public/icones/paypalicon.png'
 
 
@@ -17,7 +16,7 @@ const Paypal = ({className, ...rest}) => {
 
 
 
-                <form className="PaypalButton"action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <form className="PaypalButton" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_donations"/>
                     <input type="hidden" name="business" value="ludautisme@gmail.com"/>
                     <input type="hidden" name="lc" value="FR"/>

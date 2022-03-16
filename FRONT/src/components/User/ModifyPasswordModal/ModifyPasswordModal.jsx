@@ -46,7 +46,7 @@ const ModifyPasswordModal = ({className, ...rest}) => {
     return (
 
       <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button className='ModifyPasswordModal-button' variant="outlined" onClick={handleClickOpen}>
             Modifier mon mot de passe
       </Button>
       <Dialog open={open} onClose={handleClose}>

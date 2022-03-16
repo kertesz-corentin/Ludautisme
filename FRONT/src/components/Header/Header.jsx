@@ -58,6 +58,9 @@ const Header = ({
                 >
                     Liens utiles
                 </NavLink>
+
+                {/* <Shop /> */}
+            {/* <LoginUser /> */}
             </nav>
             {userToken ?  <CartModal currentItemsNumber = {currentItemsNumber}  currentItems = {currentItems}/> : "" }
             <LoginUser />
