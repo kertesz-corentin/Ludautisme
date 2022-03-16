@@ -21,13 +21,13 @@ module.exports = {
 
         // Check if too much articles are booked
         if (!refIds || refIds.length > 7) {
-            throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
+            throw new ApiError(403, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
         }
 
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
         if (user.length !== 1) {
-            throw new ApiError(400, 'Cet utilisateur n\'existe pas');
+            throw new ApiError(403, 'Cet utilisateur n\'existe pas');
         }
 
         //  Get active perm id and next perm id
@@ -39,7 +39,7 @@ module.exports = {
         ];
         const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
         if (bookingExist.length > 0) {
-            throw new ApiError(400, 'Cet utilisateur à déjà une réservation pour cette permanence');
+            throw new ApiError(403, 'Cet utilisateur à déjà une réservation pour cette permanence');
         }
 
         // Check if articles are available
@@ -47,7 +47,7 @@ module.exports = {
         if (refAvailability.length !== refIds.length) {
             const unknownRefIds = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             const unknownRef = await referenceDataMapper.findManyWithRefId(unknownRefIds);
-            throw new ApiError(400, `Référence(s) inconnues ou indisponibles : [ ${unknownRef.map((ref)=> `idRef : ${ref.id} - ${ref.name}`)} ]`);
+            throw new ApiError(403, `Référence(s) inconnues ou indisponibles : [ ${unknownRef.map((ref)=> `idRef : ${ref.id} - ${ref.name}`)} ]`);
         }
 
         try {
