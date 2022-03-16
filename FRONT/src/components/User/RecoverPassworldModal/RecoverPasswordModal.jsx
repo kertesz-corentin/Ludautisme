@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { TextField , Typography} from '@mui/material';
 import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,17 +16,6 @@ import {requestGetNewPassword} from '../../../requests/requestsUser/recoverpassw
 import api from '../../../requests';
 
 const RecoverPasswordModal = ({className, ...rest}) => {
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-
-      const handleClose = () => {
-        setOpen(false);
-      };
-
-
-
   function handleMailChange (event) {
     setMailValue(event.target.value)
     console.log(`Mail`, event.target.value)
@@ -41,40 +30,35 @@ const handleMailSubmit = async(event) => {
         console.log(`Mail where send newPassword`, mail);
         const response = await api.post('/login/forgot-password',mail)
         console.log(response);
-        handleClose();
 }
 
 const [mailValue, setMailValue]= useState()
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-            Mot de passe oublié ?
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Valider</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+    <Box component="form" onSubmit={handleMailSubmit} noValidate sx={{ mt: 1 }}>
+         <Typography>
             Veuillez entrer votre mail pour recevoir votre nouveau mot de passe
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Mon adresse mail"
-            type="string"
+          </Typography>
+        <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Mon adresse mail"
+                type="string"
+                fullWidth
+                variant="standard"
+                value= {mailValue}
+                onChange={(event) => handleMailChange(event, mailValue)}
+            />
+            <Button
+            type="submit"
             fullWidth
-            variant="standard"
-            value= {mailValue}
-            onChange={(event) => handleMailChange(event, mailValue)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleMailSubmit}>Valider</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+            variant="contained"
+            sx={{ mt: 1, mb: 2 }}
+            >
+                Envoyer le mot de passe
+            </Button>
+    </Box>
     );
 };
 
