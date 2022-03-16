@@ -17,10 +17,13 @@ const Home = ({
     return (
         <div className={classnames('home', className)}>
         <ContentPage>
+            <div>
             <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
                 {children}
-
-            <Footer/>
+                </div>
+            <div className='footerBody'>
+            <Footer />
+            </div>
         </ContentPage>
         </div>
     );

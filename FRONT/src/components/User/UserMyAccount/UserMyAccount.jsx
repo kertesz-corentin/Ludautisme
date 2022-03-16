@@ -141,6 +141,10 @@ const UserMyAccount = ({
                 { modifyBtn
                     ?
                         <span >
+                            <h2>
+                            Données personnelles
+                            </h2>
+
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 200 }} aria-label="simple table">
                                     <TableBody>
@@ -159,7 +163,7 @@ const UserMyAccount = ({
                                 </Table>
                             </TableContainer>
                             <button className="loginuser-submit" type="click" onClick= {handleClickModifyBtn}>
-                                    Modifier
+                                    Modifier mes informations
                             </button>
                         </span>
                     :

@@ -21,7 +21,7 @@ import IconButton from '@mui/material/IconButton';
 import Paypal from  '../Paypal/Paypal';
 import Tirelire from '../public/icones/tirelire.png'
 import Facebook from '../public/icones/Logo-Facebook.png'
-import Parlant from '../public/icones/parlant.png'
+import News from '../public/icones/nouvelles.png'
 
 const Infos = ({className, ...rest}) => {
   const [open, setOpen] = React.useState(false);
@@ -208,11 +208,11 @@ const Infos = ({className, ...rest}) => {
             <div className='infos-bottom-right'>
                 <div className='infos-bottom-facebook'>
                     <h2>
-                        <img className='infos-bottom-actus-logo' src={Parlant} alt="logo actus" />
+                        <img className='infos-bottom-actus-logo' src={News} alt="logo actus" />
                         Suivre nos actualités
                     </h2>
                     <button className='infos-bottom-facebook-button'>
-                        <a href="https://www.facebook.com/Ludautisme-344242315626617/">
+                        <a target="_blank" rel="noreferrer" href="https://www.facebook.com/Ludautisme-344242315626617/">
                             <img className='infos-bottom-facebook-logo'src={Facebook} alt="facebook logo" />
                             Page Facebook de Lud'Autisme
                         </a>
