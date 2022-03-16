@@ -1,7 +1,14 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
+
+// import requests
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
+
+// import react components
+import AlertMessage from '../../AlertMessage/AlertMessage';
+
+// import material ui components
+import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './addreferencemodal.scss';
@@ -11,6 +18,35 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState('');
+
+    const [mainCat, setMainCat] = useState(false);
+
+    const [alertMessage, setAlertMessage] = useState();
+
+    const handleMainCatCheck = (event) => {
+        setMainCat(event.target.checked)
+    }
+
+    const AddNewCategory = async (event) => {
+        const data = new FormData(event.currentTarget);
+
+        const addedCategory = {
+            'name': data.get('name'),
+            'description': data.get('description'),
+            'main': mainCat,
+        }
+
+        console.log('addedCategory', addedCategory);
+
+        const response = await api.post('/admin/categorie', addedCategory)
+        const newCategory = await response.data;
+        if(response.status === 200) {
+            setCategory(state => [...state, newCategory[0]]);
+        }
+        else {
+            setAlertMessage(response.data.message);
+        }
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();

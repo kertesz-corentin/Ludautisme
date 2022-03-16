@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import './permanency.scss';
+
 import Calendrier from '../public/icones/calendrier.png'
 
-
+import './permanency.scss';
 
 const Permanency = ({className, ...rest}) => {
    return (

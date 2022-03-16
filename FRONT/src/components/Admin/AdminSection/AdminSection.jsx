@@ -6,14 +6,17 @@ import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
 
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, initialState, children }) => {
+const AdminSection = ({ title, rows, columns, initialState, children, category }) => {
 
     return (
         <section className='section'>
             <div className="section-element">
                 <h1 className="section-element-title">Tableau de bord - {title}</h1>
             </div>
-            {children}
+            <div className='section-element-modal'>
+                {children}
+                {category}
+            </div>
             <div className="section-element">
                 <div className="section-element-grid" style={{ height: 500, width: '100%'}}>
                     <DataGrid

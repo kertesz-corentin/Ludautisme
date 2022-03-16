@@ -1,6 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+
+// import react components
+import AdminPermanency from '../AdminPermanency/AdminPermanency';
+
 import './adminhome.scss';
 
 const AdminHome = ({isLogged, className, ...rest}) => {
@@ -10,6 +14,7 @@ const AdminHome = ({isLogged, className, ...rest}) => {
             {...rest}
          >
             Accueil
+            <AdminPermanency />
         </div>
     );
 };

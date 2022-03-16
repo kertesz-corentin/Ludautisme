@@ -133,6 +133,7 @@ const AdminBookings = ({className, ...rest}) => {
                         columnVisibilityModel: {
                             id_user: false,
                             id_permanency: false,
+                            overdue: false,
                         },
                     },
                     sorting: {
