@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // import requests
 import api from '../../../requests';
 
+// import react components
+import AlertMessage from '../../AlertMessage/AlertMessage';
+
 // import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, IconButton, FormGroup }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,6 +25,8 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     const [archivedChecked, setArchivedChecked] = useState(params.row.archived);
     const [role, setRole] = useState(false)
     const [idRole, setIdRole] = useState(params.row.id_role)
+
+    const [alertMessage, setAlertMessage] = useState();
 
     const admin = () => {
         if(params.row.id_role === 2){
@@ -59,7 +64,9 @@ const UpdateUserModal = ({params, className, ...rest}) => {
             handleClose();
             window.location.reload();
         }
-        console.log('response', response);
+        else {
+            setAlertMessage(response.data.message);
+        }
 
     }
 
@@ -170,7 +177,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             id='outlined'
                             label='n° de rue'
                             name='adress_number'
-                            type='number'
+                            type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_number}
                             sx={{mb: 2}}
@@ -190,7 +197,11 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             id='outlined'
                             label='Code Postal'
                             name='adress_zipcode'
-                            type='number'
+                            placeholder= 'ex: 75000'
+                            inputProps={{
+                                inputMode: 'numeric',
+                                pattern: '[0-9]*'
+                            }}
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_zipcode}
                             sx={{mb: 2}}
@@ -240,6 +251,9 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                         )}
 
                     </div>
+                    {alertMessage && (
+                        <AlertMessage message={alertMessage} />
+                    )}
                 </Box>
             </Modal>
 
