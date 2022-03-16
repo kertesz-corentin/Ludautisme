@@ -8,6 +8,7 @@ import api from '../../../requests/index';
 // import react components
 import AdminSection from '../AdminSection/AdminSection';
 import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
+import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
 import AlertMessage from '../../AlertMessage/AlertMessage';
 import { referenceSchema } from '../../../Schemas';
@@ -115,7 +116,10 @@ const AdminReferences = ({className, ...rest}) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                children={<AddReferenceModal categories={categories} />}
+                children={
+                    <AddReferenceModal categories={categories} />
+                }
+                category={<AddCategoryModal />}
             />
         </div>
    );

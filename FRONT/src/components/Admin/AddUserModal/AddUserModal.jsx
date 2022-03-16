@@ -8,7 +8,7 @@ import api from '../../../requests';
 import AlertMessage from '../../AlertMessage/AlertMessage';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FromGroup, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './addusermodal.scss';
@@ -16,8 +16,13 @@ import './addusermodal.scss';
 const AddUserModal = ({className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+    }
     const [checked, setChecked] = useState(false);
+    const [cotisationChecked, setCotisationChecked] = useState(false);
+    const [cautionChecked, setCautionChecked] = useState(false);
+    const [archivedChecked, setArchivedChecked] = useState(false);
     const [role, setRole] = useState(1)
 
     const [alertMessage, setAlertMessage] = useState();
@@ -29,45 +34,56 @@ const AddUserModal = ({className, ...rest}) => {
             setRole(2);
         }
         const user = {
-            'member_number': data.get('member_number'),
+            'member_number': Number(data.get('member_number')),
             'email': data.get('email'),
             'first_name': data.get('first_name'),
             'last_name': data.get('last_name'),
             'phone': data.get('phone'),
             'adress_number': data.get('adress_number'),
             'adress_street': data.get('adress_street'),
-            'adress_zipcode': data.get('adress_zipcode'),
+            'adress_zipcode': Number(data.get('adress_zipcode')),
             'adress_city': data.get('adress_city'),
-            'cotisation_status': data.get('cotisation_status'),
-            'caution_status': data.get('caution_status'),
-            'archived': data.get('archived'),
+            'cotisation_status': cotisationChecked,
+            'caution_status': cautionChecked,
+            'archived': archivedChecked,
             'id_role': role,
         };
 
         console.log('user', user);
-        try{
-            const response = await api.post('/admin/users', user)
-            if(response.status === 200) {
-                handleClose();
-                console.log('response', response)
-            }
+
+        const response = await api.post('/admin/users', user)
+        if(response.status === 200) {
+            handleClose();
+            window.location.reload();
+            console.log('response', response)
         }
-        catch (err) {
-            setAlertMessage(err.response.data.message);
-            console.error(err)
+        else {
+            setAlertMessage(response.data.message);
         }
 
     }
 
-    const handleCheckBoxChange = (event) => {
-        setChecked(event.target.checked)
+    const handleCotisationCheck = (event) => {
+        setCotisationChecked(event.target.checked)
+    }
+
+    const handleCautionCheck = (event) => {
+        setCautionChecked(event.target.checked)
+    }
+
+    const handleArchivedCheck = (event) => {
+        setArchivedChecked(event.target.checked)
+    }
+
+    const handleRole = (event) => {
+        if(event.target.checked === true){
+            setRole(2)
+        }
     }
 
     return (
         <div className="adduser-modal--open">
-            {alertMessage && (
-                <AlertMessage message={alertMessage} />
-            )}
+
             <Button onClick={handleOpen} variant='outlined'>Ajouter adhérent</Button>
             <Modal
                 open={open}
@@ -137,7 +153,7 @@ const AddUserModal = ({className, ...rest}) => {
                             id='outlined'
                             label='n° de rue'
                             name='adress_number'
-                            type='number'
+                            type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
                         >
@@ -155,7 +171,11 @@ const AddUserModal = ({className, ...rest}) => {
                             id='outlined'
                             label='Code Postal'
                             name='adress_zipcode'
-                            type='number'
+                            placeholder= 'ex: 75000'
+                            inputProps={{
+                                inputMode: 'numeric',
+                                pattern: '[0-9]*'
+                            }}
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
                         >
@@ -177,10 +197,10 @@ const AddUserModal = ({className, ...rest}) => {
                                 justifyContent: 'space-around'
                             }}
                         >
-                            <FormControlLabel control={<Checkbox name='cotisation_status' onChange={handleCheckBoxChange} />} label="Cotisation" />
-                            <FormControlLabel control={<Checkbox name='caution_status' onChange={handleCheckBoxChange} />} label="Caution" />
-                            <FormControlLabel control={<Checkbox name='archived' onChange={handleCheckBoxChange} />} label="Archivé" />
-                            <FormControlLabel control={<Checkbox name='id_role' onChange={handleCheckBoxChange} />} label="Admin" />
+                            <FormControlLabel control={<Checkbox name='cotisation_status' onChange={handleCotisationCheck} />} label="Cotisation" />
+                            <FormControlLabel control={<Checkbox name='caution_status' onChange={handleCautionCheck} />} label="Caution" />
+                            <FormControlLabel control={<Checkbox name='archived' onChange={handleArchivedCheck} />} label="Archivé" />
+                            <FormControlLabel control={<Checkbox name='id_role' onChange={handleRole} />} label="Admin" />
                         </FormGroup>
                     </div>
                     <div className="adduser-modal-footer">
@@ -192,6 +212,9 @@ const AddUserModal = ({className, ...rest}) => {
                             Valider
                         </Button>
                     </div>
+                    {alertMessage && (
+                        <AlertMessage message={alertMessage} />
+                    )}
                 </Box>
             </Modal>
 

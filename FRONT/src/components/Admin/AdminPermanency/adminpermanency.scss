@@ -1,0 +1,20 @@
+@import 'src/styles/vars';
+
+.adminpermanency{
+    display: flex;
+    flex-direction: column;
+    border: 3px solid $orange;
+    border-radius: 10px;
+
+
+    &-title {
+        color: $orange;
+    }
+
+    &-element {
+        margin: $gutter;
+    }
+}
+
+
+
