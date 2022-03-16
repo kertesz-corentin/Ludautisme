@@ -45,7 +45,9 @@ const CartModal = ({
     let [counter, setCounter] = useState(currentItems.length)
 
     function handleRemoveItemClick  () {
-        setCounter(currentItems.length)
+        setCounter(currentItems.length);
+        console.log(`Nombre d'article en cours`, counter);
+        (currentItems.length === 0) && handleClose() ;
     }
 
     //CLICK ON VALIDATE CART
@@ -70,7 +72,10 @@ const CartModal = ({
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
     const removeItem = (item) =>{
-        console.log(item,currentItems);
+
+        //Dans cette fonction qui fait le remove il faudrai que je puisse ajouter l'item supprimer au currentItem qui part dans le app
+        //comme ça je remets à jour les currentsItem et les boutons de chaque reference.
+        console.log(`item a delete`, item, `Mes items actuels`, currentItems);
         const deleteIndex = currentItems.findIndex((currentItem) => currentItem.id === item);
         console.log("index",deleteIndex)
         if (deleteIndex !== -1){
@@ -82,16 +87,16 @@ const CartModal = ({
     }
 
     const countSentence = ()=>{
-        if (currentItems.length ===0){
-            return `Votre panier est vide`
-         } else if (currentItems.length > 8) {
+         if (currentItems.length ===0){
+             return `Votre panier est vide`
+          } else
+        if (currentItems.length > 8) {
              return `Vous ne pouvez pas réserver plus de 8 articles`
          } else {
              return `Vous pouvez encore réserver ${8 - currentItems.length} articles`
          }
+
     }
-
-
 
     return (
       <div>
@@ -131,6 +136,7 @@ const CartModal = ({
                                 changeCounter = {handleRemoveItemClick}
                                 removeItem = {removeItem}
                                 currentItem = {currentItem}
+                                handleClose={handleClose}
                             />
                                 ))}
                             </Box>

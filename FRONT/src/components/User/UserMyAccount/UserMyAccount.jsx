@@ -134,10 +134,12 @@ const UserMyAccount = ({
       ];
 
    return (
-       <div > Bienvenue {firstNameValue}
+       <div >
          <Permanency/>
                 <div className= "home-user">
+                Bienvenue {firstNameValue}
                 <MenuUser/>
+
                 { modifyBtn
                     ?
                         <span >
@@ -209,7 +211,7 @@ const UserMyAccount = ({
                                 type="text"
                                 value= {mailValue}
                                 onChange={(event) => handleMailChange(event, mailValue)}
-                            />
+                            />'cart',
                             <TextField
                                 label= "telephone"
                                 type="text"
