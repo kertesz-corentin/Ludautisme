@@ -38,8 +38,8 @@ const ListOfReferences = ({
                         valorisation={reference.valorisation}
                     />
                     </Grid>
-                )
-            )}
+                ))
+                }
             </Grid>
           </Container>
         </React.Fragment>

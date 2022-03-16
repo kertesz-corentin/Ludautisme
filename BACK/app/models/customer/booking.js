@@ -218,7 +218,6 @@ module.exports = {
             "article_archived"
         FROM add_row_number
         WHERE ("article_available"='true' AND "article_archived"='false' AND row_number=1)
-            OR ("article_available"='false' AND row_number=1)
         `;
         const result = await sqlHandler(query, placeholders);
         return result.rows;
