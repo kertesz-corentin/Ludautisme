@@ -15,18 +15,17 @@
     border-radius: 10px;
     width: 25rem;
     margin: auto;
-    background-color: rgba(255, 0, 0, 0.13);
+    background-color: rgba(255, 251, 236, 1);
     display: flex;
     flex-direction: column;
     align-items: stretch;
 }
 
-.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
-    margin-bottom: 20px;
+.loginuser-textfield {
     background-color: white;
+    margin-bottom: 15px;
 }
 
-.loginuser-submit {
-    height: 40px;
-    font-size: 1.1rem;
+.MuiTextField-root {
+    margin-bottom: 15px;
 }

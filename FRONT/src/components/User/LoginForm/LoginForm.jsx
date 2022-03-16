@@ -8,7 +8,7 @@ import './loginform.scss'
 import classnames from 'classnames';
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 
-const LoginForm = ({closeLoginMenu, ...rest}) => {
+const LoginForm = ({handleCloseLogin, ...rest}) => {
     const navigate = useNavigate();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
             console.log(response);
             if(response.status === 200) {
                 navigate('/user/account')
-                closeLoginMenu();
+                handleCloseLogin();
             } else {
                 setAlertMessage(response.data.message);
                 console.error(response);

@@ -44,7 +44,6 @@ export default function SignIn() {
     };
 
     const handleCloseLogin = () => {
-    console.log("test");
     setAnchorEl(null);
     };
     const open = Boolean(anchorEl);
@@ -99,7 +98,7 @@ export default function SignIn() {
             }}>
             <Box className = "loginuser-popover">
             {!userToken ?
-                <LoginForm closeLoginMenu = {closeLoginMenu}/>
+                <LoginForm handleCloseLogin = {handleCloseLogin}/>
                 :
                 <Box>
                 <MenuUser display="login" handleCloseLogin={handleCloseLogin}/>
