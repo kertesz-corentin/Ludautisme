@@ -11,8 +11,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import api from '../../../requests';
 import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
-
-
+import ListOfBookings from '../../ListOfBookings/ListOfBookings';
+import moment from 'moment';
+moment().locale('fr');
 
 
 
@@ -21,6 +22,7 @@ const UserBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
     const [activeBooking, setActiveBooking] = useState([]);
     const [nextBooking, setNextBooking] = useState([]);
+    const [oldBookings, setOldBookings] = useState([]);
     const [idUser,setIdUser] = useState(0);
 
 
@@ -46,11 +48,12 @@ const UserBookings = ({className, ...rest}) => {
                             ],
                         }
                 });
+                booking.date_permanency = moment(booking.date_permanency).format("DD MMM YYYY")
+                booking.return_date_permanency = moment(booking.return_date_permanency).format("DD MMM YYYY")
                 delete booking.articles;
                 return booking
             });
             setBookings(data);
-            console.log(data);
 
             //Next Permanency
             const nextFilter = (data) ?
@@ -64,6 +67,13 @@ const UserBookings = ({className, ...rest}) => {
             : [];
             setActiveBooking(activeFilter);
             //Old Bookings
+            const oldFilter = (data) ?
+            await data.filter((booking)=> !booking.active_permanency && !booking.is_next_permanency)
+            : [];
+
+            setOldBookings(oldFilter.sort((a,b)=>{return (a.id - b.id > 0) ? -1 : 1}));
+            console.log(oldFilter);
+
 
 
         }
@@ -103,6 +113,7 @@ const UserBookings = ({className, ...rest}) => {
                         </Box>
                         <h2>Historique</h2>
                         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                            <ListOfBookings bookings = {oldBookings}/>
                         </Box>
                     </Box>
             </div>

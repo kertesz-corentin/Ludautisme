@@ -19,11 +19,7 @@ const api = {
         try {
         return await connection.post(path, data, { headers: authHeader() });
         } catch (err) {
-            // console.log(err.response.data);
-            // console.log(err.response.status);
-            // console.log(err.response.headers);
-            return err.response
-
+            return err
         }
     },
     async patch(path, data) {
