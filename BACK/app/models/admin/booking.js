@@ -17,7 +17,16 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} date_permanency - Permanency's booking
  * @property {boolean} overdue - overdue returning game
  */
-
+/**
+ * @typedef {object} Confirm
+ * @property {number} article - Number of concerned article
+ * @property {number} reservation - Id of conderned reservation
+ * @property {string} message - Description of confirmed action
+ */
+/**
+ * @typedef {object} BookingParam
+ * @property {number} articleNumber - Number of concerned article
+ */
 /**
  * @typedef {object} paramSearchBooking
  * @property {number} id - Unique identifier
@@ -33,11 +42,9 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} return_permanency - Return expected Date
  * @property {boolean} overdue - overdue returning game
  */
-
 /**
  * @typedef {object} paramAddBooking
- * @property {number} request.param.id.required - Array of articles Id
- * @property {number} request.body.articleId.required - Array of articles Id
+ * @property {array<number>} artIds - Array of articles Id
  */
 /**
  * @typedef {object} BookingArticles
@@ -142,26 +149,19 @@ module.exports = {
         FROM booking_full
         WHERE `;
         const placeholders = [];
-        console.log(arr);
-        try {
-            arr.forEach((filter, index) => {
-                let prop = Object.keys(filter)[0];
-                console.log(prop);
-                placeholders.push(filter[prop]);
-                if (index !== arr.length - 1) {
-                    query += `"${prop}"=$${index + 1} AND `;
-                } else {
-                    query += `"${prop}"=$${index + 1} `;
-                }
-            });
-            const result = await sqlHandler(query, placeholders);
-            return result.rows;
-        } catch (err) {
-            console.error(err);
-        }
+        arr.forEach((filter, index) => {
+            const prop = Object.keys(filter)[0];
+            placeholders.push(filter[prop]);
+            if (index !== arr.length - 1) {
+                query += `"${prop}"=$${index + 1} AND `;
+            } else {
+                query += `"${prop}"=$${index + 1} `;
+            }
+        });
+        const result = await sqlHandler(query, placeholders);
+        return result.rows;
     },
     async findOne(id) {
-        console.log(id);
         const query = `
         WITH booking_full AS(
 			SELECT
@@ -290,6 +290,53 @@ module.exports = {
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
+        return result.rows;
+    },
+    async deleteArticle(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "article_to_booking"
+        WHERE "id_article" = $1
+        RETURNING *`, [id]);
+        return result.rows;
+    },
+    async return(arr) {
+        let queryStart = `UPDATE "article_to_booking"
+                            SET "returned"='true'`;
+
+        const placeholders = [];
+        if (arr.length > 0) {
+            queryStart += ` WHERE "id_article" IN (`
+            arr.forEach((id, indx) => {
+                if (indx !== arr.length - 1) {
+                    queryStart += `$${placeholders.length + 1}, `;
+                } else {
+                    queryStart += `$${placeholders.length + 1})`;
+                }
+                placeholders.push(id);
+            });
+        }
+        const queryEnd = ` RETURNING *`;
+        queryStart += queryEnd;
+        const result = await sqlHandler(queryStart, placeholders);
+        return result.rows;
+    },
+    async close(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "closed"='true',
+            "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
+        return result.rows;
+    },
+    async deliver(id) {
+        const result = await sqlHandler(`
+        UPDATE "booking"
+        SET "delivered"='true'
+        WHERE "id"=$1
+        RETURNING *
+        `, [id]);
         return result.rows;
     },
 };
