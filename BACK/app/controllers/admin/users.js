@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
@@ -53,7 +54,10 @@ module.exports = {
             { member_number: Number(req.body.member_number) },
             { email: req.body.email },
         ]);
-        if (['id_role', 'email', 'member_number', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
+        const {
+            id_role, email, member_number, adress_number, adress_street
+        } = req.body;
+        if (!id_role || !email || !member_number || !adress_number || !adress_street) {
             throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
         }
         if (user.length > 0) {
