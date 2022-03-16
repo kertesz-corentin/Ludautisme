@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import {useNavigate} from "react-router-dom";
 import api from '../../../requests/index';
 import RecoverPasswordModal from '../RecoverPassworldModal/RecoverPasswordModal';
+import './loginform.scss'
+import classnames from 'classnames';
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 
 const LoginForm = ({closeLoginMenu, ...rest}) => {
     const navigate = useNavigate();
@@ -44,11 +47,13 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
     };
 
     return (
-    <Box>
+    <Box className="loginForm">
     {!recover ?
     <>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Typography sx={{textAlign : "center"}} component="h1" variant="h6" className="loginForm-connect-typo"> Se connecter </Typography>
+        <Box className="loginForm-form" component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                             <TextField
+                            className="loginForm-textfield"
                             margin="normal"
                             required
                             fullWidth
@@ -60,6 +65,7 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
                             />
                             <TextField
                             margin="normal"
+                            className="loginForm-textfield"
                             required
                             fullWidth
                             name="password"
@@ -68,15 +74,18 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
                             id="password"
                             autoComplete="current-password"
                             />
-                            <Button
+                            <ButtonUnstyled
+                            className="loginForm-submit"
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 1, mb: 2 }}
                             >
                                 Se connecter
-                            </Button>
-                            <Grid container className= "gridContainer">
+                            </ButtonUnstyled>
+            </Box>
+            <Box>
+            <Grid container className= "gridContainer">
                 <Grid item xs>
                 <Button variant="outlined" onClick={handleRecover}>
                     Mot de Passe oublié
@@ -86,8 +95,11 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
                     <Button onClick={handleClick}>
                         Pas encore de compte?
                     </Button>
-                    <Popover
-                        sx={{ borderRadius: 8}}
+                </Grid>
+
+            </Grid>
+            <Popover
+                        sx={{ borderRadius: 8, marginTop: "25px"}}
                         id={id}
                         open={open}
                         anchorEl={anchorEl}
@@ -104,9 +116,7 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
                         <Typography  sx={{ p: 2, borderRadius: 8}}>
                                 Venez nous rencontrer lors d'une permanence pour le créer ensemble!
                         </Typography>
-                    </Popover>
-                </Grid>
-            </Grid>
+            </Popover>
 
         </Box>
     </>

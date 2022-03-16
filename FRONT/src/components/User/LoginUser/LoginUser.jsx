@@ -1,10 +1,5 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 // import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import Typography from '@mui/material/Typography';
@@ -21,7 +16,9 @@ import {useNavigate} from "react-router-dom";
 // import AccountMenu from '../AccountMenu/AccountMenu';
 import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
 import AlertMessage from '../../AlertMessage/AlertMessage';
-import LoginForm from '../LoginForm/LoginForm'
+import LoginForm from '../LoginForm/LoginForm';
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import MenuUser from '../MenuUser/MenuUser'
 
 
 
@@ -77,11 +74,17 @@ export default function SignIn() {
 
   return (
 
-      <Box className = "clay login-user">
-        <Button variant="contained" onClick={handleOpenLogin}>
+      <Box className="loginuser">
+        <ButtonUnstyled
+            className = "loginuser-button"
+            variant="contained"
+            onClick={handleOpenLogin}
+            >
             <AccountCircle className = {isOpen && 'hidden'}fontSize="large" />
-        </Button>
+        </ButtonUnstyled>
         <Popover
+            sx={{ marginTop: "5px",
+                 borderBottomLeftRadius : "10px"}}
             id={id}
             open={open}
             anchorEl={anchorEl}
@@ -93,11 +96,13 @@ export default function SignIn() {
             transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
-              }}
-            >
+            }}>
+            <Box className = "loginuser-popover">
             {!userToken ?
                 <LoginForm closeLoginMenu = {closeLoginMenu}/>
                 :
+                <Box>
+                <MenuUser display="login" onClick={handleCloseLogin}/>
                 <Button
                 onClick= {handleDisconnectClick}
                 type="submit"
@@ -107,8 +112,9 @@ export default function SignIn() {
                 >
                     Se Déconnecter
                 </Button>
+                </Box>
             }
-
+        </Box>
         </Popover>
       </Box>
   );
