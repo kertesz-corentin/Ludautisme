@@ -53,7 +53,7 @@ module.exports = {
             { member_number: Number(req.body.member_number) },
             { email: req.body.email },
         ]);
-        if (!['id_role', 'email', 'member_number', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
+        if (['id_role', 'email', 'member_number', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
             throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
         }
         if (user.length > 0) {
