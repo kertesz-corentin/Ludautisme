@@ -39,6 +39,8 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const add = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
+    const [isClick, setIsClick] = useState(false);
+
 
     let itemToAdd = {
         id,
@@ -52,10 +54,14 @@ const Reference = ({
     let [quantity, setQuantity] = useState(nb_available);
 //each time i add article to my booking, delete one on quantity
 
+
     function handleClick () {
         add(itemToAdd);
         console.log(`envoi de l'item au cart`, itemToAdd)
+        setIsClick(!isClick)
     }
+
+
    return (
 
         <Card sx={{ maxWidth: 345 }}>
@@ -72,10 +78,17 @@ const Reference = ({
 
                 <Button onClick={handleOpen}>description</Button>
                 {userToken &&
-                <Button
-                    onClick={handleClick}>
-                        <AddShoppingCartIcon/>
-                </Button>
+                    !isClick ?
+                    <Button
+                        onClick={handleClick}>
+                            <AddShoppingCartIcon/>
+                    </Button>
+                    :
+                    <Button
+                        onClick={handleClick} disabled>
+                            <AddShoppingCartIcon/>
+                    </Button>
+
 
                 }
 

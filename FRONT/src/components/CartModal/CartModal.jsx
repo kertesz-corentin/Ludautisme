@@ -39,6 +39,7 @@ const CartModal = ({
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let [counter, setCounter] = useState(currentItems.length)
+
     function handleRemoveItemClick  () {
         setCounter(currentItems.length)
     }
