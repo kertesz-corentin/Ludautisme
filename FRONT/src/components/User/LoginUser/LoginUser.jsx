@@ -32,7 +32,7 @@ export default function SignIn() {
   }
 
   const closeLoginMenu = () =>{
-      setIsOpen = setIsOpen(false);
+      setIsOpen(false);
   }
 
   const [alertMessage, setAlertMessage] = useState();
@@ -44,6 +44,7 @@ export default function SignIn() {
     };
 
     const handleCloseLogin = () => {
+    console.log("test");
     setAnchorEl(null);
     };
     const open = Boolean(anchorEl);
@@ -101,7 +102,7 @@ export default function SignIn() {
                 <LoginForm closeLoginMenu = {closeLoginMenu}/>
                 :
                 <Box>
-                <MenuUser display="login" closeLoginMenu={closeLoginMenu}/>
+                <MenuUser display="login" handleCloseLogin={handleCloseLogin}/>
                 <Button
                 onClick= {handleDisconnectClick}
                 type="submit"

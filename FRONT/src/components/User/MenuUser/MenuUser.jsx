@@ -7,13 +7,27 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
+import {useNavigate} from "react-router-dom";
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 
-const MenuUser = ({className,display,closeLoginMenu, ...rest}) => {
+const MenuUser = ({className,display,handleCloseLogin, ...rest}) => {
+    const navigate = useNavigate();
 
     const buttonMyAccount =  <Button >Mon Compte</Button>;
     const buttonMyBookings = <Button >Mes Réservations</Button>;
     function handleClick() {
         console.log(`Je souhaite modifier mon mdp`)
+    }
+
+    const goToAccount = async () => {
+        handleCloseLogin();
+        navigate('/user/account');
+    }
+
+    const goToBookings = () => {
+        handleCloseLogin();
+        navigate('/user/bookings');
+
     }
 
    return (
@@ -25,9 +39,8 @@ const MenuUser = ({className,display,closeLoginMenu, ...rest}) => {
           m: 1,
         },
       }}
-    >
-       <NavLink className='menu-user-button1' to="/user/account" onClick={closeLoginMenu}> {buttonMyAccount}</NavLink>
-       <NavLink className='menu-user-button1'  to="/user/bookings" onClick={closeLoginMenu}> {buttonMyBookings}</NavLink>
+    >   <Button onClick={goToAccount}>Mon Compte</Button>
+        <Button onClick={goToBookings}>Mes Réservations</Button>
        {display !== "login" &&
             <ModifyPasswordModal/>
         }
