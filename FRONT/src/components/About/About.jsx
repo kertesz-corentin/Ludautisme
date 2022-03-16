@@ -8,7 +8,6 @@ import Parlant from '../public/icones/parlant.png'
 import Creatif from '../public/icones/creatif.png'
 import Reseau from '../public/icones/reseau.png'
 import Remarketing from '../public/icones/remarketing.png'
-import Cloud from '../public/cloudexemple.png'
 import Drapeau from '../public/icones/drapeau.png'
 import Diapo12 from '../public/DocumentsPdf/diapo-2012-2013.pdf'
 import Diapo13 from '../public/DocumentsPdf/diapo-2013-2014.pdf'
@@ -22,6 +21,7 @@ import Link from '@mui/material/Link';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 import IconButton from '@mui/material/IconButton';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
+import Wordscloud from '../Wordscloud/Wordscloud';
 
 
 const About = ({className, ...rest}) => {
@@ -39,14 +39,15 @@ const About = ({className, ...rest}) => {
                         <img className='who-title-logo' src={Drapeau} alt="qui somme nous" />
                         Qui sommes nous ?
                     </h2>
-                    <p>
+                     <p>
+                    <div className='who-content-nuage'>
+                    <Wordscloud />
+                     </div>
                         Lud'Autisme est une association créée en 2009, à l'initiative de parents d'enfants handicapés, ayant pour but d'accompagner les personnes en difficultés d'apprentissage ou d'autonomie dans leur parcours au quotidien.
                     </p>
                 </div>
 
-                <div className='nuage'>
-                    <img src={Cloud} alt="nuage de mots" />
-                </div>
+
 
                 <div className='content-actions'>
                 <div className='actions'>
