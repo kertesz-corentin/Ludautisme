@@ -1,5 +1,5 @@
 const ApiError = require('../../errors/apiError');
-const { referenceDataMapper } = require('../../models/admin');
+const { referenceDataMapper, pictureDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -29,6 +29,16 @@ module.exports = {
             throw new ApiError(400, 'Une référence avec le même nom existe déjà');
         }
         const newRef = await referenceDataMapper.create(req.body);
+        if (!newRef) {
+            throw new ApiError(500, 'Impossible de créer la référence');
+        }
+        if (!req.body.picture) {
+            req.body.picture = 6;
+        }
+        const picture = await pictureDataMapper.addRelation(newRef.id, req.body.picture);
+        if (picture[0]) {
+            throw new ApiError(500, 'Impossible d\'ajouter l\'image');
+        }
         return res.json(newRef);
     },
     async update(req, res) {
