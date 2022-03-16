@@ -49,27 +49,22 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
-        console.log('body', req.body, req.body.member_number, req.body.email);
         const user = await usersDataMapper.findFiltered([
             { member_number: Number(req.body.member_number) },
             { email: req.body.email },
         ]);
-        try {
-            // if (!['id_role', 'email', 'member_number', 'phone', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
-            //     throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
-            // }
-            if (user.length > 0) {
-                throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
-            }
-            if (req.body.password) {
-                const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-                req.body.password = hashedPassword;
-            }
-            const newUser = await usersDataMapper.addUser(req.body);
-            return res.json(newUser);
-        } catch (err) {
-            return res.json(err, err.message);
+        if (!['id_role', 'email', 'member_number', 'adress_number', 'adress_street'].includes(Object.keys(req.body))) {
+            throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
         }
+        if (user.length > 0) {
+            throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
+        }
+        if (req.body.password) {
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+            req.body.password = hashedPassword;
+        }
+        const newUser = await usersDataMapper.addUser(req.body);
+        return res.json(newUser);
     },
     async update(req, res) {
         const user = await usersDataMapper.findById(req.params.id);
