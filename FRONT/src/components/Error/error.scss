@@ -1,5 +1,7 @@
 @import 'src/styles/vars';
 
 .error{
-    background-color: blueviolet;
+    background-color: $blue;
+    height: 100vh;
+    margin: 0;
 }
