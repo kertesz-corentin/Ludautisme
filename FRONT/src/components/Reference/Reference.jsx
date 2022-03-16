@@ -20,6 +20,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import BlockIcon from '@mui/icons-material/Block';
 
 const Reference = ({
     className,
@@ -52,12 +53,18 @@ const Reference = ({
         valorisation,
     }
     let [quantity, setQuantity] = useState(nb_available);
-//each time i add article to my booking, delete one on quantity
-
+    //Need newQuantity to compare with quantity and know if article has been click already
+    let [newQuantity, setNewQuantity] = useState(quantity);
+    console.log(quantity, newQuantity)
 
     function handleClick () {
         add(itemToAdd);
         console.log(`envoi de l'item au cart`, itemToAdd)
+        setNewQuantity(newQuantity -= 1 )
+        modifyIsClick()
+    }
+
+    function modifyIsClick () {
         setIsClick(!isClick)
     }
 
@@ -77,19 +84,36 @@ const Reference = ({
                 </Typography>
 
                 <Button onClick={handleOpen}>description</Button>
-                {userToken &&
-                    !isClick ?
+                {userToken && quantity>0 && quantity === newQuantity &&
+                    <Box>
                     <Button
                         onClick={handleClick}>
                             <AddShoppingCartIcon/>
                     </Button>
-                    :
+                    </Box>
+                }
+                 {userToken && quantity !== newQuantity &&
+                    <Box>
                     <Button
                         onClick={handleClick} disabled>
                             <BookmarkAddedIcon/>
                     </Button>
+                    <Typography gutterBottom variant="p" component="div">
+                                (Article ajouté)
+                    </Typography>
+                    </Box>
+                }
+                {userToken && quantity == 0 &&
+                    <Box>
+                    <Button
+                        onClick={handleClick} disabled>
 
-
+                    </Button>
+                    <Typography gutterBottom variant="p" component="div">
+                        <BlockIcon/>
+                                Actuellement indisponible
+                    </Typography>
+                    </Box>
                 }
 
           <Modal
@@ -131,7 +155,6 @@ const Reference = ({
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité disponible: {nb_available} sur {nb_total}
                 </Typography>
-
               </Box>
             </Fade>
           </Modal>

@@ -30,7 +30,6 @@ const [categoriesData, setCategoriesDatas] = useState('')
         const response = await api.get('/customer/articles');
         console.log(response);
         setReferencesDatas(response.data)
-
    }
    async function oneReference () {
     const response = await api.get('/customer/articles/:id');
@@ -41,6 +40,13 @@ const [categoriesData, setCategoriesDatas] = useState('')
         const response = await api.get('/customer/category');
         setCategoriesDatas(response.data)
     }
+
+    const [allRef, setAllRef] = useState('');
+
+    function getAllRef(response){
+        setAllRef(response)
+    }
+    console.log(`MES DONEES IN ML `, allRef)
    return (
 
 
@@ -48,10 +54,14 @@ const [categoriesData, setCategoriesDatas] = useState('')
         <div            className={classnames('materiallibrary', className)}
             {...rest}
         >
-        <MaterialLibraryMenu categories={categoriesData} />
+        <MaterialLibraryMenu getAllRef={getAllRef} categories={categoriesData} />
             <div className= "allReferences">
                 <NextPages/>
+                {!allRef ?
                 <ListOfReferences references= {referencesData}/>
+                :
+                <ListOfReferences references= {allRef}/>
+                }
                 <NextPages/>
             </div>
         </div>

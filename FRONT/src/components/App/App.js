@@ -32,8 +32,10 @@ function App() {
     const addItemsToCart = (itemToAdd) => {
         console.log("itemToAdd",itemToAdd);
          setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
-         console.log("après ajout",itemsToCart);
+         console.log("après ajout",itemsToCart,`DERNIER AJOUT`, itemToAdd);
+
     };
+
 
 
     // Client Application
@@ -66,18 +68,10 @@ function App() {
             {/* <Route path = "/admin/references/:id/articles" element = {<AdminArticles />}></Route> */}
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-
-
-
-
-
-            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} />}>
+            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>}/>}>
                 <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
-            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
-            </Route>
             <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
                 <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserBookings />} />}></Route>
             </Route>

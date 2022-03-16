@@ -23,7 +23,7 @@ const CurrentReference = ({
     className,
     currentItem,
     removeItem,
-    changeCounter
+    changeCounter,
      }) => {
 
     //GET USER ID
