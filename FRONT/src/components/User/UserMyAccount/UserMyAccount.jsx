@@ -34,7 +34,6 @@ const UserMyAccount = ({
         const  response = await api.get(`/customer/user/${user.id}`);
         if (response.status === 200){
             setUserInfos(response.data);
-            console.log(userInfos);
         } else {
             console.error(response.data);
         }
@@ -90,23 +89,23 @@ const UserMyAccount = ({
     }
 
    return (
-       <Box>
-       <Typography > Bienvenue Polo</Typography>
-         <Permanency/>
                 <Box className= "home-user">
-                <MenuUser/>
+                <Permanency/>
                         <span >
                             <h2>
                             Données personnelles
                             </h2>
                         </span>
-                        <Box className="loginuser-form" component="form" noValidate sx={{ mt: 1 }}>
                             {userInfos &&
-                                Object.keys(userInfos).map((prop,index) => {
+                            <Box className="loginuser-form" component="form" noValidate sx={{ mt: 1 }}>
+                                <Typography className="home-user-welcome"> Bienvenue <span className="home-user-welcome-span">{userInfos.first_name}</span></Typography>
+                                {
+                                    Object.keys(userInfos).map((prop,index) => {
 
                                     return (
                                     (userSchema[prop]) ?
                                         <TextField
+                                            key={prop}
                                             id={prop}
                                             name={prop}
                                             className = "loginuser-textfield"
@@ -115,32 +114,29 @@ const UserMyAccount = ({
                                             type="text"
                                             value= {userInfos[prop]}
                                             onChange={(event)=>{handleChange(event)}}
-                                        />
-                                    : null
-                                    )
-                                })
+                                            />
+                                        : null
+                                        )
+                                    })
+                                }
 
-                            }
-                            {/* <TextField
-                                disabled={!modifyBtn}
-                                label= "Nom:"
-                                type="text"
-                                value= {firstNameValue}
-                                onChange={(event) => handleFirstNameChange(event, firstNameValue)}
-                            /> */}
+
                             {modifyBtn ?
+                            <>
+                                <ModifyPasswordModal/>
                                 <Button className="loginuser-submit" onClick={handleSubmit}>
                                     Valider
                                 </Button>
+                            </>
                             :
                             <Button className="loginuser-submit" onClick={handleClickModifyBtn}>
                                 Modifier
                             </Button>
                             }
-
                         </Box>
+                        }
+
                 </Box>
-            </Box>
    );
 };
 

@@ -1,12 +1,14 @@
 @import 'src/styles/vars';
 
 .home-user {
-
+    height: 100%;
    background-color:rgb(213, 238, 238);
-   height: 40rem;
    display: flex;
-   flex-direction: row;
    align-items: center;
+
+   &-welcome-span{
+       text-transform: capitalize;
+   }
 
 }
 .loginuser-form {
