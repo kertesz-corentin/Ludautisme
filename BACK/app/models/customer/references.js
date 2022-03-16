@@ -93,6 +93,8 @@ module.exports = {
         r.valorisation,
         cat.name AS mainCategory,
         json_agg(DISTINCT "category"."name") AS tag,
+        COUNT(DISTINCT ar."id") AS nb_total,
+        COUNT(DISTINCT ar."id") FILTER (WHERE ar."available" = TRUE) AS nb_available,
         json_agg(DISTINCT jsonb_build_object (
             'id', "image"."id",
             'url', "image"."url",
