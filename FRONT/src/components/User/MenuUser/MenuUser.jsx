@@ -8,10 +8,10 @@ import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
 import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
 
-const MenuUser = ({className,display, ...rest}) => {
+const MenuUser = ({className,display,closeLoginMenu, ...rest}) => {
 
-    const buttonMyAccount =  <Button className='test1' key="one" type = "click"  >Mon Compte</Button>;
-    const buttonMyBookings = <Button key="two" type = "click"  >Mes Réservations</Button>;
+    const buttonMyAccount =  <Button >Mon Compte</Button>;
+    const buttonMyBookings = <Button >Mes Réservations</Button>;
     function handleClick() {
         console.log(`Je souhaite modifier mon mdp`)
     }
@@ -20,23 +20,17 @@ const MenuUser = ({className,display, ...rest}) => {
        <Box
       sx={{
         display: 'flex',
+        flexDirection: 'column',
         '& > *': {
           m: 1,
         },
       }}
     >
-      <ButtonGroup className='test3'
-        orientation="vertical"
-        aria-label="vertical contained button group"
-        variant="contained"
-
-      >
-       <NavLink className='menu-user-button1' to="/user/account"> {buttonMyAccount}</NavLink>
-       <NavLink className='menu-user-button1'  to="/user/bookings"> {buttonMyBookings}</NavLink>
+       <NavLink className='menu-user-button1' to="/user/account" onClick={closeLoginMenu}> {buttonMyAccount}</NavLink>
+       <NavLink className='menu-user-button1'  to="/user/bookings" onClick={closeLoginMenu}> {buttonMyBookings}</NavLink>
        {display !== "login" &&
             <ModifyPasswordModal/>
         }
-      </ButtonGroup>
     </Box>
    );
 };

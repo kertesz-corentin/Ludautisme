@@ -64,7 +64,6 @@ export default function SignIn() {
         api.logout();
         setIsOpen(!isOpen)
         navigate('/')
-        window.location.reload()
     }
 
 // Use to recover password
@@ -102,7 +101,7 @@ export default function SignIn() {
                 <LoginForm closeLoginMenu = {closeLoginMenu}/>
                 :
                 <Box>
-                <MenuUser display="login" onClick={handleCloseLogin}/>
+                <MenuUser display="login" closeLoginMenu={closeLoginMenu}/>
                 <Button
                 onClick= {handleDisconnectClick}
                 type="submit"

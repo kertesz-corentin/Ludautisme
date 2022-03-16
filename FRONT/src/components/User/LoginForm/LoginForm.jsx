@@ -81,7 +81,7 @@ const LoginForm = ({closeLoginMenu, ...rest}) => {
                             variant="contained"
                             sx={{ mt: 1, mb: 2 }}
                             >
-                                Se connecter
+                                SE CONNECTER
                             </ButtonUnstyled>
             </Box>
             <Box>
