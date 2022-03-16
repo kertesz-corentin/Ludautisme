@@ -10,7 +10,7 @@ import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
 
 const MenuUser = ({className, ...rest}) => {
 
-    const buttonMyAccount =  <Button key="one" type = "click"  >Mon Compte</Button>;
+    const buttonMyAccount =  <Button className='test1' key="one" type = "click"  >Mon Compte</Button>;
     const buttonMyBookings = <Button key="two" type = "click"  >Mes Réservations</Button>;
     function handleClick() {
         console.log(`Je souhaite modifier mon mdp`)
@@ -25,14 +25,14 @@ const MenuUser = ({className, ...rest}) => {
         },
       }}
     >
-      <ButtonGroup
+      <ButtonGroup className='test3'
         orientation="vertical"
         aria-label="vertical contained button group"
         variant="contained"
 
       >
-       <NavLink to="/user/account"> {buttonMyAccount}</NavLink>
-       <NavLink to="/user/bookings"> {buttonMyBookings}</NavLink>
+       <NavLink className='menu-user-button1' to="/user/account"> {buttonMyAccount}</NavLink>
+       <NavLink className='menu-user-button1'  to="/user/bookings"> {buttonMyBookings}</NavLink>
        <ModifyPasswordModal/>
       </ButtonGroup>
     </Box>
