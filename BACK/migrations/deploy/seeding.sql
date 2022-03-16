@@ -52,8 +52,7 @@ INSERT INTO "image" ("url","title", "alternative_text","main") VALUES
 ('http://www.lepaysdesmerveilles.com/wp-content/uploads/2016/09/coffret-ecriture-lecture-montessori-grapheme-rugueux-balthazar.jpg', 'coffret lecture ecriture', 'un coffret pour apprendre a écrire', false),
 ('https://img.scoop.it/CtEd9UP0K3g6EJKiCAkmPoXXXL4j3HpexhjNOf_P3YmryPKwJ94QGRtDb3Sbc6KY', 'ma journée', 'un livre qui explique les étapes dans une journée', true),
 ('https://wp.oclock.io/wp-content/uploads/2022/01/Oclock-_-cinq-ans-en-chiffres_OG.jpg', 'apprendre a coder', 'un livre qui explique les étapes pour coder', true),
-('../public/pictures/game1647436382653.png', 'game', 'image jeu par défaut', false);
-
+('../public/src/components/public/game1647436382653.png', 'game', 'image jeu par défaut', false);
 INSERT INTO "reference_to_image" ("id_ref", "id_image") VALUES
 (1, 1),
 (1, 2),

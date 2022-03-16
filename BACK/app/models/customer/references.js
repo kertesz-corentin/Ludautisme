@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable comma-dangle */
 const sqlHandler = require('../../helpers/sqlHandler');
 /**
@@ -34,8 +35,8 @@ module.exports = {
             r."valorisation",
             cat."name" AS mainCategory,
             json_agg(DISTINCT"category"."name") AS tag,
-			COUNT(DISTINCT "article"."id") AS nb_total,
-			COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
+            COUNT(DISTINCT "article"."id") AS nb_total,
+            COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -49,7 +50,7 @@ module.exports = {
             JOIN "category" AS cat ON r."main_category" = cat."id"
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             LEFT JOIN "category" ON rtc."id_category" = "category"."id"
-			JOIN "article" ON "article"."id_ref" = "r"."id"
+            JOIN "article" ON "article"."id_ref" = "r"."id"
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
         );
         return result.rows;
@@ -63,8 +64,8 @@ module.exports = {
             r."valorisation",
             cat."name" AS mainCategory,
             json_agg(DISTINCT"category"."name") AS tag,
-			COUNT(DISTINCT "article"."id") AS nb_total,
-			COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
+            COUNT(DISTINCT "article"."id") AS nb_total,
+            COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
                 'id', "image"."id",
                 'url', "image"."url",
@@ -78,7 +79,7 @@ module.exports = {
             JOIN "category" AS cat ON r."main_category" = cat."id"
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             LEFT JOIN "category" ON rtc."id_category" = "category"."id"
-			JOIN "article" ON "article"."id_ref" = "r"."id"
+            JOIN "article" ON "article"."id_ref" = "r"."id"
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
             WHERE r."id"=$1`,
             [id],
@@ -112,7 +113,7 @@ module.exports = {
         `;
         const placeholders = [limit, offset];
         if (arr.length > 0) {
-            queryStart += ` WHERE `
+            queryStart += ` WHERE `;
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];
                 queryStart += `${prop} IN (`;

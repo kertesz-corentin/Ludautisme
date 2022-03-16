@@ -55,7 +55,7 @@ module.exports = {
             { email: req.body.email },
         ]);
         const {
-            id_role, email, member_number, adress_number, adress_street
+            id_role, email, member_number, adress_number, adress_street,
         } = req.body;
         if (!id_role || !email || !member_number || !adress_number || !adress_street) {
             throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
