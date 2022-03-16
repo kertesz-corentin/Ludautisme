@@ -28,6 +28,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
    async function getAllReferences () {
         const response = await api.get('/customer/articles');
+        console.log(response);
         setReferencesDatas(response.data)
 
    }

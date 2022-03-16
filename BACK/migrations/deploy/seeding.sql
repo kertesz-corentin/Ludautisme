@@ -19,7 +19,8 @@ INSERT INTO "permanency" ("perm_date","active") VALUES
 ('2022-01-04', false),
 ('2022-02-05', false),
 ('2022-03-10', true),
-('2022-04-06', false);
+('infinity', false),
+('infinity', false);
 
 INSERT INTO "booking" ( "delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
 ( false, false, 0, 3, 6),

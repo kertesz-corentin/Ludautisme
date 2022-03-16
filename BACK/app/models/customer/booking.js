@@ -138,8 +138,8 @@ module.exports = {
         INNER JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
 		INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         INNER JOIN "reference" ON "reference"."id" = ar."id_ref"
-		JOIN "reference_to_image" AS rti ON "reference"."id" = rti."id_ref"
-        JOIN "image" ON rti."id_image" = "image"."id"
+		LEFT JOIN "reference_to_image" AS rti ON "reference"."id" = rti."id_ref"
+        LEFT JOIN "image" ON rti."id_image" = "image"."id"
 		WHERE "image"."main" = TRUE AND "user"."id"=$1
         GROUP BY b.id, "user"."id",
                 "date_permanency","return_date_permanency","return_id_permanency","active_permanency"`;

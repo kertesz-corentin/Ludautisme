@@ -39,7 +39,6 @@ export default function SignIn() {
     //Use to send Datas
   const handleSubmit = async(event) => {
     event.preventDefault();
-    try {
         const data = new FormData (event.currentTarget);
         const email = data.get('email');
         const password =  data.get ('password');
@@ -48,12 +47,10 @@ export default function SignIn() {
         if(response.status === 200) {
             navigate('/user/account')
             setIsOpen(!isOpen)
+        } else {
+            setAlertMessage(response.data.message);
+            console.error(response);
         }
-    } catch (err) {
-        setAlertMessage(err.response.data.message);
-        console.error(err.response);
-
-    }
   };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -159,12 +156,6 @@ export default function SignIn() {
                                     >
                                     Se connecter
                                     </Button>
-                                    {alertMessage && (
-                                        <AlertMessage
-                                            message={alertMessage}
-                                        >
-                                        </AlertMessage>
-                                    )}
                                     <Grid container className= "gridContainer">
                                         <Grid item xs>
                                         <RecoverPassworldModal/>
@@ -188,6 +179,12 @@ export default function SignIn() {
                                             </Popover>
                                         </Grid>
                                     </Grid>
+                                    {alertMessage && (
+                                        <AlertMessage
+                                            message={alertMessage}
+                                        >
+                                        </AlertMessage>
+                                    )}
                                 </Box>
                                 </Box>
                             </Container>

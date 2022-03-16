@@ -29,6 +29,7 @@ const CartModal = ({
     }) => {
 
     const [alertMessage, setAlertMessage] = useState();
+    const [successMessage, setSuccessMessage] = useState();
     //ACTUAL CART STATE
 
 
@@ -53,11 +54,16 @@ const CartModal = ({
             refIds : currentItems.map((item)=>{return item.id}),
         };
             const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
-        if (response.status === 200){ console.log(`Réservation envoyée`)
+        if (response.status === 200){
+            setAlertMessage({
+                message : 'Votre réservation a bien été prise en compte',
+                severity : 'success'});
         }
         else
         {
-            setAlertMessage(response.data.message)
+            setAlertMessage({
+                message : response.data.message}
+                );
             console.log(`Une erreur est survenue`, response.data)
         };
     }
@@ -134,7 +140,9 @@ const CartModal = ({
                             </Button>
                             {alertMessage && (
                                 <AlertMessage
-                                    message={alertMessage}
+                                    message={alertMessage.message}
+                                    severity={alertMessage.severity}
+
                                 >
                                 </AlertMessage>
                             )}

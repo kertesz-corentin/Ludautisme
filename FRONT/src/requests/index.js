@@ -12,55 +12,59 @@ const api = {
         try {
         return await connection.get(path, { headers: authHeader() });
         } catch (err) {
-            return err
+            return err.response
         }
     },
     async post(path, data) {
         try {
         return await connection.post(path, data, { headers: authHeader() });
         } catch (err) {
-            return err
+            return err.response
         }
     },
     async patch(path, data) {
         try {
         return await connection.patch(path, data, { headers: authHeader() });
         } catch (err) {
-            return err
+            return err.response
         }
     },
     async put(path, data) {
         try {
         return await connection.put(path, data, { headers: authHeader() });
         } catch (err) {
-            return err
+            return err.response
         }
     },
     async delete(path) {
         try {
         return await connection.delete(path, { headers: authHeader() });
         } catch (err) {
-            return err
+            return err.response
         }
     },
     async login(email, password,type) {
-        let response = null;
-        if (type === "user"){
-            response = await connection.post('/login/user', { email, password });
-        } else {
-            response = await connection.post('/login/admin', { email, password });
+        try {
+            let response = null;
+            if (type === "user"){
+                response = await connection.post('/login/user', { email, password });
+            } else {
+                response = await connection.post('/login/admin', { email, password });
 
-        }
-        if (response.data.token) {
-            const user = {
-                id: response.data.id,
-                role:response.data.role,
-                token: response.data.token
             }
-            console.log("user logged:",user);
-            localStorage.setItem("user",JSON.stringify(user));
+            if (response.data.token) {
+                const user = {
+                    id: response.data.id,
+                    role:response.data.role,
+                    token: response.data.token
+                }
+                console.log("user logged:",user);
+                localStorage.setItem("user",JSON.stringify(user));
+            }
+            return response;
+        } catch (err) {
+            return err.response
         }
-        return response;
     },
     async logout() {
         console.log('logout');
@@ -71,7 +75,7 @@ const api = {
         try {
         return await connection.post(path, data);
         } catch (err) {
-            return err
+            return err.response
         }
     },
 
