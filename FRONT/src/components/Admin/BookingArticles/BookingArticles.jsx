@@ -12,7 +12,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
 
-const BookingArticles = ({list, className, ...rest}) => {
+const BookingArticles = ({list, closed, delivered, className, ...rest}) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -28,12 +28,11 @@ const BookingArticles = ({list, className, ...rest}) => {
                 switch (propElt.gridDisplay){
                     case "delete":
                         config.renderCell = (params) => (
-
                             <IconButton
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <DeleteArticleModal params={params} />
+                                <DeleteArticleModal params={params} closed={closed} delivered={delivered} />
                             </IconButton>
                         );
                     break;

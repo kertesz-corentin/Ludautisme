@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './deletearticlemodal.scss';
 import api from '../../../requests';
 
-const DeleteArticleModal = ({params, className, ...rest}) => {
+const DeleteArticleModal = ({params, closed, delivered, className, ...rest}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -28,11 +28,12 @@ const DeleteArticleModal = ({params, className, ...rest}) => {
 
     return (
         <div>
-            <IconButton onClick={handleOpen}>
-                {/* {`# ${params.value}`} */}
-                <DeleteIcon />
-            </IconButton>
-
+            {!closed && !delivered && (
+                <IconButton onClick={handleOpen}>
+                    {/* {`# ${params.value}`} */}
+                    <DeleteIcon />
+                </IconButton>
+            )}
             <Modal
                 open={open}
                 onClose={handleClose}

@@ -30,9 +30,7 @@ const AdminReferences = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/references');
             const data = await response.data;
-            if(response.status === 200){
                 setReferences(data);
-            }
         }
         catch (err) {
             setAlertMessage(err.response.data.message)

@@ -21,7 +21,6 @@ import './adminbookings.scss';
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
-    const [articles, setArticles] = useState([]);
 
     const [alertMessage, setAlertMessage] = useState();
 
@@ -39,23 +38,8 @@ const AdminBookings = ({className, ...rest}) => {
         }
     }
 
-    const getAllArticles = async () => {
-        try {
-            const response = await api.get('/admin/articles');
-            const data = await response.data;
-            if(response.status === 200){
-                setArticles(data);
-            }
-        }
-        catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err)
-        }
-    }
-
     useEffect(() => {
         getBookings();
-        getAllArticles();
     }, [])
 
     const columnBuilder = (() => {
@@ -81,15 +65,35 @@ const AdminBookings = ({className, ...rest}) => {
                             </IconButton>
                         );
                     break;
-                    case "toggle":
+                    case "closed":
                         config.renderCell = (params) => (
                             <ToggleButton
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
-                                    // const response = await api.put(`/admin/users/${params.row.id}`, {[prop] : !params.value});
-                                    // const newData = await getUsers();
-                                    // setUsers(newData.data);
+                                    const id = Number(params.row.id)
+                                    const response = await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
+                                    const newData = await getBookings();
+                                    console.log('response', response);
+                                    setBookings(newData.data);
+                                }}
+                                aria-label={`${prop}-${params.row.id}`}
+                            >
+                                <GridCheckIcon />
+                            </ToggleButton>
+                    );
+                    break;
+                    case "delivered":
+                        config.renderCell = (params) => (
+                            <ToggleButton
+                                value={params.value}
+                                selected={params.value}
+                                onChange={async () => {
+                                    // const id = Number(params.row.id)
+                                    // const response = await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
+                                    // const newData = await getBookings();
+                                    // console.log('response', response);
+                                    // setBookings(newData.data);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
@@ -99,7 +103,7 @@ const AdminBookings = ({className, ...rest}) => {
                     break;
                     case "date":
                         config.renderCell = (params) => (
-                            moment(params.value).format('DD MMMM YYYY')
+                            moment(params.value).format('DD/MM/YYYY')
                         );
                     break;
                     default:
