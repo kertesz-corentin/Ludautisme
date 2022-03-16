@@ -1,32 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import AdminSection from '../AdminSection/AdminSection';
+import moment from 'moment';
+
+// import requests
 import api from '../../../requests';
-import { bookingSchema } from '../../../Schemas';
+
+// import react components
+import AdminSection from '../AdminSection/AdminSection';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
+import AlertMessage from '../../AlertMessage/AlertMessage';
+import { bookingSchema } from '../../../Schemas';
+
+// import mui components
+import { IconButton, ToggleButton } from '@mui/material';
+import { GridCheckIcon } from '@mui/x-data-grid';
 
 import './adminbookings.scss';
-import { IconButton, ToggleButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { GridCheckIcon } from '@mui/x-data-grid';
 
 const AdminBookings = ({className, ...rest}) => {
     const [bookings, setBookings] = useState([]);
     const [articles, setArticles] = useState([]);
 
-    console.log('article-API', articles);
-
-    const path='/admin/booking';
+    const [alertMessage, setAlertMessage] = useState();
 
     const getBookings = async() => {
         try {
-            const response = await api.get(path);
+            const response = await api.get('/admin/booking');
             const data = await response.data;
-            setBookings(data);
+            if(response.status === 200){
+                setBookings(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message);
             console.error (err);
         }
     }
@@ -35,9 +43,12 @@ const AdminBookings = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/articles');
             const data = await response.data;
-            setArticles(data);
+            if(response.status === 200){
+                setArticles(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message)
             console.error(err)
         }
     }
@@ -86,6 +97,11 @@ const AdminBookings = ({className, ...rest}) => {
                             </ToggleButton>
                     );
                     break;
+                    case "date":
+                        config.renderCell = (params) => (
+                            moment(params.value).format('DD MMMM YYYY')
+                        );
+                    break;
                     default:
                         break;
                 }
@@ -100,11 +116,14 @@ const AdminBookings = ({className, ...rest}) => {
             className={classnames('adminbookings', className)}
             {...rest}
         >
+            {alertMessage && (
+                <AlertMessage message={alertMessage} />
+            )}
             <AdminSection
                 title="Réservations"
                 rows={bookings}
                 columns={columnBuilder}
-                path={path}
+                path={'/admin/booking'}
                 initialState={{
                     columns: {
                         columnVisibilityModel: {

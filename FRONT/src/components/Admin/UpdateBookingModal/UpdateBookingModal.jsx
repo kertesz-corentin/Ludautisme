@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import api from '../../../requests';
+
+// import react components
+import BookingArticles from '../BookingArticles/BookingArticles';
+
+// import material ui components
 import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import Articles from '../../Articles/Articles';
-import AddModal from '../../Articles/AddModal/AddModal';
-import BookingArticles from '../BookingArticles/BookingArticles';
 
 import './updatebookingmodal.scss';
 
 const UpdateBookingModal = ({params, className, ...rest}) => {
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);
-    console.log('params', params.row);
-    // console.log("detail_Réservation", params.row.articles);
-    // console.log('params', params);
+
+    const [articles, setArticles] = useState(params.row.borrowed_articles);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        handleClose();
         // const data = new FormData(event.currentTarget);
 
         // const reference = {
@@ -39,32 +40,10 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
         // console.log('response', response);
     }
 
-    const getArticles = async () => {
-        console.log(params.row.borrowed_articles);
-
-        // const settings = {
-        //     'id': params.row.id
-        // }
-        // const response = await api.post(`/admin/articles/search`, settings);
-        // const data = await response.data;
-        // console.log("data articles",data);
-        // setArticles(data);
-        // if(response.status === 200) {
-        //     handleClose();
-        // }
-    }
-
-    const handleChange = (event) => {
-    }
-
-    useEffect(() => {
-        getArticles();
-    }, [])
-
     return (
         <div>
             <IconButton onClick={handleOpen}>
-                {`# ${params.value}`}
+                {/* {`# ${params.value}`} */}
                 <EditIcon />
             </IconButton>
             <Modal
@@ -92,6 +71,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.first_name}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
 
                         </TextField>
@@ -102,6 +82,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.last_name}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -111,6 +92,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             disabled
                             defaultValue={params.row.email}
                             className="update-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                     </div>
@@ -158,22 +140,20 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             </Select>
                         </FormControl> */}
                     {/* </div> */}
+                    <div class="update-modal-articles">
+                        <div className="update-modal-articles--book">
+                            <BookingArticles  list={params.row.borrowed_articles} />
+                        </div>
+                    </div>
                     <div className="update-modal-footer">
                         <Button
                             type='submit'
                             className="update-modal-footer-submit"
                             variant="contained"
                         >
-                            Mettre à jour
+                            Valider
                         </Button>
-
                     </div>
-                    <div class="update-modal-articles">
-                        <div className="update-modal-articles--book">
-                            <BookingArticles  list={params.row.borrowed_articles} />
-                        </div>
-                    </div>
-
                 </Box>
             </Modal>
 

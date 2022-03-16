@@ -25,12 +25,16 @@ const ListOfReferences = ({
           <CssBaseline />
           <Container maxWidth="70%">
           <Grid
-            container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
+            className = "gridList"
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center"
         >
 
                 {references.map((reference,index)=>
                 (
-                    <Grid item xs={2} sm={4} md={4} key={index}>
+
                     <Reference
                         key = {reference.id}
                         id={reference.id}
@@ -44,7 +48,7 @@ const ListOfReferences = ({
                         nb_available={reference.nb_available}
                         nb_total={reference.nb_total}
                     />
-                    </Grid>
+
                 )
 
             )}

@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataGrid, GridToolbar, frFR, GridColDef, GridColumnsPanel } from '@mui/x-data-grid';
+
+// import material ui components
+import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
+
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, path, initialState, children }) => {
+const AdminSection = ({ title, rows, columns, initialState, children }) => {
 
     return (
         <section className='section'>

@@ -109,7 +109,7 @@ module.exports = {
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
         `;
         const placeholders = [limit, offset];
-        if (arr.length > 0 ){
+        if (arr.length > 0) {
             queryStart += ` WHERE `
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];

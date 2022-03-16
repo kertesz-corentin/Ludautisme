@@ -59,6 +59,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             name='name'
                             type='string'
                             className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -67,6 +68,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             name='description'
                             type='textarea'
                             className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
@@ -75,6 +77,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             name='valorisation'
                             type='number'
                             className="addreference-modal-inputs-item"
+                            sx={{mb: 2}}
                         >
                         </TextField>
                         <FormControl fullWidth>

@@ -85,10 +85,10 @@ const UserBookings = ({className, ...rest}) => {
                     <MenuUser/>
                     <Box className = "list" sx={{ bgcolor: 'background.paper' }}>
                         <h2>Réservation prochaine permanence</h2>
-                        <Permanency/>
+                        {/* <Permanency/> */}
                         <Box sx={{ bgcolor: 'background.paper' }}>
                             { (nextBooking[0]) ?
-                                <ListOfReferences references= {nextBooking[0].references}/>
+                                <ListOfReferences display="booking" references= {nextBooking[0].references}/>
                             :
                             <div>WAIT</div>}
                             {console.log('next',nextBooking)}
@@ -96,7 +96,7 @@ const UserBookings = ({className, ...rest}) => {
                         <h2>Emprunt en cours</h2>
                         <Box sx={{ bgcolor: 'background.paper' }}>
                             { (activeBooking[0]) ?
-                                <ListOfReferences references= {activeBooking[0].references}/>
+                                <ListOfReferences display="booking" references= {activeBooking[0].references}/>
                             :
                             <div>WAIT</div>}
                             {console.log('active',activeBooking[0])}

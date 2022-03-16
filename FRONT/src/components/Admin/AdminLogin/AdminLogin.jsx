@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Alert from '@mui/material/Alert';
+import AlertMessage from '../../AlertMessage/AlertMessage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -20,7 +20,8 @@ const theme = createTheme();
  export default function SignIn() {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const [alertMessage, setAlertMessage] = useState(false);
+
+    const [alertMessage, setAlertMessage] = useState();
 
     const onToggleOpen = () => {
         setIsOpen(!isOpen)
@@ -36,12 +37,12 @@ const theme = createTheme();
             console.log(response);
             if(response.status === 200) {
                 navigate('/admin/users');
-                setAlertMessage(false);
             }
+            return response
         }
         catch (err) {
-            setAlertMessage(true);
-            console.error(err)
+            setAlertMessage(err.response.data.message);
+            console.error(err.response)
         }
     }
 
@@ -78,10 +79,10 @@ const theme = createTheme();
                         Se connecter
                     </Typography>
                     {alertMessage && (
-                        <Alert variant="outlined"
-                            severity="error">
-                                Email ou mot de passe invalide!
-                        </Alert>
+                        <AlertMessage
+                            message={alertMessage}
+                        >
+                        </AlertMessage>
                     )}
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField

@@ -1,11 +1,12 @@
 @import 'src/styles/vars';
 
 .materiallibrary {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    width: fit-content;
 }
-.allreferences{
+.allReferences{
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
