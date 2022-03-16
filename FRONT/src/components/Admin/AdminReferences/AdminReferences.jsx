@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { IconButton } from '@mui/material';
-import AdminSection from '../AdminSection/AdminSection';
+
+// import requests
 import api from '../../../requests/index';
-import { referenceSchema } from '../../../Schemas';
+
+// import react components
+import AdminSection from '../AdminSection/AdminSection';
 import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
+import AlertMessage from '../../AlertMessage/AlertMessage';
+import { referenceSchema } from '../../../Schemas';
 
+// import material ui component
+import { IconButton } from '@mui/material';
 
-// import scss
 import './adminreferences.scss';
 
 const AdminReferences = ({className, ...rest}) => {
     const [references, setReferences] = useState([]);
     const [categories, setCategories] = useState([]);
+
+    const [alertMessage, setAlertMessage] = useState();
 
     // config path for api route
     const path = '/admin/references';
@@ -23,10 +30,12 @@ const AdminReferences = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/references');
             const data = await response.data;
-            setReferences(data);
-            console.log('references', data);
+            if(response.status === 200){
+                setReferences(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message)
             console.error (err);
         }
     }
@@ -35,10 +44,12 @@ const AdminReferences = ({className, ...rest}) => {
         try {
             const response = await api.post('/admin/categorie/search', {"main": true});
             const data = await response.data;
-            setCategories(data);
-            console.log('categories', data)
+            if(response.status === 200){
+                setCategories(data);
+            }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message)
             console.error (err);
         }
     }
@@ -87,6 +98,9 @@ const AdminReferences = ({className, ...rest}) => {
             className={classnames('adminreferences', className)}
             {...rest}
          >
+            {alertMessage && (
+                <AlertMessage message={alertMessage} />
+            )}
             <AdminSection
                 title="Références"
                 rows={references}

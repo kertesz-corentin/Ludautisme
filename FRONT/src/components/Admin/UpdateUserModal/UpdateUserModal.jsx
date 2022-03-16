@@ -1,11 +1,15 @@
-import React, { useState} from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+// import requests
 import api from '../../../requests';
+
+// import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, IconButton, FormGroup }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { userSchema } from '../../../Schemas';
 
 import './updateusermodal.scss';
 
@@ -16,10 +20,23 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     const [cotisationChecked, setCotisationChecked] = useState(params.row.cotisation_status);
     const [cautionChecked, setCautionChecked] = useState(params.row.caution_status);
     const [archivedChecked, setArchivedChecked] = useState(params.row.archived);
+    const [role, setRole] = useState(false)
+    const [idRole, setIdRole] = useState(params.row.id_role)
+
+    const admin = () => {
+        if(params.row.id_role === 2){
+            setRole(true)
+        }
+    }
+
+    useEffect(() => {
+        admin();
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+
         const user = {
             'member_number': data.get('member_number'),
             'email': data.get('email'),
@@ -33,14 +50,17 @@ const UpdateUserModal = ({params, className, ...rest}) => {
             'cotisation_status': data.get('cotisation_status'),
             'caution_status': data.get('caution_status'),
             'archived': data.get('archived'),
+            'id_role': idRole,
         };
 
         console.log('user', user);
         const response = await api.put(`/admin/users/${params.row.id}`, user)
         if(response.status === 200) {
             handleClose();
+            window.location.reload();
         }
         console.log('response', response);
+
     }
 
     const handleCotisationCheck = (event) => {
@@ -55,10 +75,21 @@ const UpdateUserModal = ({params, className, ...rest}) => {
         setArchivedChecked(event.target.checked)
     }
 
+    const handleRole = (event) => {
+        if(event.target.checked === false){
+            setIdRole(1)
+        }
+        else {
+            setIdRole(2)
+        }
+        setRole(event.target.checked)
+    }
+
     const handleDelete = async () => {
         const response = await api.delete(`/admin/users/${params.row.id}`)
         if(response.status === 200) {
             handleClose();
+            window.location.reload();
         }
     }
 
@@ -186,6 +217,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                             <FormControlLabel control={<Checkbox name='cotisation_status' checked={cotisationChecked} onChange={handleCotisationCheck} />} label="Cotisation" />
                             <FormControlLabel control={<Checkbox name='caution_status' checked={cautionChecked} onChange={handleCautionCheck} />} label="Caution" />
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />
+                            <FormControlLabel control={<Checkbox name='id_role' checked={role} onChange={handleRole} />} label="Admin" />
                         </FormGroup>
                     </div>
                     <div className="updateuser-modal-footer">
