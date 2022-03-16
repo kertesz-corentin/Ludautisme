@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState } from 'react';
+import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './cartmodal.scss';
@@ -139,12 +140,11 @@ const CartModal = ({
                             Valider le panier
                             </Button>
                             {alertMessage && (
-                                <AlertMessage
-                                    message={alertMessage.message}
-                                    severity={alertMessage.severity}
-
-                                >
-                                </AlertMessage>
+                                    <AlertMessage
+                                        message={alertMessage.message}
+                                        severity={alertMessage.severity}
+                                    >
+                                    </AlertMessage>
                             )}
                 </Box>
                 }

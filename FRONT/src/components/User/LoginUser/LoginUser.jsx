@@ -62,7 +62,16 @@ export default function SignIn() {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    const userToken = JSON.parse(localStorage.getItem('user'));
+
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [userToken, setUserToken] = useState ();
+    const [userId, setUserId] = useState ();
+
+    if (user && !userToken && !userId){
+        setUserToken(user.token) ;
+        setUserId(user.id);
+    }
 
 //Use to disconnect reset token
     function handleDisconnectClick (event) {
@@ -82,9 +91,9 @@ export default function SignIn() {
   return (
 //Here if user is not connecting, render l78 to 187
     !userToken ?
-    <div className={classnames('loginuser', { 'loginuser-isActive': isOpen })}>
+    <Box className={classnames( { 'loginuser-isActive': isOpen })}>
         <button
-        className={classnames('loginuser-btnopen', { 'loginuser-btnopen--isopen': isOpen })}
+        className={classnames( { 'loginuser-btnopen--isopen': isOpen })}
         type="button"
         onClick={onToggleOpen}
       >
@@ -99,7 +108,7 @@ export default function SignIn() {
 {/* //Here even is this condition looks useless, she's not and delete her will make a secound btn appears whe user not connected. */}
         {!userToken
             ?
-                <div>
+                <Box>
                     {isOpen && (
                         <ThemeProvider theme={theme}>
                             <Container component="main" maxWidth="xs">
@@ -191,7 +200,7 @@ export default function SignIn() {
 
                         </ThemeProvider>
                     )}
-                </div>
+                </Box>
      :
             <button
         className={classnames('loginuser-btnopen', { 'loginuser-isConnect': isOpen || userToken })}
@@ -205,7 +214,7 @@ export default function SignIn() {
                  }
       </button>
         }
-        <div >
+        <Box >
                     {(isOpen && userToken) &&  (
                         <ThemeProvider theme={theme}>
                             <Container component="main" maxWidth="xs">
@@ -249,10 +258,10 @@ export default function SignIn() {
 
                         </ThemeProvider>
                     )}
-                </div>
-    </div>
+                </Box>
+    </Box>
   :
-  <div className={classnames('loginuser', { 'loginuser-isConnect': isOpen })}>
+  <Box className={classnames('loginuser', { 'loginuser-isConnect': isOpen })}>
 
             <button
         className={classnames('loginuser-btnopen', { 'loginuser': isOpen || userToken })}
@@ -311,7 +320,7 @@ export default function SignIn() {
                         </ThemeProvider>
                     )}
                 </div>
-    </div>
+    </Box>
   );
 }
 

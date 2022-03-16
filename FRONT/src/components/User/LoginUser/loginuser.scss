@@ -1,9 +1,7 @@
 @import 'src/styles/vars';
 
 .loginuser {
-    padding:  0px;
-    background-color: $font-color;
-    position: absolute;
+    background-color: rgba(0,0,0,0.35);
     top: 15px;
     right: 15px ;
     border-radius: 10px;

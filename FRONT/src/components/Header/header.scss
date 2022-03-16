@@ -5,14 +5,12 @@
     z-index: 1;
     top: 0;
     text-decoration: none;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
     padding-left: $gutter;
     padding-right: $gutter;
     background-color: rgba(255, 251, 236, 0.8);
     filter: $drop-shadow;
+    display: flex;
+    justify-content: center;
 
     &-logo-img {
         // position: fixed;
@@ -56,4 +54,13 @@
         width: 300px;
     }
 }
+
+.header-content {
+    max-width: 1920px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    }
 
