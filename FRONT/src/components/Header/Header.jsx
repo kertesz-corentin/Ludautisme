@@ -7,6 +7,7 @@ import './header.scss';
 import { NavLink } from 'react-router-dom';
 import CartModal from '../CartModal/CartModal';
 import Cart from '../Cart/Cart';
+import Box from '@mui/material/Box';
 
 
 
@@ -23,6 +24,7 @@ const Header = ({
             className={classnames('header', className)}
             id="myHeader"
             {...rest}>
+        <Box className="header-content">
             <div className="header-logo">
                 <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
@@ -58,14 +60,10 @@ const Header = ({
                 >
                     Liens utiles
                 </NavLink>
-
-                {/* <Shop /> */}
-            {/* <LoginUser /> */}
             </nav>
-
-                <Cart currentItems = {currentItems}/>
-
-            <LoginUser  />
+                    <Cart currentItems = {currentItems}/>
+                    <LoginUser/>
+            </Box>
         </header>
    );
 };
