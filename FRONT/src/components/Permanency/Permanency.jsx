@@ -6,6 +6,8 @@ import './permanency.scss';
 import api from '../../requests';
 import moment from 'moment';
 import 'moment/locale/fr';
+import {Typography, Box } from '@mui/material';
+
 moment.locale('fr', null);
 
 const Permanency = ({className,display, ...rest}) => {
@@ -17,10 +19,16 @@ const Permanency = ({className,display, ...rest}) => {
         const response = await api.get(`/customer/permanency/`);
         if (response.status === 200){
             if (response.data[0].next_date){
-                setPermDate(response.data[0].next_date);
+                const nextDate = moment(response.data[0].next_date).add(1, 'M').format('DD MMMM YYYY');
+                setPermDate(nextDate);
             } else {
-                const nextMonth = moment(response.data[0].perm_date).add(1, 'M').format('MMMM');
-                setPermDate(nextMonth);
+                const nextMonth = (response.data[0].perm_date) ?
+                    moment(response.data[0].perm_date).add(1, 'M').format('MMMM')
+                :
+                    moment().add(1, 'M').format('MMMM');
+
+                    setPermDate(nextMonth);
+
             }
 
             console.log(response.data);
@@ -31,41 +39,29 @@ const Permanency = ({className,display, ...rest}) => {
 
    return (
        <div
-            className={(display !=='account') ? 'clay permanency' : 'clay permanency account'}
-            // className={classnames('bandeau-présentation-permanence-infos', className)}
+            className={(display !=='inline') ? 'clay permanency' : 'clay permanency inline'}
             {...rest}>
-
-            {/* <div className="permanency-title"> */}
                     <h2>
                         Prochaine permanence
                     </h2>
-                {/* </div> */}
-                {/* <div className='permanency-block'> */}
-                    <div className='permanency-block'>
-                        <img className={(display !=='account') ? "permanency-logo" : "permanency-logo account-logo"} src={Calendrier} alt="" />
-                        {(display !== 'account' && permDate) ?
-                            <>
-                                <p className="permanency-date-none">
-                                    { permDate}
-                                 </p>
-                            </>
-                            :
-                            <>
-                            <p className="permanency-date account-date">
-                                <span className='permanency-date-none'>{permDate}</span>
-                                 </p>
-                            </>
-                        }
+                    <div className={(display !=='inline') ? "permanency-block" : "permanency-block inline-block"}>
+                        <img className={(display !=='inline') ? "permanency-logo" : "permanency-logo inline-logo"} src={Calendrier} alt="" />
+                                <Box className={(display !=='inline') ? "permanency-date" : "permanency-date inline-date"}>
+                                <Typography >
+                                    <span>
+                                    {permDate}
+                                    </span>
+                                 </Typography>
+                                {(permDate && !isNaN(Number(permDate[0]))) &&
+                                <>
+                                  <Typography className={(display ==='inline') && "inline-hours"}>
+                                  20-00h - 22h00
+                                    </Typography>
+                                </>
+                                }
+                                </Box>
 
                     </div>
-                    {/* <div>
-                        <p className="permanency-date">
-                            01/03/2022 <br />
-                            8h00-12h00 <br />
-                        </p>
-                    </div> */}
-                {/* </div> */}
-
         </div>
    );
 };
