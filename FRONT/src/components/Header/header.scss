@@ -38,6 +38,7 @@ nav .main_pages
 {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
 
 }
 
@@ -62,7 +63,7 @@ nav .main_pages a
         }
 }
 
-    label, #toggle
+    label , #toggleheader
 {
     display: none;
 }
@@ -84,6 +85,7 @@ nav .main_pages a
         height: fit-content;
         width: fit-content;
         border-radius: 10px;
+        padding: 0 10px 0 10px;
     }
 
     nav .main_pages a {
@@ -92,7 +94,7 @@ nav .main_pages a
 
     label
     {
-        width: 30px;
+        // width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -102,7 +104,7 @@ nav .main_pages a
         cursor: pointer;
     }
 
-    #toggle:checked + .main_pages {
+    #toggleheader:checked + .main_pages {
         display: flex;
     }
 }

@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import Logo from '../public/logo.png';
 import LoginUser from '../User/LoginUser/LoginUser'
 import './header.scss';
-import { NavLink } from 'react-router-dom';
-import CartModal from '../CartModal/CartModal';
+// import { NavLink } from 'react-router-dom';
+// import CartModal from '../CartModal/CartModal';
 import Cart from '../Cart/Cart';
 import Box from '@mui/material/Box';
 
@@ -32,8 +32,8 @@ const Header = ({
 
 
             <nav>
-                <label for="toggle">☰</label>
-                <input type="checkbox" id="toggle" />
+                <label for="toggleheader">☰</label>
+                <input type="checkbox" id="toggleheader" />
 
                 <div className="main_pages">
                 <a
