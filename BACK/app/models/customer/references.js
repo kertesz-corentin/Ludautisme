@@ -34,7 +34,10 @@ module.exports = {
             r."description",
             r."valorisation",
             cat."name" AS mainCategory,
-            json_agg(DISTINCT"category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object(
+                    'id',"category"."id",
+                    'name',"category"."name"
+                    )) AS tag,
             COUNT(DISTINCT "article"."id") AS nb_total,
             COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
@@ -63,7 +66,10 @@ module.exports = {
             r."description",
             r."valorisation",
             cat."name" AS mainCategory,
-            json_agg(DISTINCT"category"."name") AS tag,
+            json_agg(DISTINCT jsonb_build_object(
+                'id',"category"."id",
+                'name',"category"."name"
+                )) AS tag,
             COUNT(DISTINCT "article"."id") AS nb_total,
             COUNT(DISTINCT "article"."id") FILTER (WHERE "article"."available" = TRUE) AS nb_available,
             json_agg(DISTINCT jsonb_build_object (
@@ -90,10 +96,13 @@ module.exports = {
         let queryStart = `SELECT
         r.id,
         r.name,
-        r.description,
+        r."description",
         r.valorisation,
         cat.name AS mainCategory,
-        json_agg(DISTINCT "category"."name") AS tag,
+        json_agg(DISTINCT jsonb_build_object(
+            'id',"category"."id",
+            'name',"category"."name"
+            )) AS tag,
         COUNT(DISTINCT ar."id") AS nb_total,
         COUNT(DISTINCT ar."id") FILTER (WHERE ar."available" = TRUE) AS nb_available,
         json_agg(DISTINCT jsonb_build_object (

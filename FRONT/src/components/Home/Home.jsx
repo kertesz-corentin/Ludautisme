@@ -13,20 +13,15 @@ const Home = ({
     children,
     currentItemsNumber,
     currentItems,
-
-
+    cartManager,
 }) => {
     return (
         <div className={classnames('home', className)}>
+        <Header  cartManager = {cartManager} currentItems = {currentItems} />
         <ContentPage>
-            <div>
-            <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
                 {children}
-                </div>
-            <div className='footerBody'>
-            <Footer />
-            </div>
         </ContentPage>
+        <Footer />
         </div>
     );
 };

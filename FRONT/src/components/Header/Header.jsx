@@ -8,6 +8,8 @@ import './header.scss';
 // import CartModal from '../CartModal/CartModal';
 import Cart from '../Cart/Cart';
 import Box from '@mui/material/Box';
+import {useNavigate} from "react-router-dom";
+import {Button} from '@mui/material'
 
 
 
@@ -15,9 +17,16 @@ const Header = ({
     className,
     currentItemsNumber,
     currentItems,
+    cartManager,
      ...rest}) => {
     const userToken = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {}, [userToken])
+
+
+    const navigate = useNavigate();
+    const goTo = (event)=>{
+        navigate(event.target.value);
+    }
 
     return (
        <header
@@ -36,39 +45,44 @@ const Header = ({
                 <input type="checkbox" id="toggleheader" />
 
                 <div className="main_pages">
-                <a
-                    href="/"
+                <Button
+                    value = '/'
+                    onClick = {goTo}
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Accueil
-                </a>
-                <a
-                    href="/about"
+                </Button>
+                <Button
+                    value = '/about'
+                    onClick = {goTo}
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Association
-                </a>
-                <a
-                    href="/materiallibrary"
+                </Button>
+                <Button
+                    value = '/materiallibrary'
+                    onClick = {goTo}
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Matériathèque
-                </a>
-                <a
-                    href="/infos"
+                </Button>
+                <Button
+                    value = '/infos'
+                    onClick = {goTo}
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Infos pratiques
-                </a>
-                <a
-                    href="/usefullLinks"
+                </Button>
+                <Button
+                    value = '/usefullLinks'
+                    onClick = {goTo}
                     className={({ isActive }) => isActive ? 'header-nav-link header-nav-link--active' : 'header-nav-link'}
                 >
                     Liens utiles
-                </a>
+                </Button>
                 </div>
             </nav>
-                    <Cart currentItems = {currentItems}/>
+                    <Cart cartManager={cartManager}currentItems = {currentItems}/>
                     <LoginUser/>
             </Box>
         </header>

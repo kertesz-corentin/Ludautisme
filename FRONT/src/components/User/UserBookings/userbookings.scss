@@ -1,14 +1,23 @@
 .userbookings{
    background-color:rgb(213, 238, 238);
-   height: 40rem;
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    align-items: center;
    justify-content: space-between;
 }
+
+.home-user{
+    margin: auto 0;
+
+}
+
 .list{
     width : 100%;
+    max-width: 960px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     margin: 2rem;
+    padding-top: 15px;
+    padding-bottom: 30px;
 }

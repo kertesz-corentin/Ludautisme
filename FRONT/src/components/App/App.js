@@ -10,8 +10,6 @@ import AdminHome from '../Admin/AdminHome/AdminHome';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
-import UserBookingActive from '../User/UserBookingActive/UserBookingActive';
-import UserBookingsHistory from '../User/UserBookingsHistory/UserBookingsHistory';
 import About from '../About/About';
 import Infos from '../Infos/Infos';
 import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';
@@ -29,10 +27,21 @@ function App() {
 
 
     let [itemsToCart, setItemsToCart] = useState([]);
-    const addItemsToCart = (itemToAdd) => {
-        console.log("itemToAdd",itemToAdd);
-         setItemsToCart(itemsToCart => [...itemsToCart, itemToAdd]);
-         console.log("après ajout",itemsToCart,`DERNIER AJOUT`, itemToAdd);
+    const cartManager = {
+            add : (item) => {
+                console.log("itemToAdd",item);
+                setItemsToCart(itemsToCart => [...itemsToCart, item]);
+            },
+            remove : (item) => {
+                if (item === "all") {
+                    setItemsToCart([]);
+                } else {
+                let hardCopy = [...itemsToCart];
+                hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
+                console.log('after filter',hardCopy);
+                setItemsToCart(hardCopy);
+                }
+            },
 
     };
 
@@ -42,11 +51,11 @@ function App() {
     return (
     <div className="App">
         <Routes>
-            <Route path = "/" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<HomePage />} />}></Route>
-            <Route path = "/about" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<About />} />}></Route>
-            <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<Infos />} />}></Route>
-            <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UsefullLinks />} />}></Route>
-            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<HomePage />} />}></Route>
+            <Route path = "/about" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<About />} />}></Route>
+            <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Infos />} />}></Route>
+            <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<UsefullLinks />} />}></Route>
+            <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider value ={cartManager}><MaterialLibrary currentItems = {itemsToCart}  /></FunctionContext.Provider>} />}></Route>
 
 
             <Route path = "/admin" element = {<Admin />}></Route>
@@ -68,14 +77,14 @@ function App() {
             {/* <Route path = "/admin/references/:id/articles" element = {<AdminArticles />}></Route> */}
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>}/>}>
-                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<FunctionContext.Provider value ={addItemsToCart}><UserMyAccount /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider ><UserMyAccount /></FunctionContext.Provider>}/>}>
+                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider ><UserMyAccount /></FunctionContext.Provider>} />}></Route>
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
-            <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length}/>}>
-                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} currentItemsNumber= {itemsToCart.length} children={<UserBookings />} />}></Route>
+            <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} cartManager={cartManager}/>}>
+                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<UserBookings />} />}></Route>
             </Route>
-            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider value ={addItemsToCart}><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider ><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>
             <Route path = "*" element = {<Error />}></Route>
         </Routes>

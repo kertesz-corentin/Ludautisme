@@ -39,12 +39,12 @@ INSERT INTO "category" ("name", "description", "main") VALUES
 ('livre', null, false),
 ('bois', null, false);
 
-INSERT INTO "reference" ("name", "valorisation", "main_category") VALUES
-('animaux à lacer', 10, 1),
-('declic mai-juin 2012', 5, 4),
-('le coffret écriture lecture', 30, 2),
-('ma journée', 12, 3),
-('Apprendre a coder avec OClock', 6000, 2);
+INSERT INTO "reference" ("name", "valorisation", "main_category","description") VALUES
+('animaux à lacer', 10, 1, 'Des animaux a lacer pour apprendre a faire des lacets'),
+('declic mai-juin 2012', 5, 4, 'Magasine qui met des clics plutot que des clacs'),
+('le coffret écriture lecture', 30, 2, 'Apprendre à écire avec amusement et dans la méthodologie montessori'),
+('ma journée', 12, 3,'Jeux de société pour apprendre à organiser sa journée et communiquer'),
+('Apprendre a coder avec OClock', 6000, 2, 'Le jeux de référence pour tout enfant ou adulte');
 
 INSERT INTO "image" ("url","title", "alternative_text","main") VALUES
 ('https://static.alipson.fr/vilac.4/vilac-jeu-de-lacage--mes-animaux-a-lacer.134448-1.600.jpg', 'animaux a lacer', 'jouet représantant des animaux a lacer', true),
@@ -55,13 +55,10 @@ INSERT INTO "image" ("url","title", "alternative_text","main") VALUES
 ('../public/src/components/public/game1647436382653.png', 'game', 'image jeu par défaut', false);
 INSERT INTO "reference_to_image" ("id_ref", "id_image") VALUES
 (1, 1),
-(1, 2),
+(2, 2),
 (3, 3),
 (4, 4),
-(5, 4),
-(5, 3),
-(5, 2),
-(2, 6);
+(5, 5);
 
 INSERT INTO "reference_to_category" ("id_ref", "id_category") VALUES
 (1, 5),

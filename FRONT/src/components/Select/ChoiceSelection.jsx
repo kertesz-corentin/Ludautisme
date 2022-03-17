@@ -1,43 +1,75 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './choiceselection.scss';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import api from '../../requests';
+import { Button , Box} from '@mui/material'
+import { settings } from 'eslint-plugin-import/config/react';
 
 const ChoiceSelection = ({
     className,
     categories,
-    getAllPickedRef,
+    updateDisplayRef,
      ...rest})=> {
     const [category, setCategory] = React.useState('');
+    const [categoryList,setCategoryList] = React.useState();
+
+
+    useEffect(()=>{getCategories()},[]);
+
+    const getCategories = async () => {
+        const response = await api.post('/customer/category/search',{
+            "main": true
+          });
+      if (response.status === 200){
+          setCategoryList(response.data);
+      } else {
+          console.error(response.data);
+      }
+    }
 
     const handleChange = async (event) => {
-      setCategory(event.target.value);
-      const response = await api.post('/customer/articles/search',{
-          "page": 1,
-          "limit":10,
-          "categories": [event.target.value]
-        })
-        getAllPickedRef(response.data);
-      console.log(response.data)
+        setCategory(event.target.value);
+        const settings = {
+            "page": 1,
+            "limit":10,
+          }
+        if(event.target.value) {
+            settings.categories = [event.target.value]
+        }
+
+        console.log(settings);
+      const response = await api.post('/customer/articles/search',settings)
+      if (response.status === 200) {
+          updateDisplayRef(response.data);
+      } else {
+          console.error(response.data);
+      }
     };
+
+
     return (
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Jeux</InputLabel>
+      <Box sx={{ minWidth: 120, marginTop: "15px"}}>
+        <Box>
+            <Button variant="contained" value={null} onClick={handleChange}>
+                Aucun filtre
+            </Button>
+        </Box>
+        <FormControl className="select-form" fullWidth>
+          <InputLabel id="demo-simple-select-label">Catégories Principales</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={category}
-            label="Jeux"
+            label="Catégories Principales"
             onChange={handleChange}
           >
-                {categories.map((category) => {
+                {categoryList &&
+                 categoryList.map((category) => {
                 return(
                 <MenuItem key={category.id} value={category.id} > {category.name}</MenuItem>)
             })}

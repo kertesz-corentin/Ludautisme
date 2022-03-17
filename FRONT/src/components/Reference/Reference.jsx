@@ -17,10 +17,11 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import {  Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import BlockIcon from '@mui/icons-material/Block';
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Reference = ({
     className,
@@ -33,15 +34,19 @@ const Reference = ({
     valorisation,
     article,
     nb_available,
-    nb_total
+    nb_total,
+    display,
+    currentItems,
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const add = useContext(FunctionContext);
+    const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-    const [isClick, setIsClick] = useState(false);
+    console.log("userToken",userToken);
+    console.log("currentItems",currentItems);
 
+    const [isClick, setIsClick] = useState(false);
 
     let itemToAdd = {
         id,
@@ -55,13 +60,17 @@ const Reference = ({
     let [quantity, setQuantity] = useState(nb_available);
     //Need newQuantity to compare with quantity and know if article has been click already
     let [newQuantity, setNewQuantity] = useState(quantity);
-    console.log(quantity, newQuantity)
+
+    const [cartItems,setCartItems] = useState(currentItems);
+
+    const updateCurrentItems =() =>{
+        setCartItems(currentItems);
+    }
+
+    useEffect(()=>{updateCurrentItems()},[currentItems])
 
     function handleClick () {
-        add(itemToAdd);
-        console.log(`envoi de l'item au cart`, itemToAdd)
-        setNewQuantity(newQuantity -= 1 )
-        modifyIsClick()
+        cartManager.add(itemToAdd);
     }
 
     function modifyIsClick () {
@@ -71,50 +80,54 @@ const Reference = ({
 
    return (
 
-        <Card sx={{ width: 345, height:345 }}>
+        <Card className = "card" sx={{ width: 345, height:345 }}>
             <CardMedia
                 component="img"
                 height="140"
                 image={picture[0].url}
                 alt="image about the article"
             />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography className="card-name" gutterBottom variant="h6">
                 {name}
                 </Typography>
-
-                <Button onClick={handleOpen}>description</Button>
-                {userToken && quantity>0 && quantity === newQuantity &&
-                    <Box>
-                    <Button
-                        onClick={handleClick}>
-                            <AddShoppingCartIcon/>
-                    </Button>
-                    </Box>
-                }
-                 {userToken && quantity !== newQuantity &&
-                    <Box>
-                    <Button
-                        onClick={handleClick} disabled>
-                            <BookmarkAddedIcon/>
-                    </Button>
-                    <Typography gutterBottom variant="p" component="div">
-                                (Article ajouté)
-                    </Typography>
-                    </Box>
-                }
-                {userToken && quantity == 0 &&
-                    <Box>
-                    <Button
-                        onClick={handleClick} disabled>
-
-                    </Button>
-                    <Typography gutterBottom variant="p" component="div">
-                        <BlockIcon/>
-                                Actuellement indisponible
-                    </Typography>
-                    </Box>
-                }
+                <Typography className="card-description">
+                  {description}
+                </Typography >
+                { (display !== "booking") &&
+                    <Box className="card-footer">
+                    <Button onClick={handleOpen}>Détails</Button>
+                        {(userToken)?
+                            <>
+                                {(nb_available > 0)?
+                                    <>
+                                         {(!currentItems.map((item)=> item.id).includes(id)) ?
+                                              <Button
+                                              onClick={handleClick}>
+                                                  <AddShoppingCartIcon/>
+                                                </Button>
+                                         :
+                                            <Box>
+                                                <BookmarkAddedIcon/>
+                                            </Box>
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                     <Box className="card-unavailable"
+                                             disabled>
+                                        <CancelIcon/>
+                                        <Typography className="card-unavailable-text">Indisponible</Typography>
+                                    </Box>
+                                    </>
+                                }
+                            </>
+                            :
+                            <>
+                            <Typography>Pas Loggué</Typography>
+                            </>
+                        }
+                   </Box>
+               }
 
           <Modal
             aria-labelledby="transition-modal-title"
@@ -129,16 +142,16 @@ const Reference = ({
           >
             <Fade in={open}>
               <Box className="ref">
-                <Typography id="transition-modal-title" variant="h6" component="h2">
+                <Typography className="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
                 <Divider/>
-                <Typography id="transition-modal-title" variant="h6" component="h5">
+                <Typography className="transition-modal-title" variant="h6" component="h5">
                   {description}
                 </Typography>
                 {nb_available > 0 ? <Available/> : <Unavailable/>}
-                <Typography id="transition-modal-title" variant="h6" component="h5">
-                Prix: {valorisation}
+                <Typography className="transition-modal-title" variant="h6" component="h5">
+                Prix: {valorisation}€
                 </Typography>
                 <Divider/>
                 <CardMedia
@@ -158,7 +171,6 @@ const Reference = ({
               </Box>
             </Fade>
           </Modal>
-            </CardContent>
         </Card>
    );
 };

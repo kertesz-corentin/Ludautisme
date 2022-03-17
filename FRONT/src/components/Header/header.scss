@@ -1,9 +1,7 @@
 @import 'src/styles/vars';
 
 .header {
-    position: sticky;
-    z-index: 1;
-    top: 0;
+    height: 80px;
     text-decoration: none;
     padding-left: $gutter;
     padding-right: $gutter;
@@ -42,12 +40,13 @@ nav .main_pages
 
 }
 
-nav .main_pages a
+nav .main_pages Button
 {
         font-size: 1.1rem;
         padding: 10px;
         color: #000000;
         text-decoration: none;
+        text-transform: capitalize;
         &--active {
             transition: 50ms;
          border-left: 1px solid rgba($color: #000000, $alpha: 0.5);

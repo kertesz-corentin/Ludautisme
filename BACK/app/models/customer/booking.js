@@ -176,7 +176,7 @@ module.exports = {
             placeholders.push(articleId);
         });
         const result = await sqlHandler(query, placeholders);
-        return result.rows[0];
+        return result.rows;
     },
     async updateArticlesAvailability(arr) {
         let query = `UPDATE "article" SET "available"='false' WHERE `;
