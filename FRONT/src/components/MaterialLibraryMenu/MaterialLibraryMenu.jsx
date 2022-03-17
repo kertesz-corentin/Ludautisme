@@ -22,7 +22,6 @@ const MaterialLibraryMenu = ({
         setAllPickedRef(response)
         getAllRef(response)
     }
-    console.log(`REF REMONTENT DANS MATERIAL LIBRAIRY MENU`, allPickedRef)
 
    return (
        <div

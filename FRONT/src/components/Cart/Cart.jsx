@@ -10,8 +10,8 @@ import { Box } from '@mui/material';
 const Cart = ({
     className,
     currentItems,
+    cartManager,
      ...rest}) => {
-
     const user = JSON.parse(localStorage.getItem('user'));
 
     const [userToken, setUserToken] = useState ();
@@ -34,7 +34,7 @@ const Cart = ({
             {...rest}
             onClick= {handleCartBtnClick}
          >
-            <CartModal userId = {userId} currentItems = {currentItems}/>
+            <CartModal userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
         </button>
        }
         </Box>

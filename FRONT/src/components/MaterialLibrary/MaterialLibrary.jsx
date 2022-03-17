@@ -11,8 +11,7 @@ import Loader from '../Loader/Loader';
 
 
 
-const MaterialLibrary = ({className, ...rest}) => {
-
+const MaterialLibrary = ({className,currentItems, ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
 
 const [referencesData, setReferencesDatas] = useState('')
@@ -38,7 +37,6 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
     async function getAllCategories () {
         const response = await api.get('/customer/category');
-        console.log(response.data);
         setCategoriesDatas(response.data)
     }
 
@@ -47,7 +45,6 @@ const [categoriesData, setCategoriesDatas] = useState('')
     function getAllRef(response){
         setAllRef(response)
     }
-    console.log(`MES DONEES IN ML `, allRef)
    return (
 
 
@@ -60,11 +57,11 @@ const [categoriesData, setCategoriesDatas] = useState('')
         {allRef
             ?
             <div className= "allReferences">
-                <ListOfReferences references= {allRef}/>
+                <ListOfReferences currentItems={currentItems} references= {allRef}/>
             </div>
             :
             <div className= "allReferences">
-                <ListOfReferences references= {referencesData}/>
+                <ListOfReferences currentItems={currentItems} references= {referencesData}/>
             </div>
         }
         </div>

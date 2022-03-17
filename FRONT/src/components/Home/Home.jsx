@@ -13,12 +13,11 @@ const Home = ({
     children,
     currentItemsNumber,
     currentItems,
-
-
+    cartManager,
 }) => {
     return (
         <div className={classnames('home', className)}>
-        <Header currentItemsNumber={currentItemsNumber}  currentItems = {currentItems} />
+        <Header  cartManager = {cartManager} currentItems = {currentItems} />
         <ContentPage>
                 {children}
         </ContentPage>
