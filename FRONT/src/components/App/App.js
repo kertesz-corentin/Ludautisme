@@ -31,14 +31,16 @@ function App() {
             add : (item) => {
                 console.log("itemToAdd",item);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
-                console.log("après ajout",itemsToCart,`DERNIER AJOUT`, item);
             },
             remove : (item) => {
+                if (item === "all") {
+                    setItemsToCart([]);
+                } else {
                 let hardCopy = [...itemsToCart];
                 hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
                 console.log('after filter',hardCopy);
                 setItemsToCart(hardCopy);
-                console.log("après ajout",itemsToCart,`DERNIER AJOUT`, item);
+                }
             },
 
     };

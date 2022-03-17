@@ -62,12 +62,17 @@ const CartModal = ({
             setAlertMessage({
                 message : 'Votre réservation a bien été prise en compte',
                 severity : 'success'});
+            setTimeout(()=>{handleClose();
+                            setAlertMessage();
+                            const refsObj = {};
+                            cartManager.remove("all")},1000);
         }
         else
         {
             setAlertMessage({
                 message : response.data.message}
                 );
+                setTimeout(()=>{handleClose();},1000);
             console.log(`Une erreur est survenue`, response.data)
         };
     }

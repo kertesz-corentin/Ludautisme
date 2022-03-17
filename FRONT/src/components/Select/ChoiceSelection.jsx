@@ -53,9 +53,9 @@ const ChoiceSelection = ({
 
 
     return (
-      <Box sx={{ minWidth: 120}}>
+      <Box sx={{ minWidth: 120, marginTop: "15px"}}>
         <Box>
-            <Button value={null} onClick={handleChange}>
+            <Button variant="contained" value={null} onClick={handleChange}>
                 Aucun filtre
             </Button>
         </Box>

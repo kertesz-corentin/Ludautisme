@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.70769977.css",
-    "main.js": "/static/js/main.6ec4fa11.js",
+    "main.css": "/static/css/main.89b354b1.css",
+    "main.js": "/static/js/main.126e7dc7.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
     "static/media/diapo-2012-2013.pdf": "/static/media/diapo-2012-2013.511a165ecdce5ce0677f.pdf",
     "static/media/diapo-2013-2014.pdf": "/static/media/diapo-2013-2014.7a00c15fb7d5cc60b849.pdf",
@@ -40,12 +40,12 @@
     "static/media/calendrier.png": "/static/media/calendrier.2cf2c05efe809681edc2.png",
     "static/media/Logo-Facebook.png": "/static/media/Logo-Facebook.c9125ab120cd917dcca0.png",
     "index.html": "/index.html",
-    "main.70769977.css.map": "/static/css/main.70769977.css.map",
-    "main.6ec4fa11.js.map": "/static/js/main.6ec4fa11.js.map",
+    "main.89b354b1.css.map": "/static/css/main.89b354b1.css.map",
+    "main.126e7dc7.js.map": "/static/js/main.126e7dc7.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.70769977.css",
-    "static/js/main.6ec4fa11.js"
+    "static/css/main.89b354b1.css",
+    "static/js/main.126e7dc7.js"
   ]
 }
