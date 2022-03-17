@@ -56,11 +56,18 @@ const [categoriesData, setCategoriesDatas] = useState('')
             {...rest}
         >
         <MaterialLibraryMenu getAllRef={getAllRef} categories={categoriesData} />
+        {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData, ca donne :  */}
+        {allRef
+            ?
+            <div className= "allReferences">
+                <ListOfReferences references= {allRef}/>
+            </div>
+            :
             <div className= "allReferences">
                 <ListOfReferences references= {referencesData}/>
             </div>
+        }
         </div>
-
         :
         <Loader/>
 

@@ -21,6 +21,7 @@ import { useState, useContext } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import BlockIcon from '@mui/icons-material/Block';
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Reference = ({
     className,
@@ -88,22 +89,29 @@ const Reference = ({
                     <Box className="card-footer">
                     <Button onClick={handleOpen}>Détails</Button>
                     { userToken &&
+                       //Ici il faut rajouter une condition si nb_available vaut 0 alors rend un texte "Actuellement indisponible"
+                       (nb_available == 0) ?
+                       <Button
+                          disable="true">
+                       <CancelIcon/>
+                       </Button>
+                       :
 
-                        (!isClick) ?
-                        <Button
-                            onClick={handleClick}>
-                                <AddShoppingCartIcon/>
-                        </Button>
-                        :
-                        <Button
-                            onClick={handleClick} disabled>
-                                <BookmarkAddedIcon/>
-                        </Button>
+                       (!isClick) ?
+                       <Button
+                           onClick={handleClick}>
+                               <AddShoppingCartIcon/>
+                       </Button>
+                       :
+                       <Button
+                           onClick={handleClick} disabled>
+                               <BookmarkAddedIcon/>
+                       </Button>
 
 
-                    }
-                    </Box>
-                }
+                   }
+                   </Box>
+               }
 
           <Modal
             aria-labelledby="transition-modal-title"
