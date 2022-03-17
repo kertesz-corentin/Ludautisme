@@ -57,18 +57,18 @@
 }
 
 .bandeau-présentation-texte {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
-    max-width: 800px;
+    max-width: 75vw;
     color: blanchedalmond;
-    text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
+    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
 }
 
 
 .categoriesDisplay {
     background-color: hsl(36, 100%, 49%, 1);
     color: blanchedalmond;
-    text-shadow: rgba(0, 0, 0, 0.3) 5px 3px 5px;
+    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
     font-weight:700;
     font-size: 1.5rem;
     display: flex;
@@ -76,18 +76,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    // padding-bottom: 50px;
+        // padding-bottom: 50px;
 }
 
 .categorie {
+
+    margin: 10px;
 
     &-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: auto;
-
     }
+
     --clay-background: #ffebcd;
     --clay-shadow-inset-primary: -8px -8px 16px 0 rgba(0, 0, 0, 0.15);
     padding: 10px;
