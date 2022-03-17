@@ -13,8 +13,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import api from '../../../requests';
+import {useNavigate} from "react-router-dom";
+
 
 const ModifyPasswordModal = ({className, ...rest}) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -30,9 +34,20 @@ const ModifyPasswordModal = ({className, ...rest}) => {
         const newPassword = {
             password:passwordValue
         }
-        api.resetPassword('/login/reset-password',newPassword);
-        console.log(`New Password to send Back`, newPassword)
-        handleClose()
+        if (!user.token){
+            const response = api.resetPassword('/login/reset-password',newPassword);
+            if (response.status === 200){
+                navigate('/');
+            } else {
+                console.error(response.data);
+            }
+
+            console.log(`New Password to send Back`, newPassword)
+            handleClose()
+        } else {
+             const response = api.put(`/customer/user/${user.id}`, newPassword);
+             handleClose();
+         }
     }
 
 
@@ -59,8 +74,8 @@ const ModifyPasswordModal = ({className, ...rest}) => {
             autoFocus
             margin="dense"
             id="name"
-            label="Mon adresse mail"
-            type="string"
+            label="Mot de passe"
+            type="password"
             fullWidth
             variant="standard"
             value= {passwordValue}

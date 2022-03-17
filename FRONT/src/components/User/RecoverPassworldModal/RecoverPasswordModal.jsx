@@ -15,7 +15,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {requestGetNewPassword} from '../../../requests/requestsUser/recoverpassword'
 import api from '../../../requests';
 
+
+
 const RecoverPasswordModal = ({className, ...rest}) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
   function handleMailChange (event) {
     setMailValue(event.target.value)
     console.log(`Mail`, event.target.value)
@@ -43,7 +47,7 @@ const [mailValue, setMailValue]= useState()
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Mon adresse mail"
+                label="Mot de passe"
                 type="string"
                 fullWidth
                 variant="standard"
