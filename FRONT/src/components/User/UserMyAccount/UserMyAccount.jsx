@@ -89,91 +89,13 @@ const UserMyAccount = ({
     }
 
    return (
-<<<<<<< HEAD
-       <div >
-         <Permanency/>
-                <div className= "home-user">
-                Bienvenue {firstNameValue}
-                <MenuUser/>
-
-                { modifyBtn
-                    ?
-=======
                 <Box className= "home-user">
                 <Permanency/>
->>>>>>> FRONT_user_login
                         <span >
                             <h2>
                             Données personnelles
                             </h2>
                         </span>
-<<<<<<< HEAD
-                    :
-                        <form className="loginuser-form" onSubmit={handleSubmit}>
-                            <TextField
-                                label= "Nom:"
-                                type="text"
-                                value= {firstNameValue}
-                                onChange={(event) => handleFirstNameChange(event, firstNameValue)}
-                            />
-                            <TextField
-                                label= "Prénom:"
-                                type="text"
-                                value= {lastNameValue}
-                                onChange={(event) => handleLastNameChange(event, lastNameValue)}
-                            />
-                            <TextField
-                                label= "Numéro de rue:"
-                                type="text"
-                                value= {addressNumberValue}
-                                onChange={(event) => handleAdressNumberChange(event, addressNumberValue)}
-                            />
-                            <TextField
-                                label= "Nom de rue:"
-                                type="text"
-                                value= {addressStreetValue}
-                                onChange={(event) => handleAdressStreetChange(event, addressStreetValue)}
-                            />
-                            <TextField
-                                label= "Code Postale:"
-                                type="text"
-                                value= {addressZipCodeValue}
-                                onChange={(event) => handleAdressZipCodeChange(event, addressZipCodeValue)}
-                            />
-                            <TextField
-                                label= "Ville"
-                                type="text"
-                                value= {addressCityValue}
-                                onChange={(event) => handleAdressCityChange(event, addressCityValue)}
-                            />
-                            <TextField
-                                label= "Mail"
-                                type="text"
-                                value= {mailValue}
-                                onChange={(event) => handleMailChange(event, mailValue)}
-                            />'cart',
-                            <TextField
-                                label= "telephone"
-                                type="text"
-                                value= {phoneValue}
-                                onChange={(event) => handlePhoneChange(event, phoneValue)}
-                            />
-                            <TextField
-                                label= "mot de passe"
-                                type="passworld"
-                                value= {passworldValue}
-                                onChange={(event) => handlePassworldChange(event, passworldValue)}
-                            />
-
-                            <button className="loginuser-submit" type="submit" onSubmit= "handleSubmit">
-                                Valider
-                            </button>
-                        </form>
-                }
-
-                </div>
-        </div>
-=======
                             {userInfos &&
                             <Box className="loginuser-form" component="form" noValidate sx={{ mt: 1 }}>
                                 <Typography className="home-user-welcome"> Bienvenue <span className="home-user-welcome-span">{userInfos.first_name}</span></Typography>
@@ -215,7 +137,6 @@ const UserMyAccount = ({
                         }
 
                 </Box>
->>>>>>> FRONT_user_login
    );
 };
 
