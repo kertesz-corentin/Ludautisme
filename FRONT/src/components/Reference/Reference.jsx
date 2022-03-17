@@ -81,6 +81,7 @@ const Reference = ({
                     <Box className="card-footer">
                     <Button onClick={handleOpen}>Détails</Button>
                     { userToken &&
+
                         (!isClick) ?
                         <Button
                             onClick={handleClick}>

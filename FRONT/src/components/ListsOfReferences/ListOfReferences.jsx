@@ -25,12 +25,12 @@ const ListOfReferences = ({
         references ?
         <React.Fragment>
           <CssBaseline />
-          <Container maxWidth="70%">
           <Grid
             className = "gridList"
             container
             direction="row"
             justifyContent="flex-start"
+            alignContent="flex-start"
             alignItems="center"
         >
 
@@ -56,7 +56,6 @@ const ListOfReferences = ({
 
             )}
             </Grid>
-          </Container>
         </React.Fragment>
         :
         <React.Fragment>
