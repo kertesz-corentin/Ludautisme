@@ -1,9 +1,9 @@
 const ApiError = require('../../errors/apiError');
-const userReferenceDataMapper = require('../../models/customer/permanency');
+const permanencyDataMapper = require('../../models/customer/permanency');
 
 module.exports = {
     async getActive(_, res) {
-        const references = await userReferenceDataMapper.findActive();
+        const references = await permanencyDataMapper.findActive();
         if (!references) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
