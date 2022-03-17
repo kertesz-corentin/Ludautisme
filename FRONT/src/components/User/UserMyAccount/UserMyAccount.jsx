@@ -124,12 +124,12 @@ const UserMyAccount = ({
                             {modifyBtn ?
                             <>
                                 <ModifyPasswordModal/>
-                                <Button className="loginuser-submit" onClick={handleSubmit}>
+                                <Button  variant="contained" className="loginuser-submit" onClick={handleSubmit}>
                                     Valider
                                 </Button>
                             </>
                             :
-                            <Button className="loginuser-submit" onClick={handleClickModifyBtn}>
+                            <Button variant="outlined" className="loginuser-submit" onClick={handleClickModifyBtn}>
                                 Modifier
                             </Button>
                             }

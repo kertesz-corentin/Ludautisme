@@ -96,10 +96,11 @@ const Reference = ({
                     { userToken &&
                        //Ici il faut rajouter une condition si nb_available vaut 0 alors rend un texte "Actuellement indisponible"
                        (nb_available == 0) ?
-                       <Button
-                          disable="true">
+                       <Box className="card-unavailable"
+                       onClick={handleClick} disabled>
                        <CancelIcon/>
-                       </Button>
+                       <Typography className="card-unavailable-text">Indisponible</Typography>
+                       </Box>
                        :
 
                        (!currentItems.map((item)=> item.id).includes(id)) ?
@@ -109,9 +110,11 @@ const Reference = ({
                        </Button>
                        :
                        <Button
-                           onClick={handleClick} disabled>
-                               <BookmarkAddedIcon/>
-                       </Button>
+                       onClick={handleClick}>
+                        <BookmarkAddedIcon/>
+                        </Button>
+
+
 
 
                    }
