@@ -39,6 +39,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
     async function getAllCategories () {
         const response = await api.get('/customer/category');
+        console.log(response.data);
         setCategoriesDatas(response.data)
     }
    return (

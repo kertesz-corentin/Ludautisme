@@ -12,3 +12,28 @@
 .cardmedia{
     background-color: aquamarine;
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    &-name {
+        margin: 25px auto;
+    }
+    &-description {
+        margin: 0 15px !important;
+    }
+    &-footer {
+        margin-top: auto;
+        margin-bottom: 15px;
+    }
+}
+
+.MuiCardContent-root{
+    position: relative;
+    height: 100%;
+}
+
+.card-content {
+    height: 100%;
+}

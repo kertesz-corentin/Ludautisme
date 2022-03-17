@@ -111,7 +111,10 @@ const UserBookings = ({className, ...rest}) => {
                         </Box>
                         <h2>Historique</h2>
                         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        { (activeBooking[0]) ?
                             <ListOfBookings bookings = {oldBookings}/>
+                            :
+                            <div>WAIT</div>}
                         </Box>
                     </Box>
             </div>

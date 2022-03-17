@@ -16,8 +16,10 @@ import { useContext } from 'react';
 const ListOfReferences = ({
     className,
     references,
+    display,
      ...rest
     }) => {
+
 
     return (
         references ?
@@ -32,11 +34,12 @@ const ListOfReferences = ({
             alignItems="center"
         >
 
+            {console.log(references)}
                 {references.map((reference,index)=>
                 (
-
                     <Reference
-                        key = {reference.id}
+                        display={display}
+                        key = {`${reference.id}-${index}`}
                         id={reference.id}
                         result= {reference.id}
                         name={reference.name}

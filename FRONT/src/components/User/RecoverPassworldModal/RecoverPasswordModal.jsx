@@ -18,7 +18,7 @@ import api from '../../../requests';
 
 
 const RecoverPasswordModal = ({className, ...rest}) => {
-    const user = JSON.parse(localStorage.getItem('user'));
+
 
   function handleMailChange (event) {
     setMailValue(event.target.value)
@@ -34,6 +34,7 @@ const handleMailSubmit = async(event) => {
         console.log(`Mail where send newPassword`, mail);
         const response = await api.post('/login/forgot-password',mail)
         console.log(response);
+
 }
 
 const [mailValue, setMailValue]= useState()
