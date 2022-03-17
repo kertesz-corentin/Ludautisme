@@ -38,6 +38,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
     async function getAllCategories () {
         const response = await api.get('/customer/category');
+        console.log(response.data);
         setCategoriesDatas(response.data)
     }
 
@@ -56,13 +57,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
         >
         <MaterialLibraryMenu getAllRef={getAllRef} categories={categoriesData} />
             <div className= "allReferences">
-                <NextPages/>
-                {!allRef ?
                 <ListOfReferences references= {referencesData}/>
-                :
-                <ListOfReferences references= {allRef}/>
-                }
-                <NextPages/>
             </div>
         </div>
 

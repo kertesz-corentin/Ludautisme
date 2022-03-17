@@ -10,8 +10,6 @@ import AdminHome from '../Admin/AdminHome/AdminHome';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
-import UserBookingActive from '../User/UserBookingActive/UserBookingActive';
-import UserBookingsHistory from '../User/UserBookingsHistory/UserBookingsHistory';
 import About from '../About/About';
 import Infos from '../Infos/Infos';
 import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';

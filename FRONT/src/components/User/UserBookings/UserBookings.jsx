@@ -87,12 +87,10 @@ const UserBookings = ({className, ...rest}) => {
     }, []);
 
    return (
-    <div> MES RESERVATIONS
             <div
                     className={classnames('home-user', className)}
                     {...rest}
                 >
-                    <MenuUser/>
                     <Box className = "list" sx={{ bgcolor: 'background.paper' }}>
                         <h2>Réservation prochaine permanence</h2>
                         {/* <Permanency/> */}
@@ -113,13 +111,13 @@ const UserBookings = ({className, ...rest}) => {
                         </Box>
                         <h2>Historique</h2>
                         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        { (activeBooking[0]) ?
                             <ListOfBookings bookings = {oldBookings}/>
+                            :
+                            <div>WAIT</div>}
                         </Box>
                     </Box>
             </div>
-    </div>
-
-
    );
 };
 

@@ -1,12 +1,16 @@
 @import 'src/styles/vars';
 
 .home-user {
-
+    height: 100%;
    background-color:rgb(213, 238, 238);
-   height: 40rem;
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    align-items: center;
+   justify-content: center;
+
+   &-welcome-span{
+       text-transform: capitalize;
+   }
 
 }
 .loginuser-form {
@@ -15,18 +19,17 @@
     border-radius: 10px;
     width: 25rem;
     margin: auto;
-    background-color: rgba(255, 0, 0, 0.13);
+    background-color: rgba(255, 251, 236, 1);
     display: flex;
     flex-direction: column;
     align-items: stretch;
 }
 
-.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
-    margin-bottom: 20px;
+.loginuser-textfield {
     background-color: white;
+    margin-bottom: 15px;
 }
 
-.loginuser-submit {
-    height: 40px;
-    font-size: 1.1rem;
+.MuiTextField-root {
+    margin-bottom: 15px;
 }

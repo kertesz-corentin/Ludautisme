@@ -16,27 +16,30 @@ import { useContext } from 'react';
 const ListOfReferences = ({
     className,
     references,
+    display,
      ...rest
     }) => {
+
 
     return (
         references ?
         <React.Fragment>
           <CssBaseline />
-          <Container maxWidth="70%">
           <Grid
             className = "gridList"
             container
             direction="row"
             justifyContent="flex-start"
+            alignContent="flex-start"
             alignItems="center"
         >
 
+            {console.log(references)}
                 {references.map((reference,index)=>
                 (
-
                     <Reference
-                        key = {reference.id}
+                        display={display}
+                        key = {`${reference.id}-${index}`}
                         id={reference.id}
                         result= {reference.id}
                         name={reference.name}
@@ -53,7 +56,6 @@ const ListOfReferences = ({
 
             )}
             </Grid>
-          </Container>
         </React.Fragment>
         :
         <React.Fragment>
