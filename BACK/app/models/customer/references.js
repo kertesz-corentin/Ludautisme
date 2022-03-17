@@ -90,7 +90,7 @@ module.exports = {
         let queryStart = `SELECT
         r.id,
         r.name,
-        r.description,
+        r."description",
         r.valorisation,
         cat.name AS mainCategory,
         json_agg(DISTINCT "category"."name") AS tag,

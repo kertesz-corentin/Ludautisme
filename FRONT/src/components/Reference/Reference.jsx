@@ -33,7 +33,8 @@ const Reference = ({
     valorisation,
     article,
     nb_available,
-    nb_total
+    nb_total,
+    display
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -41,7 +42,6 @@ const Reference = ({
     const add = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
     const [isClick, setIsClick] = useState(false);
-
 
     let itemToAdd = {
         id,
@@ -71,48 +71,37 @@ const Reference = ({
 
    return (
 
-        <Card sx={{ width: 345, height:345 }}>
+        <Card className = "card" sx={{ width: 345, height:345 }}>
             <CardMedia
                 component="img"
                 height="140"
                 image={picture[0].url}
                 alt="image about the article"
             />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography className="card-name" gutterBottom variant="h6">
                 {name}
                 </Typography>
+                <Typography className="card-description">
+                  {description}
+                </Typography >
+                { (display !== "booking") &&
+                    <Box className="card-footer">
+                    <Button onClick={handleOpen}>Détails</Button>
+                    { userToken &&
 
-                <Button onClick={handleOpen}>description</Button>
-                {userToken && quantity>0 && quantity === newQuantity &&
-                    <Box>
-                    <Button
-                        onClick={handleClick}>
-                            <AddShoppingCartIcon/>
-                    </Button>
-                    </Box>
-                }
-                 {userToken && quantity !== newQuantity &&
-                    <Box>
-                    <Button
-                        onClick={handleClick} disabled>
-                            <BookmarkAddedIcon/>
-                    </Button>
-                    <Typography gutterBottom variant="p" component="div">
-                                (Article ajouté)
-                    </Typography>
-                    </Box>
-                }
-                {userToken && quantity == 0 &&
-                    <Box>
-                    <Button
-                        onClick={handleClick} disabled>
+                        (!isClick) ?
+                        <Button
+                            onClick={handleClick}>
+                                <AddShoppingCartIcon/>
+                        </Button>
+                        :
+                        <Button
+                            onClick={handleClick} disabled>
+                                <BookmarkAddedIcon/>
+                        </Button>
 
-                    </Button>
-                    <Typography gutterBottom variant="p" component="div">
-                        <BlockIcon/>
-                                Actuellement indisponible
-                    </Typography>
+
+                    }
                     </Box>
                 }
 
@@ -129,16 +118,16 @@ const Reference = ({
           >
             <Fade in={open}>
               <Box className="ref">
-                <Typography id="transition-modal-title" variant="h6" component="h2">
+                <Typography className="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
                 <Divider/>
-                <Typography id="transition-modal-title" variant="h6" component="h5">
+                <Typography className="transition-modal-title" variant="h6" component="h5">
                   {description}
                 </Typography>
                 {nb_available > 0 ? <Available/> : <Unavailable/>}
-                <Typography id="transition-modal-title" variant="h6" component="h5">
-                Prix: {valorisation}
+                <Typography className="transition-modal-title" variant="h6" component="h5">
+                Prix: {valorisation}€
                 </Typography>
                 <Divider/>
                 <CardMedia
@@ -158,7 +147,6 @@ const Reference = ({
               </Box>
             </Fade>
           </Modal>
-            </CardContent>
         </Card>
    );
 };

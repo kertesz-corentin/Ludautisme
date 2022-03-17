@@ -5,8 +5,11 @@ import  PropTypes from 'prop-types';
 
 const NextPages = ({className, ...rest}) => {
    return (
-    <Stack spacing={2}>
-        <Pagination count={10} color="primary" />
+    <Stack className="nextPage" spacing={2}>
+        <Pagination className="nextPage-pagination"
+                    count={10}
+                    color="primary"
+                    sx={{justifyContent:"center"}} />
     </Stack>
    );
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
 import ChoiceSelection from '../Select/ChoiceSelection';
+import { Typography } from '@mui/material';
 
 
 

@@ -7,6 +7,9 @@
 }
 
 .gridList{
+    max-width: 1200px;
+    height: 100%;
     gap: 25px;
-    align-content: space-between;
+    align-items: flex-start;
+    align-content: space-around;
 }
