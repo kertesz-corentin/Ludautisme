@@ -1,25 +1,25 @@
 @import 'src/styles/vars';
 
-.permanency{
 
+
+
+
+.permanency{
+    padding:0 20px 20px 20px;
     display: flex;
-    flex-flow: row wrap ;
-    font-size: 1.8rem;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    max-width: fit-content;
+    font-size: 1.2rem;
     --clay-background: rgb(238, 72, 66);
     --clay-border-radius: 20px;
     color: blanchedalmond;
 
 
     &-title {
-        flex: 1 100%;
+        border: 3px solid $font-color-2;
 
         h2 {
-            width: max-content;
-            margin: 30px;
-            margin-bottom: 0;
+            border: 3px solid $font-color-2;
             text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
         }
     }
@@ -31,8 +31,8 @@
     }
 
     &-logo {
-        margin: 30px;
-        max-width: 150px;
+        margin-right: 10px;
+        max-width: 125px;
         filter: drop-shadow(rgb(0 0 0 / 30%) 5px 3px 5px);
     }
 
@@ -41,9 +41,8 @@
         border-radius: 10px;
         padding: 10px;
         border: 3px solid $font-color-2;
-        font-size:2rem;
-        margin: 30px;
-        width: max-content;
+        font-size:1.5rem;
+
     }
 }
 

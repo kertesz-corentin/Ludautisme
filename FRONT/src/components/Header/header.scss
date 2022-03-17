@@ -13,45 +13,7 @@
     justify-content: center;
 
     &-logo-img {
-        // position: fixed;
         max-width: 60px;
-        // top: 10px;
-    }
-
-    &-nav {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-
-        flex: 1;
-
-        &-link {
-
-            font-size: 1.1rem;
-            padding: 10px;
-            color: #000000;
-            text-decoration: none;
-            &--active {
-                transition: 50ms;
-             border-left: 1px solid rgba($color: #000000, $alpha: 0.5);
-            }
-
-            &:hover {
-                transition: 0.3s;
-                border: none;
-                background-color: rgb(207, 207, 207);
-                border-radius: 5px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-
-        }
-    }
-
-    &-logo-image{
-        width: 300px;
     }
 }
 
@@ -64,3 +26,83 @@
     justify-content: space-between;
     }
 
+
+nav
+{
+    margin: 0 auto;
+    width: 60%;
+
+}
+
+nav .main_pages
+{
+    display: flex;
+    align-items: flex-start;
+
+}
+
+nav .main_pages a
+{
+        font-size: 1.1rem;
+        padding: 10px;
+        color: #000000;
+        text-decoration: none;
+        &--active {
+            transition: 50ms;
+         border-left: 1px solid rgba($color: #000000, $alpha: 0.5);
+        }
+
+        &:hover {
+            transition: 0.3s;
+            border: none;
+            background-color: rgb(207, 207, 207);
+            border-radius: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+}
+
+    label, #toggle
+{
+    display: none;
+}
+
+@media all and (max-width: 991px)
+{
+    nav
+    {
+        height: 60px;
+    }
+
+    nav .main_pages
+    {
+
+        margin: 0 auto;
+        display: none;
+        flex-direction: column;
+        background: $font-color-2;
+        height: fit-content;
+        width: fit-content;
+        border-radius: 10px;
+    }
+
+    nav .main_pages a {
+        width: 50%;
+    }
+
+    label
+    {
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-size: 40px;
+        color: $font-color;
+        cursor: pointer;
+    }
+
+    #toggle:checked + .main_pages {
+        display: flex;
+    }
+}

@@ -65,7 +65,6 @@ const Accueil = ({className, ...rest}) => {
                 <h2 className="categorie-title">
                     La matériathèque
                 </h2>
-
                 <div className="categorie-box">
                     <NavLink  className="clay categorie" to="/jeux">
                             <img className="categorie-img" src={Logo6} alt="catégorie"></img>

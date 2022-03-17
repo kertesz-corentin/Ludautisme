@@ -11,23 +11,29 @@ const Permanency = ({className, ...rest}) => {
        <div
             className={classnames('clay permanency', className)}
             // className={classnames('bandeau-présentation-permanence-infos', className)}
-            {...rest}
-         >      <div className="permanency-title">
+            {...rest}>
+
+            {/* <div className="permanency-title"> */}
                     <h2>
                         Prochaine permanence
                     </h2>
-                </div>
-                <div className='permanency-block'>
-                    <div>
+                {/* </div> */}
+                {/* <div className='permanency-block'> */}
+                    <div className='permanency-block'>
                         <img className="permanency-logo" src={Calendrier} alt="" />
-                    </div>
-                    <div>
+
                         <p className="permanency-date">
                             01/03/2022 <br />
                             8h00-12h00 <br />
                         </p>
                     </div>
-                </div>
+                    {/* <div>
+                        <p className="permanency-date">
+                            01/03/2022 <br />
+                            8h00-12h00 <br />
+                        </p>
+                    </div> */}
+                {/* </div> */}
 
         </div>
    );
