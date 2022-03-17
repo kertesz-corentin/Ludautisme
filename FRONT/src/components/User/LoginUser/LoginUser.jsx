@@ -27,13 +27,6 @@ export default function SignIn() {
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const onToggleOpen = () => {
-      setIsOpen(!isOpen)
-  }
-
-  const closeLoginMenu = () =>{
-      setIsOpen(false);
-  }
 
   const [alertMessage, setAlertMessage] = useState();
 
@@ -62,8 +55,9 @@ export default function SignIn() {
 //Use to disconnect reset token
     function handleDisconnectClick (event) {
         api.logout();
-        setIsOpen(!isOpen)
-        navigate('/')
+        handleCloseLogin();
+        navigate('/');
+        window.location.reload();
     }
 
 // Use to recover password

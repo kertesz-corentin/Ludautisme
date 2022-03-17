@@ -48,7 +48,7 @@ const [mailValue, setMailValue]= useState()
                 autoFocus
                 margin="dense"
                 id="name"
-                label="Mot de passe"
+                label="Email"
                 type="string"
                 fullWidth
                 variant="standard"
@@ -61,7 +61,7 @@ const [mailValue, setMailValue]= useState()
             variant="contained"
             sx={{ mt: 1, mb: 2 }}
             >
-                Envoyer le mot de passe
+                Envoyer le mail
             </Button>
     </Box>
     );

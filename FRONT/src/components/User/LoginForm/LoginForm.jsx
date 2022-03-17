@@ -7,6 +7,7 @@ import RecoverPasswordModal from '../RecoverPassworldModal/RecoverPasswordModal'
 import './loginform.scss'
 import classnames from 'classnames';
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import AlertMessage from '../../AlertMessage/AlertMessage';
 
 const LoginForm = ({handleCloseLogin, ...rest}) => {
     const navigate = useNavigate();
@@ -98,6 +99,12 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                 </Grid>
 
             </Grid>
+            {alertMessage && (
+                        <AlertMessage
+                            message={alertMessage}
+                        >
+                        </AlertMessage>
+            )}
             <Popover
                         sx={{ borderRadius: 8, marginTop: "25px"}}
                         id={id}
