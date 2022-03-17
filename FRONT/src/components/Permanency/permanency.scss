@@ -59,6 +59,10 @@
         border: 3px solid $font-color-2;
         font-size:1.5rem;
 
+        &-none{
+            text-transform: capitalize;
+        }
+
     }
 }
 

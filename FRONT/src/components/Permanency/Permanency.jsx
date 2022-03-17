@@ -1,17 +1,29 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Calendrier from '../public/icones/calendrier.png'
 import './permanency.scss';
 import api from '../../requests';
+import moment from 'moment';
+import 'moment/locale/fr';
+moment.locale('fr', null);
 
 const Permanency = ({className,display, ...rest}) => {
-    const [permInfo,setPermInfo] = useState();
+    const [permDate,setPermDate] = useState();
 
+    useEffect(()=>{getPermInfo()},[]);
+    console.log(permDate);
     const getPermInfo = async ()=>{
-        const response = await api.get(`/customer/booking/history/`);
+        const response = await api.get(`/customer/permanency/`);
         if (response.status === 200){
-            setPermInfo(response.data);
+            if (response.data[0].next_date){
+                setPermDate(response.data[0].next_date);
+            } else {
+                const nextMonth = moment(response.data[0].perm_date).add(1, 'M').format('MMMM');
+                setPermDate(nextMonth);
+            }
+
+            console.log(response.data);
         } else {
             console.error(response.data);
         }
@@ -31,18 +43,16 @@ const Permanency = ({className,display, ...rest}) => {
                 {/* <div className='permanency-block'> */}
                     <div className='permanency-block'>
                         <img className={(display !=='account') ? "permanency-logo" : "permanency-logo account-logo"} src={Calendrier} alt="" />
-                        {(display !== 'account') ?
+                        {(display !== 'account' && permDate) ?
                             <>
-                                <p className="permanency-date">
-                                     01/03/2022 <br />
-                                     8h00-12h00 <br />
+                                <p className="permanency-date-none">
+                                    { permDate}
                                  </p>
                             </>
                             :
                             <>
                             <p className="permanency-date account-date">
-                                     01/03/2022
-                                     8h00-12h00
+                                <span className='permanency-date-none'>{permDate}</span>
                                  </p>
                             </>
                         }
