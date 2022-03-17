@@ -1,7 +1,18 @@
 @import 'src/styles/vars';
 
 .adminhome {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
+    padding: $gutter;
+
+    &-element {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin: 0 auto;
+
+        &-item {
+            margin: $gutter;
+            flex: 1;
+        }
+    }
 }

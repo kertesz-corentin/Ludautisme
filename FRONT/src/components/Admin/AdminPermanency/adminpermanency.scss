@@ -5,7 +5,9 @@
     flex-direction: column;
     border: 3px solid $orange;
     border-radius: 10px;
-
+    height: 250px;
+    width: 250px;
+    align-items: center;
 
     &-title {
         color: $orange;
@@ -13,6 +15,11 @@
 
     &-element {
         margin: $gutter;
+    }
+
+    &-button {
+        margin-top: $gutter;
+        width: 50%
     }
 }
 
