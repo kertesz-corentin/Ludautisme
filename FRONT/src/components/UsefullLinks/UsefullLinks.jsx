@@ -13,7 +13,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import Souris from '../public/icones/souris.png'
 import TranslateRoundedIcon from '@mui/icons-material/TranslateRounded';
-
+import {Box} from '@mui/material';
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -75,6 +75,7 @@ const UsefullLinks = ({className, ...rest}) => {
                         </p>
                         </div>
                         <div className='UsefullLinks-links'>
+                        <Box className='UsefullLinks-container'>
                         <Accordion className="UsefullLinks-links-box" expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                                 <p className='UsefullLinks-links-title'>Ressources Lud’autisme</p>
@@ -536,7 +537,8 @@ const UsefullLinks = ({className, ...rest}) => {
                                 </Typography>
                                 </AccordionDetails>
                                 </Accordion>
-                               </div>
+                            </Box>
+                        </div>
 </div>
    );
 };
