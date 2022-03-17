@@ -11,8 +11,7 @@ import Loader from '../Loader/Loader';
 
 
 
-const MaterialLibrary = ({className, ...rest}) => {
-
+const MaterialLibrary = ({className,currentItems, ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
 
 const [referencesData, setReferencesDatas] = useState('')
@@ -29,7 +28,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
    async function getAllReferences () {
         const response = await api.get('/customer/articles');
         console.log(response);
-        setReferencesDatas(response.data)
+        setDisplayRef(response.data);
    }
    async function oneReference () {
     const response = await api.get('/customer/articles/:id');
@@ -38,31 +37,28 @@ const [categoriesData, setCategoriesDatas] = useState('')
 
     async function getAllCategories () {
         const response = await api.get('/customer/category');
-        console.log(response.data);
         setCategoriesDatas(response.data)
     }
 
-    const [allRef, setAllRef] = useState('');
+    const [displayRef, setDisplayRef] = useState('');
 
-    function getAllRef(response){
-        setAllRef(response)
+    const updateDisplayRef = (refs) => {
+        setDisplayRef(refs);
     }
-    console.log(`MES DONEES IN ML `, allRef)
+
    return (
 
-
-       categoriesData && referencesData ?
         <div            className={classnames('materiallibrary', className)}
             {...rest}
         >
-        <MaterialLibraryMenu getAllRef={getAllRef} categories={categoriesData} />
-            <div className= "allReferences">
-                <ListOfReferences references= {referencesData}/>
-            </div>
+            <MaterialLibraryMenu updateDisplayRef={updateDisplayRef} categories={categoriesData} />
+            {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData, ca donne :  */}
+            {displayRef &&
+                <div className= "displayReferences">
+                    <ListOfReferences currentItems={currentItems} references= {displayRef}/>
+                </div>
+            }
         </div>
-
-        :
-        <Loader/>
 
    );
 };

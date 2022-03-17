@@ -16,6 +16,7 @@ const Header = ({
     className,
     currentItemsNumber,
     currentItems,
+    cartManager,
      ...rest}) => {
     const userToken = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {}, [userToken])
@@ -69,7 +70,7 @@ const Header = ({
                 </a>
                 </div>
             </nav>
-                    <Cart currentItems = {currentItems}/>
+                    <Cart cartManager={cartManager}currentItems = {currentItems}/>
                     <LoginUser/>
             </Box>
         </header>

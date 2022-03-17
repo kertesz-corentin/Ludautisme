@@ -10,19 +10,13 @@ import { Typography } from '@mui/material';
 const MaterialLibraryMenu = ({
     className,
     categories,
-    getAllRef,
+    updateDisplayRef,
      ...rest}) => {
 
 
 
 //Define state getting all picked ref from choiceSelection.jsx using fction getAllPicked Ref
     const [allPickedRef, setAllPickedRef] = useState('')
-
-    function getAllPickedRef(response){
-        setAllPickedRef(response)
-        getAllRef(response)
-    }
-    console.log(`REF REMONTENT DANS MATERIAL LIBRAIRY MENU`, allPickedRef)
 
    return (
        <div
@@ -31,7 +25,7 @@ const MaterialLibraryMenu = ({
          >
             Matériathèque
 {/* ChoiceSelection belongs to case named "Select" */}
-            <ChoiceSelection getAllPickedRef= {getAllPickedRef} categories={categories} />
+            <ChoiceSelection updateDisplayRef= {updateDisplayRef} categories={categories} />
         </div>
    );
 };

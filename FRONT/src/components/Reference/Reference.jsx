@@ -17,10 +17,11 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import {  Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import BlockIcon from '@mui/icons-material/Block';
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Reference = ({
     className,
@@ -34,12 +35,13 @@ const Reference = ({
     article,
     nb_available,
     nb_total,
-    display
+    display,
+    currentItems,
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const add = useContext(FunctionContext);
+    const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
     const [isClick, setIsClick] = useState(false);
 
@@ -55,13 +57,17 @@ const Reference = ({
     let [quantity, setQuantity] = useState(nb_available);
     //Need newQuantity to compare with quantity and know if article has been click already
     let [newQuantity, setNewQuantity] = useState(quantity);
-    console.log(quantity, newQuantity)
+
+    const [cartItems,setCartItems] = useState(currentItems);
+
+    const updateCurrentItems =() =>{
+        setCartItems(currentItems);
+    }
+
+    useEffect(()=>{updateCurrentItems()},[currentItems])
 
     function handleClick () {
-        add(itemToAdd);
-        console.log(`envoi de l'item au cart`, itemToAdd)
-        setNewQuantity(newQuantity -= 1 )
-        modifyIsClick()
+        cartManager.add(itemToAdd);
     }
 
     function modifyIsClick () {
@@ -88,22 +94,29 @@ const Reference = ({
                     <Box className="card-footer">
                     <Button onClick={handleOpen}>Détails</Button>
                     { userToken &&
+                       //Ici il faut rajouter une condition si nb_available vaut 0 alors rend un texte "Actuellement indisponible"
+                       (nb_available == 0) ?
+                       <Button
+                          disable="true">
+                       <CancelIcon/>
+                       </Button>
+                       :
 
-                        (!isClick) ?
-                        <Button
-                            onClick={handleClick}>
-                                <AddShoppingCartIcon/>
-                        </Button>
-                        :
-                        <Button
-                            onClick={handleClick} disabled>
-                                <BookmarkAddedIcon/>
-                        </Button>
+                       (!currentItems.map((item)=> item.id).includes(id)) ?
+                       <Button
+                           onClick={handleClick}>
+                               <AddShoppingCartIcon/>
+                       </Button>
+                       :
+                       <Button
+                           onClick={handleClick} disabled>
+                               <BookmarkAddedIcon/>
+                       </Button>
 
 
-                    }
-                    </Box>
-                }
+                   }
+                   </Box>
+               }
 
           <Modal
             aria-labelledby="transition-modal-title"

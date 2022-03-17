@@ -19,7 +19,7 @@ const Permanency = ({className,display, ...rest}) => {
         const response = await api.get(`/customer/permanency/`);
         if (response.status === 200){
             if (response.data[0].next_date){
-                const nextDate = moment(response.data[0].next_date).add(1, 'M').format('DD MMMM YYYY');
+                const nextDate = moment(response.data[0].next_date).format('DD MMMM YYYY');
                 setPermDate(nextDate);
             } else {
                 const nextMonth = (response.data[0].perm_date) ?

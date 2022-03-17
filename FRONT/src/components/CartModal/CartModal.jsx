@@ -26,6 +26,7 @@ const CartModal = ({
     currentItemsNumber,
     currentItems,
     userId,
+    cartManager,
      ...rest
     }) => {
 
@@ -71,19 +72,9 @@ const CartModal = ({
         };
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
-    const removeItem = (item) =>{
-
-        //Dans cette fonction qui fait le remove il faudrai que je puisse ajouter l'item supprimer au currentItem qui part dans le app
-        //comme ça je remets à jour les currentsItem et les boutons de chaque reference.
-        console.log(`item a delete`, item, `Mes items actuels`, currentItems);
-        const deleteIndex = currentItems.findIndex((currentItem) => currentItem.id === item);
-        console.log("index",deleteIndex)
-        if (deleteIndex !== -1){
-            currentItems.splice(deleteIndex,1);
-            setCounter(currentItems.length)
-        } else {
-            console.log("index de l'item non trouvé dans currentCart");
-        }
+    const removeItem = (itemId) =>{
+       console.log(cartManager,itemId);
+       cartManager.remove(itemId);
     }
 
     const countSentence = ()=>{

@@ -17,9 +17,9 @@ const ListOfReferences = ({
     className,
     references,
     display,
+    currentItems,
      ...rest
     }) => {
-
 
     return (
         references ?
@@ -33,11 +33,10 @@ const ListOfReferences = ({
             alignContent="flex-start"
             alignItems="center"
         >
-
-            {console.log(references)}
                 {references.map((reference,index)=>
                 (
                     <Reference
+                        currentItems={currentItems}
                         display={display}
                         key = {`${reference.id}-${index}`}
                         id={reference.id}
