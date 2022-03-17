@@ -1,3 +1,7 @@
 .contentpage {
     height: 100%;
 }
+
+.contentpage > *:first-child {
+    min-height: calc(100vh - 160px);
+}
