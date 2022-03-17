@@ -90,7 +90,7 @@ const UserMyAccount = ({
 
    return (
                 <Box className= "home-user">
-                <Permanency/>
+                <Permanency display="inline"/>
                         <span >
                             <h2>
                             Données personnelles
