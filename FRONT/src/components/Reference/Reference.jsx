@@ -43,6 +43,9 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
+    console.log("userToken",userToken);
+    console.log("currentItems",currentItems);
+
     const [isClick, setIsClick] = useState(false);
 
     let itemToAdd = {
@@ -93,31 +96,36 @@ const Reference = ({
                 { (display !== "booking") &&
                     <Box className="card-footer">
                     <Button onClick={handleOpen}>Détails</Button>
-                    { userToken &&
-                       //Ici il faut rajouter une condition si nb_available vaut 0 alors rend un texte "Actuellement indisponible"
-                       (nb_available == 0) ?
-                       <Box className="card-unavailable"
-                       onClick={handleClick} disabled>
-                       <CancelIcon/>
-                       <Typography className="card-unavailable-text">Indisponible</Typography>
-                       </Box>
-                       :
-
-                       (!currentItems.map((item)=> item.id).includes(id)) ?
-                       <Button
-                           onClick={handleClick}>
-                               <AddShoppingCartIcon/>
-                       </Button>
-                       :
-                       <Button
-                       onClick={handleClick}>
-                        <BookmarkAddedIcon/>
-                        </Button>
-
-
-
-
-                   }
+                        {(userToken)?
+                            <>
+                                {(nb_available > 0)?
+                                    <>
+                                         {(!currentItems.map((item)=> item.id).includes(id)) ?
+                                              <Button
+                                              onClick={handleClick}>
+                                                  <AddShoppingCartIcon/>
+                                                </Button>
+                                         :
+                                            <Box>
+                                                <BookmarkAddedIcon/>
+                                            </Box>
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                     <Box className="card-unavailable"
+                                             disabled>
+                                        <CancelIcon/>
+                                        <Typography className="card-unavailable-text">Indisponible</Typography>
+                                    </Box>
+                                    </>
+                                }
+                            </>
+                            :
+                            <>
+                            <Typography>Pas Loggué</Typography>
+                            </>
+                        }
                    </Box>
                }
 
