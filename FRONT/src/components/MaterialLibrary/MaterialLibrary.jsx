@@ -28,7 +28,7 @@ const [categoriesData, setCategoriesDatas] = useState('')
    async function getAllReferences () {
         const response = await api.get('/customer/articles');
         console.log(response);
-        setReferencesDatas(response.data)
+        setDisplayRef(response.data);
    }
    async function oneReference () {
     const response = await api.get('/customer/articles/:id');
@@ -40,33 +40,25 @@ const [categoriesData, setCategoriesDatas] = useState('')
         setCategoriesDatas(response.data)
     }
 
-    const [allRef, setAllRef] = useState('');
+    const [displayRef, setDisplayRef] = useState('');
 
-    function getAllRef(response){
-        setAllRef(response)
+    const updateDisplayRef = (refs) => {
+        setDisplayRef(refs);
     }
+
    return (
 
-
-       categoriesData && referencesData ?
         <div            className={classnames('materiallibrary', className)}
             {...rest}
         >
-        <MaterialLibraryMenu getAllRef={getAllRef} categories={categoriesData} />
-        {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData, ca donne :  */}
-        {allRef
-            ?
-            <div className= "allReferences">
-                <ListOfReferences currentItems={currentItems} references= {allRef}/>
-            </div>
-            :
-            <div className= "allReferences">
-                <ListOfReferences currentItems={currentItems} references= {referencesData}/>
-            </div>
-        }
+            <MaterialLibraryMenu updateDisplayRef={updateDisplayRef} categories={categoriesData} />
+            {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData, ca donne :  */}
+            {displayRef &&
+                <div className= "displayReferences">
+                    <ListOfReferences currentItems={currentItems} references= {displayRef}/>
+                </div>
+            }
         </div>
-        :
-        <Loader/>
 
    );
 };
