@@ -19,6 +19,13 @@ module.exports = {
         const userId = Number(req.params.UserId);
         const { refIds } = req.body;
 
+        const findDuplicate = refIds => refIds.filter((item, index) => refIds.indexOf(item) !== index);
+        const duplicateElement = findDuplicate(refIds);
+        console.log(duplicateElement);
+        if (duplicateElement[0]) {
+            throw new ApiError(403, 'La réservation ne peut pas contenir de doublon');
+        }
+
         // Check if too much articles are booked
         if (!refIds || refIds.length > 7) {
             throw new ApiError(403, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
@@ -62,7 +69,6 @@ module.exports = {
             const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
             // Update availability on each article booked to false
             await bookingDataMapper.updateArticlesAvailability(articlesIds);
-            console.log(articlesBooked);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);
