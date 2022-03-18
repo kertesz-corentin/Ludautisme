@@ -4,4 +4,10 @@
     min-width: 250px;
     background-color: #00bdb6;
     padding: 15px;
+    border-radius: 20px;
+
+    p {
+        color: $font-color-2;
+        font-size: 1.8rem;
+    }
 }

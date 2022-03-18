@@ -23,7 +23,7 @@ const MaterialLibraryMenu = ({
             className={classnames('materiallibrarymenu', className)}
             {...rest}
          >
-            Matériathèque
+            <p>Matériathèque</p>
 {/* ChoiceSelection belongs to case named "Select" */}
             <ChoiceSelection updateDisplayRef= {updateDisplayRef} categories={categories} />
         </div>
