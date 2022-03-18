@@ -1,35 +1,45 @@
 @import 'src/styles/vars';
 
 .footer {
-    display: flex;
+
+    // display: flex;
     width: 100%;
     height: 80px;
-    margin-top: auto;
-    align-items: center;
-    justify-content: space-between;
+    // margin-top: auto;
+    // align-items: center;
+    // justify-content: space-between;
     background:$font-color-2;
     filter: $drop-shadow;
+    margin-top: 30px;
+
+    &-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1900px;
+        margin: 0 auto;
+    }
 
     &-facebook-logo {
         height: 40px;
         margin: auto $gutter;
         border-radius: 8px;
         filter: $drop-shadow;
-        // border: 3px solid $font-color-2;
     }
 
     &-left {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
-        align-items:center;
         color: $font-color;
         font-size: 1.1rem;
 
-        & a {
-            flex-wrap: wrap;
-        }
+    }
+
+    &-right {
+        display: flex;
+        align-items: center;
     }
 
     &-logo {
@@ -46,87 +56,23 @@
     }
 }
 
+@media all and (max-width: 810px)
+  { .footer {
+      height: 160px;
 
-nav
-{
-    margin: 0 auto;
-    width: 60%;
-
-}
-
-nav .footer-mid
-{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    align-content: center;
-
-}
-
-nav .footer-mid a
-{
-        font-size: 1.1rem;
-        color: #000000;
-        text-decoration: none;
-        &--active {
-            transition: 50ms;
-         border-left: 1px solid rgba($color: #000000, $alpha: 0.5);
-        }
-
-        &:hover {
-            transition: 0.3s;
-            border: none;
-            background-color: rgb(207, 207, 207);
-            border-radius: 5px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-}
-
-
-.togglefooter , #togglefooter
-{
-    display: none;
-}
-
-@media all and (max-width: 991px)
-{
-    nav
-    {
-        height: 60px;
-    }
-
-    nav .footer-mid
-    {
-        margin: 0 auto;
-        display: none;
-        flex-direction: column;
-        background: $font-color-2;
-        height: fit-content;
-        width: fit-content;
-        border-radius: 10px;
-        padding: 0 10px 0 10px;
-
-    }
-
-    nav .footer-mid a {
-        width: 50%;
-    }
-
-    .togglefooter
-    {
-        // width: 30px;
+      &-container {
         display: flex;
+        flex-direction: row;
         justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        font-size: 40px;
-        color: $font-color;
-        cursor: pointer;
     }
 
-    #togglefooter:checked + .footer-mid {
-        display: flex;
+    &-texte{
+        margin: 10px;
+        }
 
+    &-left {
+        margin-top: 30px;
     }
-}
+
+  }
+  }
