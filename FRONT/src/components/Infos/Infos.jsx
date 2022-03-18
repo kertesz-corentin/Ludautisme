@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import './infos.scss';
 import Permanency from '../Permanency/Permanency';
 import Contact from '../Contact/Contact';
-import PhotoLudo from '../public/icones/photo.png'
+import PhotoLudo from '../public/icones/magasin.png'
 import Epingler from '../public/icones/epingler.png'
 import Lettre from '../public/icones/lettre.png'
 import Adhérent from '../public/icones/adhérent.png'
@@ -33,10 +33,7 @@ const Infos = ({className, ...rest}) => {
     {...rest}>
 
         <div className="infos-header">
-            <div className="infos-header-local">
                 <img src={PhotoLudo} alt="local lud'autisme"/>
-            </div>
-
             <div className="infos-header-adresse">
                 <p>
                     <h2>

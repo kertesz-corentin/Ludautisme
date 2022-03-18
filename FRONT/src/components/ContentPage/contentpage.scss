@@ -1,7 +1,11 @@
 .contentpage {
     height: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
 }
 
 .contentpage > *:first-child {
     min-height: calc(100vh - 160px);
 }
+
+

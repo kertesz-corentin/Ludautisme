@@ -13,18 +13,10 @@
     justify-content: space-evenly;
     background-color: hsl(178, 100%, 37%, 1);
 
-    &-local {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: stretch;
-        margin: 30px;
-        filter: $drop-shadow;
-
         img {
-            width: fit-content;
-            max-width: 400px;
+            width:400px;
         }
-    }
+
 
     &-adresse {
         display: flex;
@@ -78,21 +70,18 @@
 }
 
 .become {
-    // border-radius: 20px;
-    // background-color: $font-color-2;
-    // filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.3));
     margin: 30px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
 
     &-adhérent {
-        margin: 30px 0;
-        width: 500px
+        max-width: 500px;
     }
 
     &-bénévole{
-        width: 500px;
+        max-width: 500px;
+
     }
 
 
@@ -104,7 +93,7 @@
     }
 
     &-cat{
-        margin: 50px 0;
+        margin: 50px;
         max-width: fit-content;
         flex: 50%;
         justify-content: space-between;
@@ -229,7 +218,6 @@
 .infos-bottom {
     padding: 50px;
     background-color: $font-color-2;
-    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.3));
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
@@ -296,4 +284,17 @@
         margin-right: 20px;
         transition: filter 0.3s;
     }
+}
+
+@media all and (max-width: 810px)
+{ .become  {
+    width: 100vw;
+    margin: 0;
+} .infos-header-adresse {
+    text-align: center;
+    align-items:center;
+}
+
+
+
 }

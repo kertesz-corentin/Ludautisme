@@ -1,6 +1,7 @@
 @import 'src/styles/vars';
 
 .header {
+    margin-bottom: 30px;
     height: 80px;
     text-decoration: none;
     padding-left: $gutter;
@@ -16,7 +17,7 @@
 }
 
 .header-content {
-    max-width: 1920px;
+    max-width: 1900px;
     width: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -67,7 +68,7 @@ nav .main_pages Button
     display: none;
 }
 
-@media all and (max-width: 991px)
+@media all and (max-width: 1080px)
 {
     nav
     {
@@ -76,7 +77,6 @@ nav .main_pages Button
 
     nav .main_pages
     {
-
         margin: 0 auto;
         display: none;
         flex-direction: column;
