@@ -62,6 +62,7 @@ const ChoiceSelection = ({
         <FormControl className="select-form" fullWidth>
           <InputLabel id="demo-simple-select-label">Catégories Principales</InputLabel>
           <Select
+            className="select-field"
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={category}

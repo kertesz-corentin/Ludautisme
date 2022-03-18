@@ -123,7 +123,6 @@ const Reference = ({
                             </>
                             :
                             <>
-                            <Typography>Pas Loggué</Typography>
                             </>
                         }
                    </Box>
