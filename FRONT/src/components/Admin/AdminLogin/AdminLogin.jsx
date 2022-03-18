@@ -36,7 +36,7 @@ const theme = createTheme();
             const response = await api.login(email, password);
             console.log(response);
             if(response.status === 200) {
-                navigate('/admin/users');
+                navigate('/admin/home');
             }
             return response
         }

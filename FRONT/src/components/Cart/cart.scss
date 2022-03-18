@@ -3,19 +3,45 @@
 .cart {
     border: none;
     outline: none;
-    background: none;
+    background: #f1eee2;
     cursor: pointer;
-    transition: 50ms;
+    transition: 50ms, opacity 500ms;
 
     :hover {
         transition: 0.3s;
         background-color: rgba($color: #cfcfcf, $alpha: 1);
         border-radius: 5px;
     }
+
+    &-avatar{
+    background:  #e9e6da!important;
+    }
+    &-avatar:hover{
+        background: #e9e6da !important;
+    }
+    &button:hover{
+        background: #f1eee2!important;
+    }
+    &-avatar>button:hover{
+        background: #e9e6da !important;
+    }
 }
 
 .css-i4bv87-MuiSvgIcon-root {
     color: $font-color;
+}
+
+.floating{
+    background-color: #f1eee2 !important;
+    position:fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top : 21px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    opacity: 1;
 }
 
 

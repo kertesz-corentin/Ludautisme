@@ -82,7 +82,7 @@ const Header = ({
                 </Button>
                 </div>
             </nav>
-                    <Cart cartManager={cartManager}currentItems = {currentItems}/>
+                    <Cart cartManager={cartManager} currentItems = {currentItems}/>
                     <LoginUser/>
             </Box>
         </header>

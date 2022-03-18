@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import './cart.scss';
 import Reference from '../Reference/Reference';
 import CartModal from '../CartModal/CartModal';
-import { Box } from '@mui/material';
+import { Box, Avatar } from '@mui/material';
 
 
 const Cart = ({
@@ -22,15 +22,96 @@ const Cart = ({
         setUserId(user.id);
     }
 
+    const [scroll, setScroll] = useState(false);
+    const [lastScroll,setLastScroll] = useState();
+    const [offsetLeft,setOffsetLeft] = useState();
+
+    const getOffsetLeft = ()=>{
+        const left = getCoords(document.querySelector('.cart')).left;
+        setOffsetLeft(left);
+    }
+
+      useEffect(()=> {
+        if(userToken){
+            getOffsetLeft();
+            window.addEventListener('resize', handleResize);
+        }
+
+
+        return _ => {
+            window.removeEventListener('resize', handleResize)
+        }
+        },[]);
+
+
+    window.addEventListener("scroll", () => {
+        setScroll(window.scrollY > 40);
+    });
+
+    function getCoords(elem) { // crossbrowser version
+        var box = elem.getBoundingClientRect();
+
+        var body = document.body;
+        var docEl = document.documentElement;
+
+        var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+        var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+        var clientTop = docEl.clientTop || body.clientTop || 0;
+        var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+        var top  = box.top +  scrollTop - clientTop;
+        var left = box.left + scrollLeft - clientLeft;
+
+        return { top: Math.round(top), left: Math.round(left) };
+    }
+
+    const handleResize = async () => {
+        const cartElt = document.querySelector('.cart');
+        cartElt.classList.remove('floating');
+        const wrapperElt = document.querySelector('.cart-wrapper');
+        await wrapperElt.appendChild(cartElt);
+        const left = await getCoords(document.querySelector('.cart')).left;
+        setOffsetLeft(left);
+        setScroll(window.scrollY > 40);
+        console.log("resize",offsetLeft,left);
+        setCartFloating();
+  }
+
+    const setCartFloating = () => {
+            if (scroll){
+            const cartElt = document.querySelector('.cart');
+            cartElt.classList.add('floating');
+            cartElt.style.opacity = 0;
+            cartElt.style.left = `${offsetLeft+15}px`;
+            setTimeout(()=>{cartElt.style.opacity = 1},300);
+            document.getElementById('root').appendChild(cartElt);
+            setLastScroll(window.scrollY);
+            } else {
+                const cartElt = document.querySelector('.cart');
+                cartElt.style.opacity = 0;
+                setTimeout(()=>{cartElt.style.opacity = 1},300);
+                const wrapperElt = document.querySelector('.cart-wrapper');
+                wrapperElt.appendChild(cartElt);
+                setLastScroll(window.scrollY);
+            }
+          };
+
+    useEffect(()=> {
+        if(userToken){
+        setCartFloating();
+        }
+        },[scroll]);
+
    function handleCartBtnClick (event) {
     event.preventDefault();
 
    }
    return (
-       <Box>
+       <Box className='cart-wrapper' >
        {userToken &&
        <button
-            className={classnames('cart', className)}
+            className={(scroll)?'floating cart':'cart'}
             {...rest}
             onClick= {handleCartBtnClick}
          >

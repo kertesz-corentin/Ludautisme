@@ -10,7 +10,8 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Divider } from '@mui/material';
+import { Divider, Badge } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import CurrentReference from '../CurrentReference/CurrentReference';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import Loader from '../Loader/Loader';
@@ -34,6 +35,15 @@ const CartModal = ({
     const [successMessage, setSuccessMessage] = useState();
     //ACTUAL CART STATE
 
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+          right: -3,
+          top: 13,
+          background:"#ee4842",
+          border: `2px solid #ffebcd`,
+          padding: '0 4px',
+        },
+      }));
 
     useEffect(()=> {
         countSentence();
@@ -96,7 +106,18 @@ const CartModal = ({
 
     return (
       <div>
-        <Button onClick={handleOpen}><ShoppingCartIcon /></Button>
+        <Button  onClick={handleOpen}>
+            {(currentItems.length > 0) ?
+            <>
+            <StyledBadge badgeContent={currentItems.length} color="secondary">
+                <ShoppingCartIcon />
+            </StyledBadge>
+            </>
+            :
+            <>
+                <ShoppingCartIcon />
+            </>}
+        </Button>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"

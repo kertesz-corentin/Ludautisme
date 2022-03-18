@@ -21,7 +21,9 @@ import { useState, useContext, useEffect } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import BlockIcon from '@mui/icons-material/Block';
-import CancelIcon from '@mui/icons-material/Cancel'
+import CancelIcon from '@mui/icons-material/Cancel';
+import Avatar from '@mui/material/Avatar';
+import { deepOrange} from '@mui/material/colors';
 
 const Reference = ({
     className,
@@ -113,11 +115,7 @@ const Reference = ({
                                     </>
                                     :
                                     <>
-                                     <Box className="card-unavailable"
-                                             disabled>
-                                        <CancelIcon/>
-                                        <Typography className="card-unavailable-text">Indisponible</Typography>
-                                    </Box>
+                                       <Unavailable/>
                                     </>
                                 }
                             </>
@@ -141,32 +139,41 @@ const Reference = ({
           >
             <Fade in={open}>
               <Box className="ref">
+              <Box className="transition-modal-inline">
                 <Typography className="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
+                <Avatar sx={{ marginRight:"15px",color:"rgba(0,0,0,0.8)",bgcolor:"rgba(0,0,0,0)", border:"2px solid rgba(0,0,0,0.6)", fontSize: 13, fontWeight:"600", p:2, borderRadius:"25px" }} variant="rounded">
+                        {valorisation}€
+                    </Avatar>
+                    </Box>
                 <Divider/>
-                <Typography className="transition-modal-title" variant="h6" component="h5">
+                <Typography className="transition-modal-description" variant="h6" component="h5">
                   {description}
-                </Typography>
-                {nb_available > 0 ? <Available/> : <Unavailable/>}
-                <Typography className="transition-modal-title" variant="h6" component="h5">
-                Prix: {valorisation}€
-                </Typography>
+                    </Typography>
+                    <Box sx={{marginBottom:"15px"}}>
+                        {nb_available > 0 ? <Available/> : <Unavailable/>}
+                    </Box>
+
                 <Divider/>
                 <CardMedia
                 component="img"
                 height="140"
                 image={picture[0].url}
                 alt="image about the article"
-                className= "cardmedia"
+                className= "transition-modal-cardmedia"
             />
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  <p> Categorie: {maincategory} </p>
-                 <p> Sous catégories:{tag} </p>
+                 { tag &&
+                 <p> Sous catégories: {tag.map(tg=> tg.name)} </p>
+                 }
                 </Typography>
+                {(nb_available > 0) &&
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité disponible: {nb_available} sur {nb_total}
                 </Typography>
+                }
               </Box>
             </Fade>
           </Modal>

@@ -92,30 +92,35 @@ const UserBookings = ({className, ...rest}) => {
                     {...rest}
                 >
                     <Box className = "list" sx={{ bgcolor: 'background.paper' }}>
+                        { (nextBooking[0])&&
+                        <>
                         <h2>Réservation prochaine permanence</h2>
                         {/* <Permanency/> */}
                         <Box sx={{ bgcolor: 'background.paper' }}>
-                            { (nextBooking[0]) ?
                                 <ListOfReferences display="booking" references= {nextBooking[0].references}/>
-                            :
-                            <div>WAIT</div>}
                             {console.log('next',nextBooking)}
                         </Box>
+                        </>
+                        }
+                        { (activeBooking[0]) &&
+                        <>
                         <h2>Emprunt en cours</h2>
                         <Box sx={{ bgcolor: 'background.paper' }}>
-                            { (activeBooking[0]) ?
                                 <ListOfReferences display="booking" references= {activeBooking[0].references}/>
-                            :
-                            <div>WAIT</div>}
+
                             {console.log('active',activeBooking[0])}
                         </Box>
-                        <h2>Historique</h2>
-                        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                        { (activeBooking[0]) ?
-                            <ListOfBookings bookings = {oldBookings}/>
-                            :
-                            <div>WAIT</div>}
-                        </Box>
+                        </>
+                        }
+                        { (oldBookings.length>0)&&
+                            <>
+                            <h2>Historique</h2>
+                            <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                <ListOfBookings bookings = {oldBookings}/>
+
+                            </Box>
+                            </>
+                        }
                     </Box>
             </div>
    );

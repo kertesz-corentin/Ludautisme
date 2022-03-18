@@ -15,9 +15,13 @@ import { format } from 'date-fns';
 
 import './adminpermanency.scss';
 import { Button } from '@mui/material';
+import { isAfter } from 'date-fns';
+import AlertMessage from '../../AlertMessage/AlertMessage';
 
 const AdminPermanency = ({className, ...rest}) => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState();
+    const [alertMessage, setAlertMessage] = useState();
+    const [successMessage, setSuccessMessage] = useState();
 
     const getActivePermanency = async () => {
         const response = await api.get('/admin/permanency/active');
@@ -32,21 +36,34 @@ const AdminPermanency = ({className, ...rest}) => {
     }
 
     const handleChangeDate = (event) => {
+        if (new Date(event)>new Date()){
         setDate(format(new Date(event), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
+        } else {
+
+            setAlertMessage({
+                message : 'Erreur'});
+            setTimeout(()=>{setAlertMessage()},500);
+        }
     }
 
     const setPermanencyDate = async () => {
-        const newDate = {
-            'next_date': date
-        }
-        console.log(newDate);
-        const response = await api.patch('/admin/permanency/next', newDate);
+        if (date){
+            const newDate = {
+                'next_date': date
+            }
+            console.log(newDate);
+            const response = await api.patch('/admin/permanency/next', newDate);
 
-        if(response.status === 200){
-            console.log(response);
-        }
-        else {
-            console.log(response.data)
+            if(response.data === ''){
+                console.log(response);
+                setAlertMessage({
+                    message : 'Succès',
+                    severity : 'success'});
+                setTimeout(()=>{setAlertMessage()},1000);
+            }
+            else {
+                console.log(response.data)
+            }
         }
     }
 
@@ -70,12 +87,24 @@ const AdminPermanency = ({className, ...rest}) => {
                 </LocalizationProvider>
             </div>
             <div className='adminpermanency-button'>
+            {alertMessage ?
+                <>
+                                    <AlertMessage
+                                        message={alertMessage.message}
+                                        severity={alertMessage.severity}
+                                    >
+                                    </AlertMessage>
+                 </>
+                 :
+                 <>
                 <Button
                     variant='outlined'
                     onClick={setPermanencyDate}
                 >
                     modifier
                 </Button>
+                </>
+                }
             </div>
             {/* <div className="adminpermanency-element">
                 <LocalizationProvider dateAdapter={AdapterDateMoment}>

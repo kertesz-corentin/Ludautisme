@@ -10,7 +10,7 @@ import { deepOrange} from '@mui/material/colors';
 const Unavailable = ({className, ...rest}) => {
    return (
         <Stack direction="row" spacing={8}>
-        <Avatar sx={{ bgcolor: deepOrange[500], fontSize: 10, p:2, width:80 }} variant="rounded">
+        <Avatar sx={{ bgcolor: deepOrange[500], fontSize: 10, p:2, width:80, borderRadius:"25px" }} variant="rounded">
           Indisponible
         </Avatar>
       </Stack>
