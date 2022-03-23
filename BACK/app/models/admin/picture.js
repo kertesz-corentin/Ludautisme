@@ -76,7 +76,7 @@ module.exports = {
     },
     async getById(id) {
         const result = await sqlHandler(`SELECT * FROM "image"
-                                        JOIN "reference_to_image" AS rti
+                                        LEFT JOIN "reference_to_image" AS rti
                                         ON rti."id_image" = "image"."id"
                                         WHERE "image"."id" = $1`, [id]);
         return result.rows;

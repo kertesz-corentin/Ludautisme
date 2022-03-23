@@ -69,9 +69,7 @@ const UsefullLinks = ({className, ...rest}) => {
                         <div className='UsefullLinks-présentation'>
                         <p className='clay UsefullLinks-présentation-texte'>
                             <img className='UsefullLinks-présentation-texte-logo' src={Souris} alt="liens externes" />
-                            Lud'Autisme a sélectionné pour vous une liste, non-exhaustive de liens, qui nous ont aidé au quotidien en tant que parents d'enfants handicapés. <br />
-                            <br />
-                            Ces liens vous permettrons de gagner du temps dans vos recherches et sont approuvés par notre association. <br />
+                            Voici une liste de liens, non exhaustive, qui peut vous aider dans vos démarches au quotidien
                         </p>
                         </div>
                         <div className='UsefullLinks-links'>

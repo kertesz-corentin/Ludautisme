@@ -39,7 +39,13 @@ C'est simple une liste tenu a jour des développement à réaliser est présente
 Si jamais un tâche t'intéresse il suffit de te mettre en membres sur cette carte et de la mettre en cours, une fois ton développement terminé et ta pull request ( késako ? on en reparle en dessous :point_down: ) envoyé, tu n'a plus qu'à attendre que ton code soit validé et intégré au projet, dans tous les cas tu aura un retour. <br>
 
 ### Lancer l'application
-Vous pouvez un résumer des scripts de lancement de l'application [ici](./Launch.md)
+- Vous pouvez installer la totalité des déepndances en lancant un  `yarn` à la racine du projet.
+
+- Les .env sont a remplir, à la racine, dans le dossier BACK, dans le dossier FRONT
+
+- Le sqitch.conf est a remplir si vous souhaitez utiliser sqitch pour déployer la base de donnée, si vous le préférez je peut vous fournir l'URI d'une base sur héroku.
+
+- Vous pouvez trouver un résumer des scripts de lancement de l'application [ici](./Launch.md)
 
 ### Du coté de github
 ### Fork
@@ -78,7 +84,8 @@ Pour plus d'infos sur les fork je vous conseil cet [article](https://www.christo
 
 ### Bien commiter 
 Ce projet utilise commitlint pour uniformiser le format des commits, commitlint vérifie le format des commit en se basant sur les conventions d'Angular.
-Il s'installe 
+Il s'installe directement avec les dépendances, si un commit ne correspond pas aux conventions il vous le refuse, vous trouverez les conventiosn en question [ici](./Commit.md)
+
 ### Envoyer mon code 
 Pour faire remonter votre code nous allons passer par les pull request, l'avantage principale et de pouvoir tester tout code entrant sur le Repo avant de l'intégrer.
 

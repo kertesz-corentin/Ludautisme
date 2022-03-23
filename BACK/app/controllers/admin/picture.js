@@ -46,9 +46,11 @@ module.exports = {
             throw new ApiError(404, 'L\'image demandé n\'existe pas');
         }
         // I create the correct url for remove the picture
-        const arrayUrl = picture[0].url.split('/');
+        const arrayUrl = picture[0].url.split(`\\`);
+        console.log(arrayUrl);
         const name = arrayUrl[arrayUrl.length - 1];
-        const path = `../FRONT/public/pictures/${name}`;
+        console.log(name);
+        const path = `../FRONT/src/components/public/${name}`;
         // I try to remove the picture
         try {
             fs.unlink(path, (async (err) => {
