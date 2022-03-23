@@ -13,7 +13,7 @@ const MIME_TYPES = {
 // We decide where multer will store the photos and how he will name them
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-        cb(null, '../FRONT/src/components/public');
+        cb(null, '../FRONT/public');
     },
     filename(req, file, cb) {
         const name = file.originalname.split(' ').join('_');

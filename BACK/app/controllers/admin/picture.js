@@ -50,7 +50,7 @@ module.exports = {
         console.log(arrayUrl);
         const name = arrayUrl[arrayUrl.length - 1];
         console.log(name);
-        const path = `../FRONT/src/components/public/${name}`;
+        const path = `../FRONT/public/${name}`;
         // I try to remove the picture
         try {
             fs.unlink(path, (async (err) => {
