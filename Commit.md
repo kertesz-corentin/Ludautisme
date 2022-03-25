@@ -11,10 +11,10 @@
 type    |   description |
 |--------|--------|
 `build` | changement qui affecte le système de build ou des dépendances externes (yarn par exemple ou modifs dans le bundler)
-`ci`    | chqngement concernant les fichiers et scripts d'intégration ou de config
+`ci`    | changement concernant les fichiers et scripts d'intégration ou de config
 `feat`  | ajout d'une nouvelle fonctionnalité
 `fix`   | correction d'un bug
-`perf`  |amélioration des performances
+`perf`  | amélioration des performances
 `refactor`  | lorsque l'on refactorise **sans** apporter de nouvelles fonctionnalités, ni changement de performances
 `style` | changement qui affecte **uniquement** le style du code (indentation, mise en forme, ajout d'espace, renommage d'une variable...**pas de logique***)
 `docs`  | rédaction ou mise à jour de documentation
