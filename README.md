@@ -2,9 +2,9 @@
 
 ## Description du projet
 
-Le projet Lud'autisme à pour but de créer une application web de médiathèque pour l'association Lud'autisme dont vous pouvez trouver les informations [ici](https://www.facebook.com/Ludautisme-344242315626617).
+Le projet Lud'autisme a pour but de créer une application web de médiathèque pour l'association Lud'autisme dont vous pouvez trouver les informations [ici](https://www.facebook.com/Ludautisme-344242315626617).
 
-Vous trouverez ci dessous les informations pour participer dans les meilleurs conditions, si vous avez des questions n'hésitez pas à me contacter.
+Vous trouverez ci-dessous les informations pour participer dans les meilleures conditions, si vous avez des questions n'hésitez pas à me contacter.
 
 ## Les technologies utilisées
 ### En FRONT
@@ -35,8 +35,8 @@ Pour une liste complète voir le package.json [ici](./BACK/package.json)
 
 ## Comment participer
 ### De quel fonctionnalité / bug puis-je m'occuper ? 
-C'est simple une liste tenu a jour des développement à réaliser est présente sur ce [trello](https://trello.com/b/2F8MFuGv/ludautisme)<br>
-Si jamais un tâche t'intéresse il suffit de te mettre en membres sur cette carte et de la mettre en cours, une fois ton développement terminé et ta pull request ( késako ? on en reparle en dessous :point_down: ) envoyé, tu n'a plus qu'à attendre que ton code soit validé et intégré au projet, dans tous les cas tu aura un retour. <br>
+C'est simple une liste tenue à jour des développement à réaliser est présente sur ce [trello](https://trello.com/b/2F8MFuGv/ludautisme)<br>
+Si jamais une tâche t'intéresse il suffit de te mettre en membres sur cette carte et de la mettre en cours, une fois ton développement terminé et ta pull request ( késako ? On en reparle en dessous :point_down: ) envoyé, tu n'a plus qu'à attendre que ton code soit validé et intégré au projet, dans tous les cas, tu auras un retour. <br>
 
 ### Lancer l'application
 Vous pouvez un résumer des scripts de lancement de l'application [ici](./Launch.md)
@@ -44,21 +44,21 @@ Vous pouvez un résumer des scripts de lancement de l'application [ici](./Launch
 ### Du coté de github
 ### Fork
 
-Pour récupérer le code il suffit de faire un fork de ce dépot, pour ce faire:
+Pour récupérer le code, il suffit de faire un fork de ce dépôt, pour ce faire:
 
-- Cliquez sur le bouton "Fork" en haut à droite de cette page, vous pourrez ainsi faire une copi de ce Repo sur votre GitHub
-- Clonez votre Repo sur votre machine comme vous en avez l'habitude
+- Cliquez sur le bouton "Fork" en haut à droite de cette page, vous pourrez ainsi faire une copie de ce Repo sur votre GitHub
+- Clonez votre Repo sur votre machine comme vous en avez l'habitude.
 
-### Ajoutez ce dépot en remote de votre projet 
+### Ajoutez ce dépôt en remote de votre projet.
 
 ```` bash 
 git remote add upstream git@github.com:kertesz-corentin/Ludautisme.git
 ````
-- Vous pouvez vérifier que ça c'est bien passé comme ceci 
+- Vous pouvez vérifier que ca s'est bien passé comme ceci 
 ````bash
 git remote -v
 ````
-- Le résultat devrait ressembler a ceci 
+- Le résultat devrait ressembler à ceci 
 ````bash
 origin    git@github.com:YOUR_USERNAME/YOUR_FORK.git (fetch)
 origin    git@github.com:YOUR_USERNAME/YOUR_FORK.git (push)
@@ -66,7 +66,7 @@ upstream  git@github.com:kertesz-corentin/Ludautisme.git (fetch)
 upstream  git@github.com:kertesz-corentin/Ludautisme.git (push)
 ````
 ### Tenir sont fork à jour 
-Il est fortement conseiller de mettre son fork a jour par rapport au dépot original, pour ce faire 
+Il est fortement conseiller de mettre son fork à jour par rapport au dépôt original, pour ce faire 
 ````bash
 git fetch upstream
 # Rapatrie toutes les nouvelles modifications provenant du dépôt original
@@ -78,7 +78,7 @@ Pour plus d'infos sur les fork je vous conseil cet [article](https://www.christo
 
 ### Bien commiter 
 Ce projet utilise commitlint pour uniformiser le format des commits, commitlint vérifie le format des commit en se basant sur les conventions d'Angular.
-Il s'installe 
+Il s'installe directement avec les dépendances, si un commit ne correspond pas aux conventions, il vous le refuse, vous trouverez les conventiosn en question [ici](./Commit.md).
 ### Envoyer mon code 
 Pour faire remonter votre code nous allons passer par les pull request, l'avantage principale et de pouvoir tester tout code entrant sur le Repo avant de l'intégrer.
 
