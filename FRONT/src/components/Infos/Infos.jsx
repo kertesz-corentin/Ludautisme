@@ -40,7 +40,10 @@ const Infos = ({className, ...rest}) => {
                         <img src={Epingler} alt="permanence" />
                         Venir aux permanences
                     </h2>
-                    <b> Maison Pour Tous / Maison des Familles </b> <br />
+                    <strong>
+                        Permanence le 2 ème mardi de chaque mois<br />
+                        Maison Pour Tous / Maison des Familles <br />
+                    </strong>
                     Place François Mitterrand<br />
                     29800 Landerneau<br />
                 </p>

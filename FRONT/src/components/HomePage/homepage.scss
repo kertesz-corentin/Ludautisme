@@ -16,10 +16,20 @@
     align-items: center;
     justify-content: space-around;
     padding: $gutter;
-
+    &-texte { 
+        font-size: 1.5rem;
+        max-width: 75vw;
+        color: blanchedalmond;
+        text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
+        text-align: center;
+        width:60%;
+    }
+    &-permanence {
+        width: 40%;
+    }
 }
 
-.fonctionnement {
+.fonctionnement { 
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -54,16 +64,6 @@
         height: 50px;
     }
 }
-
-.bandeau-présentation-texte {
-    font-size: 1.5rem;
-    text-align: center;
-    max-width: 75vw;
-    color: blanchedalmond;
-    text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
-}
-
-
 .categoriesDisplay {
     background-color: hsl(36, 100%, 49%, 1);
     color: blanchedalmond;
@@ -165,4 +165,9 @@
     }
 
 }
-
+@media all and (max-width: 1080px)
+{
+    .bandeau-présentation {
+        flex-direction: column;
+    }
+}

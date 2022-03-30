@@ -27,9 +27,12 @@ const Accueil = ({className, ...rest}) => {
                 <div className="bandeau-présentation-texte">
                 <h2>Bienvenue</h2>
                 <p>
-                    Prêt de jeux et de matériels adaptés pour les personnes en difficultés <br /> d'apprentissage et/ou d'autonomie <br/><br />
+                    Prêt de jeux et de matériels adaptés pour les personnes en difficultés d'apprentissage et/ou d'autonomie <br/>
+                    
                     Pour les particuliers adhérents et les professionnels partenaires. <br />
                 </p>
+                <h4>Autisme mais pas que… </h4>
+                <p> Notre association s’adresse à toutes les personnes ayant des besoins spécifiques</p>
                 </div>
                 <div className="bandeau-présentation-permanence">
                         <p>
