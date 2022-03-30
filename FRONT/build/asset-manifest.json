@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.89b354b1.css",
-    "main.js": "/static/js/main.126e7dc7.js",
+    "main.css": "/static/css/main.bdcf2c0a.css",
+    "main.js": "/static/js/main.4bc0a958.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
     "static/media/diapo-2012-2013.pdf": "/static/media/diapo-2012-2013.511a165ecdce5ce0677f.pdf",
     "static/media/diapo-2013-2014.pdf": "/static/media/diapo-2013-2014.7a00c15fb7d5cc60b849.pdf",
@@ -32,20 +32,20 @@
     "static/media/echecs.png": "/static/media/echecs.3f79d0b132404d0d52f7.png",
     "static/media/magasin.png": "/static/media/magasin.e1b1ca0729a44f8995ba.png",
     "static/media/un-message.png": "/static/media/un-message.c0dfe908d458d581e692.png",
-    "static/media/photo.png": "/static/media/photo.3de66aa6fca24d99cca3.png",
     "static/media/puzzle.png": "/static/media/puzzle.83658667d39591b25bf6.png",
     "static/media/bloguer.png": "/static/media/bloguer.014b9f25fcc15996e680.png",
     "static/media/relier.png": "/static/media/relier.1448e3664ecae450708a.png",
     "static/media/paypalicon.png": "/static/media/paypalicon.6fd9bae86a4f9693b5b4.png",
     "static/media/calendrier.png": "/static/media/calendrier.2cf2c05efe809681edc2.png",
     "static/media/Logo-Facebook.png": "/static/media/Logo-Facebook.c9125ab120cd917dcca0.png",
+    "static/media/404-error.png": "/static/media/404-error.d607060cdfa554e23db4.png",
     "index.html": "/index.html",
-    "main.89b354b1.css.map": "/static/css/main.89b354b1.css.map",
-    "main.126e7dc7.js.map": "/static/js/main.126e7dc7.js.map",
+    "main.bdcf2c0a.css.map": "/static/css/main.bdcf2c0a.css.map",
+    "main.4bc0a958.js.map": "/static/js/main.4bc0a958.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.89b354b1.css",
-    "static/js/main.126e7dc7.js"
+    "static/css/main.bdcf2c0a.css",
+    "static/js/main.4bc0a958.js"
   ]
 }
