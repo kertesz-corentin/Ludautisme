@@ -96,10 +96,10 @@ const CartModal = ({
          if (currentItems.length ===0){
              return `Votre panier est vide`
           } else
-        if (currentItems.length > 8) {
-             return `Vous ne pouvez pas réserver plus de 8 articles`
+        if (currentItems.length > process.env.REACT_APP_BORROW_LIMIT) {
+             return `Vous ne pouvez pas réserver plus de ${process.env.REACT_APP_BORROW_LIMIT} articles`
          } else {
-             return `Vous pouvez encore réserver ${8 - currentItems.length} articles`
+             return `Vous pouvez encore réserver ${process.env.REACT_APP_BORROW_LIMIT - currentItems.length} articles`
          }
 
     }

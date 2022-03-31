@@ -8,6 +8,8 @@ API_DOCUMENTATION_ROUTE = /api/api-doc
 
 SALT= salt for JWT & BCRYPT
 
+BORROW_LIMIT = 10
+
 MAIL_USERNAME = USERNAME-TEST
 MAIL_USER = email@gmail.com
 MAIL_PASSWORD = paswword
