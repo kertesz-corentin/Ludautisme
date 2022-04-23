@@ -23,13 +23,16 @@
         justify-content: space-between;
         max-width: 1900px;
     }
+    &-items {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 nav
 {
     margin: 0 auto;
     width: 60%;
-
 }
 
 nav .main_pages
@@ -68,7 +71,7 @@ nav .main_pages Button
 }
 
 @media all and (max-width: 1080px)
-{   
+{
     .header{
         height: 120px;
         justify-content: space-between;
@@ -78,6 +81,7 @@ nav .main_pages Button
         margin:0;
         height: 60px;
         z-index:1;
+        width: 30%;
     }
 
     nav .main_pages
@@ -98,7 +102,7 @@ nav .main_pages Button
     label
     {
         display: flex;
-        justify-content: right;
+        justify-content: center;
         align-items: center;
         margin: 0 auto;
         font-size: 40px;

@@ -16,20 +16,20 @@
     align-items: center;
     justify-content: space-around;
     padding: $gutter;
-    &-texte { 
+    &-texte {
         font-size: 1.5rem;
-        max-width: 75vw;
+        max-width: 60%;
         color: blanchedalmond;
         text-shadow: rgb(0 0 0 / 30%) 5px 3px 5px;
         text-align: center;
         width:60%;
     }
     &-permanence {
-        width: 40%;
+        width: 30%;
     }
 }
 
-.fonctionnement { 
+.fonctionnement {
     padding: 30px;
     display: flex;
     flex-wrap: wrap;
@@ -169,5 +169,8 @@
 {
     .bandeau-présentation {
         flex-direction: column;
+        &-permanence {
+            width: 50%;
+        }
     }
 }

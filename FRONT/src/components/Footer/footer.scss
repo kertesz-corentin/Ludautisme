@@ -57,12 +57,13 @@
 }
 
 @media all and (max-width: 810px)
-  { .footer {
-      height: 160px;
-
-      &-container {
+  {
+.footer {
+    height: 100%;
+    flex-direction: column;
+    &-container {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
     }
 
@@ -71,8 +72,13 @@
         }
 
     &-left {
+        display: flex;
+        flex-direction: column;
         margin-top: 30px;
     }
-
+    &-right {
+        display: flex;
+        flex-direction: column;
+    }
   }
   }

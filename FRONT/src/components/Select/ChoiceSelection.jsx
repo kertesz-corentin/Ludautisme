@@ -31,7 +31,7 @@ const ChoiceSelection = ({
           console.error(response.data);
       }
     }
-
+    
     const handleChange = async (event) => {
         setCategory(event.target.value);
         const settings = {

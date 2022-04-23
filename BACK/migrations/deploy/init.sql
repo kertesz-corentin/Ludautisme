@@ -15,7 +15,7 @@ CREATE TABLE "user" (
     "adress_street" TEXT NOT NULL,
     "adress_zipcode" INT NOT NULL,
     "adress_city" TEXT NOT NULL,
-    "password" TEXT,
+    "password" TEXT ,
     "cotisation_status" BOOLEAN DEFAULT false,
     "cotisation_expiration" DATE,
     "caution_status" BOOLEAN DEFAULT false,

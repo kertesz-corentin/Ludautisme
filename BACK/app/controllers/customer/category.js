@@ -7,7 +7,6 @@ module.exports = {
         return res.json(results);
     },
     async findFiltered(req, res) {
-        console.log("test");
         const columns = ['id', 'name', 'description', 'main'];
         const obj = req.body;
         const props = Object.keys(obj);
