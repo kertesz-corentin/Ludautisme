@@ -19,7 +19,7 @@ const data = [
     { value: 'Jest', count: 15 },
     { value: 'Mocha', count: 17 },
     { value: 'React Native', count: 27 },
-    { value: 'Angular.js', count: 30 },
+    { value: 'Angular.js', count:29 },
     { value: 'TypeScript', count: 15 },
     { value: 'Flow', count: 30 },
     { value: 'NPM', count: 11 },

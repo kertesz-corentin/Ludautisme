@@ -21,13 +21,11 @@ module.exports = {
 
         const findDuplicate = refIds => refIds.filter((item, index) => refIds.indexOf(item) !== index);
         const duplicateElement = findDuplicate(refIds);
-        console.log(duplicateElement);
         if (duplicateElement[0]) {
             throw new ApiError(403, 'La réservation ne peut pas contenir de doublon');
         }
-
         // Check if too much articles are booked
-        if (!refIds || refIds.length > 7) {
+        if (!refIds || refIds.length > process.env.BORROW_LIMIT - 1) {
             throw new ApiError(403, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
         }
 
@@ -54,7 +52,7 @@ module.exports = {
         if (refAvailability.length !== refIds.length) {
             const unknownRefIds = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             const unknownRef = await referenceDataMapper.findManyWithRefId(unknownRefIds);
-            throw new ApiError(403, `Référence(s) inconnues ou indisponibles : [ ${unknownRef.map((ref)=> `idRef : ${ref.id} - ${ref.name}`)} ]`);
+            throw new ApiError(403, `Référence(s) inconnues ou indisponibles : [ ${unknownRef.map((ref) => `idRef : ${ref.id} - ${ref.name}`)} ]`);
         }
 
         try {

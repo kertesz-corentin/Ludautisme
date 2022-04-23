@@ -49,11 +49,6 @@ module.exports = {
         const userId = Number(req.params.UserId);
         const { refIds } = req.body;
 
-        // Check if too much articles are booked
-        if (!refIds || refIds.length > 7) {
-            throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
-        }
-
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
         if (user.length !== 1) {
@@ -103,10 +98,6 @@ module.exports = {
     async addBookingByArticle(req, res) {
         const userId = Number(req.params.UserId);
         const { artIds } = req.body;
-        // Check if too much articles are booked
-        if (!artIds || artIds.length > 7) {
-            throw new ApiError(400, 'La réservation ne peut pas être vide ou comporter plus de 8 articles');
-        }
 
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
@@ -262,14 +253,14 @@ module.exports = {
             const returned = await bookingDataMapper.return(listArticle);
             returned.forEach((article) => {
                 if (article.returned !== true) {
-                    throw new ApiError(500, `Impossible de marquer l\'article n°${article.id} comme retourné`);
+                    throw new ApiError(500, `Impossible de marquer l'article n°${article.id} comme retourné`);
                 }
             });
             // And i make the article available
             const getAvailable = await articleDataMapper.return(listArticle);
             getAvailable.forEach((article) => {
                 if (article.available !== true) {
-                    throw new ApiError(500, `Impossible de marquer l\'article n°${article.id} comme disponible`);
+                    throw new ApiError(500, `Impossible de marquer l'article n°${article.id} comme disponible`);
                 }
             });
         }

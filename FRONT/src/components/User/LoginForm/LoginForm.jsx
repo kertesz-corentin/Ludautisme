@@ -37,6 +37,7 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
             const email = data.get('email');
             const password =  data.get ('password');
             const response = await api.login(email,password,"user");
+            
             console.log(response);
             if(response.status === 200) {
                 navigate('/user/account')

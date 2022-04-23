@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './about.scss';
-// import Paypal from '../Paypal/Paypal'
 import Paquet from '../public/icones/paquet.png'
 import Parlant from '../public/icones/parlant.png'
 import Creatif from '../public/icones/creatif.png'
@@ -10,10 +9,10 @@ import Reseau from '../public/icones/reseau.png'
 import Remarketing from '../public/icones/remarketing.png'
 import Drapeau from '../public/icones/drapeau.png'
 import Diapo12 from '../public/DocumentsPdf/diapo-2012-2013.pdf'
+import Diapo16 from '../public/DocumentsPdf/diapo-2016-2017.pdf'
+import Diapo15 from '../public/DocumentsPdf/diapo-2015-2016.pdf'
 import Diapo13 from '../public/DocumentsPdf/diapo-2013-2014.pdf'
 import Diapo14 from '../public/DocumentsPdf/diapo-2014-2015.pdf'
-import Diapo15 from '../public/DocumentsPdf/diapo-2015-2016.pdf'
-import Diapo16 from '../public/DocumentsPdf/diapo-2016-2017.pdf'
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -253,17 +252,14 @@ const About = ({className, ...rest}) => {
                                 }}
                             >
                                 <Fade in={open}>
-                                        <iframe className='actions-passées-body-pdf-modal' title='diapo-2016' src={Diapo16} frameborder="0"></iframe>
+                                        <iframe className='actions-passées-body-pdf-modal' title={Diapo16} src='/pdf/diapo-2016-2017.pdf' frameborder="0"></iframe>
                                 </Fade>
                             </Modal>
                         </div>
-
+                    </div>
+                </div>
             </div>
-
-             </div>
-
-             </div>
-         </div>
+        </div>
    );
 };
 

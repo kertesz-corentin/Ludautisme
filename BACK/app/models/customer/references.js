@@ -86,9 +86,9 @@ module.exports = {
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             LEFT JOIN "category" ON rtc."id_category" = "category"."id"
             LEFT JOIN "article" ON "article"."id_ref" = "r"."id"
-            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
-            WHERE r."id"=$1`,
-            [id],
+            WHERE r."id" = $1
+            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
+            [id]
         );
         return result.rows;
     },

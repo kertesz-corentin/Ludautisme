@@ -25,11 +25,14 @@ const Accueil = ({className, ...rest}) => {
 
             <div className="bandeau-présentation">
                 <div className="bandeau-présentation-texte">
-                <h2>Bienvenue chez lud'Autisme</h2>
+                <h2>Bienvenue</h2>
                 <p>
-                    Location de jeux et matériels éducatifs pour les personnes en difficultés d'apprentissage. <br />
+                    Prêt de jeux et de matériels adaptés pour les personnes en difficultés d'apprentissage et/ou d'autonomie <br/>
+                    
                     Pour les particuliers adhérents et les professionnels partenaires. <br />
                 </p>
+                <h4>Autisme mais pas que… </h4>
+                <p> Notre association s’adresse à toutes les personnes ayant des besoins spécifiques</p>
                 </div>
                 <div className="bandeau-présentation-permanence">
                         <p>
@@ -42,22 +45,22 @@ const Accueil = ({className, ...rest}) => {
                 <h2 className="fonctionnement-title">Comment ça marche?</h2>
                     <div className="fonctionnement-content">
                             <img className="fonctionnement-logo" src={Logo1} alt="s'incrire" />
-                        <p>S'inscrire en tant qu'adhérent auprès de l'association</p>
+                        <p>Inscrivez vous auprès de l'association en tant qu'adhérent</p>
                     </div>
                     <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
                         <img className="fonctionnement-logo" src={Logo2} alt="sélectionner les articles" />
-                        <p>Sélectionner les articles que vous souhaitez réserver</p>
+                        <p>Parcourez notre matériathèque et choisissez parmi des milliers d'articles</p>
                     </div>
                     <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
                         <img className="fonctionnement-logo" src={Logo4} alt="valider la réservation" />
-                        <p>Valider la réservation de ces articles</p>
+                        <p>Validez votre liste, apportez la lors de la prochaine permanence</p>
                     </div>
                     <img className="fonctionnement-logo2" src={Logo5} alt="fleche" />
                     <div className="fonctionnement-content">
                         <img className="fonctionnement-logo" src={Logo3} alt="récuperer ses articles" />
-                        <p>Récuperer vos articles le jour de la permanence</p>
+                        <p>Récuperer vos articles sur les étagères le jour de la permanence</p>
                     </div>
             </div>
 
@@ -137,6 +140,12 @@ const Accueil = ({className, ...rest}) => {
                     </h3>
                     <p>
                         Place François Mitterand, 29800 LANDERNEAU
+                    </p>
+                    <h3>
+                        Téléphone
+                    </h3>
+                    <p>
+                        09 51 85 03 55 
                     </p>
                     <h3>
                        Email:

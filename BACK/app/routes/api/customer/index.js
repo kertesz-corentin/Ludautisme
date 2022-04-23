@@ -7,7 +7,6 @@ const bookingRouter = require('./booking');
 const permanencyRouter = require('./permanency');
 const { ApiError } = require('../../../errors/apiError');
 
-
 const router = express.Router();
 
 router.use('/articles', referenceRouter);
