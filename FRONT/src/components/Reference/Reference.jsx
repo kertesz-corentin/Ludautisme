@@ -45,8 +45,6 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-    console.log("userToken",userToken);
-    console.log("currentItems",currentItems);
 
     const [isClick, setIsClick] = useState(false);
 

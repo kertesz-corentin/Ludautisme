@@ -14,7 +14,6 @@ const Permanency = ({className,display, ...rest}) => {
     const [permDate,setPermDate] = useState();
 
     useEffect(()=>{getPermInfo()},[]);
-    console.log(permDate);
     const getPermInfo = async ()=>{
         const response = await api.get(`/customer/permanency/`);
         if (response.status === 200){
@@ -30,8 +29,6 @@ const Permanency = ({className,display, ...rest}) => {
                     setPermDate(nextMonth);
 
             }
-
-            console.log(response.data);
         } else {
             console.error(response.data);
         }

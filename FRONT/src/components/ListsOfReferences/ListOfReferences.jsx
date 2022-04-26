@@ -20,7 +20,6 @@ const ListOfReferences = ({
     currentItems,
      ...rest
     }) => {
-        console.log(references);
     return (
         references ?
         <React.Fragment>
