@@ -28,7 +28,7 @@ const Accueil = ({className, ...rest}) => {
                 <h2>Bienvenue</h2>
                 <p>
                     Prêt de jeux et de matériels adaptés pour les personnes en difficultés d'apprentissage et/ou d'autonomie <br/>
-                    
+
                     Pour les particuliers adhérents et les professionnels partenaires. <br />
                 </p>
                 <h4>Autisme mais pas que… </h4>
@@ -139,13 +139,13 @@ const Accueil = ({className, ...rest}) => {
                        Nous rencontrer:
                     </h3>
                     <p>
-                        Place François Mitterand, 29800 LANDERNEAU
+                        Place François Mitterrand, 29800 LANDERNEAU
                     </p>
                     <h3>
                         Téléphone
                     </h3>
                     <p>
-                        09 51 85 03 55 
+                        09 51 85 03 55
                     </p>
                     <h3>
                        Email:
