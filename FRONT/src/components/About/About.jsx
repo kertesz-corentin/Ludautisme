@@ -16,11 +16,11 @@ import PdfButton from '../PdfButton/PdfButton';
 const About = ({ className, ...rest }) => {
 
     const pdf = [
-        { year: '2012-2013', link: './pdf/diapo-2012-2013.pdf', alt: 'diapo-2012' },
-        { year: '2013-2014', link: './pdf/diapo-2013-2014.pdf', alt: 'diapo-2013' },
-        { year: '2014-2015', link: './pdf/diapo-2014-2015.pdf', alt: 'diapo-2014' },
-        { year: '2015-2016', link: './pdf/diapo-2015-2016.pdf', alt: 'diapo-2015' },
-        { year: '2016-2017', link: './pdf/diapo-2016-2017.pdf', alt: 'diapo-2016' },
+        { year: 'DIAPORAMA 2012-2013', link: './pdf/diapo-2012-2013.pdf', alt: 'diapo-2012' },
+        { year: 'DIAPORAMA 2013-2014', link: './pdf/diapo-2013-2014.pdf', alt: 'diapo-2013' },
+        { year: 'DIAPORAMA 2014-2015', link: './pdf/diapo-2014-2015.pdf', alt: 'diapo-2014' },
+        { year: 'DIAPORAMA 2015-2016', link: './pdf/diapo-2015-2016.pdf', alt: 'diapo-2015' },
+        { year: 'DIAPORAMA 2016-2017', link: './pdf/diapo-2016-2017.pdf', alt: 'diapo-2016' },
     ];
 
     return (

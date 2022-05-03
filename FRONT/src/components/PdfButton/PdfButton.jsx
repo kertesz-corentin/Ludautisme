@@ -22,7 +22,7 @@ const PdfButton = ({
         < div className='clay actions-passées-body' >
             <Link className='actions-passées-body-link' onClick={handleOpen}>
                 <p>
-                    Diaporama {year}
+                    {year}
                 </p>
                 <IconButton aria-label={alt} size="large">
                     <OpenInNewRoundedIcon className='actions-passées-body-link-button' />
