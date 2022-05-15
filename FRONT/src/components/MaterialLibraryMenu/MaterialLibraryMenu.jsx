@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
 import ChoiceSelection from '../Select/ChoiceSelection';
-import { Typography } from '@mui/material';
 
 
 
@@ -16,7 +15,6 @@ const MaterialLibraryMenu = ({
 
 
 //Define state getting all picked ref from choiceSelection.jsx using fction getAllPicked Ref
-    const [allPickedRef, setAllPickedRef] = useState('')
 
    return (
        <div
@@ -25,7 +23,7 @@ const MaterialLibraryMenu = ({
          >
             <p>Matériathèque</p>
 {/* ChoiceSelection belongs to case named "Select" */}
-            <ChoiceSelection updateDisplayRef= {updateDisplayRef} categories={categories} />
+            <ChoiceSelection updateDisplayRef= {updateDisplayRef}  />
         </div>
    );
 };

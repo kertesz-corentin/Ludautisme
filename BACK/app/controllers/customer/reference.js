@@ -36,9 +36,20 @@ module.exports = {
         const aliases = ['cat.id', 'category.id', 'ar.available'];
 
         // I take the arguments in body
+        if (!req.body.tags[0]) {
+            delete req.body.tags;
+        }
+        if (!req.body.categories[0]) {
+            delete req.body.categories;
+        }
+        if (!req.body.available[0]) {
+            delete req.body.available;
+        }
+
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
+
         props.forEach((prop) => {
             if (!columns.includes(prop)) {
                 throw new ApiError(400, `${prop} n'est pas une propriété valide`);
@@ -47,9 +58,6 @@ module.exports = {
             const index = columns.indexOf(prop);
             const values = [];
             array.forEach((value) => {
-                // if (Number.isNaN(index)) {
-                //     throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
-                // }
                 if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
                     throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
                 }

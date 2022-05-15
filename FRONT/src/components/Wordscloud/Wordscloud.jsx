@@ -5,46 +5,49 @@ import './wordscloud.scss';
 import { TagCloud } from 'react-tagcloud'
 
 const data = [
-    { value: 'jQuery', count: 25 },
-    { value: 'MongoDB', count: 18 },
-    { value: 'JavaScript', count: 38 },
-    { value: 'React', count: 30 },
-    { value: 'Nodejs', count: 28 },
-    { value: 'Express.js', count: 25 },
-    { value: 'HTML5', count: 33 },
-    { value: 'CSS3', count: 20 },
-    { value: 'Webpack', count: 22 },
-    { value: 'Babel.js', count: 7 },
-    { value: 'ECMAScript', count: 25 },
-    { value: 'Jest', count: 15 },
-    { value: 'Mocha', count: 17 },
-    { value: 'React Native', count: 27 },
-    { value: 'Angular.js', count:29 },
-    { value: 'TypeScript', count: 15 },
-    { value: 'Flow', count: 30 },
-    { value: 'NPM', count: 11 },
+    { value: 'tout handicap', count: 90 },
+    { value: 'échange', count: 85 },
+    { value: 'partage', count: 80 },
+    { value: 'aidants', count: 78 },
+    { value: 'famille', count: 75 },
+    { value: 'convivialité', count: 70 },
+    { value: 'particularités', count: 70 },
+    { value: 'formation', count: 70 },
+    { value: 'autonomie', count: 70 },
+    { value: 'motricité', count: 70 },
+    { value: 'échange', count: 65 },
+    { value: 'soutien', count: 65 },
+    { value: 'documentation', count: 65 },
+    { value: 'language', count: 60 },
+    { value: 'information', count:60 },
+    { value: 'communication', count: 60 },
+    { value: 'sensoriel', count: 60 },
+    { value: 'emprunt', count: 55 },
+    { value: 'difficultés au quotidien', count: 70 },
+    { value: 'matériel adapté', count: 50 },
+    { value: 'outils pédagogiques', count: 50 },
+    { value: 'gestion des émotions', count: 50 },
   ]
-
 const Wordscloud = ({className, ...rest}) => {
-   return (
+    return (
 
-       <div
-            className={classnames('wordscloud', className)}
-            {...rest}
-         >
-             <TagCloud
-    minSize={12}
-    maxSize={35}
-    tags={data}
-    className="simple-cloud"
-    // onClick={(tag) => alert(`'${tag.value}' was selected!`)}
-  />
+        <div
+             className={classnames('wordscloud', className)}
+             {...rest}
+          >
+              <TagCloud
+     minSize={25}
+     maxSize={40}
+     tags={data}
+     className="simple-cloud"
+     // onClick={(tag) => alert(`'${tag.value}' was selected!`)}
+   />
 
-        </div>
-   );
-};
+         </div>
+    );
+ };
 
-Wordscloud.propTypes = {
+ Wordscloud.propTypes = {
     className: PropTypes.string,
 };
 Wordscloud.defaultProps = {
