@@ -42,10 +42,9 @@ module.exports = {
         if (!req.body.categories[0]) {
             delete req.body.categories;
         }
-        if (!req.body.available[0]) {
+        if (req.body.available[0] === undefined || req.body.available[0] === '') {
             delete req.body.available;
         }
-
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];

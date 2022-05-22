@@ -24,19 +24,22 @@ const MenuProps = {
 
 const ChoiceSelection = ({
     className,
+    page,
+    limit,
+    tags,
+    setTags,
     updateDisplayRef,
+    disponibility,
+    setDisponibility,
+    categories,
+    setCategories,
     ...rest }) => {
     const [category, setCategory] = React.useState('');
     const [categoryList, setCategoryList] = React.useState([]);
     const [subcategories, setSubcategories] = React.useState([]);
     const [subcategoryList, setSubcategoryList] = React.useState([]);
-    const [page, setPage] = React.useState(1);
-    const [limit, setLimit] = React.useState(10);
-    const [categories, setCategories] = React.useState([]);
-    const [tags, setTags] = React.useState([]);
-    const [disponibility, setDisponibility] = React.useState([]);
-
-    const dispo = [
+    const [dispo, setDispo] = React.useState('');
+    const dispoList = [
         {
             id: 1,
             name: "disponible",
@@ -85,17 +88,18 @@ const ChoiceSelection = ({
         setCategories([]);
         setTags([]);
         setDisponibility([]);
-        setCategory('');
         setSubcategories([]);
+        setCategory('');
+        setDispo('');
 
         const settings = {
             page: page,
             limit: limit,
-            tags: tags,
-            available: disponibility,
-            categories: categories,
+            tags: [],
+            available: [],
+            categories: [],
         };
-        console.log(settings);
+        console.log(settings)
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
             updateDisplayRef(response.data);
@@ -119,7 +123,6 @@ const ChoiceSelection = ({
         }
         console.log(settings);
         const response = await api.post('/customer/articles/search', settings)
-        console.log(response.data);
         if (response.status === 200) {
             updateDisplayRef(response.data);
 
@@ -146,6 +149,7 @@ const ChoiceSelection = ({
             settings.tags = settingArray;
             setTags(settingArray);
         }
+        console.log(settings);
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
             updateDisplayRef(response.data);
@@ -154,17 +158,19 @@ const ChoiceSelection = ({
         }
     }
     const disponibilityHandleChange = async (event) => {
-        setDisponibility(event.target.value);
+        setDispo(event.target.value);
         const settings = {
             page: page,
             limit: limit,
             tags: tags,
             categories: categories,
         };
-        if (event.target.value) {
+        if (event.target.value != null) {
+
             settings.available = [event.target.value];
             setDisponibility([event.target.value]);
         }
+        console.log(settings);
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
             updateDisplayRef(response.data);
@@ -226,14 +232,14 @@ const ChoiceSelection = ({
                     className="select-field"
                     labelId="disponibility"
                     id="demo-simple-select"
-                    value={disponibility}
+                    value={dispo}
                     label="Disponibilité"
                     onChange={disponibilityHandleChange}
                 >
-                    {dispo &&
-                        dispo.map((item) => {
+                    {dispoList &&
+                        dispoList.map((dispo) => {
                             return (
-                                <MenuItem key={item.name} value={item.value} > {item.name}</MenuItem>)
+                                <MenuItem key={dispo.id} value={dispo.value} > {dispo.name}</MenuItem>)
                         })}
                 </Select>
             </FormControl>
@@ -241,10 +247,4 @@ const ChoiceSelection = ({
     )
 };
 
-Select.propTypes = {
-    className: PropTypes.string,
-};
-Select.defaultProps = {
-    className: '',
-};
 export default React.memo(ChoiceSelection);
