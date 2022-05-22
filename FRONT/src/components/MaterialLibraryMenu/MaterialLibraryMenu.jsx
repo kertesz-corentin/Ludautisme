@@ -8,8 +8,15 @@ import ChoiceSelection from '../Select/ChoiceSelection';
 
 const MaterialLibraryMenu = ({
     className,
-    categories,
+    page,
+    limit,
+    tags,
+    setTags,
     updateDisplayRef,
+    disponibility,
+    setDisponibility,
+    categories,
+    setCategories,
      ...rest}) => {
 
 
@@ -23,7 +30,17 @@ const MaterialLibraryMenu = ({
          >
             <p>Matériathèque</p>
 {/* ChoiceSelection belongs to case named "Select" */}
-            <ChoiceSelection updateDisplayRef= {updateDisplayRef}  />
+            <ChoiceSelection
+            updateDisplayRef= {updateDisplayRef}
+            page={page}
+            limit={limit}
+            tags={tags}
+            setTags={setTags}
+            disponibility={disponibility}
+            setDisponibility={setDisponibility}
+            categories={categories}
+            setCategories={setCategories}
+              />
         </div>
    );
 };

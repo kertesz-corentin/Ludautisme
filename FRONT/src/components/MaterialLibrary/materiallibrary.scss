@@ -12,6 +12,12 @@
     flex-direction: column;
     justify-content: center;
 }
+.paginate{
+    display: flex;
+    margin: 2% 0;
+    justify-content: center;
+    width: 100%;
+}
 @media all and (max-width: 1080px)
 {
     .materiallibrary {
