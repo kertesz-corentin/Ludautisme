@@ -13,7 +13,7 @@ module.exports = {
         GROUP BY "user"."id"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
-        return result.rows;
+        return result.rows[0];
     },
     async findRefByUserId(userId, refId) {
         const query = `SELECT
