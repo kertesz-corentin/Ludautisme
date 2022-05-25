@@ -7,6 +7,7 @@ const bookingRouter = require('./booking');
 const permanencyRouter = require('./permanency');
 const cartRouter = require('./cart');
 const contactRouter = require('./contact');
+const cartRouter = require('./cart');
 const { ApiError } = require('../../../errors/apiError');
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.use('/permanency', permanencyRouter);
 
 router.use('/cart', cartRouter);
 router.use('/contact', contactRouter);
+router.use('/cart', cartRouter);
 
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
