@@ -13,7 +13,7 @@ module.exports = {
         const idUser = Number(req.params.id);
         const refId = Number(req.body.refId);
         if (!refId) {
-            throw new ApiError(403, `Aucune référence transmise`);
+            throw new ApiError(403, 'Aucune référence transmise');
         }
         const count = await cartDataMapper.countCart(idUser);
         if (count[0].count >= process.env.BORROW_LIMIT) {
