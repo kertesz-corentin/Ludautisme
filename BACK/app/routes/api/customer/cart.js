@@ -12,4 +12,7 @@ router.route('/:id')
 router.route('/add/:id')
     .post(controllerHandler(cartController.addToCart));
 
+router.route('/delete/:id')
+    .delete(controllerHandler(cartController.delete));
+
 module.exports = router;

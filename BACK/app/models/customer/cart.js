@@ -13,7 +13,6 @@ module.exports = {
         GROUP BY "user"."id"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
-        console.log(result.rows);
         return result.rows;
     },
     async findRefByUserId(userId, refId) {
@@ -26,7 +25,14 @@ module.exports = {
         GROUP BY "user"."id","reference_to_cart"."id_ref"`;
         const placeholders = [userId, refId];
         const result = await sqlHandler(query, placeholders);
-        console.log("refFound", result.rows);
+        return result.rows;
+    },
+    async countCart(userId) {
+        const query = `SELECT COUNT (*) FROM "user"
+        INNER JOIN "reference_to_cart" ON "user"."id" = "reference_to_cart"."id_user"
+        WHERE "user"."id" = $1;`
+        const placeholders = [userId];
+        const result = await sqlHandler(query,placeholders);
         return result.rows;
     },
     async addRef(userId, refId) {
@@ -35,6 +41,12 @@ module.exports = {
         // Add item
         const result = await sqlHandler(query, placeholders);
         return result.rows;
+    },
+    async deleteOne(userId, refId) {
+        const query = `DELETE FROM "reference_to_cart" WHERE "reference_to_cart"."id_user" = $1 AND "reference_to_cart"."id_ref" = $2`;
+        const placeholders = [userId, refId];
+        sqlHandler(query, placeholders);
+        return { answer: "Référence supprimée" };
     },
 
     async clear(userId) {
