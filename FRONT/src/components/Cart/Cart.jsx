@@ -74,7 +74,6 @@ const Cart = ({
         const left = await getCoords(document.querySelector('.cart')).left;
         setOffsetLeft(left);
         setScroll(window.scrollY > 40);
-        console.log("resize",offsetLeft,left);
         setCartFloating();
   }
 

@@ -19,15 +19,30 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Error from '../Error/Error';
 import ResetPwd from '../ResetPwd/ResetPwd';
 import { useState } from 'react';
-
+import * as cartReq from '../../requests/customer/cart';
+import * as refReq from '../../requests/customer/reference';
 export const FunctionContext= React.createContext();
 
 
 function App() {
 
 
-    let [itemsToCart, setItemsToCart] = useState([]);
+    let [itemsToCart, setItemsToCart] = useState(null);
     const cartManager = {
+            get : async () =>{
+                const response = await cartReq.getCart();
+                const cartRefs = response.data.id_refs;
+
+                if (cartRefs){
+                cartRefs.forEach(async (refId) => {
+                    console.log(refId);
+                    const fullRef = await refReq.getOne(refId);
+                    setItemsToCart([fullRef.data[0]]);
+                });
+                return(itemsToCart);
+                }
+                setItemsToCart([]);
+            },
             add : (item) => {
                 console.log("itemToAdd",item);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);

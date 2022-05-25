@@ -17,6 +17,7 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import Loader from '../Loader/Loader';
 import api from '../../requests/index';
 import AlertMessage from '../AlertMessage/AlertMessage';
+import * as refReq from '../../requests/customer/reference';
 
 const userToken = JSON.parse(localStorage.getItem('user'));
 
@@ -46,6 +47,7 @@ const CartModal = ({
       }));
 
     useEffect(()=> {
+        getPersistentCart();
         countSentence();
         },[currentItems]);
 
@@ -53,7 +55,8 @@ const CartModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    let [counter, setCounter] = useState(currentItems.length)
+    console.log(currentItems);
+    let [counter, setCounter] = useState(null);
 
     function handleRemoveItemClick  () {
         setCounter(currentItems.length);
@@ -92,7 +95,16 @@ const CartModal = ({
        cartManager.remove(itemId);
     }
 
+    const getPersistentCart = async () => {
+        if (!currentItems){
+        console.log(await cartManager.get());
+        }
+    }
+
     const countSentence = ()=>{
+        if (currentItems === null){
+            return `Votre panier est vide`
+        }
          if (currentItems.length ===0){
              return `Votre panier est vide`
           } else
@@ -107,7 +119,7 @@ const CartModal = ({
     return (
       <div>
         <Button  onClick={handleOpen}>
-            {(currentItems.length > 0) ?
+            {(currentItems !== null && currentItems.length > 0) ?
             <>
             <StyledBadge badgeContent={currentItems.length} color="secondary">
                 <ShoppingCartIcon />
