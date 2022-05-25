@@ -38,9 +38,9 @@ module.exports = {
     },
 
     async clear(userId) {
-        const query = `DELETE FROM "reference_to_cart" `;
+        const query = `DELETE FROM "reference_to_cart" WHERE "reference_to_cart"."id_user" = $1`;
         const placeholders = [userId];
         sqlHandler(query, placeholders);
         return { answer: "Panier supprimé" };
-    }
+    },
 };

@@ -6,7 +6,8 @@ const ApiError = require('../../../errors/apiError');
 const router = express.Router();
 
 router.route('/:id')
-    .get(controllerHandler(cartController.getCart));
+    .get(controllerHandler(cartController.getCart))
+    .delete(controllerHandler(cartController.clear));
 
 router.route('/add/:id')
     .post(controllerHandler(cartController.addToCart));

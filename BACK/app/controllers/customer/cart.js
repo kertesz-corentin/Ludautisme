@@ -31,9 +31,9 @@ module.exports = {
         const cart = await cartDataMapper.findOne(idUser);
         return res.json(cart);
     },
-    async clearCart(req, res) {
+    async clear(req, res) {
         const idUser = Number(req.params.id);
-        const cart = await cartDataMapper.findOne(idUser);
+        const cart = await cartDataMapper.clear(idUser);
         return res.json(cart);
     },
 };
