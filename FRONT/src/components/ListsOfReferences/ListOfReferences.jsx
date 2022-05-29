@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './listofreferences.scss';
 import Reference from '../Reference/Reference';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Grid, Paper } from '@mui/material';
-import { useContext } from 'react';
+import { Grid} from '@mui/material';
 
 
 

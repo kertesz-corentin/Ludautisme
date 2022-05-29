@@ -102,7 +102,7 @@ const ChoiceSelection = ({
         console.log(settings)
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
-            updateDisplayRef(response.data);
+            updateDisplayRef(response.data.data, response.data.total.nb_total);
 
         } else {
             console.error(response.data);
@@ -124,7 +124,7 @@ const ChoiceSelection = ({
         console.log(settings);
         const response = await api.post('/customer/articles/search', settings)
         if (response.status === 200) {
-            updateDisplayRef(response.data);
+            updateDisplayRef(response.data.data, response.data.total.nb_total);
 
         } else {
             console.error(response.data);
@@ -152,7 +152,7 @@ const ChoiceSelection = ({
         console.log(settings);
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
-            updateDisplayRef(response.data);
+            updateDisplayRef(response.data.data, response.data.total.nb_total);
         } else {
             console.error(response.data);
         }
@@ -173,7 +173,7 @@ const ChoiceSelection = ({
         console.log(settings);
         const response = await api.post('/customer/articles/search', settings);
         if (response.status === 200) {
-            updateDisplayRef(response.data);
+            updateDisplayRef(response.data.data, response.data.total.nb_total);
 
         } else {
             console.error(response.data);
