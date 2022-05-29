@@ -33,7 +33,7 @@ module.exports = {
             throw new ApiError(500, 'Impossible de créer la référence');
         }
         if (!req.body.picture) {
-            req.body.picture = 8;
+            req.body.picture = 6;
         }
         const picture = await pictureDataMapper.addRelation(newRef.id, req.body.picture);
         if (picture[0]) {
