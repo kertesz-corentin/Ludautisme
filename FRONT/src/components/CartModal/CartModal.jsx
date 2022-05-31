@@ -17,13 +17,14 @@ import ListOfReferences from '../ListsOfReferences/ListOfReferences';
 import Loader from '../Loader/Loader';
 import api from '../../requests/index';
 import AlertMessage from '../AlertMessage/AlertMessage';
-import * as refReq from '../../requests/customer/reference';
 
 const userToken = JSON.parse(localStorage.getItem('user'));
 
 
 
 const CartModal = ({
+    open,
+    handleClose,
     className,
     currentItemsNumber,
     currentItems,
@@ -31,30 +32,26 @@ const CartModal = ({
     cartManager,
      ...rest
     }) => {
-
     const [alertMessage, setAlertMessage] = useState();
     const [successMessage, setSuccessMessage] = useState();
     //ACTUAL CART STATE
 
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-          right: -3,
-          top: 13,
-          background:"#ee4842",
-          border: `2px solid #ffebcd`,
-          padding: '0 4px',
-        },
-      }));
+    // const StyledBadge = styled(Badge)(({ theme }) => ({
+    //     '& .MuiBadge-badge': {
+    //       right: -3,
+    //       top: 13,
+    //       background:"#ee4842",
+    //       border: `2px solid #ffebcd`,
+    //       padding: '0 4px',
+    //     },
+    //   }));
 
-    useEffect(()=> {
-        getPersistentCart();
-        countSentence();
-        },[currentItems]);
+
 
     //OPEN MODAL
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => {open = false};
     console.log(currentItems);
     let [counter, setCounter] = useState(null);
 
@@ -95,11 +92,10 @@ const CartModal = ({
        cartManager.remove(itemId);
     }
 
-    const getPersistentCart = async () => {
-        if (!currentItems){
-        console.log(await cartManager.get());
-        }
-    }
+    useEffect(()=> {
+        countSentence();
+        },[]);
+
 
     const countSentence = ()=>{
         if (currentItems === null){
@@ -117,19 +113,6 @@ const CartModal = ({
     }
 
     return (
-      <div>
-        <Button  onClick={handleOpen}>
-            {(currentItems !== null && currentItems.length > 0) ?
-            <>
-            <StyledBadge badgeContent={currentItems.length} color="secondary">
-                <ShoppingCartIcon />
-            </StyledBadge>
-            </>
-            :
-            <>
-                <ShoppingCartIcon />
-            </>}
-        </Button>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -187,7 +170,6 @@ const CartModal = ({
             </Box>
           </Fade>
         </Modal>
-      </div>
     );
 };
 

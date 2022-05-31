@@ -32,7 +32,7 @@ module.exports = {
         delete req.body.page;
         delete req.body.limit;
         // I create the list of valid arguments
-        const columns = ['categories', 'tags', 'available'];
+        const columns = ['categories', 'tags', 'available', 'id'];
         const aliases = ['cat.id', 'category.id', 'ar.available'];
 
         // I take the arguments in body
@@ -49,7 +49,6 @@ module.exports = {
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
-
         props.forEach((prop) => {
             if (!columns.includes(prop)) {
                 throw new ApiError(400, `${prop} n'est pas une propriété valide`);
@@ -58,7 +57,7 @@ module.exports = {
             const index = columns.indexOf(prop);
             const values = [];
             array.forEach((value) => {
-                if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
+                if (['categories', 'tags', 'id'].includes(columns[index]) && typeof value !== 'number') {
                     throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
                 }
                 if (['available'].includes(columns[index]) && typeof value !== 'boolean') {

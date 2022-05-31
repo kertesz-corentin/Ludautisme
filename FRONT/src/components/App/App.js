@@ -26,25 +26,22 @@ export const FunctionContext= React.createContext();
 
 function App() {
 
-
-    let [itemsToCart, setItemsToCart] = useState(null);
+    let [itemsToCart, setItemsToCart] = useState([]);
     const cartManager = {
-            get : async () =>{
+            init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-
+                const tempItems = [];
                 if (cartRefs){
-                cartRefs.forEach(async (refId) => {
-                    console.log(refId);
-                    const fullRef = await refReq.getOne(refId);
-                    setItemsToCart([fullRef.data[0]]);
-                });
-                return(itemsToCart);
+                    await cartRefs.forEach(async (refId) => {
+                        const fullRef = await refReq.getOne(refId);
+                        setItemsToCart(itemsToCart => [...itemsToCart, fullRef.data[0]]);
+                    });
                 }
-                setItemsToCart([]);
             },
-            add : (item) => {
-                console.log("itemToAdd",item);
+            add : async (item) => {
+                console.log("itemToAdd",item.id);
+                await cartReq.addToCart(item.id);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
             },
             remove : (item) => {

@@ -98,7 +98,7 @@ const Reference = ({
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>
-                                {(nb_available > 0)?
+                                {(nb_available > 0 && currentItems)?
                                     <>
                                          {(!currentItems.map((item)=> item.id).includes(id)) ?
                                               <Button
