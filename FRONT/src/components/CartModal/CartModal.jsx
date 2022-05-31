@@ -1,7 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './cartmodal.scss';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -13,14 +11,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Divider, Badge } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CurrentReference from '../CurrentReference/CurrentReference';
-import ListOfReferences from '../ListsOfReferences/ListOfReferences';
-import Loader from '../Loader/Loader';
 import api from '../../requests/index';
 import AlertMessage from '../AlertMessage/AlertMessage';
-
-const userToken = JSON.parse(localStorage.getItem('user'));
-
-
 
 const CartModal = ({
     className,
@@ -32,7 +24,6 @@ const CartModal = ({
     }) => {
 
     const [alertMessage, setAlertMessage] = useState();
-    const [successMessage, setSuccessMessage] = useState();
     //ACTUAL CART STATE
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -74,7 +65,6 @@ const CartModal = ({
                 severity : 'success'});
             setTimeout(()=>{handleClose();
                             setAlertMessage();
-                            const refsObj = {};
                             cartManager.remove("all")},1000);
         }
         else
