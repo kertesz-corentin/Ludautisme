@@ -32,6 +32,7 @@ const Cart = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     //USER INFO
     const [userToken, setUserToken] = useState ();
     const [userId, setUserId] = useState ();
@@ -137,25 +138,26 @@ const Cart = ({
    return (
        <Box className='cart-wrapper' >
        {userToken &&
+       <>
        <Button
-        // onClick={handleOpen}
         className={(scroll)?'floating cart':'cart'}
         {...rest}
         onClick= {handleOpen}
         >
-       {
-       (currentItems !== null && currentItems.length > 0) ?
-       <>
-       <StyledBadge badgeContent={currentItems.length} color="secondary">
-           <ShoppingCartIcon />
-       </StyledBadge>
-       </>
-       :
-       <>
-           <ShoppingCartIcon />
-       </>}
-        {/* <CartModal open handleClose userId = {userId} cartManager={cartManager} currentItems = {currentItems}/> */}
+            {
+            (currentItems !== null && currentItems.length > 0) ?
+            <>
+            <StyledBadge badgeContent={currentItems.length} color="secondary">
+                <ShoppingCartIcon />
+            </StyledBadge>
+            </>
+            :
+            <>
+                <ShoppingCartIcon />
+            </>}
         </Button>
+            <CartModal open = {open} handleClose = {handleClose} userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
+            </>
        }
         </Box>
    );

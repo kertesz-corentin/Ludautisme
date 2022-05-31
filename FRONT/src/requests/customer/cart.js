@@ -15,8 +15,12 @@ export async function addToCart(refId){
     return response;
 }
 
-export async function deleteFromCart(userId){
+export async function deleteFromCart(refId){
     const { id } = await JSON.parse(localStorage.getItem('user'));
-    const response = await api.get(`/customer/cart/${id}`);
+    console.log(refId);
+    const settings = {refId}
+    console.log("SETT",settings);
+    const response = await api.delete(`/customer/cart/delete/${id}`,settings);
+    console.log(response);
     return response;
 }

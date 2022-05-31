@@ -25,6 +25,7 @@ const userToken = JSON.parse(localStorage.getItem('user'));
 const CartModal = ({
     open,
     handleClose,
+    setModalOpen,
     className,
     currentItemsNumber,
     currentItems,
@@ -148,7 +149,7 @@ const CartModal = ({
                                 changeCounter = {handleRemoveItemClick}
                                 removeItem = {removeItem}
                                 currentItem = {currentItem}
-                                handleClose={handleClose}
+                                //handleClose={handleClose}
                             />
                                 ))}
                             </Box>

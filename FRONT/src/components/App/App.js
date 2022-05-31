@@ -31,8 +31,7 @@ function App() {
             init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-                const tempItems = [];
-                if (cartRefs){
+                if (cartRefs && itemsToCart.length < 1){
                     await cartRefs.forEach(async (refId) => {
                         const fullRef = await refReq.getOne(refId);
                         setItemsToCart(itemsToCart => [...itemsToCart, fullRef.data[0]]);
@@ -44,7 +43,8 @@ function App() {
                 await cartReq.addToCart(item.id);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
             },
-            remove : (item) => {
+            remove : async (item) => {
+                await cartReq.deleteFromCart(item);
                 if (item === "all") {
                     setItemsToCart([]);
                 } else {
