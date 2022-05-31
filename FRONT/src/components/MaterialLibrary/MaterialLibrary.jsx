@@ -37,10 +37,8 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
 
     const updateDisplayRef = (refs, total) => {
-        console.log(total);
         const number = total;
         const pages = number / limit;
-        console.log(pages);
         setNumberPages(Math.ceil(pages));
         setDisplayRef(refs);
     }

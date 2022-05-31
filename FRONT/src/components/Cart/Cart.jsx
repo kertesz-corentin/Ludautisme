@@ -1,10 +1,8 @@
 import React, {useState, useEffect}from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './cart.scss';
-import Reference from '../Reference/Reference';
 import CartModal from '../CartModal/CartModal';
-import { Box, Avatar } from '@mui/material';
+import { Box } from '@mui/material';
 
 
 const Cart = ({
@@ -74,7 +72,6 @@ const Cart = ({
         const left = await getCoords(document.querySelector('.cart')).left;
         setOffsetLeft(left);
         setScroll(window.scrollY > 40);
-        console.log("resize",offsetLeft,left);
         setCartFloating();
   }
 

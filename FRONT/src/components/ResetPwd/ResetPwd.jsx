@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './resetpwd.scss';
 import { TextField,Box,Button } from '@mui/material';
 import { Typography } from '@mui/material';
@@ -27,7 +26,7 @@ const ResetPwd = ({className, ...rest}) => {
         }
         console.log(newPassword);
         const response = await api.resetPassword('/login/reset-password',newPassword);
-        if (response.status = 200){
+        if (response.status === 200){
             navigate('/');
         }
         console.log(response);

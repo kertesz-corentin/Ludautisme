@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Calendrier from '../public/icones/calendrier.png'
 import './permanency.scss';
 import api from '../../requests';

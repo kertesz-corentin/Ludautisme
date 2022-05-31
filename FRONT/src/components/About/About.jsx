@@ -9,7 +9,6 @@ import Reseau from '../public/icones/reseau.png'
 import Remarketing from '../public/icones/remarketing.png'
 import Drapeau from '../public/icones/drapeau.png'
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
-import Wordscloud from '../Wordscloud/Wordscloud';
 import PdfButton from '../PdfButton/PdfButton';
 
 
@@ -44,7 +43,7 @@ const About = ({ className, ...rest }) => {
                     <div>
                         <div className='everybody-content'>
                              <p> Notre association s'adresse à toutes les personnes ayant des besoins spécifiques.</p>
-                             <Wordscloud />
+                             <img src={'./pictures/wordcloud.png'} alt="accompagner" />
                         </div>
                     </div>
                 </div>
@@ -58,7 +57,7 @@ const About = ({ className, ...rest }) => {
                         <div className='actions-li'>
                             <img className='actions-li-icons' src={Paquet} alt="accompagner" />
                             <p>
-                                Prêt de jeux éducatifs et de matériels pour les enfants en difficultés de développement
+                                Prêt de jeux éducatifs et de matériels adaptés
                             </p>
                         </div>
 
@@ -72,7 +71,7 @@ const About = ({ className, ...rest }) => {
                         <div className='actions-li'>
                             <img className='actions-li-icons' src={Creatif} alt="accompagner" />
                             <p>
-                                Mener des projets permettant de favoriser la prise en charge spécifique des enfants présentant des troubles du développement.
+                                Mener des projets permettant de favoriser la prise en charge spécifique des personnes présentant des troubles du développement.
                             </p>
                         </div>
 
