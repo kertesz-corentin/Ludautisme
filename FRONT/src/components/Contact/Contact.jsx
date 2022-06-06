@@ -14,6 +14,7 @@ const Contact = ({className, ...rest}) => {
     const [email, setEmail] = React.useState('');
     const [object, setObject] = React.useState('');
     const [message, setMessage] = React.useState('');
+    const [telephone, setTelephone] = React.useState('');
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
 
@@ -31,6 +32,9 @@ const Contact = ({className, ...rest}) => {
     const handleMessage = (event, value) => {
         setMessage(event.target.value);
     }
+    const handleTelephone = (event, value) => {
+        setTelephone(event.target.value);
+    }
 
     const validForm = async () => {
         if(!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)){
@@ -45,6 +49,7 @@ const Contact = ({className, ...rest}) => {
             email,
             object,
             message,
+            telephone
         };
         const response = await api.post('/customer/contact/send', request);
         if (response.status === 200) {
@@ -110,6 +115,14 @@ const Contact = ({className, ...rest}) => {
                                 onChange={handleMessage}
                                 value={message}
                                 multiline
+                                />
+                                <TextField
+                            id="outlined-textarea"
+                            rows={4}
+                                label="Téléphone"
+                                className='ohnohoney'
+                                onChange={handleTelephone}
+                                value={telephone}
                                 />
                         </div>
                         {alertMessage && severity && (
