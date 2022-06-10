@@ -15,6 +15,9 @@ import api from '../../requests/index';
 import AlertMessage from '../AlertMessage/AlertMessage';
 
 const CartModal = ({
+    open,
+    handleClose,
+    setModalOpen,
     className,
     currentItemsNumber,
     currentItems,
@@ -22,29 +25,27 @@ const CartModal = ({
     cartManager,
      ...rest
     }) => {
-
     const [alertMessage, setAlertMessage] = useState();
     //ACTUAL CART STATE
 
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-          right: -3,
-          top: 13,
-          background:"#ee4842",
-          border: `2px solid #ffebcd`,
-          padding: '0 4px',
-        },
-      }));
+    // const StyledBadge = styled(Badge)(({ theme }) => ({
+    //     '& .MuiBadge-badge': {
+    //       right: -3,
+    //       top: 13,
+    //       background:"#ee4842",
+    //       border: `2px solid #ffebcd`,
+    //       padding: '0 4px',
+    //     },
+    //   }));
 
-    useEffect(()=> {
-        countSentence();
-        },[currentItems]);
+
 
     //OPEN MODAL
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    let [counter, setCounter] = useState(currentItems.length)
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => {open = false};
+    console.log(currentItems);
+    let [counter, setCounter] = useState(null);
 
     function handleRemoveItemClick  () {
         setCounter(currentItems.length);
@@ -82,7 +83,16 @@ const CartModal = ({
        cartManager.remove(itemId);
     }
 
+    useEffect(()=> {
+        countSentence();
+        },[open]);
+
+
     const countSentence = ()=>{
+        console.log(currentItems.length);
+        if (currentItems === null){
+            return `Votre panier est vide`
+        }
          if (currentItems.length ===0){
              return `Votre panier est vide`
           } else
@@ -95,19 +105,6 @@ const CartModal = ({
     }
 
     return (
-      <div>
-        <Button  onClick={handleOpen}>
-            {(currentItems.length > 0) ?
-            <>
-            <StyledBadge badgeContent={currentItems.length} color="secondary">
-                <ShoppingCartIcon />
-            </StyledBadge>
-            </>
-            :
-            <>
-                <ShoppingCartIcon />
-            </>}
-        </Button>
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -143,7 +140,7 @@ const CartModal = ({
                                 changeCounter = {handleRemoveItemClick}
                                 removeItem = {removeItem}
                                 currentItem = {currentItem}
-                                handleClose={handleClose}
+                                //handleClose={handleClose}
                             />
                                 ))}
                             </Box>
@@ -165,7 +162,6 @@ const CartModal = ({
             </Box>
           </Fade>
         </Modal>
-      </div>
     );
 };
 

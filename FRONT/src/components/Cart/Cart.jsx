@@ -1,6 +1,11 @@
 import React, {useState, useEffect}from 'react';
 import PropTypes from 'prop-types';
 import './cart.scss';
+import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Reference from '../Reference/Reference';
 import CartModal from '../CartModal/CartModal';
 import { Box } from '@mui/material';
 
@@ -12,6 +17,22 @@ const Cart = ({
      ...rest}) => {
     const user = JSON.parse(localStorage.getItem('user'));
 
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+          right: -3,
+          top: 13,
+          background:"#ee4842",
+          border: `2px solid #ffebcd`,
+          padding: '0 4px',
+        },
+      }));
+
+    //OPEN MODAL
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    //USER INFO
     const [userToken, setUserToken] = useState ();
     const [userId, setUserId] = useState ();
 
@@ -20,6 +41,16 @@ const Cart = ({
         setUserId(user.id);
     }
 
+    //Persistent cart initialisation
+    useEffect(()=> {
+        getPersistentCart();
+        },[]);
+
+    const getPersistentCart = async () => {
+        await cartManager.init();
+        console.log("init",currentItems);
+    }
+    //Floating Cart
     const [scroll, setScroll] = useState(false);
     const [lastScroll,setLastScroll] = useState();
     const [offsetLeft,setOffsetLeft] = useState();
@@ -102,18 +133,30 @@ const Cart = ({
 
    function handleCartBtnClick (event) {
     event.preventDefault();
-
    }
    return (
        <Box className='cart-wrapper' >
        {userToken &&
-       <button
-            className={(scroll)?'floating cart':'cart'}
-            {...rest}
-            onClick= {handleCartBtnClick}
-         >
-            <CartModal userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
-        </button>
+       <Box className={(scroll)?'floating cart':'cart'}>
+       <Button
+
+        {...rest}
+        onClick= {handleOpen}
+        >
+            {
+            (currentItems !== null && currentItems.length > 0) ?
+            <>
+            <StyledBadge badgeContent={currentItems.length} color="secondary">
+                <ShoppingCartIcon />
+            </StyledBadge>
+            </>
+            :
+            <>
+                <ShoppingCartIcon />
+            </>}
+        </Button>
+            <CartModal open = {open} handleClose = {handleClose} userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
+            </Box>
        }
         </Box>
    );

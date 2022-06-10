@@ -8,7 +8,6 @@ const sqlHandler = require('../../helpers/sqlHandler');
 
 module.exports = {
     async findActive(id) {
-        console.log(id);
         const query = `
         SELECT
 	    b.id,
