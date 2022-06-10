@@ -1,11 +1,6 @@
 import React, {useState, useEffect}from 'react';
 import PropTypes from 'prop-types';
 import './cart.scss';
-import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Badge } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Reference from '../Reference/Reference';
 import CartModal from '../CartModal/CartModal';
 import { Box } from '@mui/material';
 
