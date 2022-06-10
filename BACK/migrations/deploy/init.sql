@@ -32,15 +32,7 @@ CREATE TABLE "permanency" (
     "published" BOOLEAN DEFAULT false
 );
 
-CREATE TABLE "booking" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "delivered" BOOLEAN DEFAULT false,
-    "closed" BOOLEAN DEFAULT false,
-    "nb_prolongation" INTEGER DEFAULT 0,
-    "id_permanency" INT REFERENCES "permanency"("id"),
-    "id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
-);
+
 
 CREATE TABLE "category" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -93,12 +85,35 @@ CREATE TABLE "temptoken"(
     "temptoken" TEXT NOT NULL
 );
 
+CREATE TABLE "reference_to_cart"(
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id_user" INT REFERENCES "user"("id"),
+    "id_ref" INT REFERENCES "reference"("id")
+);
+
+CREATE TABLE "booking" (
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "delivered" BOOLEAN DEFAULT false,
+    "closed" BOOLEAN DEFAULT false,
+    "nb_prolongation" INTEGER DEFAULT 0,
+    "id_permanency" INT REFERENCES "permanency"("id"),
+    "id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMPTZ DEFAULT NOW()
+);
+
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "returned" BOOLEAN DEFAULT true,
     "id_article" INT REFERENCES "article"("id"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
+
+
+
+
+
+
+
 
 DROP VIEW IF EXISTS "full_perm";
 CREATE OR REPLACE VIEW "full_perm" AS

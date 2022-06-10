@@ -80,7 +80,6 @@ module.exports = {
             { expiresIn: '1h' },
         );
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
-        console.log(req.body);
         const html = `<a href="${req.body.url}/resetpassword/${dbTempToken.temptoken}">Lien</a>`;
         mailer.send(req.body.email, 'Your token', html);
         res.json({ status: 'ok' });

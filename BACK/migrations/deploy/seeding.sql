@@ -22,7 +22,7 @@ INSERT INTO "permanency" ("perm_date","active") VALUES
 ('infinity', false),
 ('infinity', false);
 
-INSERT INTO "booking" ( "delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
+INSERT INTO "booking" ("delivered", "closed", "nb_prolongation", "id_permanency", "id_user") VALUES
 ( false, false, 0, 3, 6),
 ( true, false, 0, 3, 1),
 ( true, true, 0, 3, 5),

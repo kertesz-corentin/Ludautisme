@@ -6,7 +6,9 @@ import Alert from '@mui/material/Alert';
 
 import './alertmessage.scss';
 
-const AlertMessage = ({message,severity}) => {
+const AlertMessage = ({message, severity}) => {
+    console.log(severity);
+    console.log(message);
     return (
         <Alert
             variant='outlined'

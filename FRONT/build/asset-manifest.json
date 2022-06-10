@@ -1,18 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.02b9500d.css",
-    "main.js": "/static/js/main.e6301850.js",
+    "main.css": "/static/css/main.4401bcc5.css",
+    "main.js": "/static/js/main.dce423ab.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
-    "static/media/diapo-2012-2013.pdf": "/static/media/diapo-2012-2013.511a165ecdce5ce0677f.pdf",
-    "static/media/diapo-2013-2014.pdf": "/static/media/diapo-2013-2014.7a00c15fb7d5cc60b849.pdf",
-    "static/media/diapo-2014-2015.pdf": "/static/media/diapo-2014-2015.050045bdfd461a2a0d3c.pdf",
-    "static/media/diapo-2015-2016.pdf": "/static/media/diapo-2015-2016.f790157a3f1c7b8e2338.pdf",
-    "static/media/diapo-2016-2017.pdf": "/static/media/diapo-2016-2017.5d89d4b30d243b5c9830.pdf",
-    "static/media/Flyer Lud_autisme.pdf": "/static/media/Flyer Lud_autisme.1e4ac79fcd6f89f695c2.pdf",
     "static/media/logo.png": "/static/media/logo.095e895cbd6faa75622a.png",
     "static/media/souris.png": "/static/media/souris.8497d08fbd79a83a4469.png",
-    "static/media/Fiche d_adhésion Lud_autisme.pdf": "/static/media/Fiche d_adhésion Lud_autisme.3b5de6c2ac429295ed8f.pdf",
-    "static/media/Règlement intérieur Lud_autisme.pdf": "/static/media/Règlement intérieur Lud_autisme.acfcd3fcea90775ff11e.pdf",
     "static/media/reseau.png": "/static/media/reseau.5087e73eca504ae43f9b.png",
     "static/media/epingler.png": "/static/media/epingler.13b5078ced731ebb7573.png",
     "static/media/signet.png": "/static/media/signet.c965202b11de71e647f4.png",
@@ -40,12 +32,12 @@
     "static/media/Logo-Facebook.png": "/static/media/Logo-Facebook.c9125ab120cd917dcca0.png",
     "static/media/404-error.png": "/static/media/404-error.d607060cdfa554e23db4.png",
     "index.html": "/index.html",
-    "main.02b9500d.css.map": "/static/css/main.02b9500d.css.map",
-    "main.e6301850.js.map": "/static/js/main.e6301850.js.map",
+    "main.4401bcc5.css.map": "/static/css/main.4401bcc5.css.map",
+    "main.dce423ab.js.map": "/static/js/main.dce423ab.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.02b9500d.css",
-    "static/js/main.e6301850.js"
+    "static/css/main.4401bcc5.css",
+    "static/js/main.dce423ab.js"
   ]
 }

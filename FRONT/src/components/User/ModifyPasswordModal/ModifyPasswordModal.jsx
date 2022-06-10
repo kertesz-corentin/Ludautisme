@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './modifypasswordmodal.scss';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
@@ -45,8 +42,8 @@ const ModifyPasswordModal = ({className, ...rest}) => {
             console.log(`New Password to send Back`, newPassword)
             handleClose()
         } else {
-             const response = api.put(`/customer/user/${user.id}`, newPassword);
-             handleClose();
+            api.put(`/customer/user/${user.id}`, newPassword);
+            handleClose();
          }
     }
 

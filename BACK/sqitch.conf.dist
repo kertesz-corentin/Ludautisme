@@ -1,0 +1,8 @@
+[core]
+    top_dir = migrations
+    engine = pg
+    plan_file = migrations/sqitch.plan
+[target "origin"]
+    uri = postgres://user:pwd@localhost:5432/dbname
+[target "heroku"]
+    uri = postgres://user:pwd@localhost:5432/dbname

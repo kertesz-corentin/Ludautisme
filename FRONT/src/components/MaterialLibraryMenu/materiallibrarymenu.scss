@@ -11,3 +11,9 @@
         font-size: 1.8rem;
     }
 }
+@media all and (max-width: 1080px)
+{
+    .MuiFormControl-root {
+        max-width: 300px;
+    }
+}

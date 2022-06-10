@@ -13,7 +13,7 @@ const Error = ({className, ...rest}) => {
              <h2 className='error-title'>
              Désolé, cette page n’existe pas (erreur 404)
              </h2>
-             <a className='clay button' class="clay button" href="/">Retour à l'acceuil</a>
+             <a className='clay button' class="clay button" href="/">Retour à l'accueil</a>
              <img className='error-404' src={Error404} alt="error 404" />
         </div>
 

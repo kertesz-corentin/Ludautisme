@@ -9,24 +9,19 @@ import Epingler from '../public/icones/epingler.png'
 import Lettre from '../public/icones/lettre.png'
 import Adhérent from '../public/icones/adhérent.png'
 import Bénévole from '../public/icones/bénévole.png'
-import Adhésion from '../public/DocumentsPdf/Fiche d_adhésion Lud_autisme.pdf'
-import Réglement from '../public/DocumentsPdf/Règlement intérieur Lud_autisme.pdf'
-import Tarifs from '../public/DocumentsPdf/Flyer Lud_autisme.pdf'
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Link from '@mui/material/Link';
-import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
-import IconButton from '@mui/material/IconButton';
 import Paypal from  '../Paypal/Paypal';
 import Tirelire from '../public/icones/tirelire.png'
 import Facebook from '../public/icones/Logo-Facebook.png'
 import News from '../public/icones/nouvelles.png'
+import InfosPdf from '../InfosPdf/InfosPdf';
 
 const Infos = ({className, ...rest}) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
+  const pdf = [
+        { title: 'Fiche d\'adhésion', link: './pdf/Fiche d_adhésion Lud_autisme.pdf', alt: 'Fiche d\'adhésion Lud_autisme', },
+        { title: 'Réglement intérieur', link: './pdf/Règlement intérieur Lud_autisme.pdf', alt: 'Réglement intérieur Lud_autisme' },
+        { title: 'Informations et Tarifs', link: './pdf/Flyer Lud_autisme.pdf', alt: 'Tarifs Lud_autisme' },
+  ]
 
    return (
     <div className={classnames('practicalinformations', className)}
@@ -85,95 +80,18 @@ const Infos = ({className, ...rest}) => {
                     </p>
 
 
-                    <ul className='become-body-list'>
-                        <li className='clay li'>
-                        <div className='become-body-docs'>
-
-                            <Link className='become-body-link' onClick={handleOpen}>
-                            <p>
-                                Fiche d'adhésion
-                            </p>
-                            <IconButton aria-label="adhésion" size="large">
-                                    <OpenInNewRoundedIcon className='become-body-link-button' />
-                                    </IconButton>
-                                </Link>
-                            <Modal
-                                aria-labelledby="transition-modal-title"
-                                aria-describedby="transition-modal-description"
-                                open={open}
-                                onClose={handleClose}
-                                closeAfterTransition
-                                BackdropComponent={Backdrop}
-                                BackdropProps={{
-                                timeout: 500,
-                                }}
-                            >
-                                <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal' title='réglement' src={Adhésion} frameborder="0"></iframe>
-                                </Fade>
-                            </Modal>
-                            </div>
-                        </li>
-                        <li className='clay li'>
-                        <div className='become-body-docs'>
-
-                            <Link className='become-body-link' onClick={handleOpen}>
-                            <p>
-                                Réglement intérieur
-                            </p>
-                            <IconButton aria-label="réglement" size="large">
-                                    <OpenInNewRoundedIcon className='become-body-link-button' />
-                                    </IconButton>
-                                </Link>
-                            <Modal
-                                aria-labelledby="transition-modal-title"
-                                aria-describedby="transition-modal-description"
-                                open={open}
-                                onClose={handleClose}
-                                closeAfterTransition
-                                BackdropComponent={Backdrop}
-                                BackdropProps={{
-                                timeout: 500,
-                                }}
-                            >
-                                <Fade in={open}>
-                                        <iframe className='become-body-pdf-modal' title='réglement' src={Réglement} frameborder="0"></iframe>
-                                </Fade>
-                            </Modal>
-                            </div>
-                        </li>
-
-                            <li className='clay li'>
-                                <div className='become-body-docs'>
-
-                                <Link className=' become-body-link' onClick={handleOpen}>
-                                <p>
-                                Informations et tarifs
-                                </p>
-                                <IconButton aria-label="infos" size="large">
-                                        <OpenInNewRoundedIcon className='become-body-link-button' />
-                                        </IconButton>
-                                    </Link>
-                                    <Modal
-                                    aria-labelledby="transition-modal-title"
-                                    aria-describedby="transition-modal-description"
-                                    open={open}
-                                    onClose={handleClose}
-                                    closeAfterTransition
-                                    BackdropComponent={Backdrop}
-                                    BackdropProps={{
-                                    timeout: 500,
-                                    }}
-                                    >
-                                    <Fade in={open}>
-                                            <iframe className='become-body-pdf-modal' title='tarifs' src={Tarifs} frameborder="0"></iframe>
-                                    </Fade>
-                                </Modal>
-                                </div>
-                            </li>
+                        <ul className='become-body-list'>
+                            {pdf.map((item, index) => (
+                                <InfosPdf
+                                    key={index}
+                                    title={item.title}
+                                    link={item.link}
+                                    alt={item.alt}
+                                />
+                            ))}
                         </ul>
                     </div>
-                    </div>
+                </div>
             </div>
 
             <div className='become-cat'>

@@ -4,58 +4,108 @@ import classnames from 'classnames';
 import './materiallibrary.scss';
 import MaterialLibraryMenu from '../MaterialLibraryMenu/MaterialLibraryMenu';
 import ListOfReferences from '../ListsOfReferences/ListOfReferences';
-import NextPages from '../NextPages/NextPages';
 import api from '../../requests';
-import Loader from '../Loader/Loader';
-
-
-
+import Pagination from '@mui/material/Pagination';
 
 const MaterialLibrary = ({className,currentItems, ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
 
-const [referencesData, setReferencesDatas] = useState('')
-const [categoriesData, setCategoriesDatas] = useState('')
-
-
-
-
     useEffect(() => {
         getAllReferences();
-        getAllCategories();
     }, []);
 
    async function getAllReferences () {
-        const response = await api.get('/customer/articles');
-        console.log(response);
-        setDisplayRef(response.data);
-   }
-   async function oneReference () {
-    const response = await api.get('/customer/articles/:id');
-    console.log(`Voila l'article demandé`, response)
-   }
 
-    async function getAllCategories () {
-        const response = await api.get('/customer/category');
-        setCategoriesDatas(response.data)
+    const settings = {
+        page: page,
+        limit: limit,
+        tags: tags,
+        categories: categories,
+        available: disponibility,
     }
+    const response = await api.post('/customer/articles/search', settings);
+        updateDisplayRef(response.data.data, response.data.total.nb_total);
+   }
 
     const [displayRef, setDisplayRef] = useState('');
+    const [page, setPage] = React.useState(1);
+    const [limit, setLimit] = React.useState(12);
+    const [tags, updateTags] = React.useState([]);
+    const [disponibility, updateDisponibility] = React.useState(['']);
+    const [categories, setCategories] = React.useState([]);
+    const [numberPages, setNumberPages] = React.useState(0);
 
-    const updateDisplayRef = (refs) => {
+
+    const updateDisplayRef = (refs, total) => {
+        const number = total;
+        const pages = number / limit;
+        setNumberPages(Math.ceil(pages));
         setDisplayRef(refs);
     }
+    const setTags = (tags) => {
+        updateTags(tags);
+    }
+    const setDisponibility = (disponibility) => {
+        updateDisponibility(disponibility);
+    }
+    const updateCategories = (categories) => {
+         setCategories(categories);
+     }
+    const handleChange = async (event, value) => {
+        setPage(value);
+        const settings = {
+            page: value,
+            limit: limit,
+            tags: tags,
+            categories: categories,
+            available: disponibility,
+        }
+        const response = await api.post('/customer/articles/search', settings);
+        if (response.status === 200) {
+            updateDisplayRef(response.data.data, response.data.total.nb_total);
+        } else {
+            console.error(response.data);
+        }
+    };
 
    return (
 
         <div            className={classnames('materiallibrary', className)}
             {...rest}
         >
-            <MaterialLibraryMenu updateDisplayRef={updateDisplayRef} categories={categoriesData} />
+            <MaterialLibraryMenu
+            updateDisplayRef={updateDisplayRef}
+            setTags={setTags}
+            setDisponibility={setDisponibility}
+            setCategories={updateCategories}
+            page={page}
+            limit={limit}
+            tags={tags}
+            disponibility={disponibility}
+            categories={categories}
+            />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData, ca donne :  */}
             {displayRef &&
                 <div className= "displayReferences">
-                    <ListOfReferences currentItems={currentItems} references= {displayRef}/>
+                    <Pagination
+                    page={page}
+                    setPage={setPage}
+                    count={numberPages} size="large"
+                    showFirstButton showLastButton
+                    onChange={handleChange}
+                    class="paginate"/>
+
+                    <ListOfReferences
+                    currentItems={currentItems}
+                    references= {displayRef}
+                    />
+
+                    <Pagination
+                    page={page}
+                    setPage={setPage}
+                    count={numberPages} size="large"
+                    showFirstButton showLastButton
+                    onChange={handleChange} class="paginate"/>
                 </div>
             }
         </div>

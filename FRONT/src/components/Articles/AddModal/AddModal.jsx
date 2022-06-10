@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
 import { Button, Typography, Box, TextField, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import classnames from 'classnames';
 import './addmodal.scss';
 
 const AddModal = ({reference, className, ...rest}) => {
-    const [article, setArticle] = useState('');
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);

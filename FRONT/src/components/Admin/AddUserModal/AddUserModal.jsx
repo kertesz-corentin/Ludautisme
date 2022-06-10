@@ -19,7 +19,6 @@ const AddUserModal = ({className, ...rest}) => {
     const handleClose = () => {
         setOpen(false);
     }
-    const [checked, setChecked] = useState(false);
     const [cotisationChecked, setCotisationChecked] = useState(false);
     const [cautionChecked, setCautionChecked] = useState(false);
     const [archivedChecked, setArchivedChecked] = useState(false);

@@ -1,34 +1,20 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-// import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Popover from '@mui/material/Popover';
 import { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import classnames from 'classnames';
-import CloseIcon from '@mui/icons-material/Close';
 import api from '../../../requests/index';
 import './loginuser.scss';
 import {useNavigate} from "react-router-dom";
-// import AccountMenu from '../AccountMenu/AccountMenu';
-import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
-import AlertMessage from '../../AlertMessage/AlertMessage';
 import LoginForm from '../LoginForm/LoginForm';
-import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import ButtonUnstyled from '@mui/base/ButtonUnstyled';
 import MenuUser from '../MenuUser/MenuUser'
 
-
-
-const theme = createTheme();
 export default function SignIn() {
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
-  const [alertMessage, setAlertMessage] = useState();
 
     //Open submit form
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,11 +44,6 @@ export default function SignIn() {
         handleCloseLogin();
         navigate('/');
         window.location.reload();
-    }
-
-// Use to recover password
-    function handleForgetPassword () {
-        console.log(`Envoyer le mot de passe`)
     }
 
   return (

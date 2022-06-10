@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Calendrier from '../public/icones/calendrier.png'
 import './permanency.scss';
 import api from '../../requests';
@@ -14,7 +13,6 @@ const Permanency = ({className,display, ...rest}) => {
     const [permDate,setPermDate] = useState();
 
     useEffect(()=>{getPermInfo()},[]);
-    console.log(permDate);
     const getPermInfo = async ()=>{
         const response = await api.get(`/customer/permanency/`);
         if (response.status === 200){
@@ -30,8 +28,6 @@ const Permanency = ({className,display, ...rest}) => {
                     setPermDate(nextMonth);
 
             }
-
-            console.log(response.data);
         } else {
             console.error(response.data);
         }

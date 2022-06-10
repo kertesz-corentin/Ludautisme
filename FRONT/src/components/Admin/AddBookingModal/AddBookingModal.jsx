@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import requests
 import api from '../../../requests';
 
 // import react components
-import BookingArticles from '../BookingArticles/BookingArticles';
 import { articleSchema } from '../../../Schemas';
 
 // import material ui components
