@@ -36,9 +36,9 @@ const api = {
             return err.response
         }
     },
-    async delete(path) {
+    async delete(path, data) {
         try {
-        return await connection.delete(path, { headers: authHeader() });
+        return await connection.delete(path, {data}, { headers: authHeader() });
         } catch (err) {
             return err.response
         }
