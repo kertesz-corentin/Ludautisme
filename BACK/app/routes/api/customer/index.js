@@ -21,6 +21,7 @@ router.use('/booking', bookingRouter);
 
 router.use('/permanency', permanencyRouter);
 
+
 router.use('/cart', cartRouter);
 router.use('/contact', contactRouter);
 
