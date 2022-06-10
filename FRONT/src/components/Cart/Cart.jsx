@@ -137,9 +137,9 @@ const Cart = ({
    return (
        <Box className='cart-wrapper' >
        {userToken &&
-       <>
+       <Box className={(scroll)?'floating cart':'cart'}>
        <Button
-        className={(scroll)?'floating cart':'cart'}
+
         {...rest}
         onClick= {handleOpen}
         >
@@ -156,7 +156,7 @@ const Cart = ({
             </>}
         </Button>
             <CartModal open = {open} handleClose = {handleClose} userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
-            </>
+            </Box>
        }
         </Box>
    );
