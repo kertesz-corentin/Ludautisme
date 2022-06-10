@@ -85,10 +85,11 @@ const CartModal = ({
 
     useEffect(()=> {
         countSentence();
-        },[]);
+        },[open]);
 
 
     const countSentence = ()=>{
+        console.log(currentItems.length);
         if (currentItems === null){
             return `Votre panier est vide`
         }
