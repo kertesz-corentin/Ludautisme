@@ -1,6 +1,11 @@
 import React, {useState, useEffect}from 'react';
 import PropTypes from 'prop-types';
 import './cart.scss';
+import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Reference from '../Reference/Reference';
 import CartModal from '../CartModal/CartModal';
 import { Box } from '@mui/material';
 
@@ -132,9 +137,9 @@ const Cart = ({
    return (
        <Box className='cart-wrapper' >
        {userToken &&
-       <>
+       <Box className={(scroll)?'floating cart':'cart'}>
        <Button
-        className={(scroll)?'floating cart':'cart'}
+
         {...rest}
         onClick= {handleOpen}
         >
@@ -151,7 +156,7 @@ const Cart = ({
             </>}
         </Button>
             <CartModal open = {open} handleClose = {handleClose} userId = {userId} cartManager={cartManager} currentItems = {currentItems}/>
-            </>
+            </Box>
        }
         </Box>
    );
