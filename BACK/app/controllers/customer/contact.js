@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = {
     async send(req, res) {
         const {
-            name, email, object, message,telephone
+            name, email, object, message, telephone,
         } = req.body;
         // thsi field is an honaypot for see the spambot
         if (telephone) {
