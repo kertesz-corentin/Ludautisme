@@ -11,7 +11,7 @@ export async function addToCart(refId){
     console.log(refId);
     const settings = {refId}
     console.log("SETT",settings);
-    const response = await api.post(`/customer/cart/add/${id}`,settings);
+    const response = await api.post(`/customer/cart/reference/${id}`,settings);
     return response;
 }
 
@@ -20,7 +20,7 @@ export async function deleteFromCart(refId){
     console.log(refId);
     const settings = {refId}
     console.log("SETT",settings);
-    const response = await api.delete(`/customer/cart/delete/${id}`,settings);
+    const response = await api.delete(`/customer/cart/reference/${id}`,settings);
     console.log(response);
     return response;
 }

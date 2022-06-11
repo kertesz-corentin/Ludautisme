@@ -1,6 +1,17 @@
 /* eslint-disable quotes */
 const sqlHandler = require('../../helpers/sqlHandler');
 
+/**
+ * @typedef {object} cartRefList
+ * @property {number} id - Cart's User Id
+ * @property {array<number>} id_refs - Array of references id
+ */
+
+/**
+ * @typedef {object} cartRefParams
+ * @property {number} refId - Cart's User Id
+ */
+
 module.exports = {
     async findCartByUserId(id) {
         const query = `SELECT
