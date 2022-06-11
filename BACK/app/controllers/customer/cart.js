@@ -5,12 +5,15 @@ const ApiError = require('../../errors/apiError');
 
 module.exports = {
     async getCart(req, res) {
-        const idUser = Number(req.params.id);
+        const idUser = Number(req.params.userId);
+        if (Number.isNaN(idUser)) {
+            throw new ApiError(403, 'Cet id est invalide');
+        }
         const cart = await cartDataMapper.findCartByUserId(idUser);
         return res.json(cart);
     },
     async addToCart(req, res) {
-        const idUser = Number(req.params.id);
+        const idUser = Number(req.params.userId);
         const refId = Number(req.body.refId);
         if (!refId) {
             throw new ApiError(403, 'Aucune référence transmise');
@@ -34,7 +37,7 @@ module.exports = {
         return res.json(cart);
     },
     async delete(req, res) {
-        const idUser = Number(req.params.id);
+        const idUser = Number(req.params.userId);
         const refId = Number(req.body.refId);
         console.log(refId);
         const refIsInCart = await cartDataMapper.findRefByUserId(idUser, refId);
@@ -45,7 +48,7 @@ module.exports = {
         return res.json(cart);
     },
     async clear(req, res) {
-        const idUser = Number(req.params.id);
+        const idUser = Number(req.params.userId);
         const cart = await cartDataMapper.clear(idUser);
         return res.json(cart);
     },

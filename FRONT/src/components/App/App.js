@@ -47,6 +47,7 @@ function App() {
                 await cartReq.deleteFromCart(item);
                 if (item === "all") {
                     setItemsToCart([]);
+                    await cartReq.clearCart();
                 } else {
                 let hardCopy = [...itemsToCart];
                 hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
