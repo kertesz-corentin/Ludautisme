@@ -24,3 +24,9 @@ export async function deleteFromCart(refId){
     console.log(response);
     return response;
 }
+
+export async function clearCart(){
+    const { id } = await JSON.parse(localStorage.getItem('user'));
+    const response = await api.delete(`/customer/cart/${id}`);
+    return response;
+}
