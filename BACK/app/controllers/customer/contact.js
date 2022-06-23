@@ -5,10 +5,6 @@ module.exports = {
     async send(req, res) {
         const {
             name, email, object, message, telephone,
-<<<<<<< HEAD
-=======
-
->>>>>>> BACK_cart
         } = req.body;
         // thsi field is an honaypot for see the spambot
         if (telephone) {

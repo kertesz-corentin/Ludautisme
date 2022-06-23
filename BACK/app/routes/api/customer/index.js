@@ -21,10 +21,6 @@ router.use('/booking', bookingRouter);
 
 router.use('/permanency', permanencyRouter);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> BACK_cart
 router.use('/cart', cartRouter);
 router.use('/contact', contactRouter);
 
