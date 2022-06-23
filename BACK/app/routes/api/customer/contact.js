@@ -9,7 +9,7 @@ const router = express.Router();
  * POST /api/customer/contact/send
  * @summary Send contact message
  * @tags [CUSTOMER] Contact
- * @params {} request.body.required - Form body
+ * @param {} request.body.required - Form body
  * @return {object} 200 - Success response - application/json
  */
 router.route('/send')
