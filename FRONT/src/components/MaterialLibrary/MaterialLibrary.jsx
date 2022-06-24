@@ -24,7 +24,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         available: disponibility,
     }
     const response = await api.post('/customer/articles/search', settings);
-        updateDisplayRef(response.data.data, response.data.total.nb_total);
+        updateDisplayRef(response.data.data, 1500);
    }
 
     const [displayRef, setDisplayRef] = useState('');

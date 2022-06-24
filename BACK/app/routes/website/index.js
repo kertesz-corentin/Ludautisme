@@ -1,13 +1,13 @@
 const { dirname } = require('path');
 const express = require('express');
 const ApiError = require('../../errors/apiError');
+
 const router = express.Router();
 
-//Serve React app
+// Serve React app
 const appDir = dirname(require.main.filename);
 const buildPath = `${appDir}/../FRONT/build`;
-//END Serve React app
-console.log(appDir);
+// END Serve React app
 
 router.use('/admin', express.static(buildPath));
 router.use('/admin/*', express.static(buildPath));

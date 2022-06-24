@@ -44,7 +44,6 @@ const CartModal = ({
     // const [open, setOpen] = React.useState(false);
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => {open = false};
-    console.log(currentItems);
     let [counter, setCounter] = useState(null);
 
     function handleRemoveItemClick  () {
@@ -89,7 +88,6 @@ const CartModal = ({
 
 
     const countSentence = ()=>{
-        console.log(currentItems.length);
         if (currentItems === null){
             return `Votre panier est vide`
         }

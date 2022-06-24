@@ -7,11 +7,12 @@ const bookingRouter = require('./booking');
 const permanencyRouter = require('./permanency');
 const cartRouter = require('./cart');
 const contactRouter = require('./contact');
+const pictureFullPath = require('../../../middleware/pictureFullPath');
 const { ApiError } = require('../../../errors/apiError');
 
 const router = express.Router();
 
-router.use('/articles', referenceRouter);
+router.use('/articles', pictureFullPath, referenceRouter);
 
 router.use('/user', userRouter);
 
