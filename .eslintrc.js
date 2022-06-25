@@ -2,7 +2,6 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
-        node: true,
     },
     extends: [
         'plugin:react/recommended',
@@ -13,11 +12,16 @@ module.exports = {
             jsx: true,
         },
         ecmaVersion: 'latest',
+        sourceType: 'module',
     },
     plugins: [
         'react',
     ],
     rules: {
+        'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+        camelcase: 'off',
         indent: ['error', 4],
+        'react/jsx-indent': ['error', 4],
+        'react/jsx-indent-props': ['error', 4],
     },
 };

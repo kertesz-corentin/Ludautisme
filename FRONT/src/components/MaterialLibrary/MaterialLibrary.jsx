@@ -12,53 +12,61 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const [displayRef, setDisplayRef] = useState('');
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(12);
-    const [tags, updateTags] = useState([]);
-    const [disponibility, updateDisponibility] = useState(['']);
-    const [categories, setCategories] = useState([]);
+    const [disponibility, setDisponibility] = useState([]);
+    const [category, setCategory] = useState([]);
+    const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
-    const [countRef,setCountRef] = useState();
 
-   async function getReferencesByPage () {
+   async function getReferences () {
     const settings = {
         page: page,
         limit: limit,
         tags: tags,
-        categories: categories,
+        categories: (Array.isArray(category))?category:[category],
         available: disponibility,
     }
+    console.log(settings)
     const references = await api.post('/customer/articles/search', settings);
-    if (!countRef) {
-        const getCountRef = await api.get('/customer/articles/total');
-        const count = Number(getCountRef.data[0].nb_total);
-        setCountRef(count);
-        updateDisplayRef(references.data,count);
-        return
-    };
-        updateDisplayRef(references.data);
+    const countRef = (references.data.length)&&references.data[0].countresult;
+    updateDisplayRef(references.data,countRef);
    }
 
-    const updateDisplayRef = (refs,initCount) => {
-        const pages = (initCount) ? initCount / limit : countRef / limit;
-        setNumberPages(Math.ceil(pages));
+   // Carrefull this function is send to ListOfReferences
+    const updateDisplayRef = (refs,countRef) => {
+        const pages = countRef / limit;
+        if(pages !== numberPages){
+            setNumberPages(Math.ceil(pages));
+        }
+        console.log(refs);
         setDisplayRef(refs);
     }
-    const setTags = (tags) => {
-        updateTags(tags);
+
+    const getFilterState = {
+                tags:((!tags[0])?'':tags),
+                disponibility,
+                category: (!category[0])?'':category[0],
     }
-    const setDisponibility = (disponibility) => {
-        updateDisponibility(disponibility);
+
+    const updateFilterState = {
+        tags(newValue){
+            setTags((!tags.length) ? [newValue] : [...tags,Number(newValue)]);
+        },
+        disponibility(newValue){
+            setDisponibility(newValue);
+        },
+        category(newValue){
+            setCategory([newValue]);
+        },
     }
-    const updateCategories = (categories) => {
-         setCategories(categories);
-     }
+
     const handleChange = (event, value) => {
         setPage(value);
     };
 
     useEffect(() => {
-        getReferencesByPage();
-    }, [page]);
-
+        getReferences();
+        console.log('useEffect',category);
+    }, [page,category,tags]);
 
    return (
 
@@ -66,15 +74,8 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
             {...rest}
         >
             <MaterialLibraryMenu
-            updateDisplayRef={updateDisplayRef}
-            setTags={setTags}
-            setDisponibility={setDisponibility}
-            setCategories={updateCategories}
-            page={page}
-            limit={limit}
-            tags={tags}
-            disponibility={disponibility}
-            categories={categories}
+            getFilterState = {getFilterState}
+            updateFilterState = {updateFilterState}
             />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData  */}
             {displayRef &&

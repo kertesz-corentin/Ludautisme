@@ -7,15 +7,6 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 const router = express.Router();
 
 /**
- * GET /api/customer/articles/total
- * @summary Get Total references count
- * @tags [CUSTOMER] Reference
- * @returns  200 - success response - application/json
- */
-router.route('/total')
-    .get(controllerHandler(referenceController.getTotalRefCount));
-
-/**
  * POST /api/customer/articles/search
  * @summary Get all ref filtered and paginate
  * @tags [CUSTOMER] Reference
@@ -25,12 +16,12 @@ router.route('/total')
 router.route('/search')
     .post(controllerHandler(referenceController.search));
 /**
- * GET /api/customer/articles/:id
+ * GET /api/customer/single/:id
  * @summary Get One reference with picture
  * @tags [CUSTOMER] Reference
  * @returns {allOf|Reference|Stock|Pictures} 200 - success response - application/json
  */
-router.route('/:id')
+router.route('/single/:id')
     .get(controllerHandler(referenceController.getOne));
 /**
 * GET /api/customer/articles

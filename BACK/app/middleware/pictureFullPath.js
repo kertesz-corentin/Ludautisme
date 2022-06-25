@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
 
     res.json = (body) => {
         const wrapFullUrlToPic = (pic) => ({ ...pic, ...{ url: `${fullUrl}${pic.url}` } });
-        if (body.status === 'error') {
+
+        if (body.status === 'error' || !body.length) {
             old(body);
             next();
             return;
