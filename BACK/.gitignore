@@ -5,7 +5,7 @@ sqitch.conf
 .env.local
 ../.env
 
-/Assets
+/public
 
 #log
 **/*.log
