@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './choiceselection.scss';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React from 'react';
+import './inputSelect.scss';
+import {InputLabel,MenuItem,FormControl,Select} from '@mui/material';
 
-const ChoiceSelection = ({
+const InputSelect = ({
     className,
     currState,
     updateState,
@@ -38,4 +35,4 @@ const ChoiceSelection = ({
     )
 };
 
-export default React.memo(ChoiceSelection);
+export default React.memo(InputSelect);

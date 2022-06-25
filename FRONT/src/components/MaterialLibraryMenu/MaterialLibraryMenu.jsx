@@ -2,8 +2,10 @@ import React, {useEffect,useState} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
-import ChoiceSelection from '../Select/ChoiceSelection';
+import InputSelect from '../InputSelect/InputSelect';
+import InputToggle from '../InputToggle/InputToggle';
 import api from '../../requests';
+import { Button, Container } from '@mui/material';
 
 
 const MaterialLibraryMenu = ({
@@ -26,24 +28,8 @@ const MaterialLibraryMenu = ({
             console.error(response.data);
         }
     }
-    // const dispoList = [
-    //     {
-    //         id: 1,
-    //         name: "disponible",
-    //         value: true
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "indisponible",
-    //         value: false
-    //     },
-    // ]
 
-    //     const reset = async () => {
-    // }
-
-
-//Define state getting all picked ref from choiceSelection.jsx using fction getAllPicked Ref
+//Define state getting all picked ref from InputSelect.jsx using fction getAllPicked Ref
     useEffect(()=>{
         initCategories();
     },[]);
@@ -53,21 +39,32 @@ const MaterialLibraryMenu = ({
             {...rest}
          >
             <p>Matériathèque</p>
-            {/* ChoiceSelection belongs to case named "Select" */}
-            <ChoiceSelection
+            <Button onClick={updateFilterState.reset}>Reset</Button>
+
+            <InputSelect
             currState = {getFilterState.category}
             updateState = {updateFilterState.category}
             labelId = 'category-filter'
             displayName = 'Catégories Principales'
             eltsList = {categoryList}
               />
-             <ChoiceSelection
+             <InputSelect
             currState = {getFilterState.tags}
             updateState = {updateFilterState.tags}
             labelId = 'tags-filter'
             displayName = 'Tags'
             eltsList = {tagsList}
               />
+              <Container>
+                <span>Disponible</span>
+              <InputToggle
+               currState = {getFilterState.available}
+                updateState = {updateFilterState.available}
+                labelId = 'tags-filter'
+                displayName = 'Tags'
+                eltsList = {tagsList}
+              />
+              </Container>
         </div>
    );
 };

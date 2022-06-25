@@ -12,7 +12,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const [displayRef, setDisplayRef] = useState('');
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(12);
-    const [disponibility, setDisponibility] = useState([]);
+    const [available, setAvailable] = useState([true]);
     const [category, setCategory] = useState([]);
     const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
@@ -23,7 +23,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         limit: limit,
         tags: tags,
         categories: (Array.isArray(category))?category:[category],
-        available: disponibility,
+        available: available,
     }
     console.log(settings)
     const references = await api.post('/customer/articles/search', settings);
@@ -43,20 +43,25 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
     const getFilterState = {
                 tags:((!tags[0])?'':tags),
-                disponibility,
-                category: (!category[0])?'':category[0],
+                available: available[0],
+                category: (!category[0] && !(category[0]===0))?'':category[0],
     }
 
     const updateFilterState = {
         tags(newValue){
             setTags((!tags.length) ? [newValue] : [...tags,Number(newValue)]);
         },
-        disponibility(newValue){
-            setDisponibility(newValue);
+        available(newValue){
+            setAvailable([newValue]);
         },
         category(newValue){
             setCategory([newValue]);
         },
+        reset(){
+            setTags([]);
+            setAvailable([]);
+            setCategory([]);
+        }
     }
 
     const handleChange = (event, value) => {
@@ -66,7 +71,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     useEffect(() => {
         getReferences();
         console.log('useEffect',category);
-    }, [page,category,tags]);
+    }, [page,category,tags,available]);
 
    return (
 
