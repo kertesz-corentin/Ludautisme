@@ -54,7 +54,7 @@ export default function SignIn() {
             variant="contained"
             onClick={handleOpenLogin}
             >
-            <AccountCircle className = {isOpen && 'hidden'}fontSize="large" />
+            <AccountCircle className = {isOpen ? 'hidden' : ''} fontSize="large" />
         </ButtonUnstyled>
         <Popover
             sx={{ marginTop: "5px",

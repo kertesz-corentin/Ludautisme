@@ -1,3 +1,6 @@
+const { isNativeError } = require('util/types');
+const ApiError = require('../errors/apiError');
+
 module.exports = (req, res, next) => {
     const fullUrl = `${req.protocol}://${req.get('host')}/api${process.env.IMAGE_CATALOG_FOLDER}/`;
 
@@ -5,14 +8,19 @@ module.exports = (req, res, next) => {
 
     res.json = (body) => {
         const wrapFullUrlToPic = (pic) => ({ ...pic, ...{ url: `${fullUrl}${pic.url}` } });
-        const data = (body.data) ? body.data : body;
-        const bodyWithUrl = data.map(
-            (ref) => ({ ...ref, ...{ picture: ref.picture.map(wrapFullUrlToPic)[0] } }),
-        );
-        console.log(bodyWithUrl);
+        if (body.status === 'error') {
+            old(body);
+            next();
+            return;
+        }
+        const bodyWrapped = (body[0].picture)
+            ? body.map(
+                (ref) => ({ ...ref, ...{ picture: ref.picture.map(wrapFullUrlToPic) } }),
+            )
+            : body;
 
         // Do whatever
-        old(bodyWithUrl);
+        old(bodyWrapped);
     };
 
     next();

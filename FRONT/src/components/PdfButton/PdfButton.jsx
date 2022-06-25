@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 
 const PdfButton = ({
-    key,
     year,
     link,
     alt,
@@ -19,7 +18,7 @@ const PdfButton = ({
     const handleClose = () => setOpen(false);
 
     return (
-        < div className='clay actions-passées-body' >
+        < div className='clay actions-passées-body'>
             <Link className='actions-passées-body-link' onClick={handleOpen}>
                 <p>
                     {year}
@@ -49,7 +48,6 @@ const PdfButton = ({
 
 
 PdfButton.propTypes = {
-    key: PropTypes.number,
     year: PropTypes.string,
     link: PropTypes.string,
     alt: PropTypes.string,

@@ -5,6 +5,13 @@ const ApiError = require('../../../errors/apiError');
 
 const router = express.Router();
 
+/**
+ * GET api/customer/permanency/
+ * @summary Get Active Permanency
+ * @tags [CUSTOMER] Permanency
+ * @returns  200 - success response - application/json
+ */
+
 router.route('/')
     .get(controllerHandler(permanencyController.getActive));
 

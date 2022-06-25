@@ -17,6 +17,10 @@ module.exports = {
         }
         return res.json(references);
     },
+    async getTotalRefCount(_, res) {
+        const response = await userReferenceDataMapper.getTotalRefs();
+        return res.json(response);
+    },
     async search(req, res) {
         // I get the page and the reference number per page and I calculate the offset
         const {
@@ -70,11 +74,8 @@ module.exports = {
         if (!references[0]) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
-        const total = await userReferenceDataMapper.findCountResult(arr);
-        const response = {
-            data: references,
-            total: total[0],
-        };
+
+        const response = references;
 
         return res.json(response);
     },

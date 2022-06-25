@@ -29,21 +29,25 @@ const About = ({ className, ...rest }) => {
         >
             <div>
                 <div className='who'>
-                    <h2 className='who-title'>
-                        <img className='who-title-logo' src={Drapeau} alt="qui somme nous" />
-                        Qui sommes nous ?
-                    </h2>
-                    <p>
-                        Lud'Autisme est une association créée en 2009, à l'initiative de parents d'enfants handicapés, ayant pour but d'accompagner les personnes en difficultés d'apprentissage ou d'autonomie dans leur parcours au quotidien.
-                    </p>
+                    <div className='content-container--max-width'>
+                        <h2 className='who-title'>
+                            <img className='who-title-logo' src={Drapeau} alt="qui somme nous" />
+                            Qui sommes nous ?
+                        </h2>
+                        <p>
+                            Lud'Autisme est une association créée en 2009, à l'initiative de parents d'enfants handicapés, ayant pour but d'accompagner les personnes en difficultés d'apprentissage ou d'autonomie dans leur parcours au quotidien.
+                        </p>
+                    </div>
                 </div>
 
                 <div className='everybody'>
-                    <h2 className='actions-title'>Autisme mais pas que...</h2>
-                    <div>
-                        <div className='everybody-content'>
-                             <p> Notre association s'adresse à toutes les personnes ayant des besoins spécifiques.</p>
-                             <img src={'./pictures/wordcloud.png'} alt="accompagner" />
+                    <div className='content-container--max-width'>
+                        <div className='everybody-column'>
+                            <h2 className='actions-title'>Autisme mais pas que...</h2>
+                            <div className='everybody-content'>
+                                <p> Notre association s'adresse à toutes les personnes ayant des besoins spécifiques.</p>
+                                <img src={'./pictures/wordcloud.png'} alt="accompagner" />
+                            </div>
                         </div>
                     </div>
                 </div>

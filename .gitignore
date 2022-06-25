@@ -5,5 +5,5 @@ node_modules
 **/*.log.*
 .env
 BACK/.env
-BACK/public
+BACK/public/images/catalog
 .husky

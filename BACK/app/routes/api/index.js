@@ -1,6 +1,5 @@
 const { dirname } = require('path');
 const express = require('express');
-const serveStatic = require('serve-static');
 const ApiError = require('../../errors/apiError');
 
 const loginRoutes = require('./auth/index');
@@ -14,9 +13,9 @@ const router = express.Router();
 
 const appDir = dirname(require.main.filename);
 const publicPath = `${appDir}/public`;
-console.log(`${__dirname}/public`);
 
 router.use('/public', express.static(publicPath));
+router.use('/public/*', express.static(publicPath));
 
 router.use('/login', loginRoutes);
 

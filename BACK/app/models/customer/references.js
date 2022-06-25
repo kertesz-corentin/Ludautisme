@@ -180,4 +180,11 @@ module.exports = {
         const results = await sqlHandler(queryStart, placeholders);
         return results.rows;
     },
+    async getTotalRefs() {
+        const query = `SELECT
+        COUNT(DISTINCT "reference"."id") AS nb_total
+        FROM "reference"`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    }
 };
