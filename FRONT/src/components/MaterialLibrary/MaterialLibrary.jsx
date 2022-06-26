@@ -10,6 +10,7 @@ import Pagination from '@mui/material/Pagination';
 const MaterialLibrary = ({className,currentItems, ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
     const [displayRef, setDisplayRef] = useState('');
+    const [ids, setIds] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(12);
     const [available, setAvailable] = useState([true]);
@@ -19,6 +20,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
    async function getReferences () {
     const settings = {
+        id:ids,
         page: page,
         limit: limit,
         tags: tags,
@@ -41,10 +43,12 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         setDisplayRef(refs);
     }
 
+    //Remainder Need to put these 3 functions below in Redux
     const getFilterState = {
                 tags:((!tags[0])?'':tags),
                 available: available[0],
                 category: (!category[0] && !(category[0]===0))?'':category[0],
+                name : ((!ids[0])?'':ids),
     }
 
     const updateFilterState = {
@@ -57,10 +61,21 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         category(newValue){
             setCategory([newValue]);
         },
+        name(newValue){
+            setIds(newValue);
+        },
         reset(){
             setTags([]);
             setAvailable([]);
             setCategory([]);
+            setIds([]);
+        }
+    }
+
+    const removeFilterState = {
+        tags(value){
+            const index = tags.findIndex(tag=>tag.id === value);
+            setTags([...tags.splice(index,1)]);
         }
     }
 
@@ -71,7 +86,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     useEffect(() => {
         getReferences();
         console.log('useEffect',category);
-    }, [page,category,tags,available]);
+    }, [page,category,tags,available,ids]);
 
    return (
 
@@ -81,6 +96,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
             <MaterialLibraryMenu
             getFilterState = {getFilterState}
             updateFilterState = {updateFilterState}
+            removeFilterState = {removeFilterState}
             />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData  */}
                 <div className= "displayReferences">

@@ -10,6 +10,13 @@ module.exports = {
         }
         return res.json(references);
     },
+    async getNameList(_, res) {
+        const references = await userReferenceDataMapper.findNameList();
+        if (!references[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+        return res.json(references);
+    },
     async getOne(req, res) {
         const references = await userReferenceDataMapper.findOne(req.params.id);
         if (!references[0]) {
@@ -33,10 +40,10 @@ module.exports = {
         delete req.body.limit;
         // I create the list of valid arguments
         const columns = ['categories', 'tags', 'available', 'id'];
-        const aliases = ['cat.id', 'category.id', 'ar.available'];
+        const aliases = ['cat.id', 'category.id', 'ar.available', 'r.id'];
 
         // I take the arguments in body
-        if (!req.body.tags[0]) {
+        if (!req.body.tags.length) {
             delete req.body.tags;
         }
         if (!req.body.categories.length) {
@@ -45,6 +52,11 @@ module.exports = {
         if (req.body.available[0] === undefined || req.body.available[0] === '') {
             delete req.body.available;
         }
+
+        if (!req.body.id.length) {
+            delete req.body.id;
+        }
+
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];

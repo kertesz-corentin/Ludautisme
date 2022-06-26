@@ -1,9 +1,9 @@
 import React, {useState,useEffect} from 'react';
-import './inputToggle.scss';
+import './inputswitch.scss';
 import {Switch} from '@mui/material';
 
 
-const InputToggle = ({
+const InputSwitch = ({
     className,
     currState,
     updateState,
@@ -26,4 +26,4 @@ const InputToggle = ({
     )
 };
 
-export default React.memo(InputToggle);
+export default React.memo(InputSwitch);

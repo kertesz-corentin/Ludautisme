@@ -30,8 +30,6 @@
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
-    "react-tagcloud": "^2.2.0",
-    "react-wordcloud": "^1.2.7",
     "sass": "^1.49.9",
     "web-vitals": "^2.1.0"
   },

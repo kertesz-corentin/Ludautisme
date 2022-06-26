@@ -58,6 +58,15 @@ module.exports = {
         );
         return result.rows;
     },
+    async findNameList() {
+        const result = await sqlHandler(
+            `SELECT
+            r."id",
+            r."name"
+            FROM "reference" AS r`
+        );
+        return result.rows;
+    },
     async findOne(id) {
         const result = await sqlHandler(
             `SELECT
@@ -93,6 +102,7 @@ module.exports = {
         return result.rows;
     },
     async findFiltered(arr, offset, limit) {
+        console.log("ARRRRR!", arr);
         let queryStart = `SELECT
         r.id,
         r.name,

@@ -8,13 +8,27 @@
     padding: 15px;
     border-radius: 20px;
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    &-inputs {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+    }
+    &-input-container{
+        display: flex;
+        align-items: baseline;
+    }
     &-row-flex{
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         padding: 0 15px;
         margin: 15px 0;
+    }
+    &-filters {
+        display: flex;
     }
     &-title{
         font-size: 1.8rem;
@@ -24,7 +38,40 @@
         color: $font-color-2;
         font-size: 1.2rem;
     }
+    &-filter-tag {
+        min-width: 15rem;
+    }
 }
+
+.searchbar{
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 1rem;
+        padding: 0 15px 0 7px;
+        height: 2rem;
+    &-autocomplete{
+        width: 100%;
+        min-width: 15rem;
+        max-width: 25rem;
+        margin-left: 5px;
+    }
+    &-textfield{
+        font-size: 0.8rem!important;
+    }
+
+}
+
+
+.searchbar-autocomplete > .MuiFormControl-root >.MuiAutocomplete-inputRoot::before,
+.searchbar-autocomplete > .MuiFormControl-root >.MuiAutocomplete-inputRoot::after,
+.materiallibrarymenu-filter-tag > .MuiFormControl-root >.MuiAutocomplete-inputRoot::before,
+.materiallibrarymenu-filter-tag > .MuiFormControl-root >.MuiAutocomplete-inputRoot::after {
+    border: none!important;
+    -webkit-transition:none!important;
+    transition: none!important;
+}
+
 @media all and (max-width: 1080px)
 {
     .MuiFormControl-root {
