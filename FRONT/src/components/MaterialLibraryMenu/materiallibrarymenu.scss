@@ -1,14 +1,28 @@
 @import 'src/styles/vars';
 
 .materiallibrarymenu{
+    height: fit-content;
     min-width: 250px;
+    width: 90%;
     background-color: #00bdb6;
     padding: 15px;
     border-radius: 20px;
-
+    display: flex;
+    align-items: baseline;
+    &-row-flex{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0 15px;
+        margin: 15px 0;
+    }
+    &-title{
+        font-size: 1.8rem;
+        color: $font-color-2;
+    }
     p {
         color: $font-color-2;
-        font-size: 1.8rem;
+        font-size: 1.2rem;
     }
 }
 @media all and (max-width: 1080px)

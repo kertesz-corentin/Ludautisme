@@ -17,14 +17,14 @@ const ListOfReferences = ({
      ...rest
     }) => {
     return (
-        references ?
+        references.length ?
         <React.Fragment>
           <CssBaseline />
           <Grid
-            className = "gridList"
+            className ={`gridList ${className}`}
             container
             direction="row"
-            justifyContent="flex-start"
+            justifyContent="center"
             alignContent="flex-start"
             alignItems="center"
         >
@@ -52,13 +52,9 @@ const ListOfReferences = ({
             </Grid>
         </React.Fragment>
         :
-        <React.Fragment>
-          <CssBaseline />
-          <Container maxWidth="70%">
-            <Box className= "lisofreferences" />
-
-          </Container>
-        </React.Fragment>
+        <div className='gridList-empty'>
+          <p>Nous n'avons aucun article à vous présenter</p>
+        </div>
       );
 };
 

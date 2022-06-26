@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import './inputToggle.scss';
 import {Switch} from '@mui/material';
 
@@ -12,18 +12,16 @@ const InputToggle = ({
     displayName,
     ...rest }) => {
 
-console.log(currState);
-
     const handleChange = (event) =>{
         updateState(!currState);
     }
 
     return (
             <Switch
-                    checked={currState}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-
+                className='inputSwitch'
+                checked={currState}
+                onChange={handleChange}
+                inputProps={{ 'aria-label': 'controlled' }}
             />
     )
 };

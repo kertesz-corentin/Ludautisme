@@ -75,7 +75,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
    return (
 
-        <div            className={classnames('materiallibrary', className)}
+        <div     className={classnames('materiallibrary content-container--max-width')}
             {...rest}
         >
             <MaterialLibraryMenu
@@ -83,16 +83,17 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
             updateFilterState = {updateFilterState}
             />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData  */}
-            {displayRef &&
                 <div className= "displayReferences">
                     <Pagination
                     page={page}
                     count={numberPages} size="large"
                     showFirstButton showLastButton
                     onChange={handleChange}
-                    className="paginate"/>
+                    className={`paginate ${(!displayRef.length || numberPages < 2)? 'hidden':''}`}
+                    />
 
                     <ListOfReferences
+                    className='displayReferences-grid'
                     currentItems={currentItems}
                     references= {displayRef}
                     />
@@ -102,9 +103,8 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
                     count={numberPages} size="large"
                     showFirstButton showLastButton
                     onChange={handleChange}
-                    className="paginate"/>
+                    className={`paginate ${(!displayRef.length || numberPages < 2)? 'hidden':''}`}/>
                 </div>
-            }
         </div>
 
    );

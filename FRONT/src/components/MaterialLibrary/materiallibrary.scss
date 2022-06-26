@@ -2,25 +2,36 @@
 
 .materiallibrary {
     width: 100%;
+    margin: 0 auto;
     display: flex;
-    flex-direction: row;
+    align-content: flex-start;
+    align-items: flex-start;
 }
 .displayReferences{
+    width: 100%;
     margin : 0 auto;
     padding: 30px 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    &-grid{
+        margin: 20px 0;
+    }
+    &--none{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 .paginate{
     display: flex;
-    margin: 2% 0;
     justify-content: center;
     width: 100%;
 }
 @media all and (max-width: 1080px)
 {
     .materiallibrary {
-        flex-direction: column;
+        //flex-direction: column;
     }
 }

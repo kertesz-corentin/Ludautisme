@@ -38,8 +38,7 @@ const MaterialLibraryMenu = ({
             className={classnames('materiallibrarymenu', className)}
             {...rest}
          >
-            <p>Matériathèque</p>
-            <Button onClick={updateFilterState.reset}>Reset</Button>
+            <h2 className='materiallibrarymenu-title'>Matériathèque</h2>
 
             <InputSelect
             currState = {getFilterState.category}
@@ -55,16 +54,16 @@ const MaterialLibraryMenu = ({
             displayName = 'Tags'
             eltsList = {tagsList}
               />
-              <Container>
-                <span>Disponible</span>
+            <div className='materiallibrarymenu-row-flex'>
+                <p>Disponible</p>
               <InputToggle
                currState = {getFilterState.available}
                 updateState = {updateFilterState.available}
-                labelId = 'tags-filter'
-                displayName = 'Tags'
+                labelId = 'available-filter'
                 eltsList = {tagsList}
               />
-              </Container>
+            </div>
+            <Button onClick={updateFilterState.reset}>Reset</Button>
         </div>
    );
 };
