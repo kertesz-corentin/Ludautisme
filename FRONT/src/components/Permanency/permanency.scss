@@ -10,6 +10,7 @@
     padding: 15px!important;
     &-logo {
         display: none!important;
+
     }
     &-date{
         margin-right: 5px !important;
@@ -20,24 +21,20 @@
         }
     }
     &-block{
-
+        margin-left: 8px;
         justify-content: flex-end!important;
     }
     &-hours{
         margin-left: 15px!important;
     }
-    h2{
-        font-size: 1rem;
-        margin-right: 15px;
-    }
     p{
-        font-size: 1rem;
+        text-transform: capitalize;
     }
 
 }
 
 .permanency{
-    padding:0 20px 20px 20px;
+    padding:10px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -73,6 +70,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        text-transform: capitalize;
 
         filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 30%) 5px 3px 5px);
         border-radius: 10px;

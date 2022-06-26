@@ -5,8 +5,9 @@ const { referenceController } = require('../../../controllers/customer');
 const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
+
 /**
- * POST api/customer/articles/search
+ * POST /api/customer/articles/search
  * @summary Get all ref filtered and paginate
  * @tags [CUSTOMER] Reference
  * @param {ParamSearchReference} request.body.required - At least page, limit and one of the three other
@@ -15,15 +16,15 @@ const router = express.Router();
 router.route('/search')
     .post(controllerHandler(referenceController.search));
 /**
- * GET api/customer/articles/:id
+ * GET /api/customer/single/:id
  * @summary Get One reference with picture
- * @tags Reference
+ * @tags [CUSTOMER] Reference
  * @returns {allOf|Reference|Stock|Pictures} 200 - success response - application/json
  */
-router.route('/:id')
+router.route('/single/:id')
     .get(controllerHandler(referenceController.getOne));
 /**
-* GET api/customer/articles
+* GET /api/customer/articles
 * @summary Get all references with picture
 * @tags [CUSTOMER] Reference
 * @return {allOf|Reference|Pictures} 200 - success response - application/json

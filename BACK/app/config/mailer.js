@@ -14,17 +14,16 @@ const transporter = nodemailer.createTransport({
 module.exports = {
     send(to, subject, html) {
         const mailOptions = {
-            from: 'vindication@enron.com',
+            from: 'carniguide@hotmail.fr',
             to,
             subject,
             html,
         };
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log(error);
-            } else {
-                console.log(`Email sent: ${info.response}`);
+                return 'error';
             }
+            return 'success';
         });
     },
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './currentreference.scss';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,15 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Loader from '../Loader/Loader';
 
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Unavailable from '../Unavailable/Unavailable';
-import Available from '../Available/Available';
-import {  Divider } from '@mui/material';
-import { useState, useContext } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const CurrentReference = ({

@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {Link,Box,Typography, Grid, TextField, Button, Popover} from '@mui/material';
+import React, { useState } from 'react';
+import { Box,Typography, Grid, TextField, Button, Popover} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useNavigate} from "react-router-dom";
 import api from '../../../requests/index';
 import RecoverPasswordModal from '../RecoverPassworldModal/RecoverPasswordModal';
 import './loginform.scss'
-import classnames from 'classnames';
-import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import ButtonUnstyled  from '@mui/base/ButtonUnstyled';
 import AlertMessage from '../../AlertMessage/AlertMessage';
 
 const LoginForm = ({handleCloseLogin, ...rest}) => {
     const navigate = useNavigate();
 
-    const [isOpen, setIsOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState();
     const [recover, setRecover] = useState(false);
 
@@ -37,7 +35,7 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
             const email = data.get('email');
             const password =  data.get ('password');
             const response = await api.login(email,password,"user");
-            
+
             console.log(response);
             if(response.status === 200) {
                 navigate('/user/account')

@@ -12,7 +12,6 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import Souris from '../public/icones/souris.png'
-import TranslateRoundedIcon from '@mui/icons-material/TranslateRounded';
 import {Box} from '@mui/material';
 
 const Accordion = styled((props) => (
@@ -280,7 +279,7 @@ const UsefullLinks = ({className, ...rest}) => {
                                     <li className='UsefullLinks-links-li'>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="https://tsa-finistere.fr/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
-                                        TAS Finistère
+                                        TSA Finistère
                                         </a>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.asperansa.org/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
@@ -288,19 +287,15 @@ const UsefullLinks = ({className, ...rest}) => {
                                         </a>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autismebreizha.canalblog.com/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
-                                        Autismebreizha
+                                        Autisme Breizh Autonomie
                                         </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autismecornouaille.fr/">
+                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href=" https://autismecornouaille.wordpress.com/autisme-cornouaille/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
                                         Autisme Cornouaille
                                         </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autismeemeraude.canalblog.com/">
+                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="https://www.autisme-emeraude.fr/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
-                                        Autisme Emeraude
-                                        </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autismeecouteetp.canalblog.com/">
-                                        <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>
-                                        Autisme Écoute et Partage
+                                        Autisme Côte d’Emeraude
                                         </a>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autisme-tregorgoelo.ovh/">
                                         <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon'/>

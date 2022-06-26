@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 
 // import react components
-import AlertMessage from '../../AlertMessage/AlertMessage';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Checkbox }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, FormControl, InputLabel, Select, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './addreferencemodal.scss';

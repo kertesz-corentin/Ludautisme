@@ -13,3 +13,5 @@ BORROW_LIMIT = 10
 MAIL_USERNAME = USERNAME-TEST
 MAIL_USER = email@gmail.com
 MAIL_PASSWORD = paswword
+
+IMAGE_CATALOG_FOLDER = '/public/images/catalog'

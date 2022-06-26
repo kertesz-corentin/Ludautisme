@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './reference.scss';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
@@ -20,10 +18,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useState, useContext, useEffect } from 'react';
 import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import BlockIcon from '@mui/icons-material/Block';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Avatar from '@mui/material/Avatar';
-import { deepOrange} from '@mui/material/colors';
 
 const Reference = ({
     className,
@@ -45,8 +40,6 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-    console.log("userToken",userToken);
-    console.log("currentItems",currentItems);
 
     const [isClick, setIsClick] = useState(false);
 
@@ -59,9 +52,6 @@ const Reference = ({
         tag,
         valorisation,
     }
-    let [quantity, setQuantity] = useState(nb_available);
-    //Need newQuantity to compare with quantity and know if article has been click already
-    let [newQuantity, setNewQuantity] = useState(quantity);
 
     const [cartItems,setCartItems] = useState(currentItems);
 
@@ -74,11 +64,6 @@ const Reference = ({
     function handleClick () {
         cartManager.add(itemToAdd);
     }
-
-    function modifyIsClick () {
-        setIsClick(!isClick)
-    }
-
 
    return (
 
@@ -100,7 +85,7 @@ const Reference = ({
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>
-                                {(nb_available > 0)?
+                                {(nb_available > 0 && currentItems)?
                                     <>
                                          {(!currentItems.map((item)=> item.id).includes(id)) ?
                                               <Button

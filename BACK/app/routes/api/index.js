@@ -1,3 +1,4 @@
+const { dirname } = require('path');
 const express = require('express');
 const ApiError = require('../../errors/apiError');
 
@@ -9,6 +10,12 @@ const authAdmin = require('../../middleware/admin');
 // const authUser = require('../../middleware/user');
 
 const router = express.Router();
+
+const appDir = dirname(require.main.filename);
+const publicPath = `${appDir}/public`;
+
+router.use('/public', express.static(publicPath));
+router.use('/public/*', express.static(publicPath));
 
 router.use('/login', loginRoutes);
 

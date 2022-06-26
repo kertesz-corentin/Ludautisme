@@ -2,6 +2,7 @@
 
 .who {
     display: flex;
+    justify-content: center;
     flex-flow: row wrap;
     background-color: $orange;
     margin-bottom: 30px;
@@ -28,11 +29,6 @@
             filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.3));
         }
     }
-
-    &-content-nuage {
-        padding: 20px 50px 0 0;
-    }
-
     p {
         display: flex;
         flex-flow: row nowrap;
@@ -42,6 +38,44 @@
         width: 60vw;
         color: $font-color-2;
         align-items: center;
+    }
+}
+.everybody{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    &-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &-content{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    p {
+        color: $font-color;
+        margin: 0;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+}
+.wordscloud{
+    margin: 2%;
+    display: flex;
+    justify-content: center;
+}
+.simple-cloud {
+
+    width: 50%;
+    line-height: 3rem;
+    span {
+        margin-right: 20px;
     }
 }
 .content-actions{
@@ -58,6 +92,7 @@
     margin: 0 auto;
 
     &-title {
+        width: 20%;
         color: $font-color;
         border-bottom: 3px solid $font-color;
         padding-bottom: 20px;
@@ -123,13 +158,6 @@
         text-align: center;
     }
 }
-
-.nuage {
-    img{
-    width: 35%;
-    }
-}
-
 .actions-passées {
     margin-bottom: 30px;
 
@@ -210,11 +238,6 @@
 
 @media all and (max-width: 810px)
 {   .who   {
-
-    &-content-nuage {
-        padding: 0;
-        margin-bottom: 50px;
-    }
 
     p {
     display: block;

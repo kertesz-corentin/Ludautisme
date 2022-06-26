@@ -1,7 +1,6 @@
 @import 'src/styles/vars';
 
 .header {
-    margin-bottom: 30px;
     height: 80px;
     text-decoration: none;
     padding-left: $gutter;
@@ -10,6 +9,7 @@
     filter: $drop-shadow;
     display: flex;
     justify-content: center;
+    align-items: center;
 
     &-logo-img {
         max-width: 100px;
@@ -27,6 +27,18 @@
         display: flex;
         flex-direction: row;
     }
+    &-link {
+        text-decoration: none;
+        font-size: 1rem;
+
+    }
+    &-link--isActive > Button{
+        color : #fa9600 !important;
+
+    }
+    &-link--isActive > Button > svg {
+        fill: #fa9600;
+    }
 }
 
 nav
@@ -43,10 +55,9 @@ nav .main_pages
 
 }
 
-nav .main_pages Button
+nav .main_pages, .header-link>button
 {
         font-size: 1.1rem;
-        padding: 10px;
         color: #000000;
         text-decoration: none;
         text-transform: capitalize;
@@ -54,8 +65,18 @@ nav .main_pages Button
             transition: 50ms;
          border-left: 1px solid rgba($color: #000000, $alpha: 0.5);
         }
+}
 
-        &:hover {
+.header-link>button {
+    display: flex;
+    align-items: baseline;
+}
+
+.header-link>button>svg {
+   height: 2rem;
+}
+
+.header-link>button:hover {
             transition: 0.3s;
             border: none;
             background-color: rgb(207, 207, 207);
@@ -63,7 +84,6 @@ nav .main_pages Button
             padding-left: 10px;
             padding-right: 10px;
         }
-}
 
     label , #toggleheader
 {
@@ -115,3 +135,5 @@ nav .main_pages Button
         display: flex;
     }
 }
+
+

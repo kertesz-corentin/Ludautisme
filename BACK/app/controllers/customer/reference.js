@@ -32,10 +32,19 @@ module.exports = {
         delete req.body.page;
         delete req.body.limit;
         // I create the list of valid arguments
-        const columns = ['categories', 'tags', 'available'];
+        const columns = ['categories', 'tags', 'available', 'id'];
         const aliases = ['cat.id', 'category.id', 'ar.available'];
 
         // I take the arguments in body
+        if (!req.body.tags[0]) {
+            delete req.body.tags;
+        }
+        if (!req.body.categories.length) {
+            delete req.body.categories;
+        }
+        if (req.body.available[0] === undefined || req.body.available[0] === '') {
+            delete req.body.available;
+        }
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
@@ -47,10 +56,7 @@ module.exports = {
             const index = columns.indexOf(prop);
             const values = [];
             array.forEach((value) => {
-                // if (Number.isNaN(index)) {
-                //     throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
-                // }
-                if (['categories', 'tags'].includes(columns[index]) && typeof value !== 'number') {
+                if (['categories', 'tags', 'id'].includes(columns[index]) && typeof value !== 'number') {
                     throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
                 }
                 if (['available'].includes(columns[index]) && typeof value !== 'boolean') {
@@ -61,9 +67,9 @@ module.exports = {
             arr.push({ [aliases[index]]: values });
         });
         const references = await userReferenceDataMapper.findFiltered(arr, offset, limit);
-        if (!references[0]) {
-            throw new ApiError(404, 'Aucun résultat trouvé');
-        }
-        return res.json(references);
+        const total = await userReferenceDataMapper.findCountResult(arr);
+        const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
+
+        return res.json(refWithCount);
     },
 };

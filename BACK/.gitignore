@@ -5,6 +5,8 @@ sqitch.conf
 .env.local
 ../.env
 
+/public/images/catalog
+
 #log
 **/*.log
 **/*.log.*
