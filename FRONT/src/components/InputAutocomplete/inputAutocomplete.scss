@@ -1,0 +1,10 @@
+.atcplt-input {
+        min-width: 10rem;
+
+        & > input {
+            background-color: rgba(0,0,0,0);
+            font-size: 1.1em;
+            width: 100%;
+            border : none;
+        }
+    }

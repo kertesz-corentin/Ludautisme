@@ -1,34 +1,42 @@
 @import 'src/styles/vars';
 
 .materiallibrarymenu{
-    height: fit-content;
-    min-width: 250px;
     width: 90%;
-    background-color: #00bdb6;
-    padding: 15px;
-    border-radius: 20px;
+    min-width: 250px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     &-inputs {
         width: 100%;
+        background-color: #00bdb6;
+        border-radius: 2.5rem;
+        padding: 5px 25px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-
     }
     &-input-container{
         display: flex;
         align-items: baseline;
     }
     &-row-flex{
+        padding: 0 15px;
+        margin: 15px 0 15px 15px;
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        padding: 0 15px;
-        margin: 15px 0;
+        column-gap: 15px;
+        &-title{
+            align-self: center;
+            font-size: 1.1rem!important;
+        }
     }
     &-filters {
+        height: fit-content;
+        width: 100%;
+        column-gap : 15px;
         display: flex;
+        align-items: center;
     }
     &-title{
         font-size: 1.8rem;
@@ -38,18 +46,44 @@
         color: $font-color-2;
         font-size: 1.2rem;
     }
-    &-filter-tag {
-        min-width: 15rem;
+    &-searchbar {
+        background: white;
+        display: flex;
+        border-radius: 2rem;
+        padding: 8px 10px;
+    }
+    &-tags , &-categories {
+        background: white;
+        display: flex;
+        height: fit-content;
+        border-radius: 2rem;
+        padding: 8px 18px;
+    }
+    &-autocomplete-input {
+        min-width: 10rem;
+        border-radius: 2rem;
+        background-color: white;
+        padding: 8px 15px;
+        display: flex;
+    }
+    &-autocomplete-input-tags {
+        padding: 8px 18px;
+    }
+    &-autocomplete-input-search {
+        padding: 8px 10px;
+    }
+    &-autocomplete-input > input {
+        font-size: 1.1em;
+        width: 100%;
+        border : none;
     }
 }
 
 .searchbar{
         display: flex;
         align-items: center;
-        background: white;
-        border-radius: 1rem;
-        padding: 0 15px 0 7px;
         height: 2rem;
+        width: 15rem;
     &-autocomplete{
         width: 100%;
         min-width: 15rem;
@@ -60,16 +94,6 @@
         font-size: 0.8rem!important;
     }
 
-}
-
-
-.searchbar-autocomplete > .MuiFormControl-root >.MuiAutocomplete-inputRoot::before,
-.searchbar-autocomplete > .MuiFormControl-root >.MuiAutocomplete-inputRoot::after,
-.materiallibrarymenu-filter-tag > .MuiFormControl-root >.MuiAutocomplete-inputRoot::before,
-.materiallibrarymenu-filter-tag > .MuiFormControl-root >.MuiAutocomplete-inputRoot::after {
-    border: none!important;
-    -webkit-transition:none!important;
-    transition: none!important;
 }
 
 @media all and (max-width: 1080px)

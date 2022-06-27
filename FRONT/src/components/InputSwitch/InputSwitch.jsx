@@ -20,6 +20,7 @@ const InputSwitch = ({
             <Switch
                 className='inputSwitch'
                 checked={currState}
+                value={''}
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'controlled' }}
             />

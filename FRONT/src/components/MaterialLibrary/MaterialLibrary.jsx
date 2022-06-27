@@ -13,10 +13,11 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const [ids, setIds] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(12);
-    const [available, setAvailable] = useState([true]);
+    const [available, setAvailable] = useState([]);
     const [category, setCategory] = useState([]);
     const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
+
 
    async function getReferences () {
     const settings = {
@@ -27,7 +28,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         categories: (Array.isArray(category))?category:[category],
         available: available,
     }
-    console.log(settings)
+    console.log("Settings",settings)
     const references = await api.post('/customer/articles/search', settings);
     const countRef = (references.data.length)&&references.data[0].countresult;
     updateDisplayRef(references.data,countRef);
@@ -39,7 +40,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         if(pages !== numberPages){
             setNumberPages(Math.ceil(pages));
         }
-        console.log(refs);
+        console.log('References',refs);
         setDisplayRef(refs);
     }
 
@@ -53,10 +54,10 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
     const updateFilterState = {
         tags(newValue){
-            setTags((!tags.length) ? [newValue] : [...tags,Number(newValue)]);
+            (newValue)&&setTags([...tags, ...[newValue]]);
         },
         available(newValue){
-            setAvailable([newValue]);
+            setAvailable((newValue)?[newValue]:[]);
         },
         category(newValue){
             setCategory([newValue]);
@@ -75,7 +76,8 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const removeFilterState = {
         tags(value){
             const index = tags.findIndex(tag=>tag.id === value);
-            setTags([...tags.splice(index,1)]);
+            tags.splice(index,1)
+            setTags([...tags]);
         }
     }
 
@@ -85,7 +87,6 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
     useEffect(() => {
         getReferences();
-        console.log('useEffect',category);
     }, [page,category,tags,available,ids]);
 
    return (
