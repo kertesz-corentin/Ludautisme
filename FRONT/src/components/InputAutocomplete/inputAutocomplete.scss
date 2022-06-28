@@ -6,5 +6,8 @@
             font-size: 1.1em;
             width: 100%;
             border : none;
+            &::placeholder{
+                color : rgba(0,0,0,0.3)
+            }
         }
     }
