@@ -10,17 +10,18 @@ const InputSwitch = ({
     eltsList,
     labelId,
     displayName,
+    handleCloseMenu,
     ...rest }) => {
 
     const handleChange = (event) =>{
         updateState(!currState);
+        (handleCloseMenu)&&handleCloseMenu();
     }
 
     return (
             <Switch
                 className='inputSwitch'
-                checked={currState}
-                value={''}
+                checked={currState || false}
                 onChange={handleChange}
                 inputProps={{ 'aria-label': 'controlled' }}
             />

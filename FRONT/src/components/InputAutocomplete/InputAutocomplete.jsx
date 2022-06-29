@@ -16,6 +16,7 @@ const InputAutocomplete = ({
     placeholder,
     iconBefore,
     iconAfter,
+    handleCloseMenu,
     ...rest }) => {
 
     const handleChange = (event) =>{

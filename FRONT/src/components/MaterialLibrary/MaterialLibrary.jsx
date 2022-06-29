@@ -14,7 +14,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(12);
     const [available, setAvailable] = useState([]);
-    const [category, setCategory] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
 
@@ -25,10 +25,9 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         page: page,
         limit: limit,
         tags: tags,
-        categories: (Array.isArray(category))?category:[category],
+        categories: (Array.isArray(categories))?categories:[categories],
         available: available,
     }
-    console.log("Settings",settings)
     const references = await api.post('/customer/articles/search', settings);
     const countRef = (references.data.length)&&references.data[0].countresult;
     updateDisplayRef(references.data,countRef);
@@ -40,7 +39,6 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         if(pages !== numberPages){
             setNumberPages(Math.ceil(pages));
         }
-        console.log('References',refs);
         setDisplayRef(refs);
     }
 
@@ -48,19 +46,19 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const getFilterState = {
                 tags:((!tags[0])?'':tags),
                 available: available[0],
-                category: (!category[0] && !(category[0]===0))?'':category[0],
+                categories: (!categories.length)?'':categories,
                 name : ((!ids[0])?'':ids),
     }
 
     const updateFilterState = {
         tags(newValue){
-            (newValue)&&setTags([...tags, ...[newValue]]);
+            (newValue && !tags.includes(newValue)) && setTags([...tags, ...[newValue]]);
         },
         available(newValue){
             setAvailable((newValue)?[newValue]:[]);
         },
-        category(newValue){
-            setCategory([newValue]);
+        categories(newValue){
+            (typeof newValue !== 'undefined' && !categories.includes(newValue)) && setCategories([...categories, newValue]);
         },
         name(newValue){
             setIds(newValue);
@@ -68,16 +66,19 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         reset(){
             setTags([]);
             setAvailable([]);
-            setCategory([]);
+            setCategories([]);
             setIds([]);
         }
     }
 
     const removeFilterState = {
         tags(value){
-            const index = tags.findIndex(tag=>tag.id === value);
-            tags.splice(index,1)
-            setTags([...tags]);
+            const removed = tags.filter(tag=> tag !== Number(value));
+            setTags(removed);
+        },
+        categories(value){
+            const removed = categories.filter(cat=> cat !== Number(value));
+            setCategories(removed);
         }
     }
 
@@ -87,7 +88,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
     useEffect(() => {
         getReferences();
-    }, [page,category,tags,available,ids]);
+    }, [page,categories,tags,available,ids]);
 
    return (
 

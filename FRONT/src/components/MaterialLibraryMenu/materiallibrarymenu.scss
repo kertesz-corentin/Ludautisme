@@ -7,44 +7,28 @@
     display: flex;
     flex-direction: column;
     &-inputs {
+        z-index: 1;
+        height : 4.5rem;
         width: 100%;
         background-color: #00bdb6;
         border-radius: 2.5rem;
         padding: 5px 25px;
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    &-input-container{
-        display: flex;
-        align-items: baseline;
-    }
-    &-row-flex{
-        padding: 0 15px;
-        margin: 15px 0 15px 5px;
-        display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        column-gap: 5px;
-        &-title{
-            align-self: center;
-            font-size: 1.1rem!important;
-        }
-    }
-    &-filters {
-        height: fit-content;
-        width: 100%;
-        column-gap : 15px;
-        display: flex;
         align-items: center;
+        &-container{
+        display: flex;
+        align-items: baseline;
+        }
+        &-dialog{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
     &-title{
         font-size: 1.8rem;
         color: $font-color-2;
-    }
-    p {
-        color: $font-color-2;
-        font-size: 1.2rem;
     }
     &-searchbar {
         background: white;
@@ -77,13 +61,6 @@
         width: 100%;
         border : none;
     }
-    &-filters {
-        height: fit-content;
-        width: 100%;
-        column-gap : 15px;
-        display: flex;
-        align-items: center;
-    }
 }
 
 .searchbar{
@@ -103,9 +80,34 @@
 
 }
 
+.is--desktop__button{
+    display: none;
+}
+
 @media all and (max-width: 1080px)
 {
     .MuiFormControl-root {
         max-width: 300px;
+    }
+    .is--desktop__button{
+        display: block;
+    }
+}
+
+@media all and (max-width: 810px)
+{
+    .materiallibrarymenu-inputs {
+        padding: 10px;
+    }
+}
+
+@media all and (max-width: 420px)
+{
+    .materiallibrarymenu {
+        width: 100%;
+        border-radius: 0;
+        &-inputs{
+            border-radius: 0;
+        }
     }
 }
