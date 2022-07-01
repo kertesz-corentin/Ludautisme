@@ -22,25 +22,15 @@
 
         }
     }
-     &-filters-container {
-        display: flex;
-        align-items: center;
-        padding: 15px 75px;
-        &__title{
-            color: black;
-            size: 0.8rem;
-            margin-right: 7px;
-        }
-        &-list{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-    }
 }
 
  .menu__button{
     display: none !important;
+    border: 3px solid $font-color-2!important;
+    color: $font-color-2!important;
+    font-weight: 600!important;
+    border-radius: 2rem!important;
+    padding: 10 15px !important;
  }
 
 .is--menu{

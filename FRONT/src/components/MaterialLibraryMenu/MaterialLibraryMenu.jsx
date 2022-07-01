@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import './materiallibrarymenu.scss';
 import api from '../../requests';
 import { Button, Slide, Box, Paper, Chip, Menu, Modal, Dialog } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import InputAutocomplete from '../InputAutocomplete/InputAutocomplete'
 import MaterialLibraryMenuFilter from '../MaterialLibraryFilter/MaterialLibraryMenuFilter';
 import CloseIcon from '@mui/icons-material/Close';
@@ -73,11 +72,36 @@ const MaterialLibraryMenu = ({
          >
         <Box className='materiallibrarymenu-inputs' >
         <Box className='materiallibrarymenu-inputs-container'>
-            <Dialog
-            className={(isDesktop)?'materiallibrarymenu-inputs-dialog hidden':'materiallibrarymenu-inputs-dialog'}
+            {/* Mobile Version, a button open a modal */}
+            <Modal
+            className={'materiallibrarymenu-inputs-modal'}
             onClose={handleCloseMenu} open={open}>
-                <Box style={{display:'flex',flexDirection:'column',alignItems:'center',padding:'30px 0 30px'}}>
+                <Box className='materiallibrarymenu-inputs-modal__content'>
                 <p><strong>Filtres</strong></p>
+                <div className='materiallibrarymenu-filters-container'>
+                    <div className='materiallibrarymenu-filters-container-list'>
+                                {(categoriesList) &&
+                                    categoriesList.map(cat=>(
+                                        (getFilterState.categories.includes(cat.id))&&
+                                            (<Chip key={`cat-${cat.id}`}data-remove={`categories-${cat.id}`} label={cat.name} variant="outlined" onDelete={handleRemove}/>)
+                                    ))
+                                }
+                                {(tagsList) &&
+                                    tagsList.map(tag=>(
+                                        (getFilterState.tags.includes(tag.id))&&
+                                            (<Chip key={`tag-${tag.id}`} data-remove={`tags-${tag.id}`} label={tag.name} variant="outlined" onDelete={handleRemove}/>)
+                                    ))
+                                }
+
+                    </div>
+                    <Button className={(!getFilterState.categories
+                                    && !getFilterState.tags
+                                    && !getFilterState.available
+                                    )
+                                    ?'hidden'
+                                    :''
+                                    } onClick={updateFilterState.reset}>Reset</Button>
+                </div>
                 <MaterialLibraryMenuFilter
                 className={`is--menu`}
                 ref={filtersRef}
@@ -88,17 +112,21 @@ const MaterialLibraryMenu = ({
                 tagsList={tagsList}
                 nameList={nameList}
                 isDesktop = {isDesktop}
-                handleCloseMenu = {handleCloseMenu}
+                //handleCloseMenu = {handleCloseMenu}
                 />
-                <CloseIcon onClick={handleCloseMenu} sx={{border:'2px solid black',borderRadius:'50%',padding:'3px'}}/>
+                <Box sx={{display:'flex',alignItems:'center',alignContent:'center',borderRadius:'2rem',border:'1px solid black',padding:'5px 10px'}} onClick={handleCloseMenu}>
+                    <p>Fermer</p>
+                    <CloseIcon/>
                 </Box>
-            </Dialog>
+                </Box>
+            </Modal>
              <Button
-                className='is--desktop__button'
+                className='is--menu__button menu__button'
                 onClick={handleClickMenu}
                 >
                     Filtres
             </Button>
+                {/* Desktop version */}
                     <MaterialLibraryMenuFilter
                     className='is--desktop'
                 ref={filtersRef}
@@ -112,15 +140,17 @@ const MaterialLibraryMenu = ({
                 />
         </Box>
                 <Paper elevation={3} sx={{borderRadius: '2rem'}} className='materiallibrarymenu-searchbar'>
-                    <SearchIcon/>
                     <InputAutocomplete
                         autoComplete
                         clearOnEscape
                         freeSolo
+                        listOnFocus = {true}
                         currState = {getFilterState.name}
                         updateState = {updateFilterState.name}
+                        className = 'searchbar'
                         placeholder= 'Rechercher'
                         eltsList = {nameList}
+                        searchIcon = {true}
                         onChange = {(newValue) => {
                                 const pattern = newValue.split(" ").map(word=>`(?=.*${word})`).join("");
                                 const regex = new RegExp(pattern,'i');

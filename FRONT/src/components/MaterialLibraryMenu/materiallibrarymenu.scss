@@ -25,6 +25,42 @@
             flex-direction: column;
             align-items: center;
         }
+        &-modal{
+        display: flex;
+        justify-content: flex-end;
+            &__content{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 0;
+                background-color: rgba($font-color-2,0.95);
+            }
+        }
+
+    }
+    &-filters-container {
+        display: flex;
+        align-items: center;
+        padding: 15px 75px;
+        &__title{
+            color: black;
+            size: 0.8rem;
+            margin-right: 7px;
+        }
+        &-list{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        & .MuiButton-root{
+            margin-left: 10px;
+            border-radius: 1.25rem;
+            padding: 5px 15px;
+            font-weight: 600;
+            color : $orange;
+            border: 1px solid $orange;
+        }
     }
     &-title{
         font-size: 1.8rem;
@@ -34,14 +70,14 @@
         background: white;
         display: flex;
         border-radius: 2rem;
-        padding: 8px 10px;
+        padding: 0;
     }
     &-tags , &-categories {
         background: white;
         display: flex;
         height: fit-content;
         border-radius: 2rem;
-        padding: 8px 18px;
+        padding: 0;
     }
     &-autocomplete-input {
         min-width: 10rem;
@@ -61,6 +97,7 @@
         width: 100%;
         border : none;
     }
+
 }
 
 .searchbar{
@@ -81,7 +118,7 @@
 }
 
 .is--desktop__button{
-    display: none;
+    display: none!important;
 }
 
 @media all and (max-width: 1080px)
@@ -90,7 +127,8 @@
         max-width: 300px;
     }
     .is--desktop__button{
-        display: block;
+        background-color: rgba($font-color-2,0.95);
+        display: block!important;
     }
 }
 
@@ -108,6 +146,14 @@
         border-radius: 0;
         &-inputs{
             border-radius: 0;
+        }
+        &-filters-container{
+            justify-content: center;
+            &-list{
+                // flex-direction: column;
+                justify-content: space-evenly;
+                margin-bottom: 15px;
+            }
         }
     }
 }

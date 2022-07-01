@@ -25,6 +25,7 @@ const MaterialLibraryMenuFilter = ({
                                 updateState = {updateFilterState.categories}
                                 placeholder= 'Catégories'
                                 eltsList = {categoriesList}
+                                iconList = {true}
                                 onChange = {(newValue) => {
                                         if (newValue) {
                                             const findId = categoriesList.find(categoriesList=>categoriesList.name === newValue);
@@ -45,6 +46,7 @@ const MaterialLibraryMenuFilter = ({
                                 updateState = {updateFilterState.tags}
                                 placeholder= 'Tags'
                                 eltsList = {tagsList}
+                                iconList = {true}
                                 onChange = {(newValue) => {
                                         if (newValue) {
                                             const findId = tagsList.find(tag=>tag.name === newValue);
