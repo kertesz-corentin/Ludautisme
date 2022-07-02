@@ -1,24 +1,19 @@
 import React from 'react';
+import { useState, useContext, useEffect } from 'react';
+import LazyImage from '../LazyImage/LazyImage'
 import PropTypes from 'prop-types';
 import './reference.scss';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 
-
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
+import {Box,Modal,Fade,Button,Skeleton,
+        Divider,Card,CardMedia,Typography,
+        Avatar,Backdrop
+      } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
-import {  Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState, useContext, useEffect } from 'react';
-import { FunctionContext } from '../App/App';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import Avatar from '@mui/material/Avatar';
+import HideImageIcon from '@mui/icons-material/HideImage';
+import { FunctionContext } from '../App/App';
 
 const Reference = ({
     className,
@@ -65,23 +60,43 @@ const Reference = ({
         cartManager.add(itemToAdd);
     }
 
+    const showMainImage = (pictures) => {
+      if (pictures[0].id === null){
+        return
+      }
+      const main = pictures.find(pic=>pic.main);
+      return (main.length) ? main : pictures[0]
+    }
+
    return (
 
-        <Card className = "card" sx={{ width: 345, height:345 }}>
-            <CardMedia
-                component="img"
-                height="140"
-                image={picture[0].url}
-                alt="image about the article"
-            />
-                <Typography className="card-name" gutterBottom variant="h6">
+        <Card className = "card" sx={{ width: 300, height:300 }}>
+          {(showMainImage(picture))
+          ?
+        //    <CardMedia
+        //         component="img"
+        //         height="200"
+        //         image={showMainImage(picture).url}
+        //         alt="image about the article"
+        //     />
+        <LazyImage
+            src={showMainImage(picture).url}
+            alt={showMainImage(picture).text}
+        />
+          :
+          <Box sx={{ width: '300px', height:'200px' }} className='reference-card__image-not-found'>
+          <HideImageIcon  className='reference-card__image-not-found--icon'/>
+          </Box>
+
+          }
+                <Typography className="reference-card__name">
                 {name}
                 </Typography>
-                <Typography className="card-description">
+                {/* <Typography className="reference-card__description">
                   {description}
-                </Typography >
+                </Typography > */}
                 { (display !== "booking") &&
-                    <Box className="card-footer">
+                    <Box className="reference-card__footer">
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>

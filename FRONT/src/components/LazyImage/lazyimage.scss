@@ -1,0 +1,28 @@
+
+@keyframes loadingAnimation{
+0% {background-color: #fff;}
+50% {background-color: #ccc;}
+100% {background-color: #fff;}
+}
+
+.lazy-image{
+    &__wrapper{
+        position: relative;
+    }
+
+    &__placeholder{
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        animation: loadingAnimation 2s infinite;
+    }
+    &__styledImage{
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
