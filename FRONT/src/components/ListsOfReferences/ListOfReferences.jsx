@@ -14,6 +14,8 @@ const ListOfReferences = ({
     references,
     display,
     currentItems,
+    gridSize,
+    isLoading,
      ...rest
     }) => {
     return (
@@ -44,6 +46,8 @@ const ListOfReferences = ({
                         valorisation={reference.valorisation}
                         nb_available={reference.nb_available}
                         nb_total={reference.nb_total}
+                        gridSize={gridSize}
+                        isLoading={isLoading}
                     />
 
                 )

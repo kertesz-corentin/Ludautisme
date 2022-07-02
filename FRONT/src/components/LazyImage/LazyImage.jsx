@@ -1,18 +1,22 @@
 import React from "react";
 import './lazyimage.scss'
 import PropTypes from "prop-types";
-import LazyLoad from "react-lazyload";
+import LazyLoad, {forceVisible} from "react-lazyload";
 
-const LazyImage = ({ src, alt }) => {
+
+const LazyImage = ({ src, alt, gridSize }) => {
   const refPlaceholder = React.useRef();
 
   const removePlaceholder = () => {
     refPlaceholder.current.remove();
   };
 
+  forceVisible();
   return (
-    <div className="lazy-image__wrapper" style = {{height:'200px',width:'300px'}}>
-      <div className="lazy-image__placeholder" ref={refPlaceholder} />
+    <div className="lazy-image__wrapper" style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}>
+      <div className="lazy-image__placeholder"
+            style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}
+            ref={refPlaceholder} />
       <LazyLoad>
         <img className="lazy-image__styledImage"
           onLoad={removePlaceholder}

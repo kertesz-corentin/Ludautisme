@@ -29,6 +29,8 @@ const Reference = ({
     nb_total,
     display,
     currentItems,
+    gridSize,
+    isLoading,
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -61,34 +63,38 @@ const Reference = ({
     }
 
     const showMainImage = (pictures) => {
-      if (pictures[0].id === null){
+      if (pictures){
+        if(pictures[0].id === null){
         return
+        }
+        const main = pictures.find(pic=>pic.main);
+        return (main.length) ? main : pictures[0]
       }
-      const main = pictures.find(pic=>pic.main);
-      return (main.length) ? main : pictures[0]
+
     }
 
    return (
 
-        <Card className = "card" sx={{ width: 300, height:300 }}>
-          {(showMainImage(picture))
-          ?
-        //    <CardMedia
-        //         component="img"
-        //         height="200"
-        //         image={showMainImage(picture).url}
-        //         alt="image about the article"
-        //     />
-        <LazyImage
-            src={showMainImage(picture).url}
-            alt={showMainImage(picture).text}
-        />
-          :
-          <Box sx={{ width: '300px', height:'200px' }} className='reference-card__image-not-found'>
-          <HideImageIcon  className='reference-card__image-not-found--icon'/>
-          </Box>
+        <Card className = "reference-card" sx={{ width: gridSize, height:gridSize }}>
+            {/* Card Loading */}
+            {(!isLoading)
+            ?
 
-          }
+            <Box>
+                {/* Image Loading */}
+                {
+                (showMainImage(picture))
+                ?
+                    <LazyImage
+                        gridSize={gridSize}
+                        src={showMainImage(picture).url}
+                        alt={showMainImage(picture).text}
+                    />
+                :
+                    <Box style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}} className='reference-card__image-not-found'>
+                    <HideImageIcon  className='reference-card__image-not-found--icon'/>
+                    </Box>
+                }
                 <Typography className="reference-card__name">
                 {name}
                 </Typography>
@@ -125,7 +131,12 @@ const Reference = ({
                         }
                    </Box>
                }
-
+            </Box>
+            :
+            <Box>
+                <Skeleton key= {`skeleton-card ${id}`} height={1000} style= {{marginTop:'-100%'}}/>
+            </Box>
+            }
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -156,19 +167,19 @@ const Reference = ({
                     </Box>
 
                 <Divider/>
-                <CardMedia
-                component="img"
-                height="140"
-                image={picture[0].url}
-                alt="image about the article"
-                className= "transition-modal-cardmedia"
-            />
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 <p> Categorie: {maincategory} </p>
-                 { tag &&
-                 <p> Sous catégories: {tag.map(tg=> tg.name)} </p>
-                 }
-                </Typography>
+                 {(showMainImage(picture))
+                        ?
+                        <LazyImage
+                            gridSize={gridSize}
+                            src={showMainImage(picture).url}
+                            alt={showMainImage(picture).text}
+                        />
+                        :
+                        <Box sx={{ width: '300px', height:'200px' }} className='reference-card__image-not-found'>
+                            <HideImageIcon  className='reference-card__image-not-found--icon'/>
+                        </Box>
+
+                }
                 {(nb_available > 0) &&
                 <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                  Quantité disponible: {nb_available} sur {nb_total}
