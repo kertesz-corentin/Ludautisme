@@ -17,7 +17,7 @@ const ReferenceSwiper = ({
     const renderImageType = () => {
                 if (pictures.length === 0 || pictures[0].id === null) {
                     return (
-                    <Box style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}} className='reference-card__image-not-found'>
+                    <Box style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}} className='reference-card__image-not-found'>
                         <HideImageIcon  className='reference-card__image-not-found--icon'/>
                     </Box>
                     );
@@ -33,7 +33,7 @@ const ReferenceSwiper = ({
                     return (
                         <Swiper
                             spaceBetween={30}
-                            style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}
+                            style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}}
                             pagination={{
                             clickable: true,
                             }}

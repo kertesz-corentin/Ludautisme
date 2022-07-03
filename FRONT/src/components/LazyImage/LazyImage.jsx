@@ -13,12 +13,13 @@ const LazyImage = ({ src, alt, gridSize }) => {
 
 //   forceVisible();
   return (
-    <div className="lazy-image__wrapper" style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}>
+    <div className="lazy-image__wrapper" style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}}>
       <div className="lazy-image__placeholder"
-            style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}
+            style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}}
             ref={refPlaceholder} />
       <LazyLoad>
         <img className="lazy-image__styledImage"
+          style={{objectFit:'cover',objectPosition:'top'}}
           onLoad={removePlaceholder}
           onError={removePlaceholder}
           src={src}
