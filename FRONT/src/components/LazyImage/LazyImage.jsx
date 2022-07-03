@@ -11,7 +11,7 @@ const LazyImage = ({ src, alt, gridSize }) => {
     refPlaceholder.current.remove();
   };
 
-  forceVisible();
+//   forceVisible();
   return (
     <div className="lazy-image__wrapper" style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}}>
       <div className="lazy-image__placeholder"

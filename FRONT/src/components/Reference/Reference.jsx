@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
-import LazyImage from '../LazyImage/LazyImage'
+import LazyImage from '../LazyImage/LazyImage';
+import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
 
@@ -12,8 +13,8 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
-import HideImageIcon from '@mui/icons-material/HideImage';
 import { FunctionContext } from '../App/App';
+import HideImageIcon from '@mui/icons-material/HideImage';
 
 const Reference = ({
     className,
@@ -37,8 +38,6 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-
-    const [isClick, setIsClick] = useState(false);
 
     let itemToAdd = {
         id,
@@ -75,26 +74,20 @@ const Reference = ({
 
    return (
 
-        <Card className = "reference-card" sx={{ width: gridSize, height:gridSize }}>
+        <Card className = "reference-card"
+              sx={{ width: gridSize, height:gridSize }}
+            >
+
+            <ReferenceSwiper
+                refId={id}
+                pictures={picture}
+                gridSize={gridSize}
+            />
             {/* Card Loading */}
             {(!isLoading)
             ?
 
             <Box>
-                {/* Image Loading */}
-                {
-                (showMainImage(picture))
-                ?
-                    <LazyImage
-                        gridSize={gridSize}
-                        src={showMainImage(picture).url}
-                        alt={showMainImage(picture).text}
-                    />
-                :
-                    <Box style = {{height:`${gridSize*(2/3)}px`,width:`${gridSize}px`}} className='reference-card__image-not-found'>
-                    <HideImageIcon  className='reference-card__image-not-found--icon'/>
-                    </Box>
-                }
                 <Typography className="reference-card__name">
                 {name}
                 </Typography>
@@ -154,37 +147,50 @@ const Reference = ({
                 <Typography className="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
-                <Avatar sx={{ marginRight:"15px",color:"rgba(0,0,0,0.8)",bgcolor:"rgba(0,0,0,0)", border:"2px solid rgba(0,0,0,0.6)", fontSize: 13, fontWeight:"600", p:2, borderRadius:"25px" }} variant="rounded">
-                        {valorisation}€
+                <Avatar sx={{width:'4rem',color:"rgba(0,0,0,0.8)",bgcolor:"rgba(0,0,0,0)", border:"2px solid rgba(0,0,0,0.6)", fontSize: 13, fontWeight:"600", p:2, borderRadius:"25px" }} variant="rounded">
+                        {(valorisation===0) ? '- €' : `${valorisation}€`}
                     </Avatar>
                     </Box>
+                <Box style={{display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
+                 <ReferenceSwiper
+                refId={id}
+                pictures={picture}
+                gridSize={gridSize}
+                />
+                </Box>
                 <Divider/>
                 <Typography className="transition-modal-description" variant="h6" component="h5">
                   {description}
-                    </Typography>
-                    <Box sx={{marginBottom:"15px"}}>
-                        {nb_available > 0 ? <Available/> : <Unavailable/>}
-                    </Box>
-
-                <Divider/>
-                 {(showMainImage(picture))
-                        ?
-                        <LazyImage
-                            gridSize={gridSize}
-                            src={showMainImage(picture).url}
-                            alt={showMainImage(picture).text}
-                        />
-                        :
-                        <Box sx={{ width: '300px', height:'200px' }} className='reference-card__image-not-found'>
-                            <HideImageIcon  className='reference-card__image-not-found--icon'/>
-                        </Box>
-
-                }
-                {(nb_available > 0) &&
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                 Quantité disponible: {nb_available} sur {nb_total}
                 </Typography>
-                }
+                    <Box sx={{marginBottom:"15px",display:'flex',justifyContent:'space-evenly'}}>
+                        {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
+
+                     {(userToken)?
+                            <>
+                                {(nb_available > 0 && currentItems)?
+                                    <>
+                                         {(!currentItems.map((item)=> item.id).includes(id)) ?
+                                              <Button
+                                              onClick={handleClick}>
+                                                  <AddShoppingCartIcon/>
+                                                </Button>
+                                         :
+                                            <Box>
+                                                <BookmarkAddedIcon/>
+                                            </Box>
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                       <Unavailable/>
+                                    </>
+                                }
+                            </>
+                            :
+                            <>
+                            </>
+                        }
+                </Box>
               </Box>
             </Fade>
           </Modal>
