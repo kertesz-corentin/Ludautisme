@@ -232,6 +232,31 @@ cors@^2.8.5:
     object-assign "^4"
     vary "^1"
 
+csv-generate@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/csv-generate/-/csv-generate-4.1.0.tgz#31eb5cf9f2484f0d4b289ee03858fc77b3ed55ff"
+  integrity sha512-Z17wI0xmDfpwzB7lShyK7INBt0YMyh5kV7svWTwsBSOa30T6Lq1fHHasmSCtf2rRTI7GnTk52HQRYBk0ToAXQQ==
+
+csv-parse@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-5.1.0.tgz#e587e969bf0385ecf4f36f584ed5ddebba0237ab"
+  integrity sha512-JL+Q6YEikT2uoe57InjFFa6VejhSv0tDwOxeQ1bVQKeUC/NCnLAAZ8n3PzowPQQLuZ37fysDYZipB2UJkH9C6A==
+
+csv-stringify@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-6.1.0.tgz#6b79e2717bc35ae063800a490244117998a2e86c"
+  integrity sha512-rdBqiy77TczvhGlpLHyoph2adMs6WMnmQY4PBRqeIWykI1FLnVCppnRdso8faGj2+eN7izk9YlbFyZkOrL9rAQ==
+
+csv@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/csv/-/csv-6.1.0.tgz#f81198182b19eeeb2cd7f2479fcc086a25edfcca"
+  integrity sha512-kvd8YWk7emi/0fXhuv+IKaanNFhPi5Up1wT4ZGVUu39bd9lRWpxQu1F7eaRfxTEc9mGxeMWIzEilKKrL0MoEnQ==
+  dependencies:
+    csv-generate "^4.1.0"
+    csv-parse "^5.1.0"
+    csv-stringify "^6.1.0"
+    stream-transform "^3.1.0"
+
 debug@2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -412,6 +437,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+
+fs@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+  integrity sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==
 
 gauge@^3.0.0:
   version "3.0.2"
@@ -1063,6 +1093,11 @@ split2@^4.1.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+
+stream-transform@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/stream-transform/-/stream-transform-3.1.0.tgz#9320fc99b6ef4767a0d87ff374c4366d46d214e9"
+  integrity sha512-ncT/rST/M2N2zGLacJmeB7TNq/XS8Ck0xqvhYX6bgLwSPTSZLVFCSvNnwTU+RYhk9fAfwzCkYH9I5kdgcDMvfw==
 
 streamsearch@0.1.2:
   version "0.1.2"
