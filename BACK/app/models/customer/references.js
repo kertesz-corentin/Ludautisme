@@ -102,7 +102,6 @@ module.exports = {
         return result.rows;
     },
     async findFiltered(arr, offset, limit) {
-        console.log("ARRRRR!", arr);
         let queryStart = `SELECT
         r.id,
         r.name,
