@@ -1,5 +1,4 @@
 const express = require('express');
-
 const referenceRouter = require('./reference');
 const userRouter = require('./user');
 const categoryRouter = require('./category');

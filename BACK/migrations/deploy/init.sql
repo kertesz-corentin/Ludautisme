@@ -11,7 +11,7 @@ CREATE TABLE "user" (
     "phone" TEXT,
     "first_name" TEXT,
     "last_name" TEXT,
-    "adress_number" TEXT NOT NULL,
+    "adress_number" TEXT,
     "adress_street" TEXT NOT NULL,
     "adress_zipcode" INT NOT NULL,
     "adress_city" TEXT NOT NULL,

@@ -23,10 +23,8 @@ const router = express.Router();
 router.route('/')
     .get(controllerHandler(categoryController.getAll));
 
-
 router.route('/search')
     .post(controllerHandler(categoryController.findFiltered));
-
 
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
