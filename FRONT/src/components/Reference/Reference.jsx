@@ -88,7 +88,7 @@ const Reference = ({
             ?
 
             <Box>
-                <Typography className="reference-card__name">
+                <Typography noWrap className="reference-card__name">
                 {name}
                 </Typography>
                 {/* <Typography className="reference-card__description">
@@ -151,7 +151,7 @@ const Reference = ({
                         {(valorisation===0) ? '- €' : `${valorisation}€`}
                     </Avatar>
                     </Box>
-                <Box style={{display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
+                <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
                  <ReferenceSwiper
                 refId={id}
                 pictures={picture}
