@@ -17,3 +17,10 @@
     padding: 1rem;
 }
 
+@media all and (max-width: 420px)
+{
+    .content-container--max-width {
+       padding : 0;
+    }
+}
+

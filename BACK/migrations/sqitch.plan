@@ -4,14 +4,14 @@
 
 init 2022-02-25T12:56:42Z corentin kertesz <kertesz.corentin@hotmail.com> # create database
 
-initial_seeding/seed_roles 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_users 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_permanencies 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_bookings 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_categories 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_references 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_images 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_refs_to_images 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_refs_to_categories 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_articles 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
-initial_seeding/seed_articles_to_booking 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_roles 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_users 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_permanencies 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_bookings 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_categories 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_references 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_images 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_refs_to_images 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_refs_to_categories 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_articles 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_free_heroku/seed_articles_to_booking 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database

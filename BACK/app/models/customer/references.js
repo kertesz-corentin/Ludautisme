@@ -58,6 +58,15 @@ module.exports = {
         );
         return result.rows;
     },
+    async findNameList() {
+        const result = await sqlHandler(
+            `SELECT
+            r."id",
+            r."name"
+            FROM "reference" AS r`
+        );
+        return result.rows;
+    },
     async findOne(id) {
         const result = await sqlHandler(
             `SELECT

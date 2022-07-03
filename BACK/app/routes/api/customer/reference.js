@@ -15,8 +15,18 @@ const router = express.Router();
  */
 router.route('/search')
     .post(controllerHandler(referenceController.search));
+
 /**
- * GET /api/customer/single/:id
+ * GET /api/customer/articles/namelist
+ * @summary Get list of all references name and id
+ * @tags [CUSTOMER] Reference
+ * @returns {object} 200 - success response - application/json
+ */
+router.route('/namelist')
+    .get(controllerHandler(referenceController.getNameList));
+
+/**
+ * GET /api/customer/articles/single/:id
  * @summary Get One reference with picture
  * @tags [CUSTOMER] Reference
  * @returns {allOf|Reference|Stock|Pictures} 200 - success response - application/json

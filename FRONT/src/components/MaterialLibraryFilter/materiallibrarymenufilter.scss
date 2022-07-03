@@ -1,0 +1,77 @@
+@import 'src/styles/vars';
+
+.materiallibrarymenu-filters{
+    height: fit-content;
+    width: 100%;
+    padding: 10px;
+    &-row-flex{
+    padding: 0 15px;
+    margin: 15px 0 15px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background-color: $blue;
+    border: 2px solid $font-color-2;
+    border-radius: 1.25rem;
+    column-gap: 5px;
+    align-self: center;
+        &-title{
+            align-self: center;
+            font-size: 1rem!important;
+            color: $font-color-2;
+
+        }
+    }
+}
+
+ .menu__button{
+    display: none !important;
+    border: 3px solid $font-color-2!important;
+    color: $font-color-2!important;
+    font-weight: 600!important;
+    border-radius: 2rem!important;
+    padding: 10 15px !important;
+ }
+
+.is--menu{
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+        align-items: center;
+        padding: 20px 10%;
+    }
+
+.is--desktop{
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    align-items: center;
+}
+
+@media all and (max-width:1080px){
+    .materiallibrarymenu-inputs{
+        padding: 0 1rem;
+    }
+    .menu__button{
+        display: block !important;
+    }
+
+    .is--desktop{
+        display: none;
+    }
+
+}
+
+@media all and (max-width:420px){
+    .materiallibrarymenu-inputs{
+        justify-content: space-evenly;
+        column-gap: 10px;
+    }
+    .materiallibrarymenu-filters-container{
+        padding: 5px;
+        flex-wrap: wrap;
+        &__title{
+            display: none;
+        }
+    }
+}

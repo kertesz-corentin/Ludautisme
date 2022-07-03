@@ -8,8 +8,13 @@
 
 .gridList{
     height: 100%;
-    margin: 0 25px;
     gap: 25px;
     align-items: flex-start;
     align-content: space-around;
+    &-empty{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 125px;
+    }
 }

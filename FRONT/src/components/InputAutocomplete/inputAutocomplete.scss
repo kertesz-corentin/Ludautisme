@@ -1,0 +1,20 @@
+.atcplt-input {
+        min-width: 10rem;
+        display: flex;
+        margin: 8px 18px;
+        & > input {
+            background-color: rgba(0,0,0,0);
+            font-size: 1.1em;
+            width: 100%;
+            border : none;
+            &::placeholder{
+                color : rgba(0,0,0,0.3)
+            }
+        }
+        &--interaction:hover {
+            cursor: pointer;
+        }
+        &-searchbar{
+            margin: 8px 15px 8px 10px;
+        }
+    }

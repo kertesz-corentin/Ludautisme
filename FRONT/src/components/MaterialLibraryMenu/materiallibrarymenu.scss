@@ -1,19 +1,159 @@
 @import 'src/styles/vars';
 
 .materiallibrarymenu{
+    width: 90%;
     min-width: 250px;
-    background-color: #00bdb6;
-    padding: 15px;
-    border-radius: 20px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    &-inputs {
+        z-index: 1;
+        height : 4.5rem;
+        width: 100%;
+        background-color: #00bdb6;
+        border-radius: 2.5rem;
+        padding: 5px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &-container{
+        display: flex;
+        align-items: baseline;
+        }
+        &-dialog{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        &-modal{
+        display: flex;
+        justify-content: flex-end;
+            &__content{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 0;
+                background-color: rgba($font-color-2,0.95);
+            }
+        }
 
-    p {
-        color: $font-color-2;
-        font-size: 1.8rem;
     }
+    &-filters-container {
+        display: flex;
+        align-items: center;
+        padding: 15px 75px;
+        &__title{
+            color: black;
+            size: 0.8rem;
+            margin-right: 7px;
+        }
+        &-list{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        & .MuiButton-root{
+            margin-left: 10px;
+            border-radius: 1.25rem;
+            padding: 5px 15px;
+            font-weight: 600;
+            color : $orange;
+            border: 1px solid $orange;
+        }
+    }
+    &-title{
+        font-size: 1.8rem;
+        color: $font-color-2;
+    }
+    &-searchbar {
+        background: white;
+        display: flex;
+        border-radius: 2rem;
+        padding: 0;
+    }
+    &-tags , &-categories {
+        background: white;
+        display: flex;
+        height: fit-content;
+        border-radius: 2rem;
+        padding: 0;
+    }
+    &-autocomplete-input {
+        min-width: 10rem;
+        border-radius: 2rem;
+        background-color: white;
+        padding: 8px 15px;
+        display: flex;
+    }
+    &-autocomplete-input-tags {
+        padding: 8px 18px;
+    }
+    &-autocomplete-input-search {
+        padding: 8px 10px;
+    }
+    &-autocomplete-input > input {
+        font-size: 1.1em;
+        width: 100%;
+        border : none;
+    }
+
 }
+
+.searchbar{
+        display: flex;
+        align-items: center;
+        height: 2rem;
+        width: 15rem;
+    &-autocomplete{
+        width: 100%;
+        min-width: 15rem;
+        max-width: 25rem;
+        margin-left: 5px;
+    }
+    &-textfield{
+        font-size: 0.8rem!important;
+    }
+
+}
+
+.is--desktop__button{
+    display: none!important;
+}
+
 @media all and (max-width: 1080px)
 {
     .MuiFormControl-root {
         max-width: 300px;
+    }
+    .is--desktop__button{
+        background-color: rgba($font-color-2,0.95);
+        display: block!important;
+    }
+}
+
+@media all and (max-width: 810px)
+{
+    .materiallibrarymenu-inputs {
+        padding: 10px;
+    }
+}
+
+@media all and (max-width: 420px)
+{
+    .materiallibrarymenu {
+        width: 100%;
+        border-radius: 0;
+        &-inputs{
+            border-radius: 0;
+        }
+        &-filters-container{
+            justify-content: center;
+            &-list{
+                // flex-direction: column;
+                justify-content: space-evenly;
+                margin-bottom: 15px;
+            }
+        }
     }
 }
