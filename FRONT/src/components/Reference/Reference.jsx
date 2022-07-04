@@ -65,7 +65,7 @@ const Reference = ({
    return (
 
         <Card className = "reference-card"
-              sx={{ width: gridSize, height:gridSize }}
+              sx={{ width: gridSize }}
             >
 
             <ReferenceSwiper
@@ -73,9 +73,6 @@ const Reference = ({
                 pictures={picture}
                 gridSize={gridSize}
             />
-            {/* Card Loading */}
-            {(!isLoading)
-            ?
             <Box>
                 <Typography noWrap className="reference-card__name">
                 {(display === 'booking') ? `N°${idArticle} ${name}` :name}
@@ -111,11 +108,6 @@ const Reference = ({
                    </Box>
                }
             </Box>
-            :
-            <Box>
-                <Skeleton key= {`skeleton-card ${id}`} height={1000} style= {{marginTop:'-100%'}}/>
-            </Box>
-            }
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"

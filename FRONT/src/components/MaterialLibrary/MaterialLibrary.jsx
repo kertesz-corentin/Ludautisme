@@ -123,7 +123,6 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         ? (iconType === 'ViewComfyIcon')?setGridSize(250):setGridSize(400)
         :
         setGridSize(400);
-        forceVisible();
     }
 
 

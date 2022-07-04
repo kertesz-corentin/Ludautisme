@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable quotes */
 const sqlHandler = require('../../helpers/sqlHandler');
 
@@ -84,7 +85,7 @@ module.exports = {
         const placeholders = [];
         try {
             arr.forEach((filter, index) => {
-                let prop = Object.keys(filter)[0];
+                const prop = Object.keys(filter)[0];
                 placeholders.push(filter[prop]);
                 if (index !== arr.length - 1) {
                     query += `"${prop}"=$${index + 1} AND `;

@@ -9,9 +9,10 @@ const LazyImage = ({ src, alt, gridSize }) => {
 
   const removePlaceholder = () => {
     refPlaceholder.current.remove();
+    setTimeout(()=>{forceVisible()},150);
   };
 
-//   forceVisible();
+
   return (
     <div className="lazy-image__wrapper" style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}}>
       <div className="lazy-image__placeholder"
