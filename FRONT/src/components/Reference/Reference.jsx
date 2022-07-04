@@ -27,6 +27,7 @@ const Reference = ({
     valorisation,
     article,
     nb_available,
+    idArticle,
     nb_total,
     display,
     currentItems,
@@ -61,17 +62,6 @@ const Reference = ({
         cartManager.add(itemToAdd);
     }
 
-    const showMainImage = (pictures) => {
-      if (pictures){
-        if(pictures[0].id === null){
-        return
-        }
-        const main = pictures.find(pic=>pic.main);
-        return (main.length) ? main : pictures[0]
-      }
-
-    }
-
    return (
 
         <Card className = "reference-card"
@@ -86,14 +76,10 @@ const Reference = ({
             {/* Card Loading */}
             {(!isLoading)
             ?
-
             <Box>
                 <Typography noWrap className="reference-card__name">
-                {name}
+                {(display === 'booking') ? `N°${idArticle} ${name}` :name}
                 </Typography>
-                {/* <Typography className="reference-card__description">
-                  {description}
-                </Typography > */}
                 { (display !== "booking") &&
                     <Box className="reference-card__footer">
                     <Button onClick={handleOpen}>Détails</Button>

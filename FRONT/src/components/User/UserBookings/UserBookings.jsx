@@ -4,11 +4,7 @@ import classnames from 'classnames';
 import './userbookings.scss';
 import Permanency from '../../Permanency/Permanency';
 import MenuUser from '../MenuUser/MenuUser';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import {Box,Divider, Typography} from '@mui/material';
 import api from '../../../requests';
 import ListOfReferences from '../../ListsOfReferences/ListOfReferences';
 import ListOfBookings from '../../ListOfBookings/ListOfBookings';
@@ -29,6 +25,12 @@ const UserBookings = ({className, ...rest}) => {
     const getBookings = async() => {
         try {
             const { id } = await JSON.parse(localStorage.getItem('user'));
+
+            //Get active permanency
+            const perm = await api.get(`/customer/permanency/`);
+            const activePerm = perm.data;
+            console.log(activePerm)
+            //Get bookings
             const response = await api.get(`/customer/booking/history/${id}`);
             let data = await response.data;
             console.log("data",data);
@@ -48,8 +50,12 @@ const UserBookings = ({className, ...rest}) => {
                             ],
                         }
                 });
-                booking.date_permanency = moment(booking.date_permanency).format("DD MMM YYYY")
-                booking.return_date_permanency = moment(booking.return_date_permanency).format("DD MMM YYYY")
+                booking.date_permanency = (booking.date_permanency)
+                ? `le : ${moment(booking.date_permanency).format("DD MMMM YYYY")}`
+                :  `en ${moment(activePerm[0].perm_date).add(1, 'M').format("MMMM YYYY")}`;
+                booking.return_date_permanency = (booking.return_date_permanency)
+                ? `le : ${moment(booking.return_date_permanency).format("DD MMMM YYYY")}`
+                : `en ${moment(activePerm[0].perm_date).add(1, 'M').format("MMMM YYYY")}`;
                 delete booking.articles;
                 return booking
             });
@@ -82,6 +88,9 @@ const UserBookings = ({className, ...rest}) => {
         }
     }
 
+    const gridSize = 275;
+    const displayCountRefBooked = (references) => (`( ${nextBooking[0].references.length} article${(nextBooking[0].references.length>1)?'s':''} )`)
+
     useEffect(() => {
         getBookings();
     }, []);
@@ -93,33 +102,51 @@ const UserBookings = ({className, ...rest}) => {
                 >
                     <Box className = "list" sx={{ bgcolor: 'background.paper' }}>
                         { (nextBooking[0])&&
-                        <>
-                        <h2>Réservation prochaine permanence</h2>
+                        <Box className='booking__wrapper'>
+                        <Box className="booking__title ">
+                            <h2>Réservation prochaine permanence {displayCountRefBooked(nextBooking[0])} </h2>
+                        </Box>
+                         <Typography className="booking__info">#{nextBooking[0].id} - A venir récupérer {nextBooking[0].date_permanency}</Typography>
                         {/* <Permanency/> */}
-                        <Box sx={{ bgcolor: 'background.paper' }}>
-                                <ListOfReferences display="booking" references= {nextBooking[0].references}/>
+                        <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
+                                <ListOfReferences
+                                    display="booking"
+                                    references= {nextBooking[0].references}
+                                    gridSize={gridSize}
+                                />
                             {console.log('next',nextBooking)}
                         </Box>
-                        </>
+                        </Box>
                         }
+                        <Divider className="booking__divider"/>
                         { (activeBooking[0]) &&
-                        <>
-                        <h2>Emprunt en cours</h2>
-                        <Box sx={{ bgcolor: 'background.paper' }}>
-                                <ListOfReferences display="booking" references= {activeBooking[0].references}/>
+                        <Box className="booking__wrapper ">
+                        <Box className="booking__title ">
+                            <h2>Emprunt en cours {displayCountRefBooked(activeBooking[0])}</h2>
+                        </Box>
+                        <Typography className="booking__info">#{activeBooking[0].id} - A rendre {activeBooking[0].return_date_permanency}</Typography>
+                        <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
+                                <ListOfReferences
+                                    display="booking"
+                                    references= {activeBooking[0].references}
+                                    gridSize={gridSize}
+                                />
 
                             {console.log('active',activeBooking[0])}
                         </Box>
-                        </>
+                        </Box>
                         }
+                         <Divider className="booking__divider"/>
                         { (oldBookings.length>0)&&
-                            <>
-                            <h2>Historique</h2>
-                            <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                            <Box className="booking__wrapper">
+                            <Box className="booking__title ">
+                                <h2>Historique</h2>
+                            </Box>
+                            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                                 <ListOfBookings bookings = {oldBookings}/>
 
                             </Box>
-                            </>
+                            </Box>
                         }
                     </Box>
             </div>

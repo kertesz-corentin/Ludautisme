@@ -187,7 +187,6 @@ const MaterialLibraryMenu = ({
                                 }
                                 {(getFilterState.available === true)&&
                                     (<Chip key={`avail-${getFilterState.available}`} data-remove={`available`} label={'Disponible'} variant="outlined" onDelete={handleRemove}/>)}
-                                {console.log(getFilterState.searchValue)}
                                 {(getFilterState.searchValue) &&
                                     (<Chip key={`search-${getFilterState.searchValue}`} data-remove={`searchValue`} label={`Recherche: ${getFilterState.searchValue}`} variant="outlined" onDelete={handleRemove}/>)}
 

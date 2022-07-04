@@ -7,19 +7,37 @@ module.exports = (req, res, next) => {
     const old = res.json.bind(res);
 
     res.json = (body) => {
-        const wrapFullUrlToPic = (pic) => ({ ...pic, ...{ url: `${fullUrl}${pic.url}` } });
         if (body.status === 'error' || !body.length) {
             old(body);
             return;
         }
-        const bodyWrapped = (body[0].picture)
-            ? body.map(
-                (ref) => ({ ...ref, ...{ picture: ref.picture.map(wrapFullUrlToPic) } }),
-            )
-            : body;
+        const bodyWrapped = () => {
+            if (body[0].articles) {
+                const wrapFullUrlToPic = (picUrl) => (`${fullUrl}${picUrl}`);
+                return body.map(
+                    (book) => ({
+                        ...book,
+                        articles: book.articles.map(
+                            (art) => ({
+                                ...art,
+                                ...{ url_picture_ref: wrapFullUrlToPic(art.url_picture_ref) },
+                            }),
+                        ),
+                    }),
+                );
+            }
+            if (body[0].picture) {
+                const wrapFullUrlToPic = (pic) => ({ ...pic, ...{ url: `${fullUrl}${pic.url}` } });
+                return body.map(
+                    (ref) => ({ ...ref, ...{ picture: ref.picture.map(wrapFullUrlToPic) } }),
+                );
+            }
+
+            return body;
+        };
 
         // Do whatever
-        old(bodyWrapped);
+        old(bodyWrapped());
     };
 
     next();

@@ -75,7 +75,7 @@ const Header = ({
                 </div>
             </nav>
                 <div className="header-items">
-                    <Cart cartManager={cartManager} currentItems = {currentItems}/>
+                    {(userToken)&&<Cart cartManager={cartManager} currentItems = {currentItems}/>}
                     <LoginUser/>
                 </div>
             </Box>

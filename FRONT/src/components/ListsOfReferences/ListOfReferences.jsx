@@ -48,6 +48,7 @@ const ListOfReferences = ({
                         nb_total={reference.nb_total}
                         gridSize={gridSize}
                         isLoading={isLoading}
+                        idArticle={reference.art_id}
                     />
 
                 )

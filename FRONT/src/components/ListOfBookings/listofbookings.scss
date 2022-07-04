@@ -6,6 +6,15 @@
     border:black solid 2rem;
 }
 
-.booking__accordion {
+.booking{
+    &__container{
+        margin: 0 auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__accordion {
     width: 100%;
+    }
 }
