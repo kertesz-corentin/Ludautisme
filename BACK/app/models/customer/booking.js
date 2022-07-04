@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable quotes */
 const sqlHandler = require('../../helpers/sqlHandler');
 
@@ -84,7 +85,7 @@ module.exports = {
         const placeholders = [];
         try {
             arr.forEach((filter, index) => {
-                let prop = Object.keys(filter)[0];
+                const prop = Object.keys(filter)[0];
                 placeholders.push(filter[prop]);
                 if (index !== arr.length - 1) {
                     query += `"${prop}"=$${index + 1} AND `;
@@ -116,18 +117,7 @@ module.exports = {
 		"perm"."active" AS active_permanency,
         (perm."perm_date" > CURRENT_DATE) AS is_next_permanency,
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
-	    json_agg(json_build_object (
-                'id', ar."id",
-                'number', ar."id",
-                'available', ar."available",
-                'archived', ar."archived",
-				'id_ref', "reference"."id",
-				'name_ref', "reference"."name",
-				'description_ref', "reference"."description",
-				'id_picture_ref', "image"."id",
-				'url_picture_ref', "image"."url",
-				'text_picture_ref',"image"."alternative_text"
-                )) AS "articles"
+	    json_agg(ar."id") AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"
 		INNER JOIN "article_to_booking" AS ar_to_book ON "b"."id" = "ar_to_book"."id_booking"
