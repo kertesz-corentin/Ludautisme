@@ -18,7 +18,7 @@ router.use('/user', userRouter);
 
 router.use('/category', categoryRouter);
 
-router.use('/booking', pictureFullPath, bookingRouter);
+router.use('/booking', bookingRouter);
 
 router.use('/permanency', permanencyRouter);
 
