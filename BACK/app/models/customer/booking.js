@@ -82,11 +82,9 @@ module.exports = {
         FROM booking_full
         WHERE `;
         const placeholders = [];
-        console.log(arr);
         try {
             arr.forEach((filter, index) => {
                 let prop = Object.keys(filter)[0];
-                console.log(prop);
                 placeholders.push(filter[prop]);
                 if (index !== arr.length - 1) {
                     query += `"${prop}"=$${index + 1} AND `;
@@ -101,7 +99,6 @@ module.exports = {
         }
     },
     async findHistory(id) {
-        console.log(id);
         const query = `
         SELECT
 	    b.id,

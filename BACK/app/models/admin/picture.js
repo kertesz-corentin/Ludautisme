@@ -83,7 +83,6 @@ module.exports = {
     },
     async update(id, obj) {
         const props = Object.keys(obj);
-        console.log(obj);
         let query = `UPDATE "image" SET `;
         const placeholders = [];
         props.forEach((prop, index) => {

@@ -10,6 +10,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ViewComfyIcon from '@mui/icons-material/ViewComfy';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import {forceVisible} from "react-lazyload";
 
 const MaterialLibrary = ({className,currentItems, ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
@@ -25,6 +26,8 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
 
     const [gridSize,setGridSize] = useState(400);
     const [isLoading,setIsLoading] = useState(true);
+
+    const [currentSearchValue,setCurrentSearchValue] = useState();
 
 
    async function getReferences () {
@@ -56,6 +59,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
                 available: available[0],
                 categories: (!categories.length)?'':categories,
                 name : ((!ids[0])?'':ids),
+                searchValue: currentSearchValue,
     }
 
     const updateFilterState = {
@@ -69,13 +73,16 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
             (typeof newValue !== 'undefined' && !categories.includes(newValue)) && setCategories([...categories, newValue]);
         },
         name(newValue){
-            setIds(newValue);
+            setIds(newValue.ids);
+            setCurrentSearchValue(newValue.searchValue);
+            console.log(newValue)
         },
         reset(){
             setTags([]);
             setAvailable([]);
             setCategories([]);
             setIds([]);
+            setCurrentSearchValue();
         }
     }
 
@@ -87,6 +94,13 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         categories(value){
             const removed = categories.filter(cat=> cat !== Number(value));
             setCategories(removed);
+        },
+        available(){
+            setAvailable(false);
+        },
+        searchValue(){
+            setIds([]);
+            setCurrentSearchValue();
         }
     }
 
@@ -109,6 +123,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         ? (iconType === 'ViewComfyIcon')?setGridSize(250):setGridSize(400)
         :
         setGridSize(400);
+        forceVisible();
     }
 
 

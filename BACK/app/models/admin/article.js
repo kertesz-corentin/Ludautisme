@@ -49,7 +49,6 @@ module.exports = {
         return result.rows;
     },
     async findOne(id) {
-        console.log(id);
         const query = `
         SELECT
         "article"."id",
@@ -120,7 +119,6 @@ module.exports = {
         INNER JOIN "reference" ON "article"."id_ref"="reference"."id"
         WHERE `;
         const placeholders = [];
-        console.log(arr);
         arr.forEach((filter, index) => {
             let prop = Object.keys(filter)[0];
             placeholders.push(filter[prop]);

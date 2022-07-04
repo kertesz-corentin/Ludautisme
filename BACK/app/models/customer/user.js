@@ -34,7 +34,6 @@ module.exports = {
         return result.rows[0];
     },
     async update(id, obj) {
-        console.log(id,obj);
         const props = Object.keys(obj);
         let query = `UPDATE "user" SET `;
         const placeholders = [];

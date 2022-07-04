@@ -39,7 +39,6 @@ module.exports = {
     async delete(req, res) {
         const idUser = Number(req.params.userId);
         const refId = Number(req.body.refId);
-        console.log(refId);
         const refIsInCart = await cartDataMapper.findRefByUserId(idUser, refId);
         if (refIsInCart.length < 1) {
             throw new ApiError(403, "Cet article n'est pas dans le panier");

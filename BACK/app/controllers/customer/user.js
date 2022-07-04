@@ -36,7 +36,6 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
             req.body.password = hashedPassword;
         }
-        console.log("body",req.body);
         const updatedUser = await userDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
     },

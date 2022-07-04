@@ -19,7 +19,6 @@ const sqlHandler = require('../../helpers/sqlHandler');
  */
 module.exports = {
     async findAll() {
-        console.log('data !!');
         const result = await sqlHandler(`
         SELECT
         r.id,

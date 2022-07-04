@@ -155,7 +155,7 @@ const MaterialLibraryMenu = ({
                                 const pattern = newValue.split(" ").map(word=>`(?=.*${word})`).join("");
                                 const regex = new RegExp(pattern,'i');
                                 const found = nameList.filter((tag)=>tag.name.match(regex));
-                                return found.map( elt=> Number(elt.id) );
+                                return {searchValue: newValue , ids: found.map( elt=> Number(elt.id) )};
                             }
                         }
                     />
@@ -163,7 +163,11 @@ const MaterialLibraryMenu = ({
         </Box>
         <Box  ref={filtersContainerRef} style={{width:'100%',display:'block'}}>
           <Slide direction="down"
-                 in={(getFilterState.tags.length > 0 || getFilterState.categories.length > 0)}
+                 in={(getFilterState.tags.length > 0
+                    || getFilterState.categories.length > 0)
+                    || getFilterState.available
+                    || getFilterState.searchValue
+                }
                  mountOnEnter unmountOnExit
                  container={filtersContainerRef.current}>
                 <div className='materiallibrarymenu-filters-container'>
@@ -181,6 +185,11 @@ const MaterialLibraryMenu = ({
                                             (<Chip key={`tag-${tag.id}`} data-remove={`tags-${tag.id}`} label={tag.name} variant="outlined" onDelete={handleRemove}/>)
                                     ))
                                 }
+                                {(getFilterState.available === true)&&
+                                    (<Chip key={`avail-${getFilterState.available}`} data-remove={`available`} label={'Disponible'} variant="outlined" onDelete={handleRemove}/>)}
+                                {console.log(getFilterState.searchValue)}
+                                {(getFilterState.searchValue) &&
+                                    (<Chip key={`search-${getFilterState.searchValue}`} data-remove={`searchValue`} label={`Recherche: ${getFilterState.searchValue}`} variant="outlined" onDelete={handleRemove}/>)}
 
                     </div>
                     <Button onClick={updateFilterState.reset}>Reset</Button>
