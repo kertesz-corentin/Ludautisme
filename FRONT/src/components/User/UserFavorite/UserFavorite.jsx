@@ -11,17 +11,22 @@ const UserFavorite = ({className, ...rest}) => {
 
     const getFavorites = async ()=>{
         const favorites = await api.get(`/customer/favorite/${user.id}`);
+        console.log(favorites.data);
         setFavoritesList(favorites.data);
     }
 
     useEffect(()=>{
         getFavorites();
     },[]);
-    
+
     return(
-            favoritesList.map((fav)=>(
+        <div>
+            {(favoritesList) && 
+                favoritesList.map((fav)=>(
                  <div>{JSON.stringify(fav)}</div>
-            ))      
+            ))
+            }
+        </div>      
     )
 };
 
