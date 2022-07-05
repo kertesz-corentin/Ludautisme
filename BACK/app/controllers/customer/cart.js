@@ -5,20 +5,20 @@ const ApiError = require('../../errors/apiError');
 
 module.exports = {
     async getCart(req, res) {
-        const idUser = Number(req.params.userId);
-        if (Number.isNaN(idUser)) {
+        const userId = Number(req.params.userId);
+        if (Number.isNaN(userId)) {
             throw new ApiError(403, 'Cet id est invalide');
         }
-        const cart = await cartDataMapper.findCartByUserId(idUser);
+        const cart = await cartDataMapper.findCartByUserId(userId);
         return res.json(cart);
     },
     async addToCart(req, res) {
-        const idUser = Number(req.params.userId);
+        const userId = Number(req.params.userId);
         const refId = Number(req.body.refId);
         if (!refId) {
             throw new ApiError(403, 'Aucune référence transmise');
         }
-        const count = await cartDataMapper.countCart(idUser);
+        const count = await cartDataMapper.countCart(userId);
         if (count[0].count >= process.env.BORROW_LIMIT) {
             throw new ApiError(403, `Taille maximale du panier atteinte (${process.env.BORROW_LIMIT})`);
         }
@@ -29,26 +29,26 @@ module.exports = {
         if (refExist[0].nb_available < 1) {
             throw new ApiError(403, "Cette référence n'est pas disponible");
         }
-        const refIsInCart = await cartDataMapper.findRefByUserId(idUser, refId);
+        const refIsInCart = await cartDataMapper.findRefByUserId(userId, refId);
         if (refIsInCart.length > 0) {
             throw new ApiError(403, 'Cet article est déjà dans le panier');
         }
-        const cart = await cartDataMapper.addRef(idUser, refId);
+        const cart = await cartDataMapper.addRef(userId, refId);
         return res.json(cart);
     },
     async delete(req, res) {
-        const idUser = Number(req.params.userId);
+        const userId = Number(req.params.userId);
         const refId = Number(req.body.refId);
-        const refIsInCart = await cartDataMapper.findRefByUserId(idUser, refId);
+        const refIsInCart = await cartDataMapper.findRefByUserId(userId, refId);
         if (refIsInCart.length < 1) {
             throw new ApiError(403, "Cet article n'est pas dans le panier");
         }
-        const cart = await cartDataMapper.deleteOne(idUser, refId);
+        const cart = await cartDataMapper.deleteOne(userId, refId);
         return res.json(cart);
     },
     async clear(req, res) {
-        const idUser = Number(req.params.userId);
-        const cart = await cartDataMapper.clear(idUser);
+        const userId = Number(req.params.userId);
+        const cart = await cartDataMapper.clear(userId);
         return res.json(cart);
     },
 };

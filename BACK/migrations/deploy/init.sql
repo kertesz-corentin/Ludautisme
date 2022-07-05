@@ -108,6 +108,12 @@ CREATE TABLE "article_to_booking"(
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
 
+CREATE TABLE "favorite_user_to_reference"(
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id_user" INT REFERENCES "user"("id"),
+    "id_ref" INT REFERENCES "reference"("id")
+);
+
 
 
 

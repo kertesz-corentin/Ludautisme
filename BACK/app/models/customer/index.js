@@ -4,6 +4,7 @@ const categoryDataMapper = require('./category');
 const bookingDataMapper = require('./booking');
 const permanencyDataMapper = require('./permanency');
 const cartDataMapper = require('./cart');
+const favoriteDataMapper = require('./favorite');
 
 module.exports = {
     referencesDataMapper,
@@ -12,4 +13,5 @@ module.exports = {
     bookingDataMapper,
     permanencyDataMapper,
     cartDataMapper,
+    favoriteDataMapper,
 };

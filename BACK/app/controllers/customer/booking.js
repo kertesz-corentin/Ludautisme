@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable max-len */
 const { bookingDataMapper } = require('../../models/customer');
 const { usersDataMapper, permanencyDataMapper, referenceDataMapper } = require('../../models/admin');
@@ -12,14 +13,7 @@ module.exports = {
     async getHistory(req, res) {
         const idUser = Number(req.params.id);
         const booking = await bookingDataMapper.findHistory(idUser);
-        console.log(booking);
-        const bookWithRef = await booking.map(async (book) => {
-            const refs = await referenceDataMapper.findManyWithRefId(booking[0].articles);
-            console.log(refs);
-            return { ...book, articles: refs };
-        });
 
-        console.log('ref', bookWithRef);
         return res.json(booking);
     },
 
@@ -27,8 +21,7 @@ module.exports = {
         const userId = Number(req.params.UserId);
         const { refIds } = req.body;
 
-        const findDuplicate = (refIds) => refIds.filter((item, index) => refIds.indexOf(item) !== index);
-        const duplicateElement = findDuplicate(refIds);
+        const duplicateElement = refIds.filter((item, index) => refIds.indexOf(item) !== index);
         if (duplicateElement[0]) {
             throw new ApiError(403, 'La réservation ne peut pas contenir de doublon');
         }
