@@ -50,7 +50,9 @@ const Header = ({
 
 
             <nav>
-                <label className="toggleheader">☰</label>
+                <label className="toggleheader">
+                    <MenuIcon/>
+                </label>
                 <input type="checkbox" id="toggleheader" />
 
                 <div className="main_pages">

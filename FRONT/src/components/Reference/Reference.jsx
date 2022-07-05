@@ -4,6 +4,7 @@ import LazyImage from '../LazyImage/LazyImage';
 import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
+import api from '../../requests';
 
 import {Box,Modal,Fade,Button,Skeleton,
         Divider,Card,CardMedia,Typography,
@@ -56,6 +57,12 @@ const Reference = ({
         setCartItems(currentItems);
     }
 
+    const handleFavorite = (e) =>{
+            const refId = e.target.dataset.refid;
+            api.post(`/customer/favorite/${userToken.id}`,{refId});
+
+    }
+
     useEffect(()=>{updateCurrentItems()},[currentItems])
 
     function handleClick () {
@@ -82,6 +89,7 @@ const Reference = ({
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>
+                            <Button data-refId={id} onClick={handleFavorite}>Fav.</Button>
                                 {(nb_available > 0 && currentItems)?
                                     <>
                                          {(!currentItems.map((item)=> item.id).includes(id)) ?

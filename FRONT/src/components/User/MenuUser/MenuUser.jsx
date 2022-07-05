@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './menuUser.scss';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import {Button,Box} from '@mui/material';
 import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
 import {useNavigate} from "react-router-dom";
 

@@ -25,7 +25,7 @@ router.use('/permanency', permanencyRouter);
 
 router.use('/cart', cartRouter);
 
-router.use('/favorite', favoriteRouter);
+router.use('/favorite', pictureFullPath, favoriteRouter);
 
 router.use('/contact', contactRouter);
 

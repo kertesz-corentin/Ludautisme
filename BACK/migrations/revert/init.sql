@@ -6,6 +6,8 @@ DROP VIEW IF EXISTS "full_perm" CASCADE;
 
 DROP TABLE IF EXISTS "temptoken" CASCADE;
 
+DROP TABLE IF EXISTS "favorite_user_to_reference" CASCADE;
+
 DROP TABLE IF EXISTS "reference_to_cart" CASCADE;
 
 DROP TABLE IF EXISTS "article_to_booking" CASCADE;

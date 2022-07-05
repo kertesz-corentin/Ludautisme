@@ -29,11 +29,9 @@ const UserBookings = ({className, ...rest}) => {
             //Get active permanency
             const perm = await api.get(`/customer/permanency/`);
             const activePerm = perm.data;
-            console.log(activePerm)
             //Get bookings
             const response = await api.get(`/customer/booking/history/${id}`);
             let data = await response.data;
-            console.log("data",data);
             data = data.map((booking) => {
                 booking['references'] = booking.articles.map((article) => {
                     return {
@@ -78,7 +76,6 @@ const UserBookings = ({className, ...rest}) => {
             : [];
 
             setOldBookings(oldFilter.sort((a,b)=>{return (a.id - b.id > 0) ? -1 : 1}));
-            console.log(oldFilter);
 
 
 
@@ -114,7 +111,6 @@ const UserBookings = ({className, ...rest}) => {
                                     references= {nextBooking[0].references}
                                     gridSize={gridSize}
                                 />
-                            {console.log('next',nextBooking)}
                         </Box>
                         </Box>
                         }
@@ -131,8 +127,6 @@ const UserBookings = ({className, ...rest}) => {
                                     references= {activeBooking[0].references}
                                     gridSize={gridSize}
                                 />
-
-                            {console.log('active',activeBooking[0])}
                         </Box>
                         </Box>
                         }

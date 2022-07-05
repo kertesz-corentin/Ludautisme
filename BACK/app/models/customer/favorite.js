@@ -51,11 +51,8 @@ module.exports = {
     async addRef(idUser, idRef) {
         const query = `INSERT INTO "favorite_user_to_reference"("id_user","id_ref") VALUES ($1,$2)
                         ON CONFLICT DO NOTHING
-                        RETURNING (
-                            SELECT json_agg(fav."id_ref")
-                            FROM "favorite_user_to_reference" AS fav
-                            WHERE fav."id_user" = $1
-                            )`;
+                        RETURNING *
+                        `;
         const placeholders = [idUser, idRef];
         const result = await sqlHandler(query, placeholders);
         return result.rows;

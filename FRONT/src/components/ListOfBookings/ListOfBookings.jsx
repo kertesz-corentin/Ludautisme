@@ -11,13 +11,12 @@ const ListOfBookings = ({
     bookings,
      ...rest
     }) => {
-    console.log(bookings);
     return (
         bookings ?
         <Box className='booking__container'>
         {(bookings) &&
                     bookings.map((booking,index) => (
-                        <Accordion className = "booking__accordion">
+                        <Accordion key={`booking-old-${index}`}className = "booking__accordion">
                              <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls={`panel${index}a-header`}
@@ -33,8 +32,6 @@ const ListOfBookings = ({
                                     gridSize={300}
                                 />
                             </AccordionDetails>
-                        {console.log(booking)}
-                        {console.log(booking.id,booking.delivered,booking.closed,booking.references.length,booking.overdue)}
                         </Accordion>
                     ))
         }
