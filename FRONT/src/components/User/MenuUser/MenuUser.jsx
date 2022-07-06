@@ -19,6 +19,12 @@ const MenuUser = ({className,display,handleCloseLogin, ...rest}) => {
 
     }
 
+     const goToFavorites = () => {
+        handleCloseLogin();
+        navigate('/user/favorites');
+
+    }
+
    return (
        <Box
       sx={{
@@ -30,6 +36,7 @@ const MenuUser = ({className,display,handleCloseLogin, ...rest}) => {
       }}
     >   <Button onClick={goToAccount}>Mon Compte</Button>
         <Button onClick={goToBookings}>Mes Réservations</Button>
+        <Button onClick={goToFavorites}>Mes Favoris</Button>
        {display !== "login" &&
             <ModifyPasswordModal/>
         }

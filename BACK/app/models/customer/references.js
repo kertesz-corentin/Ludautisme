@@ -53,7 +53,7 @@ module.exports = {
             JOIN "category" AS cat ON r."main_category" = cat."id"
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             LEFT JOIN "category" ON rtc."id_category" = "category"."id"
-            LEFT JOIN"article" ON "article"."id_ref" = "r"."id"
+            LEFT JOIN "article" ON "article"."id_ref" = "r"."id"
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
         );
         return result.rows;
@@ -101,7 +101,7 @@ module.exports = {
         );
         return result.rows;
     },
-    async findFiltered(arr, offset, limit) {
+    async findFiltered(arr, offset, limit, userId) {
         let queryStart = `SELECT
         r.id,
         r.name,
@@ -120,7 +120,10 @@ module.exports = {
             'name', "image"."title",
             'text', "image"."alternative_text",
             'main', "image"."main"
-        )) AS "picture"
+        )) AS "picture" `;
+        queryStart += (userId) ? `, (fav."id_user" = $1) AS "favorite"` : '';
+
+        queryStart += `
         FROM "reference" AS r
         LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
         LEFT JOIN "image" ON rti."id_image" = "image"."id"
@@ -128,8 +131,10 @@ module.exports = {
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+        LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
         `;
-        const placeholders = [limit, offset];
+        const placeholders = [userId[0], limit, offset];
+        // eslint-disable-next-line no-unused-expressions
         if (arr.length > 0) {
             queryStart += ` WHERE `;
             arr.forEach((filter, index) => {
@@ -148,8 +153,8 @@ module.exports = {
                 }
             });
         }
-        const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name
-        LIMIT $1 OFFSET $2 `;
+        const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, fav.id_user
+        LIMIT $2 OFFSET $3 `;
 
         queryStart += queryEnd;
 
@@ -166,6 +171,7 @@ module.exports = {
         LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+        LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
         `;
         const placeholders = [];
         if (arr.length > 0) {

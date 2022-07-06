@@ -14,6 +14,7 @@ const MaterialLibraryMenu = ({
     getFilterState,
     removeFilterState,
     style,
+    typeDisplay,
      ...rest}) => {
 
      //Init variables used to create select inputs
@@ -32,11 +33,20 @@ const MaterialLibraryMenu = ({
     }
 
     const initNames = async () => {
-        const response = await api.get('/customer/articles/namelist');
-        if (response.status === 200) {
-            setNameList(response.data);
-        } else {
-            console.error(response.data);
+        if (typeDisplay === 'favorites'){
+               const user= JSON.parse(localStorage.getItem('user'));
+               const favorites = await api.get(`/customer/favorite/${user.id}`);
+               const favNameList = favorites.data.map((ref)=> {return {id : ref.id, name:ref.name } });
+                setNameList(favNameList);
+        }
+        if(!typeDisplay || typeDisplay === 'mathériatèque'){
+            const response = await api.get('/customer/articles/namelist');
+            if (response.status === 200) {
+                console.log(response.data);
+                setNameList(response.data);
+            } else {
+                console.error(response.data);
+            }
         }
     }
 

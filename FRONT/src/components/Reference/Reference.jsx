@@ -14,6 +14,7 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../App/App';
 import HideImageIcon from '@mui/icons-material/HideImage';
 
@@ -34,6 +35,7 @@ const Reference = ({
     currentItems,
     gridSize,
     isLoading,
+    favorite,
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -52,15 +54,17 @@ const Reference = ({
     }
 
     const [cartItems,setCartItems] = useState(currentItems);
+    const [isFav,setIsFav] = useState(favorite);
 
     const updateCurrentItems =() =>{
         setCartItems(currentItems);
     }
 
-    const handleFavorite = (e) =>{
-            const refId = e.target.dataset.refid;
-            api.post(`/customer/favorite/${userToken.id}`,{refId});
-
+    const handleFavorite = () =>{
+            (favorite)
+            ? api.delete(`/customer/favorite/${userToken.id}`,{refId:id})
+            : api.post(`/customer/favorite/${userToken.id}`,{refId:id});
+            setIsFav(!isFav);
     }
 
     useEffect(()=>{updateCurrentItems()},[currentItems])
@@ -89,7 +93,9 @@ const Reference = ({
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>
-                            <Button data-refId={id} onClick={handleFavorite}>Fav.</Button>
+                            <Button data-refid={id} data-favvalue={favorite} onClick={handleFavorite}>{
+                                <FavoriteIcon color={(isFav)?'error':'disabled'}/>}
+                            </Button>
                                 {(nb_available > 0 && currentItems)?
                                     <>
                                          {(!currentItems.map((item)=> item.id).includes(id)) ?

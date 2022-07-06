@@ -12,7 +12,10 @@ import ViewComfyIcon from '@mui/icons-material/ViewComfy';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import {forceVisible} from "react-lazyload";
 
-const MaterialLibrary = ({className,currentItems, ...rest}) => {
+const MaterialLibrary = ({className,
+                          currentItems,
+                          typeDisplay,
+                           ...rest}) => {
 //Here i define all datas i'll need in materiallibrary, they'll be set by api response
     const [displayRef, setDisplayRef] = useState([]);
     const [countRef,setCountRef] = useState(0);
@@ -23,15 +26,15 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
+    const [favoriteIds,setFavoriteIds] = useState([]);
 
     const [gridSize,setGridSize] = useState(400);
     const [isLoading,setIsLoading] = useState(true);
 
+
     const [currentSearchValue,setCurrentSearchValue] = useState();
 
-
-   async function getReferences () {
-
+    async function getReferences () {
     setIsLoading(true);
     const settings = {
         id:ids,
@@ -41,7 +44,18 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
         available: available,
     }
     settings.limit = (limit !== -1) ? limit : null;
-    const references = await api.post('/customer/articles/search', settings);
+    if (typeDisplay === 'favorites') {
+        const userToken = JSON.parse(localStorage.getItem('user'));
+        console.log(userToken);
+        const favorites = await api.get(`/customer/favorite/${userToken.id}`);
+        console.log(favorites);
+        settings.id = favorites.data.ref_ids;
+        console.log(settings.id);
+        settings.id = settings.id.filter(elt => favorites.data.ref_ids.includes(elt)); 
+        console.log(settings);
+    }
+    let references = await api.post('/customer/articles/search', settings);
+    console.log(references.data);
     setDisplayRef(references.data);
     if (references.data[0]){
     setCountRef(Number(references.data[0].countresult));
@@ -140,6 +154,7 @@ const MaterialLibrary = ({className,currentItems, ...rest}) => {
             getFilterState = {getFilterState}
             updateFilterState = {updateFilterState}
             removeFilterState = {removeFilterState}
+            typeDisplay = {typeDisplay}
             />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData  */}
                 <div className= "displayReferences">
