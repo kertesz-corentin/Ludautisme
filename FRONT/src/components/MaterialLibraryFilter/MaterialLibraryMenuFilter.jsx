@@ -12,6 +12,7 @@ const MaterialLibraryMenuFilter = ({
     categoriesList,
     tagsList,
     handleCloseMenu,
+    typeDisplay,
     },ref)=>{
     return (
          <Box className={`materiallibrarymenu-filters ${className}`} ref={ref}>
@@ -63,9 +64,19 @@ const MaterialLibraryMenuFilter = ({
                             currState = {getFilterState.available}
                             updateState = {updateFilterState.available}
                             labelId = 'available-filter'
-                            eltsList = {tagsList}
                         />
                         </Box>
+                        {(typeDisplay !== 'favorites') &&
+                            <Box className='materiallibrarymenu-filters-row-flex'>
+                                <p className='materiallibrarymenu-filters-row-flex-title'>Favoris</p>
+                            <InputSwitch
+                                currState = {getFilterState.favorite}
+                                updateState = {updateFilterState.favorite}
+                                labelId = 'favorite-filter'
+                            />
+                            </Box>
+                        }
+                         
                     </Box>
     )
 }

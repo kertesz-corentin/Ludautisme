@@ -10,7 +10,7 @@ module.exports = {
     async addRef(req, res) {
         const idUser = Number(req.params.userId);
         const idRef = Number(req.body.refId);
-        if (!idRef) {
+        if (Number.isNaN(idRef)) {
             throw new ApiError(403, 'Aucune référence transmise');
         }
         const refs = await favoriteDataMapper.addRef(idUser, idRef);
@@ -19,7 +19,7 @@ module.exports = {
     async deleteRef(req, res) {
         const idUser = Number(req.params.userId);
         const idRef = Number(req.body.refId);
-        if (!idRef) {
+        if (Number.isNaN(idRef)) {
             throw new ApiError(403, 'Aucune référence transmise');
         }
         const refs = await favoriteDataMapper.deleteRef(idUser, idRef);

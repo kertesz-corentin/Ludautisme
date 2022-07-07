@@ -26,7 +26,7 @@ const MaterialLibrary = ({className,
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [numberPages, setNumberPages] = useState(0);
-    const [favoriteIds,setFavoriteIds] = useState([]);
+    const [favorite,setFavorite] = useState();
 
     const [gridSize,setGridSize] = useState(400);
     const [isLoading,setIsLoading] = useState(true);
@@ -42,20 +42,13 @@ const MaterialLibrary = ({className,
         tags: tags,
         categories: (Array.isArray(categories))?categories:[categories],
         available: available,
+        favorite: favorite,
     }
-    settings.limit = (limit !== -1) ? limit : null;
     if (typeDisplay === 'favorites') {
-        const userToken = JSON.parse(localStorage.getItem('user'));
-        console.log(userToken);
-        const favorites = await api.get(`/customer/favorite/${userToken.id}`);
-        console.log(favorites);
-        settings.id = favorites.data.ref_ids;
-        console.log(settings.id);
-        settings.id = settings.id.filter(elt => favorites.data.ref_ids.includes(elt)); 
-        console.log(settings);
-    }
+       settings.favorite = [true];
+   }
+    settings.limit = (limit !== -1) ? limit : null;   
     let references = await api.post('/customer/articles/search', settings);
-    console.log(references.data);
     setDisplayRef(references.data);
     if (references.data[0]){
     setCountRef(Number(references.data[0].countresult));
@@ -74,6 +67,7 @@ const MaterialLibrary = ({className,
                 categories: (!categories.length)?'':categories,
                 name : ((!ids[0])?'':ids),
                 searchValue: currentSearchValue,
+                favorite,
     }
 
     const updateFilterState = {
@@ -89,7 +83,9 @@ const MaterialLibrary = ({className,
         name(newValue){
             setIds(newValue.ids);
             setCurrentSearchValue(newValue.searchValue);
-            console.log(newValue)
+        },
+        favorite(newValue){
+            setFavorite(!favorite);
         },
         reset(){
             setTags([]);
@@ -111,6 +107,9 @@ const MaterialLibrary = ({className,
         },
         available(){
             setAvailable(false);
+        },
+        favorite(){
+            setFavorite(false);
         },
         searchValue(){
             setIds([]);
@@ -142,7 +141,7 @@ const MaterialLibrary = ({className,
 
     useEffect(() => {
         getReferences();
-    }, [tags,ids,categories,available,page,limit]);
+    }, [tags,ids,categories,available,page,limit,favorite]);
 
 
    return (

@@ -58,10 +58,11 @@ module.exports = {
         if (!req.body.id.length) {
             delete req.body.id;
         }
-
-        // // Add user id if exist
+        // Add user id if exist
         if (req.body.favorite) {
             req.body.favorite = [userIdToken(req)];
+        } else {
+            delete req.body.favorite;
         }
 
         const obj = req.body;

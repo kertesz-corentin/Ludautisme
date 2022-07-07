@@ -53,7 +53,6 @@ const UserHome = ({
     
     const setCurrUrl = ()=>{
         setIsActive(pages.findIndex((page)=> page.url.includes(currUrl)));
-        console.log(isActive);
     }
 
      const handleActive = (event,newValue) => {
