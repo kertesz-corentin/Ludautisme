@@ -101,7 +101,9 @@ module.exports = {
         );
         return result.rows;
     },
+
     async findFiltered(arr, offset, limit, userId) {
+
         let queryStart = `SELECT
         r.id,
         r.name,
