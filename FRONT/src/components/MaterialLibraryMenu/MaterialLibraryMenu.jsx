@@ -14,6 +14,7 @@ const MaterialLibraryMenu = ({
     getFilterState,
     removeFilterState,
     style,
+    typeDisplay,
      ...rest}) => {
 
      //Init variables used to create select inputs
@@ -32,11 +33,21 @@ const MaterialLibraryMenu = ({
     }
 
     const initNames = async () => {
-        const response = await api.get('/customer/articles/namelist');
-        if (response.status === 200) {
-            setNameList(response.data);
-        } else {
-            console.error(response.data);
+        if (typeDisplay === 'favorites'){
+               const user= JSON.parse(localStorage.getItem('user'));
+               const favorites = await api.get(`/customer/favorite/${user.id}`);
+               if(favorites.data){
+               const favNameList = favorites.data.ref_ids.map((ref)=> {return {id : ref.id, name:ref.name } });
+                setNameList(favNameList);
+               }
+        }
+        if(!typeDisplay || typeDisplay === 'mathériatèque'){
+            const response = await api.get('/customer/articles/namelist');
+            if (response.status === 200) {
+                setNameList(response.data);
+            } else {
+                console.error(response.data);
+            }
         }
     }
 
@@ -83,13 +94,21 @@ const MaterialLibraryMenu = ({
                                 {(categoriesList) &&
                                     categoriesList.map(cat=>(
                                         (getFilterState.categories.includes(cat.id))&&
-                                            (<Chip key={`cat-${cat.id}`}data-remove={`categories-${cat.id}`} label={cat.name} variant="outlined" onDelete={handleRemove}/>)
+                                            (<Chip key={`cat-${cat.id}`}
+                                                    data-remove={`categories-${cat.id}`} 
+                                                    label={cat.name} 
+                                                    variant="outlined" 
+                                                    onDelete={handleRemove}/>)
                                     ))
                                 }
                                 {(tagsList) &&
                                     tagsList.map(tag=>(
                                         (getFilterState.tags.includes(tag.id))&&
-                                            (<Chip key={`tag-${tag.id}`} data-remove={`tags-${tag.id}`} label={tag.name} variant="outlined" onDelete={handleRemove}/>)
+                                            (<Chip key={`tag-${tag.id}`} 
+                                                    data-remove={`tags-${tag.id}`} 
+                                                    label={tag.name} 
+                                                    variant="outlined" 
+                                                    onDelete={handleRemove}/>)
                                     ))
                                 }
 
@@ -112,6 +131,7 @@ const MaterialLibraryMenu = ({
                 tagsList={tagsList}
                 nameList={nameList}
                 isDesktop = {isDesktop}
+                typeDisplay = {typeDisplay}
                 //handleCloseMenu = {handleCloseMenu}
                 />
                 <Box sx={{display:'flex',alignItems:'center',alignContent:'center',borderRadius:'2rem',border:'1px solid black',padding:'5px 10px'}} onClick={handleCloseMenu}>
@@ -137,6 +157,7 @@ const MaterialLibraryMenu = ({
                 tagsList={tagsList}
                 nameList={nameList}
                 isDesktop = {isDesktop}
+                typeDisplay = {typeDisplay}
                 />
         </Box>
                 <Paper elevation={3} sx={{borderRadius: '2rem'}} className='materiallibrarymenu-searchbar'>
@@ -155,7 +176,7 @@ const MaterialLibraryMenu = ({
                                 const pattern = newValue.split(" ").map(word=>`(?=.*${word})`).join("");
                                 const regex = new RegExp(pattern,'i');
                                 const found = nameList.filter((tag)=>tag.name.match(regex));
-                                return found.map( elt=> Number(elt.id) );
+                                return {searchValue: newValue , ids: found.map( elt=> Number(elt.id) )};
                             }
                         }
                     />
@@ -163,7 +184,12 @@ const MaterialLibraryMenu = ({
         </Box>
         <Box  ref={filtersContainerRef} style={{width:'100%',display:'block'}}>
           <Slide direction="down"
-                 in={(getFilterState.tags.length > 0 || getFilterState.categories.length > 0)}
+                 in={(getFilterState.tags.length > 0
+                    || getFilterState.categories.length > 0)
+                    || getFilterState.available
+                    || getFilterState.searchValue
+                    || getFilterState.favorite
+                }
                  mountOnEnter unmountOnExit
                  container={filtersContainerRef.current}>
                 <div className='materiallibrarymenu-filters-container'>
@@ -181,6 +207,20 @@ const MaterialLibraryMenu = ({
                                             (<Chip key={`tag-${tag.id}`} data-remove={`tags-${tag.id}`} label={tag.name} variant="outlined" onDelete={handleRemove}/>)
                                     ))
                                 }
+                                {(getFilterState.available === true)&&
+                                    (<Chip key={`avail-${getFilterState.available}`} 
+                                            data-remove={`available`} 
+                                            label={'Disponible'} 
+                                            variant="outlined" 
+                                            onDelete={handleRemove}/>)}
+                                {(getFilterState.favorite && typeDisplay !== "favorites")&&
+                                    (<Chip key={`fav-${getFilterState.favorite}`} 
+                                            data-remove={`favorite`} 
+                                            label={'Favoris'} 
+                                            variant="outlined" 
+                                            onDelete={handleRemove}/>)}
+                                {(getFilterState.searchValue) &&
+                                    (<Chip key={`search-${getFilterState.searchValue}`} data-remove={`searchValue`} label={`Recherche: ${getFilterState.searchValue}`} variant="outlined" onDelete={handleRemove}/>)}
 
                     </div>
                     <Button onClick={updateFilterState.reset}>Reset</Button>

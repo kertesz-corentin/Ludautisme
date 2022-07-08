@@ -4,6 +4,7 @@ import LazyImage from '../LazyImage/LazyImage';
 import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
+import api from '../../requests';
 
 import {Box,Modal,Fade,Button,Skeleton,
         Divider,Card,CardMedia,Typography,
@@ -13,6 +14,7 @@ import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../App/App';
 import HideImageIcon from '@mui/icons-material/HideImage';
 
@@ -27,11 +29,13 @@ const Reference = ({
     valorisation,
     article,
     nb_available,
+    idArticle,
     nb_total,
     display,
     currentItems,
     gridSize,
     isLoading,
+    favorite,
      }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -50,9 +54,17 @@ const Reference = ({
     }
 
     const [cartItems,setCartItems] = useState(currentItems);
+    const [isFav,setIsFav] = useState(favorite);
 
     const updateCurrentItems =() =>{
         setCartItems(currentItems);
+    }
+
+    const handleFavorite = () =>{
+            (favorite)
+            ? api.delete(`/customer/favorite/${userToken.id}`,{refId:id})
+            : api.post(`/customer/favorite/${userToken.id}`,{refId:id});
+            setIsFav(!isFav);
     }
 
     useEffect(()=>{updateCurrentItems()},[currentItems])
@@ -61,21 +73,10 @@ const Reference = ({
         cartManager.add(itemToAdd);
     }
 
-    const showMainImage = (pictures) => {
-      if (pictures){
-        if(pictures[0].id === null){
-        return
-        }
-        const main = pictures.find(pic=>pic.main);
-        return (main.length) ? main : pictures[0]
-      }
-
-    }
-
    return (
 
         <Card className = "reference-card"
-              sx={{ width: gridSize, height:gridSize }}
+              sx={{ width: gridSize }}
             >
 
             <ReferenceSwiper
@@ -83,22 +84,18 @@ const Reference = ({
                 pictures={picture}
                 gridSize={gridSize}
             />
-            {/* Card Loading */}
-            {(!isLoading)
-            ?
-
             <Box>
                 <Typography noWrap className="reference-card__name">
-                {name}
+                {(display === 'booking') ? `N°${idArticle} ${name}` :name}
                 </Typography>
-                {/* <Typography className="reference-card__description">
-                  {description}
-                </Typography > */}
                 { (display !== "booking") &&
                     <Box className="reference-card__footer">
                     <Button onClick={handleOpen}>Détails</Button>
                         {(userToken)?
                             <>
+                            <Button data-refid={id} data-favvalue={favorite} onClick={handleFavorite}>{
+                                <FavoriteIcon color={(isFav)?'error':'disabled'}/>}
+                            </Button>
                                 {(nb_available > 0 && currentItems)?
                                     <>
                                          {(!currentItems.map((item)=> item.id).includes(id)) ?
@@ -125,11 +122,6 @@ const Reference = ({
                    </Box>
                }
             </Box>
-            :
-            <Box>
-                <Skeleton key= {`skeleton-card ${id}`} height={1000} style= {{marginTop:'-100%'}}/>
-            </Box>
-            }
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"

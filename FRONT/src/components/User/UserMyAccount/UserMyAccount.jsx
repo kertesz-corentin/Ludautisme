@@ -23,8 +23,7 @@ const UserMyAccount = ({
     }) => {
 
     const [userInfos,setUserInfos] = useState();
-// Each time page is loading, want to call requestGetDatasOneUser
-    useEffect(() => {requestGetDatasOneUser()},[]);
+    const [modifyBtn, setModifyBtn]=  useState(false);
 
 //This const get id, role  from API when user is logged
     const user= JSON.parse(localStorage.getItem('user'));
@@ -38,16 +37,12 @@ const UserMyAccount = ({
             console.error(response.data);
         }
     }
-        // Here i create ButtonModify's state in order to make appear differents elements ( <span><TableContainre> OR <form><TextField>)
-        //This state will be modify when clicking ButtonModify with function names handleClickModifyBtn.
-    const [modifyBtn, setModifyBtn]=  useState(false);
 
     const handleClickModifyBtn = () => {
         setModifyBtn(!modifyBtn)
     }
 
     const handleChange = (event) => {
-        console.log(event.target.value);
         let tempUser = {...userInfos};
         tempUser[event.target.id] = event.target.value;
         setUserInfos(tempUser);
@@ -59,7 +54,7 @@ const UserMyAccount = ({
             last_name:   'Nom',
             adress_number:   'Numéro de rue',
             adress_street:   'Nom de rue',
-            adress_zipcode:  'Code Postale',
+            adress_zipcode:  'Code Postal',
             adress_city:   'Ville',
             email:   'Mail',
             phone:   'Telephone',
@@ -85,17 +80,15 @@ const UserMyAccount = ({
         } else {
             console.error(response.data);
         }
-        console.log(modifyBtn)
     }
+
+
+    // Each time page is loading, want to call requestGetDatasOneUser
+    useEffect(() => {requestGetDatasOneUser()},[]);
 
    return (
                 <Box className= "home-user">
                 <Permanency display="inline"/>
-                        <span >
-                            <h2>
-                            Données personnelles
-                            </h2>
-                        </span>
                             {userInfos &&
                             <Box className="loginuser-form" component="form" noValidate sx={{ mt: 1 }}>
                                 <Typography className="home-user-welcome"> Bienvenue <span className="home-user-welcome-span">{userInfos.first_name}</span></Typography>

@@ -34,7 +34,6 @@ const InputAutocomplete = ({
     const [inputValue, setInputValue] = React.useState("");
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
-        console.log('inputValue',inputValue);
         if (inputValue.length > 0 || !listOnFocus) {
                 setOpen(true);
             }

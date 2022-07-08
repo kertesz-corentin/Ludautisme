@@ -1,5 +1,5 @@
 const ApiError = require('../../errors/apiError');
-
+const userIdToken = require('../../helpers/userIdToken');
 const userReferenceDataMapper = require('../../models/customer/references');
 
 module.exports = {
@@ -25,6 +25,8 @@ module.exports = {
         return res.json(references);
     },
     async search(req, res) {
+        // Get userId to check favorite
+        const userId = [userIdToken(req)];
         // I get the page and the reference number per page and I calculate the offset
         const {
             page,
@@ -39,8 +41,8 @@ module.exports = {
         delete req.body.page;
         delete req.body.limit;
         // I create the list of valid arguments
-        const columns = ['categories', 'tags', 'available', 'id'];
-        const aliases = ['cat.id', 'category.id', 'ar.available', 'r.id'];
+        const columns = ['categories', 'tags', 'available', 'id', 'favorite'];
+        const aliases = ['cat.id', 'category.id', 'ar.available', 'r.id', 'fav.id_user'];
 
         // I take the arguments in body
         if (!req.body.tags.length) {
@@ -56,6 +58,12 @@ module.exports = {
         if (!req.body.id.length) {
             delete req.body.id;
         }
+        // Add user id if exist
+        if (req.body.favorite) {
+            req.body.favorite = [userIdToken(req)];
+        } else {
+            delete req.body.favorite;
+        }
 
         const obj = req.body;
         const props = Object.keys(obj);
@@ -68,7 +76,7 @@ module.exports = {
             const index = columns.indexOf(prop);
             const values = [];
             array.forEach((value) => {
-                if (['categories', 'tags', 'id'].includes(columns[index]) && typeof value !== 'number') {
+                if (['categories', 'tags', 'id', 'favorite'].includes(columns[index]) && typeof value !== 'number') {
                     throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
                 }
                 if (['available'].includes(columns[index]) && typeof value !== 'boolean') {
@@ -78,7 +86,8 @@ module.exports = {
             });
             arr.push({ [aliases[index]]: values });
         });
-        const references = await userReferenceDataMapper.findFiltered(arr, offset, limit);
+        
+        const references = await userReferenceDataMapper.findFiltered(arr, offset, limit, userId);
         const total = await userReferenceDataMapper.findCountResult(arr);
         const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
 

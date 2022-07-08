@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './menuUser.scss';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import {Button,Box} from '@mui/material';
 import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
 import {useNavigate} from "react-router-dom";
 
@@ -20,6 +19,12 @@ const MenuUser = ({className,display,handleCloseLogin, ...rest}) => {
 
     }
 
+     const goToFavorites = () => {
+        handleCloseLogin();
+        navigate('/user/favorites');
+
+    }
+
    return (
        <Box
       sx={{
@@ -31,6 +36,7 @@ const MenuUser = ({className,display,handleCloseLogin, ...rest}) => {
       }}
     >   <Button onClick={goToAccount}>Mon Compte</Button>
         <Button onClick={goToBookings}>Mes Réservations</Button>
+        <Button onClick={goToFavorites}>Mes Favoris</Button>
        {display !== "login" &&
             <ModifyPasswordModal/>
         }

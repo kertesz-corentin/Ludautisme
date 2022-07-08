@@ -8,6 +8,7 @@ const permanencyRouter = require('./permanency');
 const cartRouter = require('./cart');
 const contactRouter = require('./contact');
 const pictureFullPath = require('../../../middleware/pictureFullPath');
+const favoriteRouter = require('./favorite');
 const { ApiError } = require('../../../errors/apiError');
 
 const router = express.Router();
@@ -18,11 +19,14 @@ router.use('/user', userRouter);
 
 router.use('/category', categoryRouter);
 
-router.use('/booking', bookingRouter);
+router.use('/booking', pictureFullPath, bookingRouter);
 
 router.use('/permanency', permanencyRouter);
 
 router.use('/cart', cartRouter);
+
+router.use('/favorite', pictureFullPath, favoriteRouter);
+
 router.use('/contact', contactRouter);
 
 router.use(() => {

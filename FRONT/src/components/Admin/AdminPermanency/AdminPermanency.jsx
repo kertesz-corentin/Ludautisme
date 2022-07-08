@@ -7,10 +7,10 @@ import frLocale from 'date-fns/locale/fr';
 import api from '../../../requests';
 
 // import material ui components
-import TextField from '@mui/material/TextField';
+import {TextField,Chip} from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { format } from 'date-fns';
 
 import './adminpermanency.scss';
@@ -22,16 +22,19 @@ const AdminPermanency = ({className, ...rest}) => {
     const [date, setDate] = useState();
     const [alertMessage, setAlertMessage] = useState();
     const [successMessage, setSuccessMessage] = useState();
+    const [isDefined,setIsDefined] = useState(false);
 
     const getActivePermanency = async () => {
         const response = await api.get('/admin/permanency/active');
         const activePermanency = await response.data;
-        console.log('permanence', activePermanency[0].next_date)
         if(response.status === 200){
-            setDate(format(new Date(activePermanency[0].next_date), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
+            (activePermanency[0].next_date)
+            ?setDate(format(new Date(activePermanency[0].next_date), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}))
+            :setDate(format(new Date(), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
+            (activePermanency[0].next_date)&&setIsDefined(true);
         }
         else {
-            console.log(response.data)
+            console.error(response);
         }
     }
 
@@ -39,7 +42,6 @@ const AdminPermanency = ({className, ...rest}) => {
         if (new Date(event)>new Date()){
         setDate(format(new Date(event), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
         } else {
-
             setAlertMessage({
                 message : 'Erreur'});
             setTimeout(()=>{setAlertMessage()},500);
@@ -69,7 +71,7 @@ const AdminPermanency = ({className, ...rest}) => {
 
     React.useEffect(() => {
         getActivePermanency();
-    }, [setDate])
+    }, [date]);
 
     console.log('date', date);
 
@@ -86,6 +88,9 @@ const AdminPermanency = ({className, ...rest}) => {
                     />
                 </LocalizationProvider>
             </div>
+            {(!isDefined)?
+                <Chip label="Non définie" color="error"/>
+            : <Chip label="Publiée" color="success"/>}
             <div className='adminpermanency-button'>
             {alertMessage ?
                 <>

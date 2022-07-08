@@ -50,7 +50,9 @@ const Header = ({
 
 
             <nav>
-                <label className="toggleheader">☰</label>
+                <label className="toggleheader">
+                    <MenuIcon/>
+                </label>
                 <input type="checkbox" id="toggleheader" />
 
                 <div className="main_pages">
@@ -75,7 +77,7 @@ const Header = ({
                 </div>
             </nav>
                 <div className="header-items">
-                    <Cart cartManager={cartManager} currentItems = {currentItems}/>
+                    {(userToken)&&<Cart cartManager={cartManager} currentItems = {currentItems}/>}
                     <LoginUser/>
                 </div>
             </Box>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from '../Home/Home';
+import UserHome from '../User/UserHome/UserHome';
 import HomePage from '../HomePage/HomePage';
 import {Routes, Route} from 'react-router-dom';
 import UserMyAccount from '../User/UserMyAccount/UserMyAccount';
@@ -90,12 +91,25 @@ function App() {
             {/* <Route path = "/admin/references/:id/articles" element = {<AdminArticles />}></Route> */}
             {/* <Route path = "/admin/categories" element = {<AdminCategories />}></Route> */}
             {/* <Route path = "/admin/logout" element = {<AdminLogout />}></Route> */}
-            <Route path = "/user/account" element = {<PrivateRoute currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider ><UserMyAccount /></FunctionContext.Provider>}/>}>
-                <Route path = "/user/account" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider ><UserMyAccount /></FunctionContext.Provider>} />}></Route>
+            <Route path = "/user/account" element = {<PrivateRoute/>}>
+                <Route path = "/user/account" element = {
+                    <Home
+                        currentItems = {itemsToCart}
+                        cartManager={cartManager}
+                        children={
+                                <UserHome/>
+                        }
+                    />
+                }>
+
+                </Route>
             </Route>
             {/* <Route path = "/shop" element = {<Shop />}></Route> */}
-            <Route path = "/user/bookings" element = {<PrivateRoute currentItems = {itemsToCart} cartManager={cartManager}/>}>
-                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<UserBookings />} />}></Route>
+            <Route path = "/user/bookings" element = {<PrivateRoute/>}>
+                <Route path = "/user/bookings" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<UserHome/>} />}></Route>
+            </Route>
+             <Route path = "/user/favorites" element = {<PrivateRoute/>}>
+                <Route path = "/user/favorites" element = {<Home currentItems = {itemsToCart} cartManager={cartManager} children={<UserHome/>} />}></Route>
             </Route>
             <Route path = "/user/articles" element = {<Home children={<FunctionContext.Provider ><MaterialLibrary /></FunctionContext.Provider>} />}></Route>
             <Route path = "/resetpassword/:token" element ={<ResetPwd />}></Route>

@@ -56,7 +56,6 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                             className="loginForm-textfield"
                             margin="normal"
                             required
-                            fullWidth
                             id="email"
                             label="Adresse email"
                             name="email"
@@ -67,7 +66,6 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                             margin="normal"
                             className="loginForm-textfield"
                             required
-                            fullWidth
                             name="password"
                             label="Mot de passe"
                             type="password"
@@ -77,7 +75,6 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                             <ButtonUnstyled
                             className="loginForm-submit"
                             type="submit"
-                            fullWidth
                             variant="contained"
                             sx={{ mt: 1, mb: 2 }}
                             >

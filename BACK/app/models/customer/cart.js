@@ -41,9 +41,9 @@ module.exports = {
     async countCart(userId) {
         const query = `SELECT COUNT (*) FROM "user"
         INNER JOIN "reference_to_cart" ON "user"."id" = "reference_to_cart"."id_user"
-        WHERE "user"."id" = $1;`
+        WHERE "user"."id" = $1;`;
         const placeholders = [userId];
-        const result = await sqlHandler(query,placeholders);
+        const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
     async addRef(userId, refId) {

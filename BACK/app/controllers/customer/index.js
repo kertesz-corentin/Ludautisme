@@ -5,6 +5,7 @@ const bookingController = require('./booking');
 const permanencyController = require('./permanency');
 const cartController = require('./cart');
 const contactController = require('./contact');
+const favoriteController = require('./favorite');
 
 module.exports = {
     userController,
@@ -14,4 +15,5 @@ module.exports = {
     permanencyController,
     cartController,
     contactController,
+    favoriteController,
 };
