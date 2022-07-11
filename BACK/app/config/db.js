@@ -4,9 +4,9 @@ const config = {};
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
     config.connectionString = process.env.DATABASE_URL;
-    config.ssl = {
-        rejectUnauthorized: false,
-    };
+    // config.ssl = {
+    //     rejectUnauthorized: false,
+    // };
 } else {
     config.connectionString = process.env.DATABASE_DEV;
 }
