@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "node-dev --no-notify index.js",
-    "production": "node index.js"
+    "production": "node index.js",
+    "build react": "yarn --cwd ../FRONT react-scripts build"
   }
 }

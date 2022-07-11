@@ -8,7 +8,6 @@ const router = express.Router();
 
 const appDir = dirname(require.main.filename);
 const buildPath = (process.env.NODE_ENV === 'production') ? '../FRONT/build' : `${appDir}/../FRONT/build`;
-console.error('REACT BUILPATH', buildPath, process.env.REACT_BUILD_FOLDER);
 
 router.use('/admin', express.static(buildPath));
 router.use('/admin/*', express.static(buildPath));
