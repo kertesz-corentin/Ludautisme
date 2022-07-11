@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config({ path: '../.env' });
 const fs = require('fs/promises');
 const client = require('../app/config/db');
 
-const deployPath = './sqitch.plan';
+const deployPath = path.join(__dirname, '/sqitch.plan');
 
 const sendQuery = async (query, placeholders) => {
     try {
@@ -52,7 +52,7 @@ const readDeploy = async () => {
             sqlFiles.forEach(async (file, index) => {
                 setTimeout(async () => {
                     const result = await queryFromFile(`./deploy/${file}.sql`);
-                }, index * 20000);
+                }, index * 3500);
             });
         }, 5000);
     } catch (err) {
