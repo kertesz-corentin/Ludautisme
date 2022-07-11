@@ -1,11 +1,11 @@
 BEGIN;
 
 CREATE TABLE "role" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "name" TEXT NOT NULL
 );
 CREATE TABLE "user" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "email" TEXT NOT NULL UNIQUE,
     "member_number" INT NOT NULL UNIQUE,
     "phone" TEXT,
@@ -26,7 +26,7 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "permanency" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "perm_date" DATE,
     "active" BOOLEAN DEFAULT false,
     "published" BOOLEAN DEFAULT false
@@ -35,14 +35,14 @@ CREATE TABLE "permanency" (
 
 
 CREATE TABLE "category" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "main" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "reference" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "valorisation" INT,
@@ -50,7 +50,7 @@ CREATE TABLE "reference" (
 );
 
 CREATE TABLE "image" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "url" TEXT NOT NULL,
     "title" TEXT,
     "alternative_text" TEXT,
@@ -58,19 +58,19 @@ CREATE TABLE "image" (
 );
 
 CREATE TABLE "reference_to_image" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "id_ref" INT REFERENCES "reference"("id") NOT NULL,
     "id_image" INT NOT NULL REFERENCES "image"("id")  ON DELETE CASCADE
 );
 
 CREATE TABLE "reference_to_category" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "id_ref" INT REFERENCES "reference"("id"),
     "id_category" INT REFERENCES "category"("id")
 );
 
 CREATE TABLE "article" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "number" INT NOT NULL UNIQUE,
     "origin" TEXT,
     "date_buy" DATE,
@@ -80,19 +80,19 @@ CREATE TABLE "article" (
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE "temptoken"(
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "email_user" TEXT REFERENCES "user"("email"),
     "temptoken" TEXT NOT NULL
 );
 
 CREATE TABLE "reference_to_cart"(
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "id_user" INT REFERENCES "user"("id"),
     "id_ref" INT REFERENCES "reference"("id")
 );
 
 CREATE TABLE "booking" (
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "delivered" BOOLEAN DEFAULT false,
     "closed" BOOLEAN DEFAULT false,
     "nb_prolongation" INTEGER DEFAULT 0,
@@ -102,14 +102,14 @@ CREATE TABLE "booking" (
 );
 
 CREATE TABLE "article_to_booking"(
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "returned" BOOLEAN DEFAULT true,
     "id_article" INT REFERENCES "article"("id"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
 
 CREATE TABLE "favorite_user_to_reference"(
-    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id" INT SERIAL,
     "id_user" INT REFERENCES "user"("id"),
     "id_ref" INT REFERENCES "reference"("id"),
     UNIQUE ("id_user","id_ref")
