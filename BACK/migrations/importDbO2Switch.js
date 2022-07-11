@@ -1,4 +1,5 @@
 const dotenv = require('dotenv').config({ path: '../.env' });
+const path = require('path');
 const fs = require('fs/promises');
 const client = require('../app/config/db');
 
