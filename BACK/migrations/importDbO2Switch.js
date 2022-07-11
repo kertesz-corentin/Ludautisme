@@ -47,7 +47,7 @@ const readDeploy = async () => {
             );
         const sqlFiles = cleaned.map((line) => line.split(' ')[0]);
         sqlFiles.forEach(async (file) => {
-            await queryFromFile(`/migrations/revert/${file}.sql`);
+            await queryFromFile(`/revert/${file}.sql`);
         });
         setTimeout(() => {
             sqlFiles.forEach(async (file, index) => {
