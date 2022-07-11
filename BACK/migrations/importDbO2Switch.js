@@ -28,7 +28,7 @@ const sendQuery = async (query, placeholders) => {
 
 const queryFromFile = async (filepath) => {
     try {
-        const data = await fs.readFile(filepath, { encoding: 'utf8' });
+        const data = await fs.readFile(path.join(__dirname, filepath), { encoding: 'utf8' });
         sendQuery(data);
         return data;
     } catch (err) {
@@ -47,7 +47,7 @@ const readDeploy = async () => {
             );
         const sqlFiles = cleaned.map((line) => line.split(' ')[0]);
         sqlFiles.forEach(async (file) => {
-            await queryFromFile(`./revert/${file}.sql`);
+            await queryFromFile(`/migrations/revert/${file}.sql`);
         });
         setTimeout(() => {
             sqlFiles.forEach(async (file, index) => {
