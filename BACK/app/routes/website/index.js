@@ -6,19 +6,12 @@ const router = express.Router();
 
 // Serve React app
 
-const getBuildPath = (req) => {
-    const appDir = dirname(require.main.filename);
-    const fixedPathsHost = ['ludautisme.fr'];
-    console.error('testo', fixedPathsHost.includes(req.get('host')), req.get('host'));
-    const buildPath = (fixedPathsHost.includes(req.get('host')))
-        ? `${appDir}/../FRONT/build`
-        : '../FRONT/build';
-    express.static(buildPath);
-};
+const appDir = dirname(require.main.filename);
+const buildPath = (process.env.REACT_FOLDER) ? process.env.REACT_FOLDER : `${appDir}/../FRONT/build`;
 
-router.use('/admin', getBuildPath);
-router.use('/admin/*', getBuildPath);
-router.use('/', getBuildPath);
-router.use('/*', getBuildPath);
+router.use('/admin', express.static(buildPath));
+router.use('/admin/*', express.static(buildPath));
+router.use('/', express.static(buildPath));
+router.use('/*', express.static(buildPath));
 
 module.exports = router;
