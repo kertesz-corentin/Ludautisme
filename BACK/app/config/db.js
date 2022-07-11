@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const config = {};
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
-    config.connectionString = 'postgres://vxto8575_apey:@pey@pey12@127.0.0.1:5432/vxto8575_ludautisme';
+    config.connectionString = 'postgres://vxto8575:qXKR-zyLm-J5v@@127.0.0.1:5432/vxto8575_ludautisme';
     // config.ssl = {
     //     rejectUnauthorized: false,
     // };
