@@ -1,7 +1,6 @@
 const { Pool } = require('pg');
 
 const config = {};
-
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
     config.connectionString = process.env.DATABASE_URL;
