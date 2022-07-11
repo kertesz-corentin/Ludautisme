@@ -9,11 +9,13 @@ const router = express.Router();
 const appDir = dirname(require.main.filename);
 const buildPath = `${appDir}/../FRONT/build`;
 
-const getBuildPath = (req, res) => {
+const getBuildPath = (req, res, next) => {
     const fixedPathsHost = ['ludautisme.fr'];
-    return (fixedPathsHost.includes(req.get('host')))
+    console.error(fixedPathsHost.includes(req.get('host')), req.get('host'));
+    fixedPathsHost.includes(req.get('host'))
         ? express.static('../FRONT/build')
         : express.static(buildPath);
+    next();
 };
 
 router.use('/admin', getBuildPath);
