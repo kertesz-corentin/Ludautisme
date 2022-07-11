@@ -53,7 +53,7 @@ const readDeploy = async () => {
             sqlFiles.forEach(async (file, index) => {
                 setTimeout(async () => {
                     const result = await queryFromFile(`./deploy/${file}.sql`);
-                }, index * 3500);
+                }, index * 10000);
             });
         }, 5000);
     } catch (err) {
