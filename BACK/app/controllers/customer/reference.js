@@ -36,6 +36,8 @@ module.exports = {
             throw new ApiError(400, 'Page ou limite invalide (attendu: nombre)');
         }
 
+        console.log(req.body);
+
         const offset = (page * limit) - limit;
         // I clean req.body before while
         delete req.body.page;
@@ -59,11 +61,15 @@ module.exports = {
             delete req.body.id;
         }
         // Add user id if exist
-        if (req.body.favorite[0]) {
-            req.body.favorite = [userIdToken(req)];
-        } else {
-            delete req.body.favorite;
+        if (req.body.favorite) {
+            if (!req.body.favorite[0]) {
+                delete req.body.favorite;
+            } else {
+                req.body.favorite = [userIdToken(req)];
+            }
         }
+
+        console.log(JSON.stringify(req.body));
 
         const obj = req.body;
         const props = Object.keys(obj);
@@ -90,7 +96,6 @@ module.exports = {
         const references = await userReferenceDataMapper.findFiltered(arr, offset, limit, userId);
         const total = await userReferenceDataMapper.findCountResult(arr);
         const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
-
         return res.json(refWithCount);
     },
 };
