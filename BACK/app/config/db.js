@@ -1,9 +1,12 @@
 const { Pool } = require('pg');
+const ApiError = require('../errors/apiError');
 
 const config = {};
 
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
+    const dburl = { ...process.env.DATABASE_URL };
+    throw new ApiError({ message: dburl });
     config.connectionString = process.env.DATABASE_URL;
     if (process.env.DATABASE_OPTION_SSL) {
         config.ssl = {

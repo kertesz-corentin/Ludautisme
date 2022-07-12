@@ -65,8 +65,6 @@ module.exports = {
             delete req.body.favorite;
         }
 
-        console.log(JSON.stringify(req.body));
-
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
