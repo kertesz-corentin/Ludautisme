@@ -59,7 +59,7 @@ module.exports = {
             delete req.body.id;
         }
         // Add user id if exist
-        if (req.body.favorite) {
+        if (req.body.favorite[0]) {
             req.body.favorite = [userIdToken(req)];
         } else {
             delete req.body.favorite;
@@ -86,7 +86,7 @@ module.exports = {
             });
             arr.push({ [aliases[index]]: values });
         });
-        
+
         const references = await userReferenceDataMapper.findFiltered(arr, offset, limit, userId);
         const total = await userReferenceDataMapper.findCountResult(arr);
         const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));

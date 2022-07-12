@@ -1,4 +1,3 @@
-const { isNativeError } = require('util/types');
 const ApiError = require('../errors/apiError');
 
 module.exports = (req, res, next) => {
