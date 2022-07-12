@@ -1,15 +1,20 @@
 const { Pool } = require('pg');
 
 const config = {};
+
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
-    config.connectionString = 'postgres://vxto8575:qXKR-zyLm-J5v@@127.0.0.1:5432/vxto8575_ludautisme';
-    // config.ssl = {
-    //     rejectUnauthorized: false,
-    // };
+    config.connectionString = process.env.DATABASE_URL;
+    if (process.env.DATABASE_OPTION_SSL) {
+        config.ssl = {
+            rejectUnauthorized: false,
+        };
+    }
 } else {
     config.connectionString = process.env.DATABASE_DEV;
 }
+
+console.log(config);
 
 const pool = new Pool(config);
 
