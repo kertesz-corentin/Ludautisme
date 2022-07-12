@@ -36,8 +36,6 @@ module.exports = {
             throw new ApiError(400, 'Page ou limite invalide (attendu: nombre)');
         }
 
-        console.log(req.body);
-
         const offset = (page * limit) - limit;
         // I clean req.body before while
         delete req.body.page;
@@ -62,11 +60,9 @@ module.exports = {
         }
         // Add user id if exist
         if (req.body.favorite) {
-            if (!req.body.favorite[0]) {
-                delete req.body.favorite;
-            } else {
-                req.body.favorite = [userIdToken(req)];
-            }
+            req.body.favorite = [userIdToken(req)];
+        } else {
+            delete req.body.favorite;
         }
 
         console.log(JSON.stringify(req.body));
