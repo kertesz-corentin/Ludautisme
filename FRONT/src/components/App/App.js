@@ -1,24 +1,23 @@
 import React from 'react';
-import Home from '../Home/Home';
-import UserHome from '../User/UserHome/UserHome';
-import HomePage from '../HomePage/HomePage';
+import Home from '../Front-Office/Home/Home';
+import UserHome from '../Front-Office/User/UserHome/UserHome';
+import HomePage from '../Front-Office/Static/HomePage/HomePage';
 import {Routes, Route} from 'react-router-dom';
-import UserMyAccount from '../User/UserMyAccount/UserMyAccount';
-import UserBookings from '../User/UserBookings/UserBookings';
 import Admin from '../Admin/Admin';
+import AdminHome2 from '../Admin2/AdminHome'
 import AdminPage from '../Admin/AdminPage/AdminPage';
 import AdminHome from '../Admin/AdminHome/AdminHome';
 import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
-import About from '../About/About';
-import Infos from '../Infos/Infos';
-import MaterialLibrary from '../MaterialLibrary/MaterialLibrary';
-import UsefullLinks from '../UsefullLinks/UsefullLinks';
+import About from '../Front-Office/Static/About/About';
+import Infos from '../Front-Office/Static/Infos/Infos';
+import MaterialLibrary from '../Front-Office/MaterialLibrary/MaterialLibrary';
+import UsefullLinks from '../Front-Office/Static/UsefullLinks/UsefullLinks';
 import './App.scss';
-import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import Error from '../Error/Error';
-import ResetPwd from '../ResetPwd/ResetPwd';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import Error from '../Front-Office/Reusable/Error/Error';
+import ResetPwd from '../Front-Office/User/ResetPassword/ResetPassword';
 import { useState } from 'react';
 import * as cartReq from '../../requests/customer/cart';
 import * as refReq from '../../requests/customer/reference';
@@ -85,7 +84,10 @@ function App() {
             <Route path = "/admin/bookings" element = {<PrivateRoute/>}>
                 <Route path = "/admin/bookings" element = {<AdminPage><AdminBookings /></AdminPage>}></Route>
             </Route>
-            {/* <Route path = "/admin/categorie" element = {<AdminCategory />}></Route> */}
+
+            
+            {/*ADMIN REFACTOR*/}
+            <Route path = "/admin2/home" element = {<AdminHome2 />}></Route>
             {/* <Route path = "/admin/users/:id" element = {<AdminUser/>}></Route> */}
             {/* <Route path = "/admin/references/:id" element = {<AdminReference />}></Route> */}
             {/* <Route path = "/admin/references/:id/articles" element = {<AdminArticles />}></Route> */}

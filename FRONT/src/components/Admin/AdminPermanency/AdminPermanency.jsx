@@ -16,7 +16,7 @@ import { format } from 'date-fns';
 import './adminpermanency.scss';
 import { Button } from '@mui/material';
 import { isAfter } from 'date-fns';
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 const AdminPermanency = ({className, ...rest}) => {
     const [date, setDate] = useState();

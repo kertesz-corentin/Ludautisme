@@ -4,8 +4,8 @@ import api from '../../../requests';
 import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import Articles from '../../Articles/Articles';
-import AddModal from '../../Articles/AddModal/AddModal';
+import Articles from '../Articles/Articles';
+import AddModal from '../Articles/AddModal/AddModal';
 
 import './updatereferencemodal.scss';
 

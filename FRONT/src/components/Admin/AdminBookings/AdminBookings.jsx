@@ -10,7 +10,7 @@ import api from '../../../requests';
 import AdminSection from '../AdminSection/AdminSection';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { bookingSchema } from '../../../Schemas';
 
 // import mui components

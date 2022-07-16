@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import api from '../../../requests/index';
 
 // import react components
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import AdminSection from '../AdminSection/AdminSection';
 import AddUserModal from '../AddUserModal/AddUserModal';
 import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
