@@ -11,8 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ImportStatus from '../../Import/ImportStatus/ImportStatus';
-import { addAroundSize } from '../../../store/actions';
+//import ImportStatus from '../../Import/ImportStatus/ImportStatus';
+import { addAroundSize } from '../../../../store/actions';
 
 function debounce(fn, ms) {
     let timer;
@@ -42,12 +42,14 @@ function AdminHeader() {
     // Dynamic Content size
     const headerRef = useRef(null);
     const [headerSize, setHeaderSize] = useState({ width: 0, height: 0 });
-
+    // Accueil Adhérents Références Réservations Se déconnecter
     const pages = {
-        Home: { url: '/', display: <HomeIcon /> },
-        References: { url: '/references', display: 'Références' },
-        Articles: { url: '/articles', display: 'Articles' },
-        Import: { url: '/import', display: 'Import' },
+        Home: { url: '/admin2/home', display: <HomeIcon /> },
+        Users: { url: '/admin2/users', display: 'Adhérents' },
+        References: { url: '/admin2/references', display: 'Références' },
+        Articles: { url: '/admin2/bookings', display: 'Réservations' },
+        Categories: { url: '/admin2/categories', display: 'Categories' },
+        Images: { url: '/admin2/images', display: 'Images' },
     };
 
     // Menu Interaction
@@ -129,7 +131,7 @@ function AdminHeader() {
                             </Link>
                         ))}
                     </Box>
-                    <ImportStatus />
+                    {/* <ImportStatus /> */}
                 </Toolbar>
             </Container>
         </AppBar>
