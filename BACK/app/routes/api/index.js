@@ -13,7 +13,7 @@ const router = express.Router();
 
 const appDir = dirname(require.main.filename);
 const publicPath = `${appDir}/public`;
-
+console.log(publicPath);
 router.use('/public', express.static(publicPath));
 router.use('/public/*', express.static(publicPath));
 
