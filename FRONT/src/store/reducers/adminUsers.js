@@ -3,6 +3,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as actions from '../actions';
 import api from '../../requests'
+
 const initialState = {
   users: [],
   status: 'idle',
@@ -18,14 +19,9 @@ const adminUsersSlice = createSlice({
   name: 'adminUsers',
   initialState,
   reducers: {
-     postAdded: {
-      reducer(state, action) {
-        state.posts.push(action.payload)
-      },
-      prepare(title, content, userId) {
-        // omit prepare logic
-      }
-    },
+    fetch: ()=>{
+
+    }
   },
   extraReducers(builder) {
     builder
