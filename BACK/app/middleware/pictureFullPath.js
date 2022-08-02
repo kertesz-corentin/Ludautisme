@@ -2,9 +2,10 @@ const ApiError = require('../errors/apiError');
 
 module.exports = (req, res, next) => {
     const fullUrl = (process.env.IMAGE_PORT_REDIRECTION)
-        ? `${req.protocol}://${req.get('host').splice(':')[0]}:${process.env.IMAGE_PORT_REDIRECTION}/api${process.env.IMAGE_CATALOG_FOLDER}/`
+        ? `${req.protocol}://${req.get('host').split(':')[0]}:${process.env.IMAGE_PORT_REDIRECTION}/api${process.env.IMAGE_CATALOG_FOLDER}/`
         : `${req.protocol}://${req.get('host')}/api${process.env.IMAGE_CATALOG_FOLDER}/`;
 
+    console.log(fullUrl);
     const old = res.json.bind(res);
 
     res.json = (body) => {
