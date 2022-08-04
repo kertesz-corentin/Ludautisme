@@ -5,12 +5,16 @@ const config = {};
 // Heroku
 if (process.env.NODE_ENV !== 'dev') {
     config.connectionString = process.env.DATABASE_URL;
-    config.ssl = {
-        rejectUnauthorized: false,
-    };
+    if (process.env.DATABASE_OPTION_SSL) {
+        config.ssl = {
+            rejectUnauthorized: false,
+        };
+    }
 } else {
     config.connectionString = process.env.DATABASE_DEV;
 }
+
+console.log(config);
 
 const pool = new Pool(config);
 

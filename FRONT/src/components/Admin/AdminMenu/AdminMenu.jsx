@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './adminmenu.scss';
 import api from '../../../requests/index';
 
-import Logo from '../../public/logo.png';
+import Logo from '../../../public/logo.png';
 
 
 const MenuAdmin = ({className, ...rest}) => {

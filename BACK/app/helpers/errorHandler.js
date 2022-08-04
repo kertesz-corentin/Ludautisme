@@ -23,7 +23,6 @@ const errorHandler = (err, res) => {
     // if (statusCode === 500 && !['dev', 'front'].includes(res.app.get('env')) !== 'development') {
     //     message = 'Internal Server Error';
     // }
-
     res.status(statusCode).json({
         status: 'error',
         statusCode,

@@ -5,9 +5,9 @@ const ApiError = require('../../errors/apiError');
 const router = express.Router();
 
 // Serve React app
+
 const appDir = dirname(require.main.filename);
-const buildPath = `${appDir}/../FRONT/build`;
-// END Serve React app
+const buildPath = (process.env.NODE_ENV === 'production') ? '../FRONT/build' : `${appDir}/../FRONT/build`;
 
 router.use('/admin', express.static(buildPath));
 router.use('/admin/*', express.static(buildPath));

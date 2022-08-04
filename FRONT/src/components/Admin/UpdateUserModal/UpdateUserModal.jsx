@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 
 // import react components
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 // import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, IconButton, FormGroup }  from '@mui/material';

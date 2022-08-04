@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {
+    adminUsers
+} from './admin';
 
 const baseURL = (window.location.origin.includes('localhost')) ? `http://localhost:3001` : window.location.origin;
 console.log(baseURL);
@@ -7,7 +10,20 @@ const connection = axios.create({
     baseURL: `${baseURL}/api`,
 });
 
+
+const authHeader = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user != null) {
+        return { 'x-access-token': user.token }
+    }
+
+    //No token
+    return {};
+}
+
 const api = {
+    adminUsers,
     async get(path) {
         try {
         return await connection.get(path, { headers: authHeader() });
@@ -82,14 +98,3 @@ const api = {
 }
 
 export default api;
-
-const authHeader = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-
-    if (user != null) {
-        return { 'x-access-token': user.token }
-    }
-
-    //No token
-    return {};
-}

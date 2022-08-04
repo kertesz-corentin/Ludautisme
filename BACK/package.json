@@ -18,6 +18,8 @@
   },
   "scripts": {
     "start": "node-dev --no-notify index.js",
-    "production": "node index.js"
+    "production": "node index.js",
+    "build_react": "yarn --cwd ./FRONT react-scripts build",
+    "reset_db": "node ./migrations/importDbO2Switch.js"
   }
 }

@@ -10,7 +10,7 @@ import AdminSection from '../AdminSection/AdminSection';
 import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
 import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { referenceSchema } from '../../../Schemas';
 
 // import material ui component
