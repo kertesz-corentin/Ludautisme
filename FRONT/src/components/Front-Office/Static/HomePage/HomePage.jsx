@@ -154,6 +154,9 @@ const Accueil = ({className, ...rest}) => {
                         <p>
                             09 51 85 03 55
                         </p>
+                        <p>
+                            06 72 63 38 77
+                        </p>
                         <h3>
                         Email:
                         </h3>
