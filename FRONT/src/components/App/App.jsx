@@ -32,7 +32,6 @@ function App() {
             init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-                console.log('cartRefs',cartRefs,itemsToCart);
                 if (cartRefs){
                     const items = await cartReq.getItems(cartRefs);
                     setItemsToCart(items.data || []);
@@ -40,7 +39,6 @@ function App() {
 
             },
             add : async (item) => {
-                console.log("itemToAdd",item.id);
                 await cartReq.addToCart(item.id);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
             },
@@ -52,7 +50,6 @@ function App() {
                 } else {
                 let hardCopy = [...itemsToCart];
                 hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
-                console.log('after filter',hardCopy);
                 setItemsToCart(hardCopy);
                 }
             },

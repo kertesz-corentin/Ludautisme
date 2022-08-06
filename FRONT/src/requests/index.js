@@ -13,13 +13,7 @@ const connection = axios.create({
 
 const authHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-
-    if (user != null) {
-        return { 'x-access-token': user.token }
-    }
-
-    //No token
-    return {};
+    return (user != null) ? { 'x-access-token': user.token } : {};
 }
 
 const api = {
@@ -54,9 +48,11 @@ const api = {
     },
     async delete(path, data) {
         try {
-        return await connection.delete(path, {data}, { headers: authHeader() });
+        console.log(path,data);
+        return (!data) ? await connection.delete(path, { headers: authHeader() })
+                      : await connection.delete(path, {data}, { headers: authHeader() });
         } catch (err) {
-            return err.response
+            return err
         }
     },
     async login(email, password,type) {

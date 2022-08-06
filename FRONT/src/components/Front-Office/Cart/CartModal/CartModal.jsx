@@ -48,7 +48,6 @@ const CartModal = ({
 
     function handleRemoveItemClick  () {
         setCounter(currentItems.length);
-        console.log(`Nombre d'article en cours`, counter);
         (currentItems.length === 0) && handleClose() ;
     }
 
@@ -73,7 +72,6 @@ const CartModal = ({
                 message : response.data.message}
                 );
                 setTimeout(()=>{handleClose();},1000);
-            console.log(`Une erreur est survenue`, response.data)
         };
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart

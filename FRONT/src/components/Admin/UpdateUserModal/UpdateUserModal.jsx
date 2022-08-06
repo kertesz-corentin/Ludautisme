@@ -93,18 +93,21 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     }
 
     const handleDelete = async () => {
-        const response = await api.delete(`/admin/users/${params.row.id}`)
+        const response = await api.delete(`/admin/users/${params.row.id}`);
         if(response.status === 200) {
             handleClose();
             window.location.reload();
+        } else {
+            setAlertMessage(response.statusText);
+            setTimeout(()=>{setAlertMessage()},2000);
         }
     }
 
     return (
         <div className="updateuser">
-            <IconButton onClick={handleOpen}>
+            <Box onClick={handleOpen}>
                 <EditIcon />
-            </IconButton>
+            </Box>
             <Modal
                 open={open}
                 onClose={handleClose}

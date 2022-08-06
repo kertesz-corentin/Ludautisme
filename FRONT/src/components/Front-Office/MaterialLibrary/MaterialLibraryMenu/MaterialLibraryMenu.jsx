@@ -36,7 +36,7 @@ const MaterialLibraryMenu = ({
         if (typeDisplay === 'favorites'){
                const user= JSON.parse(localStorage.getItem('user'));
                const favorites = await api.get(`/customer/favorite/${user.id}`);
-               if(favorites.data){
+               if(favorites.data.ref_ids){
                const favNameList = favorites.data.ref_ids.map((ref)=> {return {id : ref.id, name:ref.name } });
                 setNameList(favNameList);
                }
