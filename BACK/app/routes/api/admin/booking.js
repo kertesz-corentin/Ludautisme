@@ -57,9 +57,26 @@ router.route('/return/:id')
  * @return {booking} 200 - success response - application/json
  */
 
+/**
+ * PUT /api/admin/booking/:id
+ * @summary Add a reference to a booking
+ * @tags [ADMIN] Booking
+ * @param {paramSearch} request.body.required - At least one of these params
+ * @return {booking} 200 - success response - application/json
+ */
+
+/**
+ * DELETE /api/admin/booking/:id
+ * @summary Delete a booking
+ * @tags [ADMIN] Booking
+ * @param {paramSearch} request.body.required - At least one of these params
+ * @return {booking} 200 - success response - application/json
+ */
+
 router.route('/:id')
     .get(controllerHandler(bookingController.getOne))
-    .put(controllerHandler(bookingController.addToBooking));
+    .put(controllerHandler(bookingController.addToBooking))
+    .delete(controllerHandler(bookingController.removeBooking));
 /**
  * POST /api/admin/booking/add/:UserId
  * @summary Add a new booking
@@ -79,6 +96,7 @@ router.route('/add/:UserId')
  */
 router.route('/search')
     .post(controllerHandler(bookingController.getFiltered));
+
 /**
  * GET /api/admin/booking
  * @summary Get all detailed booking

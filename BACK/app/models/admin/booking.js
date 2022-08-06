@@ -323,6 +323,20 @@ module.exports = {
         RETURNING *`, [id]);
         return result.rows;
     },
+    async deleteAllArticles(idBooking) {
+        const result = await sqlHandler(`
+        DELETE FROM "article_to_booking"
+        WHERE "id_booking" = $1
+        RETURNING *`, [idBooking]);
+        return result.rows;
+    },
+    async deleteBooking(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "booking"
+        WHERE "id" = $1
+        RETURNING *`, [id]);
+        return result.rows;
+    },
     async return(arr) {
         let queryStart = `UPDATE "article_to_booking"
                             SET "returned"='true'`;
