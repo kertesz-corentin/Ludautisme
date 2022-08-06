@@ -211,6 +211,23 @@ module.exports = {
         };
         return res.json(confirm);
     },
+    async removeBooking(req, res) {
+        const bookingId = Number(req.params.id);
+        const booking = await bookingDataMapper.findOne(bookingId);
+        if (!bookingId || booking.length === 0) {
+            throw new ApiError(400, 'Cette réservation n\'existe pas');
+        }
+        if (booking[0].delivered || booking[0].closed) {
+            throw new ApiError(400, 'Cette reservation ne peut être supprimée');
+        }
+        if (booking.length === 1) {
+            await bookingDataMapper.deleteAllArticles(bookingId);
+            await bookingDataMapper.deleteBooking(bookingId);
+            return res.json('Réservation annulée');
+        }
+
+        return res.json('La réservation n\'a pu être annulée');
+    },
     async returnArticle(req, res) {
         const { id } = req.params;
 
