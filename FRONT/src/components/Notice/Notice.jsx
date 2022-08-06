@@ -2,7 +2,7 @@ import React from 'react';
 import './notice.scss';
 const Notice = ({className, ...rest}) => {
     return(
-        <div class="privacy">
+        <div class="notice">
             <h1>
             Mentions légales
             </h1>

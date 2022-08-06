@@ -64,7 +64,7 @@ const Accueil = ({className, ...rest}) => {
                     </div>
             </div>
 
-            <div className="categoriesDisplay">
+            {/* <div className="categoriesDisplay"> 
                 <div className='content-container--max-width'>
                 <h2 className="categorie-title">
                     La matériathèque
@@ -116,8 +116,8 @@ const Accueil = ({className, ...rest}) => {
                     </div>
                     </div>
                 </div>
-            </div>
-            <div className="actu">
+            </div>*/}
+            {/* <div className="actu"> 
                 <div className='content-container--max-width'>
                     <h2 className="actu-title">
                         Nos dernières actualités
@@ -132,7 +132,7 @@ const Accueil = ({className, ...rest}) => {
                     <img className="actu-img" src={FacebookPost} alt="" />
                     </div>
                 </div>
-            </div>
+            </div>*/}
             <div className="contact-container">
                 <div className='content-container--max-width'>
                     <div className="contact-container-coordonnées">
