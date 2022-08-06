@@ -5,7 +5,6 @@ module.exports = (req, res, next) => {
         ? `${req.protocol}://${req.get('host').split(':')[0]}:${process.env.IMAGE_PORT_REDIRECTION}/api${process.env.IMAGE_CATALOG_FOLDER}/`
         : `${req.protocol}://${req.get('host')}/api${process.env.IMAGE_CATALOG_FOLDER}/`;
 
-    console.log(fullUrl);
     const old = res.json.bind(res);
 
     res.json = (body) => {
