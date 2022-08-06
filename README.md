@@ -39,7 +39,7 @@ C'est simple une liste tenue à jour des développement à réaliser est présen
 Si jamais une tâche t'intéresse il suffit de te mettre en membres sur cette carte et de la mettre en cours, une fois ton développement terminé et ta pull request ( késako ? On en reparle en dessous :point_down: ) envoyé, tu n'a plus qu'à attendre que ton code soit validé et intégré au projet, dans tous les cas, tu auras un retour. <br>
 
 ### Lancer l'application
-- Vous pouvez installer la totalité des dépndances en lancant un  `yarn` à la racine du projet.
+- Vous pouvez installer la totalité des déepndances en lancant un  `yarn` à la racine du projet.
 
 - Les .env sont a remplir, à la racine, dans le dossier BACK, dans le dossier FRONT
 
