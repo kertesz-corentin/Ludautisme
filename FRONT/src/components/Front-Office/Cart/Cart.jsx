@@ -42,6 +42,7 @@ const Cart = ({
 
     //Persistent cart initialisation
     useEffect(()=> {
+        console.log(currentItems);
         getPersistentCart();
         },[]);
 

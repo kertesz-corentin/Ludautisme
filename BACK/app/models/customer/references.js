@@ -103,7 +103,6 @@ module.exports = {
     },
 
     async findFiltered(arr, offset, limit, userId) {
-
         let queryStart = `SELECT
         r.id,
         r.name,
