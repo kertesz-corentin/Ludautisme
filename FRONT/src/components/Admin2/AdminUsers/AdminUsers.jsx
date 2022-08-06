@@ -10,11 +10,12 @@ const AdminUsers2 = ({}) => {
     const dispatch = useDispatch();
 
 
-    useEffect(()=>{
-        dispatch(adminUsersReducer.FETCH_ADMIN_USERS);
-    },[
-        dispatch
-    ]);
+    // useEffect(()=>{
+    //     dispatch();
+    // },[
+    //     dispatch
+    // ]);
+
     return (
         <Box style={{position : 'absolute',height:'100%',width:'100%'}}>
             <Box>Menu</Box>
