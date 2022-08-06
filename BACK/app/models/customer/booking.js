@@ -37,8 +37,16 @@ module.exports = {
         LEFT JOIN "article" AS ar ON "ar_to_book"."id_article" = "ar"."id"
 		LEFT JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
         WHERE "user"."id"=$1 AND "perm"."active"=true
-        GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency";`;
+        GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active;"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
@@ -76,8 +84,16 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-		GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+		GROUP b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"
         )
         SELECT *
         FROM booking_full
@@ -138,8 +154,16 @@ module.exports = {
 		LEFT JOIN "reference_to_image" AS rti ON "reference"."id" = rti."id_ref"
         LEFT JOIN "image" ON rti."id_image" = "image"."id"
 		WHERE "image"."main" = TRUE AND "user"."id"=$1
-        GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"`;
+        GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;

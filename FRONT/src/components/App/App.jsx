@@ -32,12 +32,12 @@ function App() {
             init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-                if (cartRefs && itemsToCart.length < 1){
-                    await cartRefs.forEach(async (refId) => {
-                        const fullRef = await refReq.getOne(refId);
-                        setItemsToCart(itemsToCart => [...itemsToCart, fullRef.data[0]]);
-                    });
+                console.log('cartRefs',cartRefs,itemsToCart);
+                if (cartRefs){
+                    const items = await cartReq.getItems(cartRefs);
+                    setItemsToCart(items.data || []);
                 }
+
             },
             add : async (item) => {
                 console.log("itemToAdd",item.id);
