@@ -101,8 +101,16 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-		GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"
         )
         SELECT *
         FROM booking_full`;
@@ -142,8 +150,16 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-		GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"
         )
         SELECT *
         FROM booking_full
@@ -194,8 +210,16 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-		GROUP BY b.id, "user"."id",
-                "date_permanency","return_date_permanency","return_id_permanency","active_permanency"
+		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"
         )
         SELECT *
         FROM booking_full
@@ -299,13 +323,27 @@ module.exports = {
         RETURNING *`, [id]);
         return result.rows;
     },
+    async deleteAllArticles(idBooking) {
+        const result = await sqlHandler(`
+        DELETE FROM "article_to_booking"
+        WHERE "id_booking" = $1
+        RETURNING *`, [idBooking]);
+        return result.rows;
+    },
+    async deleteBooking(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "booking"
+        WHERE "id" = $1
+        RETURNING *`, [id]);
+        return result.rows;
+    },
     async return(arr) {
         let queryStart = `UPDATE "article_to_booking"
                             SET "returned"='true'`;
 
         const placeholders = [];
         if (arr.length > 0) {
-            queryStart += ` WHERE "id_article" IN (`
+            queryStart += ` WHERE "id_article" IN (`;
             arr.forEach((id, indx) => {
                 if (indx !== arr.length - 1) {
                     queryStart += `$${placeholders.length + 1}, `;

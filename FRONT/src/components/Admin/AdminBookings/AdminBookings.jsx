@@ -73,9 +73,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 onChange={async () => {
                                     const id = Number(params.row.id)
                                     const response = await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
-                                    const newData = await getBookings();
-                                    console.log('response', response);
-                                    setBookings(newData.data);
+                                    await getBookings();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >

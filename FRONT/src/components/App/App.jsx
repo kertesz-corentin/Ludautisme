@@ -22,6 +22,8 @@ import ResetPwd from '../Front-Office/User/ResetPassword/ResetPassword';
 import { useState } from 'react';
 import * as cartReq from '../../requests/customer/cart';
 import * as refReq from '../../requests/customer/reference';
+import Privacy from '../Privacy/Privacy';
+import Notice from '../Notice/Notice';
 export const FunctionContext= React.createContext();
 
 
@@ -32,15 +34,13 @@ function App() {
             init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-                if (cartRefs && itemsToCart.length < 1){
-                    await cartRefs.forEach(async (refId) => {
-                        const fullRef = await refReq.getOne(refId);
-                        setItemsToCart(itemsToCart => [...itemsToCart, fullRef.data[0]]);
-                    });
+                if (cartRefs){
+                    const items = await cartReq.getItems(cartRefs);
+                    setItemsToCart(items.data || []);
                 }
+
             },
             add : async (item) => {
-                console.log("itemToAdd",item.id);
                 await cartReq.addToCart(item.id);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
             },
@@ -52,7 +52,6 @@ function App() {
                 } else {
                 let hardCopy = [...itemsToCart];
                 hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
-                console.log('after filter',hardCopy);
                 setItemsToCart(hardCopy);
                 }
             },
@@ -71,7 +70,8 @@ function App() {
             <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<UsefullLinks />} />}></Route>
             <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider value ={cartManager}><MaterialLibrary currentItems = {itemsToCart}  /></FunctionContext.Provider>} />}></Route>
-
+            <Route path = "/notice" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Notice />} />}></Route>
+            <Route path = "/privacy" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Privacy/>} />}></Route>
 
             
             {/*ADMIN REFACTOR*/}

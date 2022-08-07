@@ -5,7 +5,6 @@ import api from '../requests/index'
 
 const store = configureStore({
     reducer ,
-    middleware : [thunk]
 });
 
 export default store;

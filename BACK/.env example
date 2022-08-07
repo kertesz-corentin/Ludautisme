@@ -1,5 +1,6 @@
 PORT = 3001
 NODE_ENV = front | dev | production
+IMAGE_PORT_REDIRECTION = 80 
 
 DATABASE_URL = postgres://user:pwd@remote_host:5432/dbname
 DATABASE_DEV = postgres://user:pwd@localhost:5432/dbname

@@ -65,9 +65,11 @@ function AdminHeader() {
 
     // Get header Height
     const debouncedHandleResize = debounce(() => {
-        const { height, width } = headerRef.current.getBoundingClientRect();
-        setHeaderSize({ height, width });
-        updateStore({ height, width });
+        if (headerRef['current']) {
+            const { height, width } = headerRef.current.getBoundingClientRect();
+            setHeaderSize({ height, width });
+            updateStore({ height, width });
+        }
     }, 16);
 
     useEffect(() => {
