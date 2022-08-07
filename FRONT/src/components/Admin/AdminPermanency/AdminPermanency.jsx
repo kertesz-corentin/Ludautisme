@@ -21,7 +21,6 @@ import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage'
 const AdminPermanency = ({className, ...rest}) => {
     const [date, setDate] = useState();
     const [alertMessage, setAlertMessage] = useState();
-    const [successMessage, setSuccessMessage] = useState();
     const [isDefined,setIsDefined] = useState(false);
 
     const getActivePermanency = async () => {
@@ -53,11 +52,10 @@ const AdminPermanency = ({className, ...rest}) => {
             const newDate = {
                 'next_date': date
             }
-            console.log(newDate);
             const response = await api.patch('/admin/permanency/next', newDate);
 
             if(response.data === ''){
-                console.log(response);
+                setIsDefined(true);
                 setAlertMessage({
                     message : 'Succès',
                     severity : 'success'});
@@ -71,9 +69,7 @@ const AdminPermanency = ({className, ...rest}) => {
 
     React.useEffect(() => {
         getActivePermanency();
-    }, [date]);
-
-    console.log('date', date);
+    }, [date,isDefined]);
 
     return (
         <div className="adminpermanency">
