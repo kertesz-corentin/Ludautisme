@@ -60,10 +60,10 @@ const Reference = ({
         setCartItems(currentItems);
     }
 
-    const handleFavorite = () =>{
-            (favorite)
-            ? api.delete(`/customer/favorite/${userToken.id}`,{refId:id})
-            : api.post(`/customer/favorite/${userToken.id}`,{refId:id});
+    const handleFavorite = async () =>{
+            (isFav)
+            ? await api.delete(`/customer/favorite/${userToken.id}`,{refId:id})
+            : await api.post(`/customer/favorite/${userToken.id}`,{refId:id});
             setIsFav(!isFav);
     }
 

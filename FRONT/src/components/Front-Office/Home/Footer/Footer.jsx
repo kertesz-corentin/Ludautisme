@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import logo from '../../../../public/logo.png';
 import './footer.scss';
 import facebookLogo from '../../../../public/icones/Logo-Facebook.png';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const Footer = ({className, ...rest}) => {
 

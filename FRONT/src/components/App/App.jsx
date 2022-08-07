@@ -34,15 +34,13 @@ function App() {
             init : async () =>{
                 const response = await cartReq.getCart();
                 const cartRefs = response.data.id_refs;
-                if (cartRefs && itemsToCart.length < 1){
-                    await cartRefs.forEach(async (refId) => {
-                        const fullRef = await refReq.getOne(refId);
-                        setItemsToCart(itemsToCart => [...itemsToCart, fullRef.data[0]]);
-                    });
+                if (cartRefs){
+                    const items = await cartReq.getItems(cartRefs);
+                    setItemsToCart(items.data || []);
                 }
+
             },
             add : async (item) => {
-                console.log("itemToAdd",item.id);
                 await cartReq.addToCart(item.id);
                 setItemsToCart(itemsToCart => [...itemsToCart, item]);
             },
@@ -54,7 +52,6 @@ function App() {
                 } else {
                 let hardCopy = [...itemsToCart];
                 hardCopy = hardCopy.filter((cartItem) => cartItem.id !== item);
-                console.log('after filter',hardCopy);
                 setItemsToCart(hardCopy);
                 }
             },

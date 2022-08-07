@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// import requests
+import api from '../../../requests';
+
+// import react components
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+
 // import react components
 import BookingArticles from '../BookingArticles/BookingArticles';
 
@@ -8,6 +14,7 @@ import BookingArticles from '../BookingArticles/BookingArticles';
 import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updatebookingmodal.scss';
 
@@ -21,6 +28,8 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     const [overdue, setOverdue] = useState(params.row.overdue);
 
     const [articles, setArticles] = useState(params.row.borrowed_articles);
+
+    const [alertMessage, setAlertMessage] = useState();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -39,6 +48,19 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
         //     handleClose();
         // }
         // console.log('response', response);
+    }
+
+     const handleDelete = async () => {
+        console.log('handleDelete',params.row.id);
+        const response = await api.delete(`/admin/booking/${params.row.id}`);
+        console.log(response);
+        if(response.status === 200) {
+            handleClose();
+            window.location.reload();
+        } else {
+            setAlertMessage(response.statusText);
+            setTimeout(()=>{setAlertMessage()},2000);
+        }
     }
 
     return (
@@ -158,7 +180,20 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
                             Valider
                         </Button>
                     )}
+                      {(!delivered && !closed) && (
+                            <Button
+                                onClick={handleDelete}
+                                className="update-modal-footer-submit"
+                                variant="outlined"
+                                startIcon={<DeleteIcon />}
+                            >
+                                Supprimer
+                            </Button>
+                        )}
                     </div>
+                     {alertMessage && (
+                        <AlertMessage message={alertMessage} />
+                    )}
                 </Box>
             </Modal>
 
