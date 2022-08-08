@@ -84,7 +84,7 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-		GROUP b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
                 ,"user"."id"
                 ,"user"."member_number"
                 ,"user"."first_name"
@@ -100,6 +100,7 @@ module.exports = {
         WHERE `;
         const placeholders = [];
         try {
+            console.log('query before', query, arr, 'Stop');
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];
                 placeholders.push(filter[prop]);
@@ -110,6 +111,7 @@ module.exports = {
                 }
             });
             const result = await sqlHandler(query, placeholders);
+            console.log('query', query, placeholders);
             return result.rows;
         } catch (err) {
             console.error(err);

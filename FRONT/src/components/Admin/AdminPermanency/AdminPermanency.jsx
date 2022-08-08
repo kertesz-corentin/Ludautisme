@@ -11,11 +11,10 @@ import {TextField,Chip} from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { format } from 'date-fns';
+import { format,isAfter,parse } from 'date-fns';
 
 import './adminpermanency.scss';
 import { Button } from '@mui/material';
-import { isAfter } from 'date-fns';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 const AdminPermanency = ({className, ...rest}) => {
@@ -53,7 +52,6 @@ const AdminPermanency = ({className, ...rest}) => {
             const newDate = {
                 'next_date': date
             }
-            console.log(newDate);
             const response = await api.patch('/admin/permanency/next', newDate);
 
             if(response.data === ''){
@@ -67,6 +65,12 @@ const AdminPermanency = ({className, ...rest}) => {
                 console.log(response.data)
             }
         }
+    }
+
+    const closePermanency = async () => {
+        await api.get('/admin/permanency/active/close');
+        setDate();
+        setIsDefined(false);
     }
 
     React.useEffect(() => {
@@ -101,14 +105,22 @@ const AdminPermanency = ({className, ...rest}) => {
                                     </AlertMessage>
                  </>
                  :
-                 <>
-                <Button
-                    variant='outlined'
-                    onClick={setPermanencyDate}
-                >
-                    modifier
-                </Button>
-                </>
+                 (isAfter(new Date(),parse(date,'yyyy-MM-dd',new Date())) && isDefined) ?
+                    <>
+                    <Button
+                        variant='outlined'
+                        onClick={closePermanency}
+                    >
+                        cloturer
+                    </Button>
+                    </>
+                :
+                    <Button
+                        variant='outlined'
+                        onClick={setPermanencyDate}
+                    >
+                        modifier
+                    </Button>
                 }
             </div>
             {/* <div className="adminpermanency-element">
