@@ -28,7 +28,7 @@ import { useGetUsersQuery } from '../../api/apiSlice';
 // }
 
 export const UsersList = () => {
-            console.log('userList',useGetUsersQuery());
+           
             const {
                 data: users = [],
                 isLoading,
@@ -43,7 +43,6 @@ export const UsersList = () => {
             if (isLoading || isFetching) {
                 content = <Box text="Loading..." />
             } else if (isSuccess) {
-                console.log('user isSuccess',users);
                 content = users.map(user => (<Box key={user.id}>{user.first_name}</Box>))
             } else if (isError) {
                 content = <div>{error.toString()}</div>
