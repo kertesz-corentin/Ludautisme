@@ -126,7 +126,7 @@ const Contact = ({ className, ...rest }) => {
                     />
                     <HCaptcha
                         sitekey="6b9cef95-cd94-4fbc-a4df-5819f3329ea5"
-                        size="invisible"
+                        size="normal"
                         onVerify={setToken}
                         onError={captchaError}
                         onExpire={captchaError}
