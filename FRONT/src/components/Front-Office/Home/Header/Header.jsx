@@ -9,7 +9,7 @@ import './header.scss';
 import Cart from '../../Cart/Cart';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
-import {Button} from '@mui/material'
+import {Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -46,8 +46,6 @@ const Header = ({
             <div className="header-logo">
                 <img src={Logo} className="header-logo-img" alt="Logo" />
             </div>
-
-
 
             <nav>
                 <label className="toggleheader">

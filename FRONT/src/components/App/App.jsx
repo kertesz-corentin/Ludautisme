@@ -22,6 +22,8 @@ import ResetPwd from '../Front-Office/User/ResetPassword/ResetPassword';
 import { useState } from 'react';
 import * as cartReq from '../../requests/customer/cart';
 import * as refReq from '../../requests/customer/reference';
+import Privacy from '../Privacy/Privacy';
+import Notice from '../Notice/Notice';
 export const FunctionContext= React.createContext();
 
 
@@ -68,7 +70,8 @@ function App() {
             <Route path = "/infos" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Infos />} />}></Route>
             <Route path = "/usefulllinks" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<UsefullLinks />} />}></Route>
             <Route path = "/materiallibrary" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<FunctionContext.Provider value ={cartManager}><MaterialLibrary currentItems = {itemsToCart}  /></FunctionContext.Provider>} />}></Route>
-
+            <Route path = "/notice" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Notice />} />}></Route>
+            <Route path = "/privacy" element = {<Home  currentItems = {itemsToCart} cartManager={cartManager} children={<Privacy/>} />}></Route>
 
             
             {/*ADMIN REFACTOR*/}

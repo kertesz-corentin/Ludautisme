@@ -30,7 +30,7 @@ const About = ({ className, ...rest }) => {
             <div>
                 <div className='who'>
                     <div className='content-container--max-width'>
-                        <h2 className='who-title'>
+                        <h2 className='about-title about-title--white'>
                             <img className='who-title-logo' src={Drapeau} alt="qui somme nous" />
                             Qui sommes nous ?
                         </h2>
@@ -43,10 +43,10 @@ const About = ({ className, ...rest }) => {
                 <div className='everybody'>
                     <div className='content-container--max-width'>
                         <div className='everybody-column'>
-                            <h2 className='actions-title'>Autisme mais pas que...</h2>
+                            <h2 className='about-title'>Autisme mais pas que...</h2>
                             <div className='everybody-content'>
                                 <p> Notre association s'adresse à toutes les personnes ayant des besoins spécifiques.</p>
-                                <img src={'./pictures/wordcloud.png'} alt="accompagner" />
+                                <img class='wordcloud' src={'./pictures/wordcloud.png'} alt="accompagner" />
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ const About = ({ className, ...rest }) => {
 
                 <div className='content-actions'>
                     <div className='actions'>
-                        <h2 className='actions-title'>
+                        <h2 className='about-title'>
                             Nos buts
                         </h2>
 
@@ -97,7 +97,7 @@ const About = ({ className, ...rest }) => {
                 </div>
 
                 <div className='about-philo'>
-                    <h2 className='about-philo-title'>
+                    <h2 className='about-title about-title--white'>
                         Notre philosophie
                     </h2>
 
@@ -122,7 +122,7 @@ const About = ({ className, ...rest }) => {
                 </div>
 
                 <div className='actions-passées'>
-                    <h2 className='actions-passées-title'>
+                    <h2 className='about-title'>
                         Nos actions passées
                     </h2>
                     <p>
