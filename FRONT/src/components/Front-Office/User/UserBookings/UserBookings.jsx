@@ -61,18 +61,18 @@ const UserBookings = ({className, ...rest}) => {
 
             //Next Permanency
             const nextFilter = (data) ?
-            await data.filter((booking)=> booking.is_next_permanency)
+            await data.filter((booking)=> booking.is_next_permanency && !booking.delivered)
             : [];
             setNextBooking(nextFilter);
 
             //Active permanency
             const activeFilter = (data) ?
-            await data.filter((booking)=> booking.active_permanency)
+            await data.filter((booking)=> booking.active_permanency || (booking.is_next_permanency && booking.delivered && !booking.closed ))
             : [];
             setActiveBooking(activeFilter);
             //Old Bookings
             const oldFilter = (data) ?
-            await data.filter((booking)=> !booking.active_permanency && !booking.is_next_permanency)
+            await data.filter((booking)=> (!booking.active_permanency && !booking.is_next_permanency) || booking.closed)
             : [];
 
             setOldBookings(oldFilter.sort((a,b)=>{return (a.id - b.id > 0) ? -1 : 1}));
@@ -100,12 +100,13 @@ const UserBookings = ({className, ...rest}) => {
                     {...rest}
                 >
                     <Box className = "list" sx={{ bgcolor: 'background.paper' }}>
-                        { (nextBooking[0])&&
                         <Box className='booking__wrapper'>
                         <Box className="booking__title ">
-                            <h2>Réservation prochaine permanence {displayCountRefBooked(nextBooking[0])} </h2>
+                            <h2>Réservation prochaine permanence {(nextBooking[0]) && displayCountRefBooked(nextBooking[0])} </h2>
                         </Box>
-                         <Typography className="booking__info">#{nextBooking[0].id} - A venir récupérer {nextBooking[0].date_permanency}</Typography>
+                        { (nextBooking[0])?
+                        <>
+                        <Typography className="booking__info">#{nextBooking[0].id} - A venir récupérer {nextBooking[0].date_permanency}</Typography>
                         {/* <Permanency/> */}
                         <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
@@ -114,14 +115,19 @@ const UserBookings = ({className, ...rest}) => {
                                     gridSize={gridSize}
                                 />
                         </Box>
-                        </Box>
+                        </>
+                        :
+                        <>Vous n'avez pas de réservations pour la prochaine permanence</>
                         }
+                        </Box>
                         <Divider className="booking__divider"/>
-                        { (activeBooking[0]) &&
+
                         <Box className="booking__wrapper ">
                         <Box className="booking__title ">
-                            <h2>Emprunt en cours {displayCountRefBooked(activeBooking[0])}</h2>
+                            <h2>Emprunt en cours {(activeBooking[0]) && displayCountRefBooked(activeBooking[0])}</h2>
                         </Box>
+                        { (activeBooking[0]) ?
+                        <>
                         <Typography className="booking__info">#{activeBooking[0].id} - A rendre {activeBooking[0].return_date_permanency}</Typography>
                         <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
@@ -130,8 +136,11 @@ const UserBookings = ({className, ...rest}) => {
                                     gridSize={gridSize}
                                 />
                         </Box>
+                        </>
+                        : <>Vous n'avez pas d'emprunt en cours</>
+                         }
                         </Box>
-                        }
+
                          <Divider className="booking__divider"/>
                         { (oldBookings.length>0)&&
                             <Box className="booking__wrapper">
