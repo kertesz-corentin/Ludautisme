@@ -4,12 +4,8 @@ require('dotenv').config();
 module.exports = {
     async send(req, res) {
         const {
-            name, email, object, message, telephone,
+            name, email, object, message,
         } = req.body;
-        // thsi field is an honaypot for see the spambot
-        if (telephone) {
-            res.status(500).json("erreur d'envoi");
-        }
         const html = `<div>
                         <h1>Nouveau message de contact</h1>
                         <p>Nom: ${name}</p>
