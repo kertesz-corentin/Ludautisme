@@ -8,8 +8,7 @@ import { UsersList } from '../../../store/features/Admin/Users/UsersList'
 
 const AdminUsers2 = ({}) => {
     const dispatch = useDispatch();
-
-    console.log('Redux api answer : ',UsersList());
+    
     // useEffect(()=>{
     //     dispatch();
     // },[
