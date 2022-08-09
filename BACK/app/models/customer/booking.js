@@ -100,7 +100,7 @@ module.exports = {
         WHERE `;
         const placeholders = [];
         try {
-            console.log('query before', query, arr, 'Stop');
+         
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];
                 placeholders.push(filter[prop]);
@@ -111,7 +111,7 @@ module.exports = {
                 }
             });
             const result = await sqlHandler(query, placeholders);
-            console.log('query', query, placeholders);
+            
             return result.rows;
         } catch (err) {
             console.error(err);
