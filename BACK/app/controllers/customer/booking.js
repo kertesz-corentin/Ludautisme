@@ -44,6 +44,7 @@ module.exports = {
             { id_user: userId },
         ];
         const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
+        console.log('bookingExtist?', bookingExist);
         if (bookingExist.length > 0) {
             throw new ApiError(403, 'Cet utilisateur à déjà une réservation pour cette permanence');
         }
