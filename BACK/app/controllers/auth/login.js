@@ -83,7 +83,7 @@ module.exports = {
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
         const link = `${req.body.url}/resetpassword/${dbTempToken.temptoken}`;
         const mailTemplate = template.sendPasswordRecovery(user.name, link);
-        mailer.send(req.body.email, mailTemplate.subject, mailTemplate.html);
+        mailer.send(req.body.email, mailTemplate.subject, mailTemplate.text);
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
