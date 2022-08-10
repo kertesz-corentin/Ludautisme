@@ -66,9 +66,8 @@ module.exports = {
     },
     async forgotPassword(req, res) {
         const user = await loginDatamapper.getUserWithToken(req.body.email);
-        console.log(user);
         if (!user) {
-            res.json('Cette adresse email ne corresponds a aucun contact');
+            res.status(500).json('Cette adresse email ne corresponds a aucun contact');
             return;
         }
         if (user.temptoken) {
