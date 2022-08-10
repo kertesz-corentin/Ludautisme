@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 const mailer = require('../../config/mailer');
+const template = require('../../template/mail');
 require('dotenv').config();
 
 const loginDatamapper = require('../../models/auth/login');
@@ -80,8 +81,9 @@ module.exports = {
             { expiresIn: '1h' },
         );
         const dbTempToken = await loginDatamapper.addToken(req.body.email, token);
-        const html = `<a href="${req.body.url}/resetpassword/${dbTempToken.temptoken}">Lien</a>`;
-        mailer.send(req.body.email, 'Your token', html);
+        const link = `${req.body.url}/resetpassword/${dbTempToken.temptoken}`;
+        const mailTemplate = template.sendPasswordRecovery(user.name, link);
+        mailer.send(req.body.email, mailTemplate.subject, mailTemplate.html);
         res.json({ status: 'ok' });
     },
     async resetPassword(req, res) {
