@@ -15,7 +15,6 @@ const RecoverPasswordModal = ({className, ...rest}) => {
 
   function handleMailChange (event) {
     setMailValue(event.target.value)
-    console.log(`Mail`, event.target.value)
 }
 
 const handleMailSubmit = async(event) => {
