@@ -48,7 +48,7 @@ const Header = ({
             </div>
 
             <nav>
-                <label className="toggleheader">
+                <label className="toggleheader" for="toggleheader">
                     <MenuIcon/>
                 </label>
                 <input type="checkbox" id="toggleheader" />
@@ -63,21 +63,21 @@ const Header = ({
                                 onClick={() => { handleActive(page); }}
                             >
                                 <Button
-
                                     //onClick={handleCloseNavMenu}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
                                     {pages[page].display}
                                 </Button>
-                            </Link>
+                        </Link>
                     ))
                 }
-                </div>
-            </nav>
                 <div className="header-items">
                     {(userToken)&&<Cart cartManager={cartManager} currentItems = {currentItems}/>}
                     <LoginUser/>
                 </div>
+                </div>
+            </nav>
+                
             </Box>
         </header>
    );
