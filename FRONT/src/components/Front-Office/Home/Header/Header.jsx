@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Logo from '../../../../public/logo.png';
-import burgerMenu from '../../../../public/menu.png';
 import LoginUser from '../../User/LoginUser/LoginUser';
 import './header.scss';
 // import { NavLink } from 'react-router-dom';
@@ -65,8 +64,8 @@ const Header = ({
 
                 <nav>
                     <div>
-                        <Button className="button-menu" aria-describedby={id} variant="contained" onClick={handleClickMenu}>
-                            <img src={burgerMenu} className="" alt="burger menu" />
+                        <Button className="button-menu" aria-describedby={id} variant="ctext" onClick={handleClickMenu}>
+                            <MenuIcon/>
                         </Button>
                         <Popover
                             id={id}
@@ -75,7 +74,11 @@ const Header = ({
                             onClose={handleCloseMenu}
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'left',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center'
                             }}
                         >
                             <div className="mobile-menu">
