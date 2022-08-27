@@ -1,5 +1,7 @@
 @import 'src/styles/vars';
-
+.button-menu{
+    display: none !important;
+}
 .header {
     height: 80px;
     text-decoration: none;
@@ -88,13 +90,25 @@ nav .main_pages,
     padding-left: 10px;
     padding-right: 10px;
 }
-
-label,
-#toggleheader {
+.mobile-menu {
     display: none;
 }
 
 @media all and (max-width: 1080px) {
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        background-color: rgba(255, 251, 236, 0.8);
+        & .MuiButton-text {
+            margin-bottom: 0;
+        }
+
+    }
+    .button-menu{
+        display: inline-flex !important;
+    }
     .header {
         height: 120px;
         justify-content: space-between;
