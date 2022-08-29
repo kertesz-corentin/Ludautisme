@@ -8,7 +8,8 @@
     transform: translate(-50%, -50%);
     border: hidden;
     border-radius: 20px;
-    padding:2rem;
+    padding:1rem;
+    width: 50%;
 }
 .cardmedia{
     background-color: aquamarine;
@@ -78,8 +79,6 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 15px!important;
-            margin-right: 15px!important;
         }
         &-valorisation{
             color : rgba(0,0,0,0.8);
@@ -105,4 +104,9 @@
 .MuiCardContent-root{
     position: relative;
     height: 100%;
+}
+@media all and (max-width: 1080px) {
+    .ref{
+        width: 95%;
+    }
 }
