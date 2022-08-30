@@ -59,8 +59,6 @@
 nav {
     margin: 0 auto;
     width: 60%;
-    display: flex;
-    align-items: center;
 }
 
 nav .main_pages {
@@ -137,6 +135,8 @@ nav .main_pages,
         height: 60px;
         z-index: 2;
         width: 30%;
+        display: flex;
+        align-items: center;
     }
 
     nav .main_pages {
