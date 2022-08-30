@@ -27,7 +27,7 @@ const Header = ({
     const pages = {
         test1: { url: '/', display: <HomeIcon /> },
         test2: { url: '/about', display: 'Association' },
-        test3: { url: '/materiallibrary', display: 'Mathériathèque' },
+        // test3: { url: '/materiallibrary', display: 'Mathériathèque' },
         test4: { url: '/infos', display: 'Infos pratiques' },
         test5: { url: '/usefullLinks', display: 'Liens utiles' },
     };
@@ -131,7 +131,11 @@ const Header = ({
                 </nav>
 
             </Box>
+            <Box className="maintenance">
+                <span>🚧 Bienvenue sur notre nouveau site, celui-ci est encore en travaux, a bientôt pour des nouveautés 😉</span>
+            </Box>
         </header>
+        
     );
 };
 

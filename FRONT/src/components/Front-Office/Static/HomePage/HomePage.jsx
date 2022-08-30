@@ -41,7 +41,7 @@ const Accueil = ({className, ...rest}) => {
                 </div>
             </div>
 
-            <div className="fonctionnement">
+            {/*<div className="fonctionnement">
                 <h2 className="fonctionnement-title">Comment ça marche?</h2>
                     <div className="fonctionnement-content">
                             <img className="fonctionnement-logo" src={Logo1} alt="s'incrire" />
@@ -62,7 +62,7 @@ const Accueil = ({className, ...rest}) => {
                         <img className="fonctionnement-logo" src={Logo3} alt="récuperer ses articles" />
                         <p>Récupérez vos articles sur les étagères le jour de la permanence</p>
                     </div>
-            </div>
+    </div>*/}
 
             {/* <div className="categoriesDisplay"> 
                 <div className='content-container--max-width'>
