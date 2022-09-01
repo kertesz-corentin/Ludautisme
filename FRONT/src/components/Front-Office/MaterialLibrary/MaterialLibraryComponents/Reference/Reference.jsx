@@ -139,9 +139,6 @@ const Reference = ({
                 <Typography className="transition-modal-title" variant="h6" component="h2">
                   {name}
                 </Typography>
-                <Avatar sx={{width:'4rem',color:"rgba(0,0,0,0.8)",bgcolor:"rgba(0,0,0,0)", border:"2px solid rgba(0,0,0,0.6)", fontSize: 13, fontWeight:"600", p:2, borderRadius:"25px" }} variant="rounded">
-                        {(valorisation===0) ? '- €' : `${valorisation}€`}
-                    </Avatar>
                     </Box>
                 <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
                  <ReferenceSwiper
@@ -153,7 +150,9 @@ const Reference = ({
                 <Divider/>
                 <Typography className="transition-modal-description" variant="h6" component="h5">
                   {description}
+                  
                 </Typography>
+                    {(valorisation===0) ? '' : `Caution : ${valorisation}€`}
                     <Box sx={{marginBottom:"15px",display:'flex',justifyContent:'space-evenly'}}>
                         {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
 

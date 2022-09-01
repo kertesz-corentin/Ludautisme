@@ -6,7 +6,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:600px;
+    width:50%;
     border: hidden;
     border-radius: 20px;
     padding:2rem;
@@ -14,6 +14,12 @@
 
 .currentItem{
     background-color: aquamarine;
+}
+
+@media all and (max-width: 1080px) {
+    .shopmodal{
+        width: 90%;
+    }
 }
 
 

@@ -35,12 +35,12 @@ const referenceSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
-    tag:{
+    /*tag:{
         type : "string",
         label : "tag",
         gridDisplay : "normal",
         width : 250,
-    },
+    }*/
 }
 
 export {referenceSchema}
