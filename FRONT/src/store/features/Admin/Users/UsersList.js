@@ -38,7 +38,7 @@ export const UsersList = () => {
                 isError,
                 error,
             } = useGetUsersQuery();
-            console.log(useGetUsersQuery());
+            console.log(apiSlice.useGetUsersQuery());
 
             let content
 

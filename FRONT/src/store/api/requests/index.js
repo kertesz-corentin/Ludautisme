@@ -17,13 +17,13 @@ export const initEndpoints = (builder) =>{
     let endpoints = {};
     
     //Le .map ajoute les requetes ok a apiEndpoints, rajoute aussi les requêtes pas ok avec message d'erreur redux
-    //Récupère seulement les endpoints en erreur pour affichage console a l'initialisation
+    //errors Récupère seulement les endpoints en erreur pour affichage console a l'initialisation
     //Pour toutes les librairies de requettes
     const errors = endpointsLibs.map(endpointLib => {
         //On contrôle si les propriétés sont valides
         return Object.keys(endpointLib).map(endpointName => {
-            //Si ok opn les ajoute a endpoints
-            if (   typeof endpointLib[endpointName] === 'function' 
+           
+            if (   typeof endpointLib[endpointName] === 'function'  //Si ok on les ajoute a endpoints
                 && typeof endpointLib[endpointName]() === 'string'){
                 endpoints = {...endpoints, ...{[endpointName] : builder.query({query : endpointLib[endpointName]})} };
             }

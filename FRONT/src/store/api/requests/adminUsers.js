@@ -1,8 +1,8 @@
 //Liste des requetes api
 export const adminUsers = {
-    getOne:'',
+    getUser:'',
     getUsers:() => '/users',
-    addOne:'',
+    addUser:'',
     // updateOne:'',
     // deleteOne:'',
 }
