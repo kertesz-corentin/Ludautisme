@@ -152,7 +152,7 @@ const Reference = ({
                   {description}
                   
                 </Typography>
-                    {(valorisation===0) ? '' : `Caution : ${valorisation}€`}
+                    {(valorisation===0) ? 'Caution : --€' : `Caution : ${valorisation}€`}
                     <Box sx={{marginBottom:"15px",display:'flex',justifyContent:'space-evenly'}}>
                         {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
 

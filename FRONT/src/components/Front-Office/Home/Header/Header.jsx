@@ -132,7 +132,7 @@ const Header = ({
 
             </Box>
             <Box className="maintenance">
-                <span>🚧 Bienvenue sur notre nouveau site, celui-ci est encore en travaux, a bientôt pour des nouveautés 😉</span>
+                <span>🚧 Bienvenue sur notre nouveau site, celui-ci est encore en travaux, à bientôt pour des nouveautés 😉</span>
             </Box>
         </header>
         
