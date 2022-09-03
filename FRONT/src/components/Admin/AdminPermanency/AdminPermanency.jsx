@@ -37,12 +37,12 @@ const AdminPermanency = ({className, ...rest}) => {
     }
 
     const handleChangeDate = (event) => {
-        if (new Date(event)>new Date()){
+        if (new Date(event)>= new Date()){
         setDate(format(new Date(event), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
         } else {
             setAlertMessage({
                 message : 'Erreur'});
-            setTimeout(()=>{setAlertMessage()},500);
+            setTimeout(()=>{setAlertMessage()},1500);
         }
     }
 
@@ -74,7 +74,7 @@ const AdminPermanency = ({className, ...rest}) => {
 
     React.useEffect(() => {
         getActivePermanency();
-    }, [date,isDefined]);
+    }, [isDefined]);
 
     return (
         <div className="adminpermanency">
