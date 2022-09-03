@@ -7,7 +7,8 @@ import { Box } from '@mui/material';
 // import { TimeAgo } from './TimeAgo'
 // import { ReactionButtons } from './ReactionButtons'
 
-import { useGetUsersQuery } from '../../api/apiSlice';
+import { useGetUsersQuery } from '../../../api/apiSlice.js';
+import {apiSlice} from '../../../api/apiSlice.js';
 
 // let PostExcerpt = ({ post }) => {
 //   return (
@@ -37,16 +38,17 @@ export const UsersList = () => {
                 isError,
                 error,
             } = useGetUsersQuery();
+            console.log(apiSlice.useGetUsersQuery());
 
             let content
 
-            if (isLoading || isFetching) {
-                content = <Box text="Loading..." />
-            } else if (isSuccess) {
-                content = users.map(user => (<Box key={user.id}>{user.first_name}</Box>))
-            } else if (isError) {
-                content = <div>{error.toString()}</div>
-            }
+            // if (isLoading || isFetching) {
+            //     content = <Box text="Loading..." />
+            // } else if (isSuccess) {
+            //     content = users.map(user => (<Box key={user.id}>{user.first_name}</Box>))
+            // } else if (isError) {
+            //     content = <div>{error.toString()}</div>
+            // }
 
             return (
                 <section className="users-list">

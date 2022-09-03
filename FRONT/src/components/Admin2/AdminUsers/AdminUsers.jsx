@@ -4,7 +4,7 @@ import AdminDataGrid from '../AdminDatagrid/AdminDatagrid';
 import { Box } from '@mui/material';
 import { userSchema } from '../../../Schemas';
 import { useDispatch } from 'react-redux';
-import { UsersList } from '../../../store/features/Admin/Users/UsersList'
+import { UsersList } from '../../../store/features/Admin/Users/UsersList';
 
 const AdminUsers2 = ({}) => {
     const dispatch = useDispatch();

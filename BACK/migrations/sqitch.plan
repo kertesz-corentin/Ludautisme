@@ -15,3 +15,4 @@ initial_seeding_Final/seed_refs_to_images 2022-06-24T17:08:00Z arnaud peybernes 
 initial_seeding_Final/seed_refs_to_categories 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
 initial_seeding_Final/seed_articles 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
 initial_seeding_Final/seed_articles_to_booking 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
+initial_seeding_Final/update_reference_wp_descriptions 2022-06-24T17:08:00Z arnaud peybernes <a@a.fr> # create database
