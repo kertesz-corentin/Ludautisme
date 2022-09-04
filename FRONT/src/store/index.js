@@ -2,7 +2,7 @@ import { configureStore} from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
 import api from '../requests/index'
-import { apiSlice } from './features/api/apiSlice'
+import { apiSlice } from './api/apiSlice'
 
 const store = configureStore({
         reducer : {

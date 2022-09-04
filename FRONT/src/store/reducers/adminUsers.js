@@ -1,47 +1,34 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable default-param-last */
 /* eslint-disable import/prefer-default-export */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as actions from '../actions';
-import api from '../../requests'
+import { createAsyncThunk, createSlice,useQuery } from '@reduxjs/toolkit';
+//import * as actions from '../actions';
+import { apiSlice } from '../../store/api/apiSlice.js';
 
-const initialState = {
-  users: [],
-  status: 'idle',
-  error: null
-}
 
-export const fetchUsers = createAsyncThunk('posts/fetchUsers', async () => {
-  const response = await api.adminUsers.getAll();
-  return response.data
-})
+const initialState = [];
+
+//Au premier chargement de la page remplir l'état initial
+const fetchUsers2 = apiSlice;
+
 
 const adminUsersSlice = createSlice({
   name: 'adminUsers',
   initialState,
   reducers: {
-    fetch: ()=>{
-
+    fetchUsers : () =>{
+        
     }
+    //getAll
+    //getOne
+    //addOne
+    //updateOne
+    //deleteOne
   },
-  extraReducers(builder) {
-    builder
-      .addCase(fetchUsers.pending, (state, action) => {
-        state.status = 'loading'
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        // Add any fetched posts to the array
-        state.posts = state.posts.concat(action.payload)
-      })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.error.message
-      })
-  }
 })
 
 
-export const {userAdded} = adminUsersSlice.actions
+export const {fetchUsers} = adminUsersSlice.actions
 
 export const selectAllUsers = state => state.users
 

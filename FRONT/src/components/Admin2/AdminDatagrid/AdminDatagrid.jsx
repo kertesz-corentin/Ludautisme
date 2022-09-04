@@ -58,8 +58,8 @@ const AdminDatagrid = ({
         });
 
     });
-    console.log(height);
-    console.log(columnBuilder());
+    //console.log(height);
+    //console.log(columnBuilder());
     return (
        <div className="datagrid__availableSpace" 
             ref={parentSize}
