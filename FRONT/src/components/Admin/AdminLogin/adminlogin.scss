@@ -9,3 +9,14 @@
     border-radius: 15px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(0, 0, 0, 0.25);
 }
+@media all and (max-width: 1080px) {
+    .admin-login{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: $color;
+        padding: $gutter;
+        border-radius: 15px;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25), inset -4px -4px 8px rgba(0, 0, 0, 0.25);
+    }
+}

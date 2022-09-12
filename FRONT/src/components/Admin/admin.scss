@@ -15,3 +15,14 @@
         max-width: 60%;
     }
 }
+
+@media all and (max-width: 1080px) {
+    
+    .admin {
+       padding: 3rem; 
+        &-title {
+            font-size: 1.5rem;
+            max-width: none;
+        }
+    }
+}
