@@ -2,6 +2,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 // import { Link } from 'react-router-dom'
 
+import { createSlice, createAction } from '@reduxjs/toolkit'
+
 // import { Spinner } from '../../components/Spinner'
 // import { PostAuthor } from './PostAuthor'
 // import { TimeAgo } from './TimeAgo'
@@ -10,50 +12,35 @@ import { Box } from '@mui/material';
 import { useGetUsersQuery } from '../../../api/apiSlice.js';
 import {apiSlice} from '../../../api/apiSlice.js';
 
-// let PostExcerpt = ({ post }) => {
-//   return (
-//     <article className="post-excerpt" key={post.id}>
-//       <h3>{post.title}</h3>
-//       <div>
-//         <PostAuthor userId={post.user} />
-//         <TimeAgo timestamp={post.date} />
-//       </div>
-//       <p className="post-content">{post.content.substring(0, 100)}</p>
+const initialState = {
+     users:[]
+    ,status:null
+}
 
-//       <ReactionButtons post={post} />
-//       <Link to={`/posts/${post.id}`} className="button muted-button">
-//         View Post
-//       </Link>
-//     </article>
-//   )
-// }
-
-export const UsersList = () => {
-           
-            const {
-                data: users = [],
-                isLoading,
-                isFetching,
-                isSuccess,
-                isError,
-                error,
-            } = useGetUsersQuery();
-            console.log(apiSlice.useGetUsersQuery());
-
-            let content
-
-            // if (isLoading || isFetching) {
-            //     content = <Box text="Loading..." />
-            // } else if (isSuccess) {
-            //     content = users.map(user => (<Box key={user.id}>{user.first_name}</Box>))
-            // } else if (isError) {
-            //     content = <div>{error.toString()}</div>
-            // }
-
-            return (
-                <section className="users-list">
-                <h2>Users</h2>
-                {content}
-                </section>
-            )
+export default createSlice({
+  name: 'users',
+  initialState,
+  reducers: {
+    setUserName: (state, action) => {
+      state.name = action.payload // mutate the state all you want with immer
+    },
+    setStatus: (state, action) => {
+        console.log(state,action);
+      state.status = action.payload // mutate the state all you want with immer
+    },
+    handleFetch: (state, action) => {
+        console.log('handleFetch',action.payload.status,action.payload.data);
+        state.status = action.payload.status;
+        state.users = (action.payload.data) ? action.payload.data : state.users;
     }
+  },
+  // "map object API"
+//   extraReducers: {
+//     [counter.actions.increment]: (
+//       state,
+//       action /* action will be inferred as "any", as the map notation does not contain type information */
+//     ) => {
+//       state.age += 1
+//     },
+//   },
+})
