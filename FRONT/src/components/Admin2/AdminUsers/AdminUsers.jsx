@@ -12,18 +12,17 @@ import CircularProgress from '@mui/material/CircularProgress';
 const AdminUsers2 = ({}) => {
     const dispatch = useDispatch(); 
     const getUsers = useGetUsersQuery(); //Mandatory for useEffect usage
-    store.dispatch(users.actions.handleFetch(getUsers));
-    
+    store.dispatch(users.actions.handleFetch(getUsers)); //First loading only, fetch an store api
+
     useEffect(()=>{
-        //getUsers.refetch();
-        //store.dispatch(users.actions.handleFetch(getUsers));
+        getUsers.refetch(); //Make a refetch
+        store.dispatch(users.actions.handleFetch(getUsers));//Read refetch
     },[]);
 
     return (
         <Box style={{position : 'absolute',height:'100%',width:'100%'}}>
             {(store.getState().users.status === 'pending')&& <CircularProgress sx={{position:'fixed',bottom:'25px',right:'25px'}} />}
-            {/* <Box>{JSON.stringify(store.getState().users.status)}</Box> */}
-            {/* <Box>{JSON.stringify(store.getState().users.users)}</Box> */}
+            <Box>{JSON.stringify(store.getState().users.status)}</Box>
             <AdminDataGrid
                 rows={store.getState().users.users}
                 schema={userSchema}
