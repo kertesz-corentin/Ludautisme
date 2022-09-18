@@ -8,6 +8,7 @@ import users from '../../../store/features/Admin/Users/UsersList';
 import store from '../../../store';
 import { useGetUsersQuery } from '../../../store//api/apiSlice.js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { DriveEta } from '@mui/icons-material';
 
 const AdminUsers2 = ({}) => {
     const dispatch = useDispatch(); 
@@ -15,19 +16,21 @@ const AdminUsers2 = ({}) => {
     store.dispatch(users.actions.handleFetch(getUsers)); //First loading only, fetch an store api
 
     useEffect(()=>{
-        getUsers.refetch(); //Make a refetch
+        getUsers.refetch(); //Make a refetch cleare apiSlice cache
         store.dispatch(users.actions.handleFetch(getUsers));//Read refetch
     },[]);
 
     return (
-        <Box style={{position : 'absolute',height:'100%',width:'100%'}}>
-            {(store.getState().users.status === 'pending')&& <CircularProgress sx={{position:'fixed',bottom:'25px',right:'25px'}} />}
-            <Box>{JSON.stringify(store.getState().users.status)}</Box>
-            <AdminDataGrid
-                rows={store.getState().users.users}
-                schema={userSchema}
-                />
-        </Box>
+        <div className = 'adminUser'>
+            <div>TEST MENU</div>
+            <div className = 'userTest'>
+                {/* <Box>Menu {(store.getState().users.status === 'pending')&& <CircularProgress/>}</Box>          */}
+                <AdminDataGrid
+                    rows={store.getState().users.users}
+                    schema={userSchema}
+                    />
+            </div>
+        </div>
     )
 }
 

@@ -9,10 +9,7 @@ function Content({ content }) {
     const headerHeight = headerSizeStore.height;
 
     return (
-        <div
-            className="content"
-            style={{ minHeight: `calc(100vh - ${headerHeight}px)` }}
-        >
+        <div className="content">
             {content}
         </div>
     );

@@ -1,21 +1,47 @@
-import React, { useState, useEffect,useCallback } from 'react';
+import React, { useState, useEffect,useCallback,useRef } from 'react';
 import './admindatagrid.scss'
 import { Box, ToggleButton, IconButton  } from '@mui/material';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';
+
+function debounce(fn, ms) {
+    let timer;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            timer = null;
+            fn.apply(this, arguments);
+        }, ms);
+    };
+}
 
 const AdminDatagrid = ({
     rows,
     schema
 }) => {
+
     // Responsive Datagrid height
     const [height, setHeight] = useState(null);
-    const parentSize = useCallback((node) => {
-        if (node !== null) {
-            setHeight(node.getBoundingClientRect().height);
-        }
-    }, []);
+    const [clientHeight,setClientHeight] = useState(window.innerHeight);
+    const [resizing,setResizing] = useState(true);
+    const parentSize = useRef();
 
-    const [columns,setColumns] = useState(['id']);
+
+    //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
+    const debouncedHandleResize = debounce(() => {
+        const delta = (window.innerHeight < clientHeight ) ?  clientHeight - window.innerHeight : 0;
+        setClientHeight(window.innerHeight);
+        setHeight(parentSize.current.getBoundingClientRect().height - delta);
+    }, 16);
+
+    useEffect(() => {
+        debouncedHandleResize();
+        window.addEventListener('resize', debouncedHandleResize);
+        return (_) => {
+            window.removeEventListener('resize', debouncedHandleResize);
+        };
+    }, [clientHeight]);
+
+    const [columns,setColumns] = useState(['id']);  //Allow datagrid render even without values
 
 
     //Configure custem render cell
@@ -58,14 +84,14 @@ const AdminDatagrid = ({
         });
 
     });
-    //console.log(height);
-    //console.log(columnBuilder());
+
+
     return (
        <div className="datagrid__availableSpace" 
             ref={parentSize}
         >
-            <Box
-                style={{ height: height - 150 || 200, width: '100%' }} 
+            <div
+                style={{ height: height || 200, width: '100%' }} 
                 className="datagrid__container"
             >
                 <DataGrid
@@ -77,7 +103,7 @@ const AdminDatagrid = ({
                         Toolbar: GridToolbar,
                     }}
                 />
-            </Box>
+            </div>
         </div>
     )
 }
