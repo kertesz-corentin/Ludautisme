@@ -21,7 +21,7 @@ CREATE TABLE "user" (
     "caution_status" BOOLEAN DEFAULT false,
     "caution_expiration" DATE,
     "archived" BOOLEAN DEFAULT false,
-    "id_role" INT REFERENCES "role"("id"),
+    "id_role" INT REFERENCES "role"("id") DEFAULT 1,
     "created_at" TIMESTAMPTZ DEFAULT NOW()
 );
 

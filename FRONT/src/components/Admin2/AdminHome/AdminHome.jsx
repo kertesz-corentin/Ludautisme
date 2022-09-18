@@ -8,7 +8,7 @@ import Content from './AdminContent/AdminContent';
 
 function Home({ content }) {
     return (
-        <div className="home">
+        <div className="adminHome">
             <Header />
             <Content content={content} />
         </div>

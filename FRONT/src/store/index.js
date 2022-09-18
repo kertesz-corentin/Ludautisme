@@ -1,8 +1,6 @@
 import { configureStore} from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import reducer from './reducers';
-import api from '../requests/index'
-import { apiSlice } from './api/apiSlice'
+import { reducer } from './reducers';
+import { apiSlice } from './api/apiSlice';
 
 const store = configureStore({
         reducer : {
@@ -10,7 +8,9 @@ const store = configureStore({
             [apiSlice.reducerPath]: apiSlice.reducer
         }
         , middleware: getDefaultMiddleware =>
-            getDefaultMiddleware().concat(apiSlice.middleware)
+            getDefaultMiddleware({
+                serializableCheck: false
+            }).concat(apiSlice.middleware)
     });
 
 export default store;
