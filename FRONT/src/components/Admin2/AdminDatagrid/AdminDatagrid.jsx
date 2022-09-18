@@ -1,6 +1,9 @@
 import React, { useState, useEffect,useRef } from 'react';
-import './admindatagrid.scss'
+import './admindatagrid.scss';
+import store from '../../../store';
+import details from '../../../store/features/Admin/Details';
 import { Box, ToggleButton, IconButton  } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';
 
 function debounce(fn, ms) {
@@ -64,7 +67,10 @@ const AdminDatagrid = ({
             <IconButton
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
+                 onClick={()=>{store.dispatch(details.actions.openDetails());}
+                          }
             >
+                <EditIcon />
                 {/* <UpdateUserModal params={params} /> */}
             </IconButton>
                     ),
