@@ -1,4 +1,6 @@
 .content{
-    position : relative;
     width: 100%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
 }

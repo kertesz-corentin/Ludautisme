@@ -85,7 +85,7 @@ module.exports = {
         	"perm"."next_id" AS return_id_permanency,
         	"perm"."next_date" AS return_date_permanency,
             "perm"."active" AS active_permanency,
-        	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+        	(perm."next_date" < CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
             json_agg(json_build_object (
                 'id', borrowed."id",
                 'number', borrowed."number",
@@ -134,7 +134,7 @@ module.exports = {
         	"perm"."next_id" AS return_id_permanency,
         	"perm"."next_date" AS return_date_permanency,
             "perm"."active" AS active_permanency,
-        	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+        	(perm."next_date" < CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
             json_agg(json_build_object (
                 'id', borrowed."id",
                 'number', borrowed."number",
@@ -194,7 +194,7 @@ module.exports = {
         	"perm"."next_id" AS return_id_permanency,
         	"perm"."next_date" AS return_date_permanency,
             "perm"."active" AS active_permanency,
-        	(perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+        	(perm."next_date" < CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
             json_agg(json_build_object (
                 'id', borrowed."id",
                 'number', borrowed."number",
