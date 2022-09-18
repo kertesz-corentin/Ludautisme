@@ -9,14 +9,14 @@ export default createSlice({
   name: 'details',
   initialState,
   reducers: {
-    setDetails: (state, action) => {
-      state.content = action.payload; // mutate the state all you want with immer
+    setContent : (state,action) => {
+        return {...state,content: action.payload}    
     },
-    openDetails: (state) => {
-        state.open = true;
+    setOpen : (state,action) => {
+        return {...state,open:true}
     },
-    resetDetails: (state) => {
-      state = {content:{},open:false}
-    },
+    setClose : (state,action) => {
+        return {...state,open:false}
+    }
   },
 })

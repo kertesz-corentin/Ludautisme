@@ -24,12 +24,6 @@ const AdminUsers2 = ({}) => {
         store.dispatch(users.actions.handleFetch(getUsers));//Read refetch
     },[]);
 
-    const [open,setOpen] = useState(store.getState().details.open);
-
-    useEffect(()=>{
-        console.log('refresh');
-    },[open]);
-
 
     
     return (
@@ -43,8 +37,7 @@ const AdminUsers2 = ({}) => {
                         />
                 </div>
                 <div className='admin-details'>
-                         <div onClick={details.actions.resetDetails}>Fermer</div>
-                        <AdminDetails/>    
+                        <AdminDetails/>
                 </div>
             </div>
         </div>

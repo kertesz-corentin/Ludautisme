@@ -67,7 +67,7 @@ const AdminDatagrid = ({
             <IconButton
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
-                 onClick={()=>{store.dispatch(details.actions.openDetails());}
+                 onClick={()=>{store.dispatch(details.actions.setOpen(store.getState().details))}
                           }
             >
                 <EditIcon />
