@@ -2,22 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './adminusers.scss';
 import AdminDashboardMenu from '../AdminDashboardMenu/AdminDashboardMenu';
 import AdminDataGrid from '../AdminDatagrid/AdminDatagrid';
-import { Box } from '@mui/material';
 import { userSchema } from '../../../Schemas';
-import { useDispatch } from 'react-redux';
 import users from '../../../store/features/Admin/Users/UsersList';
 import store from '../../../store';
-import { useGetUsersQuery } from '../../../store//api/apiSlice.js';
-import CircularProgress from '@mui/material/CircularProgress';
-import { DriveEta } from '@mui/icons-material';
+import { useGetUsersQuery } from '../../../store/api/apiSlice.js';
 
 const AdminUsers2 = ({}) => {
-    const dispatch = useDispatch(); 
-    const getUsers = useGetUsersQuery(); //Mandatory for useEffect usage
+    const getUsers = useGetUsersQuery(); //Mandatory on top-level for useEffect usage
     store.dispatch(users.actions.handleFetch(getUsers)); //First loading only, fetch an store api
 
     useEffect(()=>{
-        getUsers.refetch(); //Make a refetch cleare apiSlice cache
+        getUsers.refetch(); //Make a refetch clear apiSlice cache
         store.dispatch(users.actions.handleFetch(getUsers));//Read refetch
     },[]);
 

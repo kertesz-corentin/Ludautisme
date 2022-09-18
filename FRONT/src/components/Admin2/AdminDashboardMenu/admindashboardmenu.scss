@@ -1,0 +1,9 @@
+.admin-dashboardmenu{
+    display: flex;
+    &__title {
+        font-size: 1.1rem;
+    }
+    &__container{
+        display: flex;
+    }
+}

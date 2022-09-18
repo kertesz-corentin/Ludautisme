@@ -13,6 +13,13 @@ import { Link } from 'react-router-dom';
 
 function AdminHeader() {
 
+    // Active tab
+    const [isActive, setIsActive] = useState();
+
+    const handleActive = (event) => {
+        setIsActive(event);
+    };
+
     // Accueil Adhérents Références Réservations Se déconnecter
     const pages = {
         Home: { url: '/admin2/home', display: <HomeIcon /> },
