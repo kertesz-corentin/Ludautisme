@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './adminusers.scss';
+import AdminDashboardMenu from '../AdminDashboardMenu/AdminDashboardMenu';
 import AdminDataGrid from '../AdminDatagrid/AdminDatagrid';
 import { Box } from '@mui/material';
 import { userSchema } from '../../../Schemas';
@@ -22,7 +23,7 @@ const AdminUsers2 = ({}) => {
 
     return (
         <div className = 'adminUser'>
-            <div>TEST MENU</div>
+            <AdminDashboardMenu/>
             <div className = 'userTest'>
                 {/* <Box>Menu {(store.getState().users.status === 'pending')&& <CircularProgress/>}</Box>          */}
                 <AdminDataGrid
