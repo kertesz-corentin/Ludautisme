@@ -43,8 +43,8 @@
     "start": "concurrently \"yarn react-scripts start\" \"yarn --cwd ../BACK start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "npm i postcss-place"
+    "eject": "react-scripts eject"
+   
   },
   "eslintConfig": {
     "extends": [
