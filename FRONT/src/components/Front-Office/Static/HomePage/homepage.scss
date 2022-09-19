@@ -164,10 +164,6 @@
     justify-content: space-evenly;
     align-items: center;
 
-
-
-
-
     &-iframe {
         height: 250px;
         padding: 30px;
@@ -183,6 +179,18 @@
         flex-direction: column;
         &-permanence {
             width: 50%;
+        }
+        &-texte {
+            font-size: 1.2rem;
+            margin-bottom: 5%;
+        }
+    }
+    .fonctionnement {
+        & p {
+            margin-bottom: 5%;
+        }
+        &-logo2{
+            display: none;
         }
     }
 }

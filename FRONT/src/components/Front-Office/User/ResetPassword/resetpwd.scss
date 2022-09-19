@@ -1,5 +1,30 @@
-@import 'src/styles/vars';
-
+@import '../../../../styles/vars';
+.pwd-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 .resetpwd{
-    background-color: rgb(81, 81, 160);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width:70%;
+    height: 70%;
+    background-color: $font-color-2;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: $drop-shadow;
+
+    & h1 {
+        font-size: 1.5rem;
+    }
+
+    & .password_limit{ 
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
 }

@@ -6,7 +6,6 @@
 
             display: flex;
 
-
         &-texte {
             display: flex;
             --clay-background: rgb(238, 72, 66);
@@ -111,10 +110,6 @@
                 }
             }
         }
-
-
-
-
 }
 
 .MuiAccordion-root {
@@ -122,8 +117,6 @@
     border-left-color: none !important;
 
 }
-
-
 
 .css-1fjvggn-MuiPaper-root-MuiAccordion-root{
     border-top: 0  !important;
@@ -138,7 +131,6 @@
     border-radius: 0 0 10px 10px !important;
 }
 
-
 .css-fv7qqu-MuiButtonBase-root-MuiAccordionSummary-root {
     align-items: baseline !important;
 }
@@ -147,5 +139,15 @@
     border-top: 0 !important;
 }
 
-
-// @media all and (max-width: 810px)
+@media all and (max-width: 1080px)
+{
+    .UsefullLinks { 
+        &-links {
+            padding: 30px 5%;
+        }
+        &-présentation {
+        &-texte {
+            flex-direction: column;
+        }}
+    }
+}

@@ -11,17 +11,15 @@ import {TextField,Chip} from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { format } from 'date-fns';
+import { format,isAfter,parse } from 'date-fns';
 
 import './adminpermanency.scss';
 import { Button } from '@mui/material';
-import { isAfter } from 'date-fns';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 const AdminPermanency = ({className, ...rest}) => {
     const [date, setDate] = useState();
     const [alertMessage, setAlertMessage] = useState();
-    const [successMessage, setSuccessMessage] = useState();
     const [isDefined,setIsDefined] = useState(false);
 
     const getActivePermanency = async () => {
@@ -39,12 +37,12 @@ const AdminPermanency = ({className, ...rest}) => {
     }
 
     const handleChangeDate = (event) => {
-        if (new Date(event)>new Date()){
+        if (new Date(event)>= new Date()){
         setDate(format(new Date(event), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
         } else {
             setAlertMessage({
                 message : 'Erreur'});
-            setTimeout(()=>{setAlertMessage()},500);
+            setTimeout(()=>{setAlertMessage()},1500);
         }
     }
 
@@ -53,11 +51,10 @@ const AdminPermanency = ({className, ...rest}) => {
             const newDate = {
                 'next_date': date
             }
-            console.log(newDate);
             const response = await api.patch('/admin/permanency/next', newDate);
 
             if(response.data === ''){
-                console.log(response);
+                setIsDefined(true);
                 setAlertMessage({
                     message : 'Succès',
                     severity : 'success'});
@@ -69,11 +66,15 @@ const AdminPermanency = ({className, ...rest}) => {
         }
     }
 
+    const closePermanency = async () => {
+        await api.get('/admin/permanency/active/close');
+        setDate();
+        setIsDefined(false);
+    }
+
     React.useEffect(() => {
         getActivePermanency();
-    }, [date]);
-
-    console.log('date', date);
+    }, [isDefined]);
 
     return (
         <div className="adminpermanency">
@@ -101,14 +102,22 @@ const AdminPermanency = ({className, ...rest}) => {
                                     </AlertMessage>
                  </>
                  :
-                 <>
-                <Button
-                    variant='outlined'
-                    onClick={setPermanencyDate}
-                >
-                    modifier
-                </Button>
-                </>
+                 (isAfter(new Date(),parse(date,'yyyy-MM-dd',new Date())) && isDefined) ?
+                    <>
+                    <Button
+                        variant='outlined'
+                        onClick={closePermanency}
+                    >
+                        cloturer
+                    </Button>
+                    </>
+                :
+                    <Button
+                        variant='outlined'
+                        onClick={setPermanencyDate}
+                    >
+                        modifier
+                    </Button>
                 }
             </div>
             {/* <div className="adminpermanency-element">

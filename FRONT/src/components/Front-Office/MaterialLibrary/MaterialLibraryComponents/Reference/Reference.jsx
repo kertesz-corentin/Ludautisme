@@ -17,6 +17,7 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../../../../App/App';
 import HideImageIcon from '@mui/icons-material/HideImage';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Reference = ({
     className,
@@ -73,12 +74,13 @@ const Reference = ({
         cartManager.add(itemToAdd);
     }
 
+
+
    return (
 
         <Card className = "reference-card"
               sx={{ width: gridSize }}
             >
-
             <ReferenceSwiper
                 refId={id}
                 pictures={picture}
@@ -135,53 +137,61 @@ const Reference = ({
           >
             <Fade in={open}>
               <Box className="ref">
-              <Box className="transition-modal-inline">
-                <Typography className="transition-modal-title" variant="h6" component="h2">
-                  {name}
-                </Typography>
-                <Avatar sx={{width:'4rem',color:"rgba(0,0,0,0.8)",bgcolor:"rgba(0,0,0,0)", border:"2px solid rgba(0,0,0,0.6)", fontSize: 13, fontWeight:"600", p:2, borderRadius:"25px" }} variant="rounded">
-                        {(valorisation===0) ? '- €' : `${valorisation}€`}
-                    </Avatar>
-                    </Box>
-                <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
-                 <ReferenceSwiper
-                refId={id}
-                pictures={picture}
-                gridSize={gridSize}
-                />
+                <Box  className='reference-card__close' onClick={handleClose}>
+                    <p>Fermer</p>
+                    <CloseIcon className='reference-card__close--icon'/>
                 </Box>
-                <Divider/>
-                <Typography className="transition-modal-description" variant="h6" component="h5">
-                  {description}
-                </Typography>
+                <Box  className='reference-card__wrapper'>
+                    <Box className="transition-modal-inline">
+                    
+                        <Typography className="transition-modal-title" variant="h6" component="h2">
+                        {name}
+                        </Typography>
+                    </Box>
+                    <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden', minHeight:'300px'}}>
+                        <ReferenceSwiper
+                    refId={id}
+                    pictures={picture}
+                    gridSize={gridSize}
+                    />
+                    </Box>
+                    <Divider/>
+                    <Typography className="transition-modal-description" variant="h6" component="h5">
+                    {description}
+                    
+                    </Typography>
+                    <Typography className="reference-card__caution">
+                        {(valorisation===0) ? '' : `Caution : ${valorisation}€`}
+                    </Typography>
                     <Box sx={{marginBottom:"15px",display:'flex',justifyContent:'space-evenly'}}>
-                        {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
+                            {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
 
-                     {(userToken)?
-                            <>
-                                {(nb_available > 0 && currentItems)?
-                                    <>
-                                         {(!currentItems.map((item)=> item.id).includes(id)) ?
-                                              <Button
-                                              onClick={handleClick}>
-                                                  <AddShoppingCartIcon/>
-                                                </Button>
-                                         :
-                                            <Box>
-                                                <BookmarkAddedIcon/>
-                                            </Box>
-                                        }
-                                    </>
-                                    :
-                                    <>
-                                       <Unavailable/>
-                                    </>
-                                }
-                            </>
-                            :
-                            <>
-                            </>
-                        }
+                        {(userToken)?
+                                <>
+                                    {(nb_available > 0 && currentItems)?
+                                        <>
+                                            {(!currentItems.map((item)=> item.id).includes(id)) ?
+                                                <Button
+                                                onClick={handleClick}>
+                                                    <AddShoppingCartIcon/>
+                                                    </Button>
+                                            :
+                                                <Box>
+                                                    <BookmarkAddedIcon/>
+                                                </Box>
+                                            }
+                                        </>
+                                        :
+                                        <>
+                                        <Unavailable/>
+                                        </>
+                                    }
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+                    </Box>
                 </Box>
               </Box>
             </Fade>
