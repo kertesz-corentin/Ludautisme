@@ -1,26 +1,22 @@
-import { IntegrationInstructions } from '@mui/icons-material';
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
      content:{}
-    ,open:null
+    ,open:false
 }
 
 export default createSlice({
   name: 'details',
   initialState,
   reducers: {
-    setDetails: (state, action) => {
-     console.log(state,action);
-      state.content = action.payload; // mutate the state all you want with immer
+    setContent : (state,action) => {
+        return {...state,content: action.payload}    
     },
-    openDetails: (state,action) => {
-        console.log('openDetail');
-        state = {...state,open:true};
+    setOpen : (state,action) => {
+        return {...state,open:true}
     },
-    resetDetails: (state,action) => {
-        console.log('closeDetail');
-        state = {...state,open:false};
-    },
+    setClose : (state,action) => {
+        return {...state,open:false}
+    }
   },
 })
