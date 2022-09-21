@@ -28,12 +28,12 @@ const Accueil = ({className, ...rest}) => {
                     <div className="bandeau-présentation-texte">
                     <h2>Bienvenue à lud'autisme !</h2>
                     <p>
-                        Prêt de jeux et de matériels adaptés pour les personnes en difficultés d'apprentissage et/ou d'autonomie <br/>
+                        Prêt de jeux et de matériels adaptés pour les personnes en difficultés d'apprentissage et/ou d'autonomie. <br/>
 
                         Pour les particuliers adhérents et les professionnels partenaires. <br />
                     </p>
                     <h4>Autisme mais pas que… </h4>
-                    <p> Notre association s’adresse à toutes les personnes ayant des besoins spécifiques</p>
+                    <p> Notre association s’adresse à toutes les personnes ayant des besoins spécifiques.</p>
                     </div>
                     <div className="bandeau-présentation-permanence">
                                 <Permanency />
@@ -143,13 +143,13 @@ const Accueil = ({className, ...rest}) => {
                         8 rue Traverse, 29800 LANDERNEAU
                         </p>
                         <h3>
-                        Nous rencontrer:
+                        Nous rencontrer :
                         </h3>
                         <p>
                             Place François Mitterrand, 29800 LANDERNEAU
                         </p>
                         <h3>
-                            Téléphone
+                            Téléphone :
                         </h3>
                         <p>
                             09 51 85 03 55
