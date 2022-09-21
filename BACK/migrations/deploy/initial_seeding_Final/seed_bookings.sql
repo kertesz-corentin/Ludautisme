@@ -1756,4 +1756,11 @@ INSERT INTO "booking"(id,id_user,id_permanency,delivered,closed,nb_prolongation)
 INSERT INTO "booking"(id,id_user,id_permanency,delivered,closed,nb_prolongation) OVERRIDING SYSTEM VALUE VALUES (1755,120,46,'true','true',0);
 INSERT INTO "booking"(id,id_user,id_permanency,delivered,closed,nb_prolongation) OVERRIDING SYSTEM VALUE VALUES (1756,131,45,'true','true',0);
 INSERT INTO "booking"(id,id_user,id_permanency,delivered,closed,nb_prolongation) OVERRIDING SYSTEM VALUE VALUES (1757,104,64,'true','true',0);
+
+--Set la séquence identity a la valeur max(id) booking, obligatoire après forcage des id a l'import 
+WITH const (seq_name, booking_max_id) as (
+   SELECT pg_get_serial_sequence('booking', 'id'), max(id) FROM "booking"
+)
+SELECT setval (seq_name, booking_max_id) FROM const;
+
 COMMIT;
