@@ -10,13 +10,13 @@ export default createSlice({
   initialState,
   reducers: {
     setContent : (state,action) => {
-        return {...state,content: action.payload}    
+        state.content = action.payload;
     },
     setOpen : (state,action) => {
-        return {...state,open:true}
+        state.open = true;
     },
     setClose : (state,action) => {
-        return {...state,open:false}
+        state.open = false;
     }
   },
 })

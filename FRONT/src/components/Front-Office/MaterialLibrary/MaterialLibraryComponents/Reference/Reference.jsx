@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
-import LazyImage from '../LazyImage/LazyImage';
 import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
 import api from '../../../../../requests';
 
-import {Box,Modal,Fade,Button,Skeleton,
-        Divider,Card,CardMedia,Typography,
-        Avatar,Backdrop
+import {Box,Modal,Fade,Button,
+        Divider,Card,Typography
+        ,Backdrop
       } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
@@ -16,7 +15,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../../../../App/App';
-import HideImageIcon from '@mui/icons-material/HideImage';
 import CloseIcon from '@mui/icons-material/Close';
 
 const Reference = ({
@@ -54,6 +52,7 @@ const Reference = ({
         valorisation,
     }
 
+    // eslint-disable-next-line no-unused-vars
     const [cartItems,setCartItems] = useState(currentItems);
     const [isFav,setIsFav] = useState(favorite);
 
@@ -68,6 +67,7 @@ const Reference = ({
             setIsFav(!isFav);
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{updateCurrentItems()},[currentItems])
 
     function handleClick () {

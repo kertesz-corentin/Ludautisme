@@ -6,6 +6,7 @@ import { adminUsers } from "./adminUsers";
 
 export const initEndpoints = (builder) =>{
 
+    //REFERENCEMENT DE NOUVELLES LIBRAIRIES API
     const endpointsLibs = [adminUsers];
     
     //On lit chaque librairie de requete, si stucture ok on le rajoute au endpoints
@@ -18,7 +19,7 @@ export const initEndpoints = (builder) =>{
     
     //Le .map ajoute les requetes ok a apiEndpoints, rajoute aussi les requêtes pas ok avec message d'erreur redux
     //errors Récupère seulement les endpoints en erreur pour affichage console a l'initialisation
-    //Pour toutes les librairies de requettes
+    //Pour toutes les librairies de requetes
     const errors = endpointsLibs.map(endpointLib => {
         //On contrôle si les propriétés sont valides
         return Object.keys(endpointLib).map(endpointName => {

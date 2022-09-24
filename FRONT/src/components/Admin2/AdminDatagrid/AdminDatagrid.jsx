@@ -2,7 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import './admindatagrid.scss';
 import store from '../../../store';
 import details from '../../../store/features/Admin/Details';
-import { Box, ToggleButton, IconButton  } from '@mui/material';
+import { ToggleButton, IconButton  } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';
 
@@ -25,7 +25,6 @@ const AdminDatagrid = ({
     // Responsive Datagrid height
     const [height, setHeight] = useState(null);
     const [clientHeight,setClientHeight] = useState(window.innerHeight);
-    const [resizing,setResizing] = useState(true);
     const parentSize = useRef();
 
 
@@ -42,12 +41,13 @@ const AdminDatagrid = ({
         return (_) => {
             window.removeEventListener('resize', debouncedHandleResize);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clientHeight]);
 
-    const [columns,setColumns] = useState(['id']);  //Allow datagrid render even without values
+    const [columns] = useState(['id']);  //Allow datagrid render even without values
 
 
-    //Configure custem render cell
+    //Configure custom render cell
     const customCellBuilder = {
         toggle : (params) => (
              <ToggleButton
@@ -67,7 +67,10 @@ const AdminDatagrid = ({
             <IconButton
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
-                 onClick={()=>{store.dispatch(details.actions.setOpen(store.getState().details))}
+                 onClick={()=>{
+                                store.dispatch(details.actions.setContent(params.row));
+                                store.dispatch(details.actions.setOpen());
+                              }
                           }
             >
                 <EditIcon />
