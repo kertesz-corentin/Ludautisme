@@ -113,7 +113,8 @@ const userSchema  = {
         width : 100,
         bloc : 2,
         blocTitle : 'Situation',
-        field : 1
+        field : 1,
+        inputDisplay : 'checkbox',
     },
     cotisation_expiration:{
         type : "date",
@@ -121,7 +122,8 @@ const userSchema  = {
         gridDisplay : "date",
         width : 150,
         bloc : 2,
-        field : 2
+        field : 2,
+        inputDisplay : 'date',
     },
     caution_status:{
         type : "boolean",
@@ -129,7 +131,8 @@ const userSchema  = {
         gridDisplay : "toggle",
         width: 100,
         bloc : 2,
-        field : 3
+        field : 3,
+        inputDisplay : 'checkbox',
         
     },
     caution_expiration:{
@@ -138,7 +141,8 @@ const userSchema  = {
         gridDisplay : "date",
         width : 150,
         bloc : 2,
-        field : 4
+        field : 4,
+        inputDisplay : 'date',
         
     },
     id_role:{
@@ -154,7 +158,8 @@ const userSchema  = {
         gridDisplay : "toggle",
         width : 100,
         bloc : 2,
-        field : 5
+        field : 5,
+        inputDisplay : 'checkbox',
     },
 }
 

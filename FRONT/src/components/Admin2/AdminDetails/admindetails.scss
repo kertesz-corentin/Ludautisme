@@ -1,17 +1,20 @@
 .admin-details {
     // flex-grow: 2;
+    max-height: 500px;
     will-change: transform;
     transition: flex-grow 300ms,transform 300ms linear;
     display: flex;
     flex-direction: column;
     &__close {
         width: 0;
+        height: 0;
         flex-grow: 0;
         -webkit-transform: translateX(100%);
 		transform: translateX(100%);
     }
     &__open{
         min-width: 400px;
+        max-width: 50%;
         flex-grow: 2;
         -webkit-transform: none;
 			transform: none;
@@ -22,14 +25,37 @@
         background-color: lightgray;
         display: flex;
         align-items: center;
+        &--close {
+            display: none;
+        }
+        &-button{
+            flex-grow: 1;
+                &--close{
+                        // position : absolute;
+                width: fit-content;
+                margin: 0 0 0 0.5rem;
+                padding : 0.15rem;
+                font-size: 0.8rem;
+                color : red;
+                border-radius: 1.25rem;
+                border : 2px solid red;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                &-icon {
+                    color: red;
+                }
+            }
+        }
     }
     &__title{
         width: 100%;
         font-size: 1.1rem;
         font-weight: 800;
+        flex-grow: 6;
     }
     &__close-button {
-        position : absolute;
+        // position : absolute;
         width: fit-content;
         margin: 0 0 0 0.5rem;
         padding : 0.15rem;
@@ -38,6 +64,7 @@
         border-radius: 1.25rem;
         border : 2px solid red;
         cursor: pointer;
+        flex-grow: 1;
         display: flex;
         align-items: center;
         &--icon {
@@ -45,16 +72,45 @@
         }
     }
     .admin-details__bloc-container {
+        padding: 1rem 2.5rem;
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        &--close {
+            display: none;
+        }
     }
 
     .admin-details__bloc {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
+        &--title {
+            margin: 1rem 2rem 2rem;
+            font-weight: 800;
+            align-self: flex-start;
+        }
+        &--inputs {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
     }
+
+    .admin-details__input{
+        margin: 0.5rem 1rem;
+        flex-grow: 1;
+        &--container {
+            padding : 0.15rem 1rem;
+            display: flex;
+            align-items: center;
+
+
+        }
+    }
+
 }
