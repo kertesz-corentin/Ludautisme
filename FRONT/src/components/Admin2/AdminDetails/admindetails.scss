@@ -1,8 +1,7 @@
 .admin-details {
     // flex-grow: 2;
-    max-height: 500px;
     will-change: transform;
-    transition: flex-grow 300ms,transform 300ms linear;
+    transition: flex-grow 300ms,transform 600ms linear;
     display: flex;
     flex-direction: column;
     &__close {
@@ -72,6 +71,8 @@
         }
     }
     .admin-details__bloc-container {
+        overflow: auto;
+        height: 100%;
         padding: 1rem 2.5rem;
         flex-grow: 1;
         display: flex;
@@ -104,6 +105,9 @@
     .admin-details__input{
         margin: 0.5rem 1rem;
         flex-grow: 1;
+        &:hover {
+            cursor: pointer;
+        }
         &--container {
             padding : 0.15rem 1rem;
             display: flex;

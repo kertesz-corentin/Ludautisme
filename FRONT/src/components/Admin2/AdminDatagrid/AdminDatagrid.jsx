@@ -19,7 +19,8 @@ function debounce(fn, ms) {
 
 const AdminDatagrid = ({
     rows,
-    schema
+    schema,
+    submitAction
 }) => {
 
     // Responsive Datagrid height
@@ -68,6 +69,7 @@ const AdminDatagrid = ({
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
                  onClick={()=>{
+                                store.dispatch(details.actions.setSubmitAction(submitAction));
                                 store.dispatch(details.actions.setContent(params.row));
                                 store.dispatch(details.actions.setOpen());
                               }

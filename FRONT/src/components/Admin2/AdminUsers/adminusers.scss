@@ -7,6 +7,7 @@
 .dashcontainer{
     flex-grow: 2;
     display: flex;
+    transition: flex-grow 300ms,transform 300ms linear;
 }
 
 .dash-grid {

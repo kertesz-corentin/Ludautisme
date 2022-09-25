@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /*
 Full object example
  id:{
@@ -7,7 +8,7 @@ Full object example
         width: 100,
         titlePrefix : '#',                  //Add a prefix in title only
         title : 3,                          //Display order in title only,   if missing => Not in
-        inputDisplay : 'none' | 'input' | 'toggle' | 'date' 
+        inputDisplay : 'none' | 'input' | 'checkbox' | 'date' 
         bloc  : 1,                          //Bloc affectation,              if missing  => In the 'default' bloc at bottom of the page
         blocTitle : 'Identité',             //BlocTitle, need to be on first field of each block,id no order field, takes the first found if missing => no block title
         field : 1,                          //Field order,                   if missing  => at the end bloc end by prop order in this schema
@@ -33,7 +34,9 @@ const userSchema  = {
         titlePrefix : '#',
         title : 3,
         bloc : 1,
-        field : 3
+        field : 3,
+        regex : /^-?[\d]*$/g,
+        errorInfo : 'La saisie doit être un nombe entier'
     },
     email:{
         type : "string",
@@ -43,6 +46,8 @@ const userSchema  = {
         bloc  : 3,
         blocTitle : 'Contact',
         field : 1,
+        regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+        errorInfo : 'La saisie doit être du type adresse@nomdedomaine.ext',
     },
     last_name:{
         type : "string",

@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
      content:{}
     ,open:false
+    ,submitAction : null
 }
 
 export default createSlice({
@@ -17,6 +18,9 @@ export default createSlice({
     },
     setClose : (state,action) => {
         state.open = false;
-    }
+    },
+    setSubmitAction:(state,action)  => {
+      state.submitAction = action.payload // mutate the state all you want with immer
+    },
   },
 })
