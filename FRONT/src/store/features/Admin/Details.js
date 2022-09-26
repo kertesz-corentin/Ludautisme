@@ -19,7 +19,7 @@ export default createSlice({
     setClose : (state,action) => {
         state.open = false;
     },
-    setSubmitAction:(state,action)  => {
+    setSubmitPayload:(state,action)  => {
       state.submitAction = action.payload // mutate the state all you want with immer
     },
   },

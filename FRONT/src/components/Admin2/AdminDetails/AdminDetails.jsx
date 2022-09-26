@@ -3,6 +3,7 @@ import './admindetails.scss';
 import store from '../../../store';
 import {useSelector} from 'react-redux';
 import {actions} from '../../../store/reducers';
+import { useGetUsersQuery, apiSlice } from '../../../store/api/apiSlice.js';
 import CloseIcon from '@mui/icons-material/Close';
 import {FormControlLabel,Checkbox,TextField,Button } from '@mui/material/';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -15,21 +16,26 @@ import { format } from 'date-fns';
 const AdminDetails = ({schema,titleOverride,modeOverride}) => {
     const { details } = useSelector(state => state);
     const setClose = ()=> store.dispatch(actions.details.setClose());
+
+    const [mode,setMode] = useState((modeOverride) ? modeOverride : null);
     
     const [updated,setUpdated] = useState((details) ? {...details.content} : null);
 
-    const [mode,setMode] = useState((modeOverride) ? modeOverride : null);
 
     const [errors,setErrors] = useState(false);
     const [isSubmitable,setIsSubmitable] = useState(false);
 
+    const [submit,response] = (details.submitAction) ? apiSlice[details.submitAction.actionName]() : [null,null];
+
     const handleSubmit = () => {
-        console.log('details submitAction',JSON.stringify(details.submitAction));
+        const payload = {param:details.submitAction.params.param,body:updated};
+        // console.log((isSubmitable && submit[0]) && submit(payload),response);
+        // console.log('response',response);
+        //console.log('details submitAction',apiSlice[details.submitAction.actionName]);
         //(isSubmitable) && details.submitAction(updated);
     }
-
     const handleChange = (event) => {
-        console.log('pure target',event.target.name,event.target.value,event.target.checked);
+        // console.log('pure target',event.target.name,event.target.value,event.target.checked);
         const newValue = (event.target.value === '@!ludo_checkbox')                                                                 //Hack to identify checkbox cause value is in checked not in value
                           ? event.target.checked 
                           : event.target.value;

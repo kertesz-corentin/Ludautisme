@@ -71,7 +71,7 @@ const AdminDatagrid = ({
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
                  onClick={()=>{
-                                store.dispatch(details.actions.setSubmitAction([submit,response] = submitAction()));
+                                store.dispatch(details.actions.setSubmitPayload({actionName:'useUpdateOneMutation',params :{param:params.row.id, body:params.row}}));
                                 store.dispatch(details.actions.setContent(params.row));
                                 store.dispatch(details.actions.setOpen());
                               }

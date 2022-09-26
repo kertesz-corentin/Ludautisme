@@ -24,16 +24,16 @@ const AdminUsers2 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
-    const [addNewPost, response] = apiSlice.useUpdateOneMutation();
-    const sub = () =>{
-        console.log(addNewPost( {param:1,body:{last_name:'testo V2'}}));
-         store.dispatch(users.actions.updateUser({id:1}));
-    }
+    // const [addNewPost, response] = apiSlice.useUpdateOneMutation();
+    // const sub = () =>{
+    //     console.log(addNewPost( {param:1,body:{last_name:'testo V2'}}));
+    //      store.dispatch(users.actions.updateUser({id:1}));
+    // }
 
     
     return (
         <div className = 'adminUser'>
-            <button onClick={sub}>Testo</button>
+            {/* <button onClick={sub}>Testo</button> */}
             <AdminDashboardMenu title='Adhérents' store={store.getState().users} buttons={buttons}/>
             <div className = 'dashcontainer'>
                 <div className = 'dash-grid'>
