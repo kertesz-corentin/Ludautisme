@@ -4,14 +4,17 @@ import AdminDashboardMenu from '../AdminDashboardMenu/AdminDashboardMenu';
 import AdminDataGrid from '../AdminDatagrid/AdminDatagrid';
 import AdminDetails from '../AdminDetails/AdminDetails';
 import { userSchema } from '../../../Schemas';
-import users from '../../../store/features/Admin/UsersList';
+// import users from '../../../store/features/Admin/UsersList';
 import store from '../../../store';
+import {actions} from '../../../store/reducers';
 import { useGetUsersQuery, apiSlice } from '../../../store/api/apiSlice.js';
-
+import {useSelector} from 'react-redux';
 const AdminUsers2 = () => {
     const getUsers = useGetUsersQuery(); //Mandatory on top-level for useEffect usage
-    store.dispatch(users.actions.handleFetch(getUsers)); //First loading only, fetch an store api
-    const updateUsers = apiSlice.useUpdateOneMutation;
+    const { details, users } = useSelector(state => state); //Redux state
+
+    store.dispatch(actions.users.handleFetch(getUsers)); //First loading only, fetch an store api
+
 
     const buttons = [
         [{label : 'ajouter',
@@ -20,32 +23,32 @@ const AdminUsers2 = () => {
 
     useEffect(()=>{
         getUsers.refetch(); //Make a refetch clear apiSlice cache
-        store.dispatch(users.actions.handleFetch(getUsers));//Read refetch
+        store.dispatch(actions.users.handleFetch(getUsers));//Read refetch
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
-    // const [addNewPost, response] = apiSlice.useUpdateOneMutation();
-    // const sub = () =>{
-    //     console.log(addNewPost( {param:1,body:{last_name:'testo V2'}}));
-    //      store.dispatch(users.actions.updateUser({id:1}));
-    // }
+    useEffect(()=>{
+        getUsers.refetch(); //Make a refetch clear apiSlice cache
+        store.dispatch(actions.users.handleFetch(getUsers));//Read refetch
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[details]);
 
     
     return (
         <div className = 'adminUser'>
-            {/* <button onClick={sub}>Testo</button> */}
             <AdminDashboardMenu title='Adhérents' store={store.getState().users} buttons={buttons}/>
             <div className = 'dashcontainer'>
                 <div className = 'dash-grid'>
                     <AdminDataGrid
-                        rows={store.getState().users.users}
+                        rows={users.users}
                         schema={userSchema}
-                        submitAction = {updateUsers}
+                        reducer='users'
+                        submitAction = 'useUpdateOneMutation'
                         />
                 </div>
-                        <AdminDetails schema={userSchema} 
+                        {(Object.keys(details.content).length > 0)&&<AdminDetails schema={userSchema} 
                                     //   titleOverride={'Surcharge du titre'}
-                        />
+                        />}
             </div>
         </div>
     )

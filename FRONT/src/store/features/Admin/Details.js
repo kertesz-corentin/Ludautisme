@@ -3,7 +3,8 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
      content:{}
     ,open:false
-    ,submitAction : null
+    ,submitAction : {actionName:'null',params:{param:null,body:null}}
+    ,reducer : null
 }
 
 export default createSlice({
@@ -20,7 +21,10 @@ export default createSlice({
         state.open = false;
     },
     setSubmitPayload:(state,action)  => {
-      state.submitAction = action.payload // mutate the state all you want with immer
+      state.submitAction = action.payload; // mutate the state all you want with immer
     },
+    setReducer:(state,action) => {
+        state.reducer = action.payload.charAt(0).toUpperCase() + action.payload.slice(1); //Capitalise for redux apiSlice automatic function naming 
+    }
   },
 })

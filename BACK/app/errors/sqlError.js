@@ -7,7 +7,7 @@
  */
 
 module.exports = class SqlError extends Error {
-    constructor(message,stack) {
+    constructor(message, stack) {
         super(message);
         this.name = 'Sql request error';
         this.message = message;

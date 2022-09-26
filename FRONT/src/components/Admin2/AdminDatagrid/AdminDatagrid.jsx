@@ -20,15 +20,16 @@ function debounce(fn, ms) {
 const AdminDatagrid = ({
     rows,
     schema,
-    submitAction
+    submitAction,
+    reducer,
 }) => {
 
-    // Responsive Datagrid height
+    // RESPONSIVE DATAGRID HEIGHT
     const [height, setHeight] = useState(null);
     const [clientHeight,setClientHeight] = useState(window.innerHeight);
     const parentSize = useRef();
 
-    const [submit,response] = submitAction();
+    const [apiReducer] = useState()
 
 
     //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
@@ -46,6 +47,7 @@ const AdminDatagrid = ({
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clientHeight]);
+    // END RESPONSIVE DATAGRID HEIGHT
 
     const [columns] = useState(['id']);  //Allow datagrid render even without values
 
@@ -71,14 +73,14 @@ const AdminDatagrid = ({
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
                  onClick={()=>{
-                                store.dispatch(details.actions.setSubmitPayload({actionName:'useUpdateOneMutation',params :{param:params.row.id, body:params.row}}));
+                                store.dispatch(details.actions.setReducer(reducer));
+                                store.dispatch(details.actions.setSubmitPayload({actionName:submitAction,params :{param:params.row.id, body:params.row}}));
                                 store.dispatch(details.actions.setContent(params.row));
                                 store.dispatch(details.actions.setOpen());
                               }
                           }
             >
                 <EditIcon />
-                {/* <UpdateUserModal params={params} /> */}
             </IconButton>
                     ),
     }

@@ -76,6 +76,17 @@ module.exports = {
         if (user.length < 1) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
+
+        const memberNumberExist = await usersDataMapper.findFiltered([
+            { member_number: Number(req.body.member_number) },
+            { email: req.body.email },
+        ]);
+        if (memberNumberExist.length > 0) {
+            if (memberNumberExist[0].id !== user[0].id) {
+                throw new ApiError(404, 'Un autre adhérent a déjà ce numéro de membre ou cet email');
+            }
+        }
+
         if (req.body.password) {
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
             req.body.password = hashedPassword;

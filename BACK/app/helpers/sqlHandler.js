@@ -14,11 +14,11 @@ module.exports = async (query, placeholders) => {
         return result;
     } catch (err) {
         const showErr = {
-            name : err.constructor.name,
-            message : err.message,
+            name: err.constructor.name,
+            message: err.message,
             stack: err.stack,
-            table : err.table,
-            schemas : err.schemas,
+            table: err.table,
+            schemas: err.schemas,
             column: err.column,
             dataType: err.dataType,
         };

@@ -3,7 +3,7 @@ import './admindetails.scss';
 import store from '../../../store';
 import {useSelector} from 'react-redux';
 import {actions} from '../../../store/reducers';
-import { useGetUsersQuery, apiSlice } from '../../../store/api/apiSlice.js';
+import { apiSlice } from '../../../store/api/apiSlice.js';
 import CloseIcon from '@mui/icons-material/Close';
 import {FormControlLabel,Checkbox,TextField,Button } from '@mui/material/';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -16,6 +16,8 @@ import { format } from 'date-fns';
 const AdminDetails = ({schema,titleOverride,modeOverride}) => {
     const { details } = useSelector(state => state);
     const setClose = ()=> store.dispatch(actions.details.setClose());
+    const setContent = (data)=> store.dispatch(actions.details.setContent(data));
+    apiSlice[`useGet${details.reducer}Query`]();
 
     const [mode,setMode] = useState((modeOverride) ? modeOverride : null);
     
@@ -24,12 +26,17 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
 
     const [errors,setErrors] = useState(false);
     const [isSubmitable,setIsSubmitable] = useState(false);
+    
+    const [submit,res] = apiSlice[details.submitAction.actionName]();
 
-    const [submit,response] = (details.submitAction) ? apiSlice[details.submitAction.actionName]() : [null,null];
 
     const handleSubmit = () => {
-        const payload = {param:details.submitAction.params.param,body:updated};
-        // console.log((isSubmitable && submit[0]) && submit(payload),response);
+        const payload = { param:details.submitAction.params.param , body:updated };
+        ( isSubmitable && submit ) &&  submit( payload ).unwrap()
+                                                        .then((payload) => {console.log('fulfilled', payload);setContent( payload )})
+                                                        .catch((error) => console.error('rejected', error));
+        
+                                                        // setContent( response.data );
         // console.log('response',response);
         //console.log('details submitAction',apiSlice[details.submitAction.actionName]);
         //(isSubmitable) && details.submitAction(updated);
@@ -45,7 +52,8 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
         //Get update and insert current changement.
         const syncUpdated = {...updated,[event.target.name]:newValue};
 
-        //Check if all imputs 
+        //Check if all inputs are the same
+        //!Strange comportment on users -> member number : return modified(true) after delete and rewrite same value
         const checkModified = (details) &&                                                                                          //Avoid error if details empty
                                         !Object.entries(details.content).every(                                                     //Compare every Api data fields and search for a difference
                                             (entrie)=> Object.keys(syncUpdated).includes(entrie[0])                                 //Defensive : check if all api props exist in current state 
@@ -67,6 +75,7 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
         const checkConform = (currentErrors) && currentErrors.every((entrie)=> (!entrie[1]) );                                                   //Check if there is no error
         
         setErrors((!checkConform) && errorsWithText.reduce((prev,curr)=>{return { ...prev, ...{[`${curr[0]}`]:curr[1]} } },{}));             //Go back from Entries (array) to object
+        console.log(checkModified);
         setIsSubmitable((checkModified && checkConform));                                                                                   //Set is conform (= conform to submit)
         setUpdated({...syncUpdated});
     }
@@ -145,7 +154,7 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                         />
                                     </LocalizationProvider>)},
             input       : () => (<TextField className='admin-details__input'
-                                            error={(errors) && errors[name]}
+                                            error={(errors) && !(!errors[name])}
                                             helperText={(errors && errors[name]) ? errors[name] : '' }
                                             name = {name}
                                             key = {name}
