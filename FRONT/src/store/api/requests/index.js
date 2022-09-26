@@ -11,6 +11,17 @@ export const initEndpoints = (builder) =>{
     //Chaque hook de requete doit être unique
     //sinon on le signale en erreur et on rajoute un retour d'erreur sans bloquer l'exécution
 
+    //Tableau des champs systemes de l'api ne pouvant être mis à jour
+    const sysFields = ['id','created_at'];
+    const cleanPayload = (body) => {
+        const cleanedArr = Object.entries(body).filter((prop)=> !sysFields.includes(prop[0]));
+        const cleanedBody =  cleanedArr.reduce(
+                                (prev,curr)=>{const newProp = {[curr[0]]:curr[1]} ;
+                                              return {...prev,...newProp}
+                                            },{});
+        console.log(cleanedBody);
+        return cleanedBody;
+    }
     //On gère les différents dypes de requetes d'une api REST
     const buildRequest = (endpoint) => {
         const reqs ={
@@ -26,7 +37,7 @@ export const initEndpoints = (builder) =>{
                 put     : builder.mutation({    query: (payload) => ({
                                                     url:`${endpoint.query}${(payload.param)?payload.param:''}`,
                                                     method: 'PUT',
-                                                    body: payload.body,
+                                                    body: cleanPayload(payload.body),
                                                 }),
                                                 //invalidatesTags: ['Post'],
                                                 }),

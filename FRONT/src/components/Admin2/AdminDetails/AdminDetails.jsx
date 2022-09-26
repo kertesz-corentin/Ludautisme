@@ -24,8 +24,8 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
     const [isSubmitable,setIsSubmitable] = useState(false);
 
     const handleSubmit = () => {
-        console.log(details.submitAction);
-        (isSubmitable) && details.submitAction(updated);
+        console.log('details submitAction',JSON.stringify(details.submitAction));
+        //(isSubmitable) && details.submitAction(updated);
     }
 
     const handleChange = (event) => {

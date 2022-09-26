@@ -28,6 +28,8 @@ const AdminDatagrid = ({
     const [clientHeight,setClientHeight] = useState(window.innerHeight);
     const parentSize = useRef();
 
+    const [submit,response] = submitAction();
+
 
     //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
     const debouncedHandleResize = debounce(() => {
@@ -69,7 +71,7 @@ const AdminDatagrid = ({
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
                  onClick={()=>{
-                                store.dispatch(details.actions.setSubmitAction(submitAction));
+                                store.dispatch(details.actions.setSubmitAction([submit,response] = submitAction()));
                                 store.dispatch(details.actions.setContent(params.row));
                                 store.dispatch(details.actions.setOpen());
                               }
