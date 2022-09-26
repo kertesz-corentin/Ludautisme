@@ -54,6 +54,9 @@ const AdminDatagrid = ({
 
     //Configure custom render cell
     const customCellBuilder = {
+        date : (params) => (
+            <span>{(params.value) ? new Date(Date.parse(params.value)).toLocaleDateString("fr") : ''} </span>
+        ),
         toggle : (params) => (
              <ToggleButton
                     value={params.value || 'Undefined'}
