@@ -29,8 +29,6 @@ const AdminDatagrid = ({
     const [clientHeight,setClientHeight] = useState(window.innerHeight);
     const parentSize = useRef();
 
-    const [apiReducer] = useState()
-
 
     //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
     const debouncedHandleResize = debounce(() => {
@@ -79,6 +77,7 @@ const AdminDatagrid = ({
                                 store.dispatch(details.actions.setReducer(reducer));
                                 store.dispatch(details.actions.setSubmitPayload({actionName:submitAction,params :{param:params.row.id, body:params.row}}));
                                 store.dispatch(details.actions.setContent(params.row));
+                                store.dispatch(details.actions.setMode());
                                 store.dispatch(details.actions.setOpen());
                               }
                           }

@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {actions} from '../../../store/reducers';
 import { apiSlice } from '../../../store/api/apiSlice.js';
 import CloseIcon from '@mui/icons-material/Close';
-import {FormControlLabel,Checkbox,TextField,Button } from '@mui/material/';
+import {FormControlLabel,Checkbox,TextField,Button,Snackbar,Alert } from '@mui/material/';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,29 +17,36 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
     const { details } = useSelector(state => state);
     const setClose = ()=> store.dispatch(actions.details.setClose());
     const setContent = (data)=> store.dispatch(actions.details.setContent(data));
-    apiSlice[`useGet${details.reducer}Query`]();
+    apiSlice[`useGet${details.reducer}Query`]();                  //! Ask to Fetch data need to go in useState?
 
     const [mode,setMode] = useState((modeOverride) ? modeOverride : null);
     
     const [updated,setUpdated] = useState((details) ? {...details.content} : null);
 
-
+    const [alert, setAlert] = useState(null);
     const [errors,setErrors] = useState(false);
+    
     const [isSubmitable,setIsSubmitable] = useState(false);
     
+    // eslint-disable-next-line no-unused-vars
     const [submit,res] = apiSlice[details.submitAction.actionName]();
 
 
     const handleSubmit = () => {
-        const payload = { param:details.submitAction.params.param , body:updated };
+        const routeParam = (details.submitAction.params) && details.submitAction.params.param;
+        const minimalPayload = { body:updated };
+        const payload = (routeParam) ? {...minimalPayload,param:routeParam} : minimalPayload;
         ( isSubmitable && submit ) &&  submit( payload ).unwrap()
-                                                        .then((payload) => {console.log('fulfilled', payload);setContent( payload )})
-                                                        .catch((error) => console.error('rejected', error));
-        
-                                                        // setContent( response.data );
-        // console.log('response',response);
-        //console.log('details submitAction',apiSlice[details.submitAction.actionName]);
-        //(isSubmitable) && details.submitAction(updated);
+                                                        .then((payload) => {setAlert({severity:'success',message:'Succès'});
+                                                                            setTimeout(()=>{setAlert();setClose();},2500);
+                                                                            setContent( payload );
+                                                                            
+                                                                            })
+                                                        .catch((error) => { console.error('rejected', error);
+                                                                            setAlert( {severity:'error'
+                                                                                       ,message:`${error.status}: ${error.data.message}`});
+                                                                            setTimeout(()=>{setAlert()},2500);
+                                                                            });
     }
     const handleChange = (event) => {
         // console.log('pure target',event.target.name,event.target.value,event.target.checked);
@@ -54,11 +61,12 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
 
         //Check if all inputs are the same
         //!Strange comportment on users -> member number : return modified(true) after delete and rewrite same value
-        const checkModified = (details) &&                                                                                          //Avoid error if details empty
+        const checkModified = (details && details.mode !== 'new') ?                                                                                          //Avoid error if details empty
                                         !Object.entries(details.content).every(                                                     //Compare every Api data fields and search for a difference
                                             (entrie)=> Object.keys(syncUpdated).includes(entrie[0])                                 //Defensive : check if all api props exist in current state 
                                                        && entrie[1] === syncUpdated[entrie[0]]                                      //and check if value is different
-                                        );
+                                        )
+                                        : true;
 
         const currentErrors = Object.entries(syncUpdated).map((entrie)=>[entrie[0]                                                  // Array definition [api prop,
                                                             ,(schema[entrie[0]]) && (schema[entrie[0]].regex)                       // errorInfo or if error info doesn't exist 'invalid input' 
@@ -124,19 +132,22 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
     const inputType = (type,label,value,name) => {
         // console.log(type,label,value,name);
         const types = {
-            checkbox    : () => (<FormControlLabel className='admin-details__input--checkbox admin-details__input '
+            checkbox    : () => {
+                                const cleanedValue = true;
+                                const clv = Number();
+                                return (<FormControlLabel className='admin-details__input--checkbox admin-details__input '
                                                 name = {name}
                                                 key = {name}
                                                 label={(label) ? label : ''} 
                                                 //onChange = {(event)=>{console.log(event.target)}}
                                                 control={<Checkbox name = {name}
                                                                    value = '@!ludo_checkbox' 
-                                                                   checked={(value)?value:false} 
+                                                                   checked={cleanedValue} 
                                                                    onChange = {handleChange}
                                                                    inputProps={{ 'aria-label': 'controlled' }}
                                                                    />
                                                         } 
-                                />),
+                                />)},
             date        : () => {
                                 return (
                                     <LocalizationProvider key = {`localization-provider__${name}`} 
@@ -208,7 +219,18 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
 
                             </div>)}
                     )}   
-                </div>   
+                </div>
+            {/* SNACKBAR */}
+            {(alert) && 
+                <Snackbar   open={!(!alert)} 
+                            autoHideDuration={6000} 
+                            onClose={()=>{setAlert()}}
+                             anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
+                    <Alert onClose={()=>{setAlert()}} severity={alert.severity} sx={{ width: '100%' }}>
+                        {alert.message}
+                    </Alert>
+                </Snackbar>
+            }   
         </div>
     )
 }

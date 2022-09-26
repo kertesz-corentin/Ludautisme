@@ -18,15 +18,19 @@ const AdminUsers2 = () => {
 
     const buttons = [
         [{label : 'ajouter',
-        action : 'action'} ]
+          action : {reducer:'users',mode:'new',submitAction:'useAddUserMutation'}
+        }]
     ]
 
+
+    //Refrech on each render
     useEffect(()=>{
         getUsers.refetch(); //Make a refetch clear apiSlice cache
         store.dispatch(actions.users.handleFetch(getUsers));//Read refetch
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
+    //Refetch on detail modification
     useEffect(()=>{
         getUsers.refetch(); //Make a refetch clear apiSlice cache
         store.dispatch(actions.users.handleFetch(getUsers));//Read refetch
@@ -43,11 +47,11 @@ const AdminUsers2 = () => {
                         rows={users.users}
                         schema={userSchema}
                         reducer='users'
-                        submitAction = 'useUpdateOneMutation'
+                        submitAction = 'useUpdateUserMutation'
                         />
                 </div>
-                        {(Object.keys(details.content).length > 0)&&<AdminDetails schema={userSchema} 
-                                    //   titleOverride={'Surcharge du titre'}
+                        {(Object.keys(details.content).length > 0 || details.mode === 'new')&&<AdminDetails schema={userSchema} 
+                                    titleOverride={(details.mode === 'new')?'Nouvel utilisateur':null}
                         />}
             </div>
         </div>

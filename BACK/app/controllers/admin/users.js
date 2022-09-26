@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
+const { cp } = require('fs');
 
 const saltRounds = 10;
 
@@ -79,10 +80,20 @@ module.exports = {
 
         const memberNumberExist = await usersDataMapper.findFiltered([
             { member_number: Number(req.body.member_number) },
-            { email: req.body.email },
         ]);
+
         if (memberNumberExist.length > 0) {
             if (memberNumberExist[0].id !== user[0].id) {
+                throw new ApiError(404, 'Un autre adhérent a déjà ce numéro de membre ou cet email');
+            }
+        }
+
+        const emailExist = await usersDataMapper.findFiltered([
+            { email: req.body.email },
+        ]);
+
+        if (emailExist.length > 0) {
+            if (emailExist[0].id !== user[0].id) {
                 throw new ApiError(404, 'Un autre adhérent a déjà ce numéro de membre ou cet email');
             }
         }

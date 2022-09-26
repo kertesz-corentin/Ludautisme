@@ -5,6 +5,7 @@ const initialState = {
     ,open:false
     ,submitAction : {actionName:'null',params:{param:null,body:null}}
     ,reducer : null
+    ,mode : null
 }
 
 export default createSlice({
@@ -25,6 +26,9 @@ export default createSlice({
     },
     setReducer:(state,action) => {
         state.reducer = action.payload.charAt(0).toUpperCase() + action.payload.slice(1); //Capitalise for redux apiSlice automatic function naming 
+    },
+    setMode:(state,action) => {
+        state.mode = action.payload;
     }
   },
 })

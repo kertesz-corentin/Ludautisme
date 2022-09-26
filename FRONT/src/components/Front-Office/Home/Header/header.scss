@@ -3,13 +3,13 @@
     display: none !important;
 }
 .header {
-    height: 80px;
     text-decoration: none;
     padding-left: $gutter;
     padding-right: $gutter;
     background-color: rgba(255, 251, 236, 0.8);
     filter: $drop-shadow;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -45,6 +45,14 @@
 
     &-link--isActive>Button>svg {
         fill: #fa9600;
+    }
+    & .maintenance {
+        color: white;
+        background-color: $orange;
+        font-size: 1.5rem;
+        border-radius: 20px;
+        padding: 5px;
+        margin-bottom: 2px;
     }
 }
 
@@ -110,13 +118,15 @@ nav .main_pages,
         display: inline-flex !important;
     }
     .header {
-        height: 120px;
         justify-content: space-between;
 
         &-link {
             & button {
                 margin: 10px 0;
             }
+        }
+        & .maintenance {
+            font-size: 1rem;
         }
     }
 
@@ -125,6 +135,8 @@ nav .main_pages,
         height: 60px;
         z-index: 2;
         width: 30%;
+        display: flex;
+        align-items: center;
     }
 
     nav .main_pages {
