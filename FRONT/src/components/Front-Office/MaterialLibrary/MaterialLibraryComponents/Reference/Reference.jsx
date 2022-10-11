@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useContext, useEffect } from 'react';
-import LazyImage from '../LazyImage/LazyImage';
 import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
 import api from '../../../../../requests';
 
-import {Box,Modal,Fade,Button,Skeleton,
-        Divider,Card,CardMedia,Typography,
-        Avatar,Backdrop
+import {Box,Modal,Fade,Button,
+        Divider,Card,Typography
+        ,Backdrop
       } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
@@ -16,7 +15,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../../../../App/App';
-import HideImageIcon from '@mui/icons-material/HideImage';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Reference = ({
     className,
@@ -53,6 +52,7 @@ const Reference = ({
         valorisation,
     }
 
+    // eslint-disable-next-line no-unused-vars
     const [cartItems,setCartItems] = useState(currentItems);
     const [isFav,setIsFav] = useState(favorite);
 
@@ -67,18 +67,20 @@ const Reference = ({
             setIsFav(!isFav);
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{updateCurrentItems()},[currentItems])
 
     function handleClick () {
         cartManager.add(itemToAdd);
     }
 
+
+
    return (
 
         <Card className = "reference-card"
               sx={{ width: gridSize }}
             >
-
             <ReferenceSwiper
                 refId={id}
                 pictures={picture}
@@ -135,52 +137,61 @@ const Reference = ({
           >
             <Fade in={open}>
               <Box className="ref">
-              <Box className="transition-modal-inline">
-                <Typography className="transition-modal-title" variant="h6" component="h2">
-                  {name}
-                </Typography>
-                    </Box>
-                <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden'}}>
-                 <ReferenceSwiper
-                refId={id}
-                pictures={picture}
-                gridSize={gridSize}
-                />
+                <Box  className='reference-card__close' onClick={handleClose}>
+                    <p>Fermer</p>
+                    <CloseIcon className='reference-card__close--icon'/>
                 </Box>
-                <Divider/>
-                <Typography className="transition-modal-description" variant="h6" component="h5">
-                  {description}
-                  
-                </Typography>
-                    {(valorisation===0) ? 'Caution : --€' : `Caution : ${valorisation}€`}
+                <Box  className='reference-card__wrapper'>
+                    <Box className="transition-modal-inline">
+                    
+                        <Typography className="transition-modal-title" variant="h6" component="h2">
+                        {name}
+                        </Typography>
+                    </Box>
+                    <Box style={{ background:'white',display:'flex',justifyContent:'center',padding:'15px 0',overflow:'hidden', minHeight:'300px'}}>
+                        <ReferenceSwiper
+                    refId={id}
+                    pictures={picture}
+                    gridSize={gridSize}
+                    />
+                    </Box>
+                    <Divider/>
+                    <Typography className="transition-modal-description" variant="h6" component="h5">
+                    {description}
+                    
+                    </Typography>
+                    <Typography className="reference-card__caution">
+                        {(valorisation===0) ? '' : `Caution : ${valorisation}€`}
+                    </Typography>
                     <Box sx={{marginBottom:"15px",display:'flex',justifyContent:'space-evenly'}}>
-                        {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
+                            {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total}/> : <Unavailable/>}
 
-                     {(userToken)?
-                            <>
-                                {(nb_available > 0 && currentItems)?
-                                    <>
-                                         {(!currentItems.map((item)=> item.id).includes(id)) ?
-                                              <Button
-                                              onClick={handleClick}>
-                                                  <AddShoppingCartIcon/>
-                                                </Button>
-                                         :
-                                            <Box>
-                                                <BookmarkAddedIcon/>
-                                            </Box>
-                                        }
-                                    </>
-                                    :
-                                    <>
-                                       <Unavailable/>
-                                    </>
-                                }
-                            </>
-                            :
-                            <>
-                            </>
-                        }
+                        {(userToken)?
+                                <>
+                                    {(nb_available > 0 && currentItems)?
+                                        <>
+                                            {(!currentItems.map((item)=> item.id).includes(id)) ?
+                                                <Button
+                                                onClick={handleClick}>
+                                                    <AddShoppingCartIcon/>
+                                                    </Button>
+                                            :
+                                                <Box>
+                                                    <BookmarkAddedIcon/>
+                                                </Box>
+                                            }
+                                        </>
+                                        :
+                                        <>
+                                        <Unavailable/>
+                                        </>
+                                    }
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+                    </Box>
                 </Box>
               </Box>
             </Fade>

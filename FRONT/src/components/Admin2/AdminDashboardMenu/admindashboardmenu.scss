@@ -1,0 +1,26 @@
+.admin-dashboardmenu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    &__title {
+        margin-left: 25px;
+        font-size: 0.9rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+    &__container{
+        margin: 0 25px;
+        width : 100%;
+        display: flex; 
+    }
+    &__loading-zone {
+        margin-right: 25px;
+        width: 25px ;
+        height: 25px;
+    }
+    &__circularprogress{
+        width: 25px !important;
+        height: 25px !important;
+    }
+}

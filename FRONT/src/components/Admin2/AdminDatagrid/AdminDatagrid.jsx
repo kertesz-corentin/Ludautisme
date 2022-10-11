@@ -1,25 +1,60 @@
-import React, { useState, useEffect,useCallback } from 'react';
-import './admindatagrid.scss'
-import { Box, ToggleButton, IconButton  } from '@mui/material';
+import React, { useState, useEffect,useRef } from 'react';
+import './admindatagrid.scss';
+import store from '../../../store';
+import details from '../../../store/features/Admin/Details';
+import { ToggleButton, IconButton  } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';
+
+function debounce(fn, ms) {
+    let timer;
+    return () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            timer = null;
+            fn.apply(this, arguments);
+        }, ms);
+    };
+}
 
 const AdminDatagrid = ({
     rows,
-    schema
+    schema,
+    submitAction,
+    reducer,
 }) => {
-    // Responsive Datagrid height
+
+    // RESPONSIVE DATAGRID HEIGHT
     const [height, setHeight] = useState(null);
-    const parentSize = useCallback((node) => {
-        if (node !== null) {
-            setHeight(node.getBoundingClientRect().height);
-        }
-    }, []);
-
-    const [columns,setColumns] = useState(['id']);
+    const [clientHeight,setClientHeight] = useState(window.innerHeight);
+    const parentSize = useRef();
 
 
-    //Configure custem render cell
+    //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
+    const debouncedHandleResize = debounce(() => {
+        const delta = (window.innerHeight < clientHeight ) ?  clientHeight - window.innerHeight : 0;
+        setClientHeight(window.innerHeight);
+        setHeight(parentSize.current.getBoundingClientRect().height - delta);
+    }, 16);
+
+    useEffect(() => {
+        debouncedHandleResize();
+        window.addEventListener('resize', debouncedHandleResize);
+        return (_) => {
+            window.removeEventListener('resize', debouncedHandleResize);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [clientHeight]);
+    // END RESPONSIVE DATAGRID HEIGHT
+
+    const [columns] = useState(['id']);  //Allow datagrid render even without values
+
+
+    //Configure custom render cell
     const customCellBuilder = {
+        date : (params) => (
+            <span>{(params.value) ? new Date(Date.parse(params.value)).toLocaleDateString("fr") : ''} </span>
+        ),
         toggle : (params) => (
              <ToggleButton
                     value={params.value || 'Undefined'}
@@ -38,8 +73,16 @@ const AdminDatagrid = ({
             <IconButton
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
+                 onClick={()=>{
+                                store.dispatch(details.actions.setReducer(reducer));
+                                store.dispatch(details.actions.setSubmitPayload({actionName:submitAction,params :{param:params.row.id, body:params.row}}));
+                                store.dispatch(details.actions.setContent(params.row));
+                                store.dispatch(details.actions.setMode());
+                                store.dispatch(details.actions.setOpen());
+                              }
+                          }
             >
-                {/* <UpdateUserModal params={params} /> */}
+                <EditIcon />
             </IconButton>
                     ),
     }
@@ -58,14 +101,14 @@ const AdminDatagrid = ({
         });
 
     });
-    //console.log(height);
-    //console.log(columnBuilder());
+
+
     return (
        <div className="datagrid__availableSpace" 
             ref={parentSize}
         >
-            <Box
-                style={{ height: height - 150 || 200, width: '100%' }} 
+            <div
+                style={{ height: height || 200, width: '100%' }} 
                 className="datagrid__container"
             >
                 <DataGrid
@@ -77,7 +120,7 @@ const AdminDatagrid = ({
                         Toolbar: GridToolbar,
                     }}
                 />
-            </Box>
+            </div>
         </div>
     )
 }

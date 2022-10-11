@@ -136,10 +136,13 @@ module.exports = {
             };
             // Add booking to get an id booking
             const newBookingConfirm = await bookingDataMapper.addOne(newBooking);
+
             // Join articles to booking
-            const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, artIds);
+            const articlesBooked = (newBookingConfirm.id) && await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, artIds);
+
             // Update availability on each article booked to false
-            await bookingDataMapper.updateArticlesAvailability(artIds);
+            // eslint-disable-next-line no-unused-vars
+            const available = (articlesBooked.id) && await bookingDataMapper.updateArticlesAvailability(artIds);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);

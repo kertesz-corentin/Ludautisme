@@ -10,27 +10,8 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-//import ImportStatus from '../../Import/ImportStatus/ImportStatus';
-import { addAroundSize } from '../../../../store/actions';
-
-function debounce(fn, ms) {
-    let timer;
-    return () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            timer = null;
-            fn.apply(this, arguments);
-        }, ms);
-    };
-}
 
 function AdminHeader() {
-    // Redux
-    const dispatch = useDispatch();
-    const updateStore = (size) => {
-        dispatch(addAroundSize(size));
-    };
 
     // Active tab
     const [isActive, setIsActive] = useState();
@@ -39,9 +20,6 @@ function AdminHeader() {
         setIsActive(event);
     };
 
-    // Dynamic Content size
-    const headerRef = useRef(null);
-    const [headerSize, setHeaderSize] = useState({ width: 0, height: 0 });
     // Accueil Adhérents Références Réservations Se déconnecter
     const pages = {
         Home: { url: '/admin2/home', display: <HomeIcon /> },
@@ -63,25 +41,8 @@ function AdminHeader() {
         setAnchorElNav(null);
     };
 
-    // Get header Height
-    const debouncedHandleResize = debounce(() => {
-        if (headerRef['current']) {
-            const { height, width } = headerRef.current.getBoundingClientRect();
-            setHeaderSize({ height, width });
-            updateStore({ height, width });
-        }
-    }, 16);
-
-    useEffect(() => {
-        debouncedHandleResize();
-        window.addEventListener('resize', debouncedHandleResize);
-        return (_) => {
-            window.removeEventListener('resize', debouncedHandleResize);
-        };
-    }, []);
-
     return (
-        <AppBar id="appbar" position="sticky" ref={headerRef}>
+        <AppBar id="appbar" position="sticky">
             <Container>
                 <Toolbar disableGutters>
                     {/* Mobile Button */}
