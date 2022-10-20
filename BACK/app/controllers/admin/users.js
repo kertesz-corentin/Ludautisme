@@ -24,17 +24,17 @@ module.exports = {
     },
     async getFiltered(req, res) {
         //  Avoid injection on column
-        const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived'];
+        const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived', 'phone'];
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
         props.forEach((prop) => {
             const value = obj[prop];
             const index = columns.indexOf(prop);
-            if (Number.isNaN(index)) {
+            if (index < 0) {
                 throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
             }
-            if (['id', 'member_number'].includes(columns[index]) && Number.isNaN(value)) {
+            if (['id', 'member_number'].includes(columns[index]) && typeof value !== 'number') {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
             }
             if (['archived'].includes(columns[index]) && typeof value !== 'boolean') {
@@ -42,7 +42,6 @@ module.exports = {
             }
             arr.push({ [columns[index]]: value });
         });
-
         const user = await usersDataMapper.findFiltered(arr);
         if (user.length < 1) {
             throw new ApiError(400, 'Nous n\'avons rien trouvé avec ces critères');

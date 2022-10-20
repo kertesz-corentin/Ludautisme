@@ -78,9 +78,9 @@ module.exports = {
             const prop = Object.keys(filter)[0];
             placeholders.push(filter[prop]);
             if (index !== arr.length - 1) {
-                query += `${prop}=$${index + 1} AND `;
+                query += `"user".${prop}=$${index + 1} AND `;
             } else {
-                query += `${prop}=$${index + 1}`;
+                query += `"user".${prop}=$${index + 1}`;
             }
         });
         const result = await sqlHandler(query, placeholders);

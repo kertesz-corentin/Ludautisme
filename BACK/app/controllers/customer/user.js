@@ -7,6 +7,9 @@ const saltRounds = 10;
 module.exports = {
     async getById(req, res) {
         const result = await userDataMapper.findById(req.params.id);
+        if (!result) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
         return res.json(result);
     },
     async update(req, res) {
