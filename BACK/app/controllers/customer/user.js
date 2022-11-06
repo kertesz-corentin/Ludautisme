@@ -15,7 +15,6 @@ module.exports = {
     async update(req, res) {
         const authorizedFields = [
             'email',
-            'member_number',
             'phone',
             'first_name',
             'last_name',
@@ -31,8 +30,8 @@ module.exports = {
             }
         });
         const user = await userDataMapper.findById(req.params.id);
-
-        if (user.length < 1) {
+        
+        if (!user) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
         if (req.body.password) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef } from 'react';
 import './admindatagrid.scss';
 import store from '../../../store';
-import details from '../../../store/features/Admin/details';
+import details from '../../../store/features/Admin/Details';
 import { ToggleButton, IconButton  } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';

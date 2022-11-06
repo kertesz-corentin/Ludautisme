@@ -20,9 +20,21 @@ const router = express.Router();
  * @param {cartRefParams} request.body.required
  * @return {cartRefList} 200 - Success response - application/json
  */
+/**
+ * DELETE /api/customer/favorite/:userId
+ * @summary Delete one favorite
+ * @tags [CUSTOMER] Favorites
+ * @param {number} userId.params.required
+ * @param {cartRefParams} request.body.required
+ * @return {cartRefList} 200 - Success response - application/json
+ */
 router.route('/:userId')
     .get(controllerHandler(favoriteController.getAll))
     .post(controllerHandler(favoriteController.addRef))
     .delete(controllerHandler(favoriteController.deleteRef));
+
+    router.use(() => {
+        throw new ApiError(404, 'API Route not found');
+    });
 
 module.exports = router;

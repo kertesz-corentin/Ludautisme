@@ -3,8 +3,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
 
 /**
  * @typedef {object} cartRefList
- * @property {number} id - Cart's User Id
- * @property {array<number>} id_refs - Array of references id
+ * @property {array<number>} ref_ids - Array of references id
  */
 
 /**
@@ -30,7 +29,7 @@ module.exports = {
                         `;
         const placeholders = [idUser, idRef];
         const result = await sqlHandler(query, placeholders);
-        return result.rows;
+        return result.rows[0];
     },
     async deleteRef(idUser, idRef) {
         const query = `DELETE FROM "favorite_user_to_reference"

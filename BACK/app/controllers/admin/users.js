@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
-const { cp } = require('fs');
 
 const saltRounds = 10;
 

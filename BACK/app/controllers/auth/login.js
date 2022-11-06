@@ -8,7 +8,7 @@ require('dotenv').config();
 const loginDatamapper = require('../../models/auth/login');
 const { usersDataMapper } = require('../../models/admin');
 const { usersController } = require('../admin');
-const { ApiError } = require('../../helpers/errorHandler');
+const ApiError = require('../../errors/apiError');
 /**
  * @typedef {object} login
  * @property {string} id - Unique identifier

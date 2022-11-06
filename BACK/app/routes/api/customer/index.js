@@ -9,7 +9,7 @@ const cartRouter = require('./cart');
 const contactRouter = require('./contact');
 const pictureFullPath = require('../../../middleware/pictureFullPath');
 const favoriteRouter = require('./favorite');
-const { ApiError } = require('../../../errors/apiError');
+const ApiError = require('../../../errors/apiError');
 
 const router = express.Router();
 
