@@ -1,4 +1,4 @@
-import details from './features/Admin/Details';
+import details from './features/Admin/details';
 import users from './features/Admin/UsersList';
 
 const reducer = {
