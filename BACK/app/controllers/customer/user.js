@@ -30,7 +30,6 @@ module.exports = {
             }
         });
         const user = await userDataMapper.findById(req.params.id);
-        
         if (!user) {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }

@@ -87,7 +87,7 @@ CREATE TABLE "temptoken"(
 
 CREATE TABLE "reference_to_cart"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "id_user" INT REFERENCES "user"("id"),
+    "id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
     "id_ref" INT REFERENCES "reference"("id")
 );
 

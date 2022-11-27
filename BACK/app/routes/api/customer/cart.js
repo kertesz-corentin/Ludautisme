@@ -45,4 +45,7 @@ router.route('/reference/:userId')
     .post(controllerHandler(cartController.addToCart))
     .delete(controllerHandler(cartController.delete));
 
+router.use(() => {
+    throw new ApiError(404, 'API Route not found');
+});
 module.exports = router;

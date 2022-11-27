@@ -36,12 +36,12 @@ module.exports = {
                         WHERE "favorite_user_to_reference"."id_user" = $1
                         AND "favorite_user_to_reference"."id_ref" = $2
                         RETURNING (
-                            SELECT json_agg(fav."id_ref")
+                            SELECT json_agg(fav."id_ref") as ref_ids
                             FROM "favorite_user_to_reference" AS fav
                             WHERE fav."id_user" = $1
                         )`;
         const placeholders = [idUser, idRef];
         const result = await sqlHandler(query, placeholders);
-        return result.rows;
+        return result.rows[0];
     },
 };

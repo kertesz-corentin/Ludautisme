@@ -4,14 +4,18 @@ const { bookingDataMapper } = require('../../models/customer');
 const { usersDataMapper, permanencyDataMapper, referenceDataMapper } = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
 
+const { testUser } = require('../../helpers/testUser');
+
 module.exports = {
     async getActive(req, res) {
         const idUser = Number(req.params.id);
+        testUser(req, idUser);
         const booking = await bookingDataMapper.findActive(idUser);
         return res.json(booking);
     },
     async getHistory(req, res) {
         const idUser = Number(req.params.id);
+        testUser(req, idUser);
         const booking = await bookingDataMapper.findHistory(idUser);
 
         return res.json(booking);
@@ -19,6 +23,7 @@ module.exports = {
 
     async addBookingByRef(req, res) {
         const userId = Number(req.params.UserId);
+        testUser(req, userId);
         const { refIds } = req.body;
 
         const duplicateElement = refIds.filter((item, index) => refIds.indexOf(item) !== index);
