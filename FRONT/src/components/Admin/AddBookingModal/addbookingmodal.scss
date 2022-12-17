@@ -29,11 +29,6 @@
             position: relative;
             text-transform: uppercase;
         }
-
-        &-close {
-
-
-        }
     }
 
     &-inputs {
@@ -70,10 +65,15 @@
             width: 100%;
         }
     }
-
-
+    
     &-footer {
         margin-top: $gutter;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        & button {
+            margin-top: 1rem;
+        }
     }
 }
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import './modifypassworldmodal.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { TextField , Typography} from '@mui/material';
@@ -28,7 +27,6 @@ const handleMailSubmit = async(event) => {
         if (response.status === 200) {
             setSeverity("success");
             setAlertMessage("email envoyé");
-
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data}`);

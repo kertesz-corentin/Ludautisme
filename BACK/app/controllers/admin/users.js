@@ -33,7 +33,7 @@ module.exports = {
             if (index < 0) {
                 throw new ApiError(400, 'Impossible de chercher par cette propriété (non reconnue ou non implémentée)');
             }
-            if (['id', 'member_number'].includes(columns[index]) && typeof value !== 'number') {
+            if (['id', 'member_number'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
             }
             if (['archived'].includes(columns[index]) && typeof value !== 'boolean') {

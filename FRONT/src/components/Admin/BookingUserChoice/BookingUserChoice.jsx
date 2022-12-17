@@ -6,12 +6,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddBookingModal from '../AddBookingModal/AddBookingModal';
 import classnames from 'classnames';
 import './bookinguserchoice.scss';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 const BookingUserChoice = ({articles, params, className, ...rest}) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
     const [value, setValue] = useState('');
+    const [alertMessage, setAlertMessage] = React.useState();
+    const [severity, setSeverity] = React.useState();
+
 
     const handleSearch = () => setSearch(true);
 
@@ -21,15 +25,15 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
         const data = new FormData(event.currentTarget);
         const memberNumber = Number(data.get('member_number'));
 
-        console.log('value', memberNumber);
-
         const response = await api.post('admin/users/search', {member_number: `${memberNumber}`})
         const searchUser = await response.data;
 
         if(response.status === 200) {
-            console.log('response-member', searchUser);
             setUser(searchUser);
             setUserExist(true);
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
         }
     }
 
@@ -45,6 +49,13 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
             {...rest}
         >
             <Button onClick={handleSearch} variant='outlined'>Ajouter réservation</Button>
+            {alertMessage && severity && (
+                    <AlertMessage
+                        message={alertMessage}
+                        severity={severity}
+                    >
+                    </AlertMessage>
+                )}
             <Box className='booking-search' component="form" onSubmit={handleSubmit}>
                 {search && (
                     <TextField

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 // import requests
 import api from '../../../requests';
@@ -15,10 +16,16 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({user, className, ...rest}) => {
+const AddBookingModal = ({ user, className, ...rest }) => {
     const [open, setOpen] = useState(false)
+    const [alertMessage, setAlertMessage] = React.useState();
+    const [severity, setSeverity] = React.useState();
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setListArticle([]);
+        setArticleId([]);
+    }
 
     const [articleId, setArticleId] = useState([]);
     const [listArticle, setListArticle] = useState([]);
@@ -29,11 +36,14 @@ const AddBookingModal = ({user, className, ...rest}) => {
             "artIds": articleId
         }
 
-        console.log('id', listIds);
         const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
-        if(response.status === 200){
-            handleClose();
-            console.log('Réservation validée');
+        if (response.status === 200) {
+            setSeverity("success");
+            setAlertMessage("Réservation réussi");
+            setTimeout(() => {handleClose()}, 5000);
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
         }
 
     }
@@ -57,10 +67,11 @@ const AddBookingModal = ({user, className, ...rest}) => {
 
     // create a function to delete an article in booking creation
     const handleDelete = (id) => {
-        console.log('article à supprimer', id);
         const newList = listArticle.filter((params) => params.id !== id)
-
         setListArticle(newList);
+
+        const newArticleList = articleId.filter((art) => art !== id)
+        setArticleId(newArticleList)
     }
 
     const columnsBuilder = (() => {
@@ -73,8 +84,8 @@ const AddBookingModal = ({user, className, ...rest}) => {
                 headerName: propElt.label,
                 width: propElt.width,
             };
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "delete":
                         config.renderCell = (params) => (
 
@@ -86,7 +97,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                                 <DeleteIcon onClick={() => handleDelete(params.id)} />
                             </IconButton>
                         );
-                    break;
+                        break;
 
                     default:
                         break;
@@ -130,7 +141,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].first_name}
                             className="addbook-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                         <TextField
@@ -140,7 +151,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].last_name}
                             className="addbook-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                         <TextField
@@ -150,7 +161,7 @@ const AddBookingModal = ({user, className, ...rest}) => {
                             disabled
                             defaultValue={user[0].email}
                             className="addbook-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                     </div>
@@ -158,27 +169,27 @@ const AddBookingModal = ({user, className, ...rest}) => {
                     <div className="addbook-modal-articles">
                         <div className="addbook-modal-articles--add">
                             <Box className='article-search' component="form" onSubmit={handleSubmitSearch}>
-                                    <TextField
-                                        id='outlined'
-                                        label='n° article'
-                                        name='number'
-                                        type='number'
-                                        className="article-search-item"
-                                    >
-                                    </TextField>
+                                <TextField
+                                    id='outlined'
+                                    label='n° article'
+                                    name='number'
+                                    type='number'
+                                    className="article-search-item"
+                                >
+                                </TextField>
 
-                                    <Button
+                                <Button
                                     type='submit'
                                     className="article-search-submit"
                                     variant="outlined"
-                                    >
-                                        Ajouter à la liste
-                                    </Button>
+                                >
+                                    Ajouter à la liste
+                                </Button>
                             </Box>
                         </div>
                         <div className="addbook-modal-articles--book">
                             <h2>Liste des articles</h2>
-                            <div className="articles-grid" style={{ height: 325, width: '100%'}}>
+                            <div className="articles-grid" style={{ height: 325, width: '100%' }}>
                                 <DataGrid
                                     getRowId={(row) => row.id}
                                     rows={listArticle}
@@ -210,13 +221,13 @@ const AddBookingModal = ({user, className, ...rest}) => {
                                             },
                                         },
                                         sorting: {
-                                            sortModel: [{field: 'number', sort: 'asc'}],
+                                            sortModel: [{ field: 'number', sort: 'asc' }],
                                         },
                                         filter: {
                                             filterModel: {
                                                 items: [
-                                                    {columnField: 'archived', value: false},
-                                                    {columnField: 'available', value: true},
+                                                    { columnField: 'archived', value: false },
+                                                    { columnField: 'available', value: true },
                                                 ]
                                             }
                                         }
@@ -227,6 +238,13 @@ const AddBookingModal = ({user, className, ...rest}) => {
                         </div>
                     </div>
                     <div className="addbook-modal-footer">
+                        {alertMessage && severity && (
+                            <AlertMessage
+                                message={alertMessage}
+                                severity={severity}
+                            >
+                            </AlertMessage>
+                        )}
                         <Button
                             onClick={handleSubmitBooking}
                             className="addbook-modal-footer-submit"

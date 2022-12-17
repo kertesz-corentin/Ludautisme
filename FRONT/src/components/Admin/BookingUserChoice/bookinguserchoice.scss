@@ -6,6 +6,7 @@
     width: 80%;
     margin: $gutter;
     justify-content: space-between;
+    align-items: center;
 
     &-search {
         display: flex;
@@ -15,7 +16,6 @@
 
         &-element {
             width: calc( 50% - $gutter );
-
         }
     }
 }
