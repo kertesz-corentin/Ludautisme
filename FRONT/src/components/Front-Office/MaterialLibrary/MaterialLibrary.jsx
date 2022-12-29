@@ -6,11 +6,8 @@ import MaterialLibraryMenu from './MaterialLibraryMenu/MaterialLibraryMenu';
 import ListOfReferences from './MaterialLibraryComponents/ListsOfReferences/ListOfReferences';
 import api from '../../../requests';
 import {Pagination,TablePagination} from '@mui/material';
-import GridViewIcon from '@mui/icons-material/GridView';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ViewComfyIcon from '@mui/icons-material/ViewComfy';
-import TableRowsIcon from '@mui/icons-material/TableRows';
-import {forceVisible} from "react-lazyload";
 
 const MaterialLibrary = ({className,
                           currentItems,
@@ -157,13 +154,6 @@ const MaterialLibrary = ({className,
             />
             {/* //Ici si allRef présent on rend listOfRef avec allRef sinon on rend avec referencesData  */}
                 <div className= "displayReferences">
-                    {/* <Pagination
-                    page={page}
-                    count={numberPages} size="large"
-                    showFirstButton showLastButton
-                    onChange={handleChange}
-                    className={`paginate ${(!displayRef.length || numberPages < 2)? 'hidden':''}`}
-                    /> */}
                     <div className="displayReferences__grid-settings">
                         <div className="displayReferences__grid-settings--size">
                             <ViewComfyIcon onClick={handleGridSizeChange}/>

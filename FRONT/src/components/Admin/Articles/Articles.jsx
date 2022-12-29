@@ -49,7 +49,6 @@ const Articles = ({params, children, name, className, ...rest}) => {
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
-                                    const response = await api.put(`/admin/articles/${params.row.id}`, {[prop] : !params.value});
                                     const newData = await getReferenceWithArticles();
                                     setArticles(newData.data);
                                 }}
@@ -67,8 +66,6 @@ const Articles = ({params, children, name, className, ...rest}) => {
         });
         return columns;
     })();
-
-    console.log('article', articles);
 
    return (
        <section

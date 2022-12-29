@@ -12,8 +12,14 @@ const ReferenceSwiper = ({
     refId,
     pictures,
     gridSize,
+    setCurrentPicture, //paramètre optionel si vous avez besoin de récupérer l'id de l'image affiché
     ...rest
 }) =>{
+    const handleChange = (target) => {
+        if (setCurrentPicture) {
+            setCurrentPicture(pictures[target.realIndex].id);
+        }
+    }
     const renderImageType = () => {
                 if (pictures.length === 0 || pictures[0].id === null) {
                     return (
@@ -22,6 +28,7 @@ const ReferenceSwiper = ({
                     </Box>
                     );
                 } else if (pictures.length === 1){
+                    setCurrentPicture(pictures[0].id);
                     return(
                         <LazyImage
                         gridSize={gridSize}
@@ -40,6 +47,8 @@ const ReferenceSwiper = ({
                             navigation={true}
                             modules={[Pagination,Navigation]}
                             className={`swiper-refId${refId}`}
+                            onSlideChange={handleChange}
+                            
                         >
                         {pictures.map(
                             pic => <SwiperSlide key={`swiper-refId${refId}-picId${pic.id}`}>
@@ -55,6 +64,7 @@ const ReferenceSwiper = ({
                 }
     }
 
+    
     return(
         <Box style={{position:'relative'}}>
         {renderImageType()}

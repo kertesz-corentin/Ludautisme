@@ -21,9 +21,17 @@ const router = express.Router();
  * @param {number} request.params.id.required - ID of the picture tu update
  * @returns {string} 200 - succes response - application/json
  */
+/**
+ * GET api/admin/picture/:id
+ * @summary get pictures of one reference
+ * @tags [ADMIN] Picture
+ * @param {number} request.params.id.required - ID of reference
+ * @returns {Picture []} 200 - succes response - application/json
+ */
 router.route('/:id')
     .put(controllerHandler(pictureController.updatePicture))
-    .delete(controllerHandler(pictureController.deletePicture));
+    .delete(controllerHandler(pictureController.deletePicture))
+    .get(controllerHandler(pictureController.getForOneRef));
 
 /**
  * POST api/admin/picture

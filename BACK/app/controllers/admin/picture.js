@@ -1,6 +1,8 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-param-reassign */
 const fs = require('fs');
 const ApiError = require('../../errors/apiError');
-const { pictureDataMapper } = require('../../models/admin');
+const { pictureDataMapper, referenceDataMapper } = require('../../models/admin');
 
 module.exports = {
     async addPicture(req, res) {
@@ -22,7 +24,7 @@ module.exports = {
         };
         // I create the picture
         const picture = await pictureDataMapper.addPicture(obj);
-        // If the picture is the main picture, i pass the other images in secondary
+        // If the picture is the main picture, pass the other images in secondary
         if (main === 'true') {
             const secondary = await pictureDataMapper.passSecondary(refId, picture[0].id);
             if (secondary[0]) {
@@ -31,7 +33,7 @@ module.exports = {
         }
         // I create the relation between the image and the reference
         const result = await pictureDataMapper.addRelation(refId, picture[0].id);
-        // If the relation is created, i return the picture info, else i return one error
+        // If the relation is created, return the picture info, else i return one error
         if (!result[0]) {
             res.json(picture).status(201);
         } else {
@@ -40,16 +42,16 @@ module.exports = {
     },
     async deletePicture(req, res) {
         const { id } = req.params;
-        // I verify if picture exist
+        // verify if picture exist
         const picture = await pictureDataMapper.getById(id);
         if (picture.length < 1) {
             throw new ApiError(404, 'L\'image demandé n\'existe pas');
         }
-        // I create the correct url for remove the picture
+        // create the correct url for remove the picture
         const arrayUrl = picture[0].url.split('\\');
         const name = arrayUrl[arrayUrl.length - 1];
-        const path = `../FRONT/public/${name}`;
-        // I try to remove the picture
+        const path = `${process.env.IMAGE_CATALOG_FOLDER}/${name}`;
+        // try to remove the picture
         try {
             fs.unlink(path, (async (err) => {
                 if (err) {
@@ -90,5 +92,25 @@ module.exports = {
         };
         const newPicture = await pictureDataMapper.update(id, obj);
         res.json(newPicture);
+    },
+    async getForOneRef(req, res) {
+        const { id } = req.params;
+        const reference = await referenceDataMapper.findOne(id);
+        if (!reference.length) {
+            throw new ApiError(404, 'référence inexistante');
+        }
+        const pictures = await pictureDataMapper.getForOneRef(id);
+
+        // remplacer le nom de l'image par l'url complet avant l'envoi
+        pictures.map((p) => p.url = `${req.protocol}://ludautisme.org/api${process.env.IMAGE_CATALOG_URL}/${p.url}`);
+
+        // remplacer la clé alternative_text par une clé alt
+        pictures.map((p) => {
+            p.text = p.alternative_text;
+            p.name = p.alternative_text;
+            delete p.alternative_text;
+            return p;
+        });
+        res.json(pictures);
     },
 };

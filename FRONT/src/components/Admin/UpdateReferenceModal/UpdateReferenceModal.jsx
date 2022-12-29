@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../Articles/Articles';
 import AddModal from '../Articles/AddModal/AddModal';
+import ReferenceSwiper from '../../Front-Office/MaterialLibrary/MaterialLibraryComponents/ReferenceSwiper/ReferenceSwiper';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 import './updatereferencemodal.scss';
 
-const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
+const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
     const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
+    const handleOpen = async () => {
+        setOpen(true)
+        let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
+        setPicture(pictureResponse.data);
+    };
+
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState(params.row.id_maincat);
+    const [picture, setPicture] = useState([]);
+    const [currentPicture, setCurrentPicture] = useState();
+    const [alertMessage, setAlertMessage] = React.useState();
+    const [severity, setSeverity] = React.useState();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,17 +36,31 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
             'valorisation': data.get('valorisation'),
             'main_category': data.get('main_category'),
         };
-        console.log('reference', reference)
         const response = await api.put(`/admin/references/${params.row.id}`, reference);
-        if(response.status === 200) {
+        if (response.status === 200) {
             handleClose();
         }
-        console.log('response', response);
+    }
+ 
+    const handleDelete = async (event) => {
+        let deleteResponse = await api.delete(`/admin/picture/${currentPicture}`);
+        if (deleteResponse.status === 200) {
+            let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
+            setPicture(pictureResponse.data);
 
+            setSeverity("success");
+            setAlertMessage("Image supprimé");
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${deleteResponse.data.message}`);
+        }
+        
+    }
+    const handleSwipperChange = (event) => {
+        setCurrentPicture(event);
     }
 
     const handleChange = (event) => {
-        console.log(event.target.value);
         setCategory(event.target.value);
     }
 
@@ -61,6 +86,40 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             <CloseIcon />
                         </Button>
                     </div>
+                        <ReferenceSwiper
+                            refId={params.row.id}
+                            pictures={picture}
+                            gridSize={400}
+                            setCurrentPicture= {handleSwipperChange}
+                        />
+                    <div className="updatereference-modal-inputs">
+                        <Button
+                            className="updatereference-modal-footer-submit"
+                            variant="contained"
+                            onClick={handleDelete}
+                        >
+                            supprimer
+                        </Button>
+                        <Button
+                            className="updatereference-modal-footer-submit"
+                            variant="contained"
+                        >
+                            photo principale
+                        </Button>
+                        <Button
+                            className="updatereference-modal-footer-submit"
+                            variant="contained"
+                        >
+                            ajouter
+                        </Button>
+                        {alertMessage && severity && (
+                            <AlertMessage
+                                message={alertMessage}
+                                severity={severity}
+                            >
+                            </AlertMessage>
+                        )}
+                    </div>
                     <div className="updatereference-modal-inputs">
                         <TextField
                             id='outlined'
@@ -69,17 +128,7 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             type='string'
                             className="updatereference-modal-inputs-item"
                             defaultValue={params.row.name}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
-                        <TextField
-                            id='outlined'
-                            label='Description'
-                            name='description'
-                            type='string'
-                            className="updatereference-modal-inputs-item"
-                            defaultValue={params.row.description}
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                         <TextField
@@ -89,9 +138,22 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                             type='number'
                             className="updatereference-modal-inputs-item"
                             defaultValue={params.row.valorisation}
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
+                        <TextField
+                            id='outlined'
+                            label='Description'
+                            name='description'
+                            type='string'
+                            fullWidth
+                            multiline
+                            className="updatereference-modal-inputs-item"
+                            defaultValue={params.row.description}
+                            sx={{ mb: 2 }}
+                        >
+                        </TextField>
+
                         <FormControl fullWidth>
                             <InputLabel id="maincategory-label">Catégorie</InputLabel>
                             <Select
@@ -103,11 +165,11 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                                 onChange={handleChange}
                                 value={category}
                             >
-                            {categories.map((category) => {
-                                return (
-                                    <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-                                )
-                            })}
+                                {categories.map((category) => {
+                                    return (
+                                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                    )
+                                })}
                             </Select>
                         </FormControl>
                     </div>
@@ -119,12 +181,10 @@ const UpdateReferenceModal = ({params, categories, className, ...rest}) => {
                         >
                             Mettre à jour
                         </Button>
-
                     </div>
                     <div className="updatereference-modal-articles">
                         <Articles params={params} children={<AddModal reference={params.row.id} />} />
                     </div>
-
                 </Box>
             </Modal>
 

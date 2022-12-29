@@ -12,7 +12,6 @@ const LazyImage = ({ src, alt, gridSize }) => {
     setTimeout(()=>{forceVisible()},150);
   };
 
-
   return (
     <div className="lazy-image__wrapper" style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}}>
       <div className="lazy-image__placeholder"

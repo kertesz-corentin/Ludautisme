@@ -81,6 +81,13 @@ module.exports = {
                                         WHERE "image"."id" = $1`, [id]);
         return result.rows;
     },
+    async getForOneRef(id) {
+        const result = await sqlHandler(`SELECT * FROM image 
+                                        LEFT JOIN "reference_to_image" AS rti 
+                                        ON "id_image" = "image"."id" 
+                                        WHERE "rti"."id_ref" = $1`, [id]);
+        return result.rows;
+    },
     async update(id, obj) {
         const props = Object.keys(obj);
         let query = `UPDATE "image" SET `;
