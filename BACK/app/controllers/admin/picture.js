@@ -51,6 +51,7 @@ module.exports = {
         const arrayUrl = picture[0].url.split('\\');
         const name = arrayUrl[arrayUrl.length - 1];
         const path = `${process.env.IMAGE_CATALOG_FOLDER}/${name}`;
+        console.log(path);
         // try to remove the picture
         try {
             fs.unlink(path, (async (err) => {

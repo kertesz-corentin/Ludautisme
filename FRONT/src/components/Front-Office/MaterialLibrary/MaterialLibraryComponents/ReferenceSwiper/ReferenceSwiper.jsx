@@ -22,6 +22,7 @@ const ReferenceSwiper = ({
         }
     }
     const renderImageType = () => {
+                console.log(pictures)
                 if (pictures.length === 0 || pictures[0].id === null) {
                     return (
                     <Box style = {{height:`${gridSize*(3/4)}px`,width:`${gridSize}px`}} className='reference-card__image-not-found'>
