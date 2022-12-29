@@ -19,7 +19,12 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
         setPicture(pictureResponse.data);
     };
 
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+
+        setSeverity(null);
+        setAlertMessage(null);
+        setOpen(false);
+    } 
     const [category, setCategory] = useState(params.row.id_maincat);
     const [picture, setPicture] = useState([]);
     const [currentPicture, setCurrentPicture] = useState();
@@ -44,6 +49,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
  
     const handleDelete = async (event) => {
         let deleteResponse = await api.delete(`/admin/picture/${currentPicture}`);
+        console.log(deleteResponse);
         if (deleteResponse.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
             setPicture(pictureResponse.data);
@@ -99,18 +105,6 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                             onClick={handleDelete}
                         >
                             supprimer
-                        </Button>
-                        <Button
-                            className="updatereference-modal-footer-submit"
-                            variant="contained"
-                        >
-                            photo principale
-                        </Button>
-                        <Button
-                            className="updatereference-modal-footer-submit"
-                            variant="contained"
-                        >
-                            ajouter
                         </Button>
                         {alertMessage && severity && (
                             <AlertMessage

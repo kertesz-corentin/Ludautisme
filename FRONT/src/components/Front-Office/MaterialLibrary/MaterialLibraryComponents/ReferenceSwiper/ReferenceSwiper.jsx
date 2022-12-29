@@ -17,6 +17,7 @@ const ReferenceSwiper = ({
 }) =>{
     const handleChange = (target) => {
         if (setCurrentPicture) {
+            console.log(pictures[target.realIndex].id);
             setCurrentPicture(pictures[target.realIndex].id);
         }
     }
@@ -48,7 +49,7 @@ const ReferenceSwiper = ({
                             modules={[Pagination,Navigation]}
                             className={`swiper-refId${refId}`}
                             onSlideChange={handleChange}
-                            
+                            onInit={handleChange}
                         >
                         {pictures.map(
                             pic => <SwiperSlide key={`swiper-refId${refId}-picId${pic.id}`}>
