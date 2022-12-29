@@ -17,8 +17,7 @@ const ReferenceSwiper = ({
 }) =>{
     const handleChange = (target) => {
         if (setCurrentPicture) {
-            console.log(pictures[target.realIndex].id);
-            setCurrentPicture(pictures[target.realIndex].id);
+            setCurrentPicture(pictures[target.realIndex].id_image);
         }
     }
     const renderImageType = () => {
