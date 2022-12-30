@@ -10,22 +10,23 @@ const contactRouter = require('./contact');
 const pictureFullPath = require('../../../middleware/pictureFullPath');
 const favoriteRouter = require('./favorite');
 const ApiError = require('../../../errors/apiError');
+const authUser = require('../../../middleware/user');
 
 const router = express.Router();
 
 router.use('/articles', pictureFullPath, referenceRouter);
 
-router.use('/user', userRouter);
+router.use('/user', authUser, userRouter);
 
 router.use('/category', categoryRouter);
 
-router.use('/booking', pictureFullPath, bookingRouter);
+router.use('/booking', authUser, pictureFullPath, bookingRouter);
 
 router.use('/permanency', permanencyRouter);
 
-router.use('/cart', cartRouter);
+router.use('/cart', authUser, cartRouter);
 
-router.use('/favorite', pictureFullPath, favoriteRouter);
+router.use('/favorite', authUser, pictureFullPath, favoriteRouter);
 
 router.use('/contact', contactRouter);
 
