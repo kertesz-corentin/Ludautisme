@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 
+const saltRounds = 10;
+
 const jwt = require('jsonwebtoken');
 const mailer = require('../../config/mailer');
 const template = require('../../template/mail');
@@ -104,6 +106,9 @@ module.exports = {
         req.params.id = dbUser[0].id;
         delete req.body.token;
 
-        await usersController.update(req, res);
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        req.body.password = hashedPassword;
+        const updatedUser = await usersDataMapper.update(req.params.id, req.body);
+        res.json(updatedUser);
     },
 };

@@ -37,7 +37,6 @@ const ResetPassword = ({ className, ...rest }) => {
                 setAlertMessage("Mot de passe changé");
 
             } else {
-                console.log(response);
                 setSeverity("error");
                 setAlertMessage(`changement impossible`);
             }
