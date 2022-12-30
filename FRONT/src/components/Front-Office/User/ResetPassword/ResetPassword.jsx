@@ -23,7 +23,7 @@ const ResetPassword = ({ className, ...rest }) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const passwordValue = data.get('password');
-        const regex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$');
+        const regex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_#^&€])([-+!*$@%_#^&€\w]{8,15})$');
 
         const newPassword = {
             token: token,
@@ -73,7 +73,7 @@ const ResetPassword = ({ className, ...rest }) => {
                     <li>Une majuscule</li>
                     <li>Une minuscule</li>
                     <li>Un chiffre et une lettre</li>
-                    <li>Un des caractères spéciaux suivants: ! @ # $ % ^ & </li>
+                    <li>Un des caractères spéciaux suivants: ! @ $ % + - & # ^ €</li>
                 </ul>
                 <Button
                     type='submit'
