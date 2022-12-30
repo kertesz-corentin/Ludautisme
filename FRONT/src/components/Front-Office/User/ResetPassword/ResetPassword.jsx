@@ -23,7 +23,7 @@ const ResetPassword = ({ className, ...rest }) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const passwordValue = data.get('password');
-        const regex = new RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_#^&€])([-+!*$@%_#^&€\w]{8,15})$');
+        const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+-€])(?=.{8,})');
 
         const newPassword = {
             token: token,
@@ -37,6 +37,7 @@ const ResetPassword = ({ className, ...rest }) => {
                 setAlertMessage("Mot de passe changé");
 
             } else {
+                console.log(response);
                 setSeverity("error");
                 setAlertMessage(`changement impossible`);
             }

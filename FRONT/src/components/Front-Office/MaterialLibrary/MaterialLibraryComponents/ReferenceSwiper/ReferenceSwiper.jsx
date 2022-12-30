@@ -29,7 +29,10 @@ const ReferenceSwiper = ({
                     </Box>
                     );
                 } else if (pictures.length === 1){
-                    setCurrentPicture(pictures[0].id);
+                    if (setCurrentPicture) {
+                        setCurrentPicture(pictures[0].id);
+                    }
+                    
                     return(
                         <LazyImage
                         gridSize={gridSize}
