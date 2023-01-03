@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import api from '../../../../requests';
 import MaterialLibrary from '../../MaterialLibrary/MaterialLibrary';
-
 
 const UserFavorite = ({className, currentItems, ...rest}) => {
 

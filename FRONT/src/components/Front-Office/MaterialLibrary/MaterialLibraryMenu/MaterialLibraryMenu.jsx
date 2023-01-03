@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './materiallibrarymenu.scss';
 import api from '../../../../requests';
-import { Button, Slide, Box, Paper, Chip, Menu, Modal, Dialog } from '@mui/material';
+import { Button, Slide, Box, Paper, Chip, Modal } from '@mui/material';
 import InputAutocomplete from '../MaterialLibraryComponents/InputAutocomplete/InputAutocomplete'
 import MaterialLibraryMenuFilter from '../MaterialLibraryFilter/MaterialLibraryMenuFilter';
 import CloseIcon from '@mui/icons-material/Close';

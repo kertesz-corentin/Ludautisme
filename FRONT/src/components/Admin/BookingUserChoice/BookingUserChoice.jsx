@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { Button, Modal, Box, TextField, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Box, TextField } from '@mui/material';
 import AddBookingModal from '../AddBookingModal/AddBookingModal';
 import classnames from 'classnames';
 import './bookinguserchoice.scss';

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './inputAutocomplete.scss';
-import {InputLabel,MenuItem,FormControl,Select, Autocomplete} from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 

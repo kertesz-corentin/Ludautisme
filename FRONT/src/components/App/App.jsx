@@ -21,7 +21,6 @@ import Error from '../Front-Office/Reusable/Error/Error';
 import ResetPwd from '../Front-Office/User/ResetPassword/ResetPassword';
 import { useState } from 'react';
 import * as cartReq from '../../requests/customer/cart';
-import * as refReq from '../../requests/customer/reference';
 import Privacy from '../Privacy/Privacy';
 import Notice from '../Notice/Notice';
 export const FunctionContext= React.createContext();

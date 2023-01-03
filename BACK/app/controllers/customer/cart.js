@@ -28,7 +28,7 @@ module.exports = {
         if (!user) throw new ApiError(403, 'Utilisateur inexistant');
 
         const count = await cartDataMapper.countCart(userId);
-        if (count[0].count >= process.env.BORROW_LIMIT) throw new ApiError(403, `Taille maximale du panier atteinte (${process.env.BORROW_LIMIT})`);
+        if (Number(count[0].count) >= process.env.BORROW_LIMIT) throw new ApiError(403, `Taille maximale du panier atteinte (${process.env.BORROW_LIMIT})`);
 
         const refExist = await referencesDataMapper.findOne(refId);
 
@@ -44,9 +44,11 @@ module.exports = {
     },
     async delete(req, res) {
         const userId = Number(req.params.userId);
+
         testUser(req, userId);
         const refId = Number(req.body.refId);
         const refIsInCart = await cartDataMapper.findRefByUserId(userId, refId);
+
         if (refIsInCart.length < 1) {
             throw new ApiError(403, "Cet article n'est pas dans le panier");
         }

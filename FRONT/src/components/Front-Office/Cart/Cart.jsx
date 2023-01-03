@@ -50,7 +50,6 @@ const Cart = ({
     }
     //Floating Cart
     const [scroll, setScroll] = useState(false);
-    const [lastScroll,setLastScroll] = useState();
     const [offsetLeft,setOffsetLeft] = useState();
 
     const getOffsetLeft = ()=>{
@@ -112,14 +111,12 @@ const Cart = ({
             cartElt.style.left = `${offsetLeft+15}px`;
             setTimeout(()=>{cartElt.style.opacity = 1},300);
             document.getElementById('root').appendChild(cartElt);
-            setLastScroll(window.scrollY);
             } else {
                 const cartElt = document.querySelector('.cart');
                 cartElt.style.opacity = 0;
                 setTimeout(()=>{cartElt.style.opacity = 1},300);
                 const wrapperElt = document.querySelector('.cart-wrapper');
                 wrapperElt.appendChild(cartElt);
-                setLastScroll(window.scrollY);
             }
           };
 
@@ -129,9 +126,6 @@ const Cart = ({
         }
         },[scroll]);
 
-   function handleCartBtnClick (event) {
-    event.preventDefault();
-   }
    return (
        <Box className='cart-wrapper' >
        {userToken &&

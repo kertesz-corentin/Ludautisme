@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import UserMyAccount from '../UserMyAccount/UserMyAccount';
 import UserBookings from '../UserBookings/UserBookings';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { Tabs , Tab, TabPanel, Box, Typography } from '@mui/material';
+import { Tabs , Tab, Box } from '@mui/material';
 import  { useNavigate } from 'react-router-dom';
 // Import components
 import './userhome.scss';

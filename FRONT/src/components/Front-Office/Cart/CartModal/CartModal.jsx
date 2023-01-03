@@ -7,9 +7,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Divider, Badge } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Divider } from '@mui/material';
 import CurrentReference from '../../MaterialLibrary/MaterialLibraryComponents/CurrentReference/CurrentReference';
 import api from '../../../../requests/index';
 import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
@@ -26,28 +24,8 @@ const CartModal = ({
      ...rest
     }) => {
     const [alertMessage, setAlertMessage] = useState();
-    //ACTUAL CART STATE
-
-    // const StyledBadge = styled(Badge)(({ theme }) => ({
-    //     '& .MuiBadge-badge': {
-    //       right: -3,
-    //       top: 13,
-    //       background:"#ee4842",
-    //       border: `2px solid #ffebcd`,
-    //       padding: '0 4px',
-    //     },
-    //   }));
-
-
-
-    //OPEN MODAL
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => {open = false};
-    let [counter, setCounter] = useState(null);
 
     function handleRemoveItemClick  () {
-        setCounter(currentItems.length);
         (currentItems.length === 0) && handleClose() ;
     }
 
@@ -76,7 +54,6 @@ const CartModal = ({
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
     const removeItem = (itemId) =>{
-       console.log(cartManager,itemId);
        cartManager.remove(itemId);
     }
 

@@ -1,18 +1,10 @@
 import React,{ useEffect, useState }from 'react';
 import PropTypes from 'prop-types';
 import './usermyaccount.scss';
-import MenuUser from '../MenuUser/MenuUser';
 import Permanency from '../../Reusable/Permanency/Permanency';
 import { TextField, Button, Typography, Box } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import api from '../../../../requests';
 import ModifyPasswordModal from '../ModifyPasswordModal/ModifyPasswordModal';
-
 
 //Prochaine étape, coder la requete pour envoyer les infos à l'api
 

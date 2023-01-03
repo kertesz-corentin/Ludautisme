@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './userbookings.scss';
-import Permanency from '../../Reusable/Permanency/Permanency';
-import MenuUser from '../MenuUser/MenuUser';
 import {Box,Divider, Typography} from '@mui/material';
 import api from '../../../../requests';
 import ListOfReferences from '../../MaterialLibrary/MaterialLibraryComponents/ListsOfReferences/ListOfReferences';
@@ -15,11 +13,9 @@ moment().locale('fr');
 
 
 const UserBookings = ({className, ...rest}) => {
-    const [bookings, setBookings] = useState([]);
     const [activeBooking, setActiveBooking] = useState([]);
     const [nextBooking, setNextBooking] = useState([]);
     const [oldBookings, setOldBookings] = useState([]);
-    const [idUser,setIdUser] = useState(0);
 
 
     const getBookings = async() => {
@@ -57,7 +53,6 @@ const UserBookings = ({className, ...rest}) => {
                 delete booking.articles;
                 return booking
             });
-            setBookings(data);
 
             //Next Permanency
             const nextFilter = (data) ?

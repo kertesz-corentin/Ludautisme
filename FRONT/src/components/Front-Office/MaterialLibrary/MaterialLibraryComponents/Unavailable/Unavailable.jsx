@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import './unavailable.scss';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';

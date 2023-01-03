@@ -134,7 +134,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
         const types = {
             checkbox    : () => {
                                 const cleanedValue = true;
-                                const clv = Number();
                                 return (<FormControlLabel className='admin-details__input--checkbox admin-details__input '
                                                 name = {name}
                                                 key = {name}

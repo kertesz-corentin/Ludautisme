@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import './listofreferences.scss';
 import Reference from '../Reference/Reference';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Grid} from '@mui/material';
-
-
 
 const ListOfReferences = ({
     className,

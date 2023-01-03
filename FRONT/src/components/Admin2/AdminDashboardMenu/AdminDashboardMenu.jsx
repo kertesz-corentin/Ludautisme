@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {Button} from '@mui/material';
 
 const AdminDashboardMenu = ({title, buttons, searchbar}) => {
-    const { details, users } = useSelector(state => state); //Redux state 
+    const { users } = useSelector(state => state); //Redux state 
 
     const handleNewElement = (params) => {
         console.log(params.submitAction,actions);

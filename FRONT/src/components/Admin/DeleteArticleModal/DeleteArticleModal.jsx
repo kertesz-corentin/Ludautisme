@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import materiel ui components
-import { IconButton, Modal, Typography, Box, Button, TextField, Alert } from '@mui/material';
+import { IconButton, Modal, Typography, Box, Button, Alert } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 

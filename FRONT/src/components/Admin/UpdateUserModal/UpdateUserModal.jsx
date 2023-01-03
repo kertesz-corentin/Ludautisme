@@ -9,7 +9,7 @@ import api from '../../../requests';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, IconButton, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';

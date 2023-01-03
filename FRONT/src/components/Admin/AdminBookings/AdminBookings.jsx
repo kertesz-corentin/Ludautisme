@@ -72,7 +72,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const id = Number(params.row.id)
-                                    const response = await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
+                                    await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
                                     await getBookings();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
@@ -88,7 +88,7 @@ const AdminBookings = ({className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const id = Number(params.row.id)
-                                    const response = await api.post(`/admin/booking/deliver/${id}`, {[prop] : !params.value});
+                                    await api.post(`/admin/booking/deliver/${id}`, {[prop] : !params.value});
                                     await getBookings();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}

@@ -3,9 +3,7 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import './resetpwd.scss';
 import { TextField, Box, Button } from '@mui/material';
-import { Typography } from '@mui/material';
 import api from '../../../../requests/index';
-import { useNavigate } from 'react-router';
 import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
 import Logo from '../../../../public/logo.png';
 
@@ -16,7 +14,6 @@ const ResetPassword = ({ className, ...rest }) => {
     const [severity, setSeverity] = React.useState();
 
     const [passwordValue] = useState();
-    const navigate = useNavigate();
     const { token } = useParams();
 
     const handleSubmit = async (event) => {

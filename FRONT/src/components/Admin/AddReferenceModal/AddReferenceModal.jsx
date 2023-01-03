@@ -18,35 +18,6 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState('');
 
-    const [mainCat, setMainCat] = useState(false);
-
-    const [alertMessage, setAlertMessage] = useState();
-
-    const handleMainCatCheck = (event) => {
-        setMainCat(event.target.checked)
-    }
-
-    const AddNewCategory = async (event) => {
-        const data = new FormData(event.currentTarget);
-
-        const addedCategory = {
-            'name': data.get('name'),
-            'description': data.get('description'),
-            'main': mainCat,
-        }
-
-        console.log('addedCategory', addedCategory);
-
-        const response = await api.post('/admin/categorie', addedCategory)
-        const newCategory = await response.data;
-        if(response.status === 200) {
-            setCategory(state => [...state, newCategory[0]]);
-        }
-        else {
-            setAlertMessage(response.data.message);
-        }
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

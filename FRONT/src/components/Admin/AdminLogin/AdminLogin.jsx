@@ -19,14 +19,11 @@ import './adminlogin.scss';
 const theme = createTheme();
 export default function SignIn() {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
 
     const [alertMessage, setAlertMessage] = useState();
-    const [severity, setSeverity] = React.useState();
+    const [severity, setSeverity] = useState();
 
-    const onToggleOpen = () => {
-        setIsOpen(!isOpen)
-    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -35,7 +32,7 @@ export default function SignIn() {
         const password = data.get('password');
         try {
             const response = await api.login(email, password);
-            console.log(response);
+            
             if (response.status === 200) {
                 navigate('/admin/home');
             } else {
@@ -45,21 +42,10 @@ export default function SignIn() {
             return response
         }
         catch (err) {
+            setSeverity("error");
             setAlertMessage(err.response.data.message);
-            console.error(err.response)
         }
     }
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
 
     return (
 
@@ -82,9 +68,10 @@ export default function SignIn() {
                         <Typography component="h1" variant="h5">
                             Se connecter
                         </Typography>
-                        {alertMessage && (
+                        {alertMessage && severity (
                             <AlertMessage
                                 message={alertMessage}
+                                severity={severity}
                             >
                             </AlertMessage>
                         )}

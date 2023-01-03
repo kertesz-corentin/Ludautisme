@@ -48,9 +48,8 @@ const api = {
     },
     async delete(path, data) {
         try {
-        console.log(path,data);
         return (!data) ? await connection.delete(path, { headers: authHeader() })
-                      : await connection.delete(path, {data}, { headers: authHeader() });
+                      : await connection.delete(path, { headers: authHeader(), data });
         } catch (err) {
             return err
         }
@@ -70,7 +69,6 @@ const api = {
                     role:response.data.role,
                     token: response.data.token
                 }
-                console.log("user logged:",user);
                 localStorage.setItem("user",JSON.stringify(user));
             }
             return response;
