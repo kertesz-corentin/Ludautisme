@@ -12,13 +12,18 @@ module.exports = {
             refId,
             main,
         } = req.body;
-        // I create the correct url for the front
-        const oldUrl = req.file.path.split('/');
-        const filteredUrl = oldUrl.filter((value) => value !== 'FRONT');
-        const url = filteredUrl.join('/');
+        // now url is not required title is use as this place
+        const urlArray = req.file.path.split('\\');
+        const url = urlArray[urlArray.length - 1];
+
+        // delete extension from picture name
+        const titleArray = title.split('.');
+        titleArray.pop();
+        const cleanTitle = titleArray.join(' ');
+
         const obj = {
             url,
-            title,
+            title: cleanTitle,
             alternative_text: description,
             main,
         };
@@ -51,7 +56,6 @@ module.exports = {
         const arrayUrl = picture[0].url.split('\\');
         const name = arrayUrl[arrayUrl.length - 1];
         const path = `${process.env.IMAGE_CATALOG_FOLDER}/${name}`;
-        console.log(path);
         // try to remove the picture
         try {
             fs.unlink(path, (async (err) => {

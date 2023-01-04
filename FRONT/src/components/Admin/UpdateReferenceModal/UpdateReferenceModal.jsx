@@ -24,7 +24,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
         setSeverity(null);
         setAlertMessage(null);
         setOpen(false);
-    } 
+    }
     const [category, setCategory] = useState(params.row.id_maincat);
     const [picture, setPicture] = useState([]);
     const [currentPicture, setCurrentPicture] = useState();
@@ -46,10 +46,10 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             handleClose();
         }
     }
- 
+
     const handleDelete = async (event) => {
         let deleteResponse = await api.delete(`/admin/picture/${currentPicture}`);
-        console.log(deleteResponse);
+
         if (deleteResponse.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
             setPicture(pictureResponse.data);
@@ -60,8 +60,37 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             setSeverity("error");
             setAlertMessage(`${deleteResponse.data.message}`);
         }
-        
+
     }
+    const handleUpload = async ({ target }) => {
+        let file = target.files[0];
+
+        if (file) {
+            try {
+                const formData = new FormData();
+                formData.append("picture", file);
+                formData.append("refId", params.row.id);
+                formData.append("main", false);
+                formData.append("title", file.name);
+                formData.append("description", "");
+
+                let response = await api.post('/admin/picture', formData, true);
+                if (response.status === 200) {
+                    let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
+                    setPicture(pictureResponse.data);
+
+                    setSeverity("success");
+                    setAlertMessage("Image ajouté");
+                } else {
+                    setSeverity("error");
+                    setAlertMessage(`${response.data.message}`);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
     const handleSwipperChange = (event) => {
         setCurrentPicture(event);
     }
@@ -92,12 +121,12 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                             <CloseIcon />
                         </Button>
                     </div>
-                        <ReferenceSwiper
-                            refId={params.row.id}
-                            pictures={picture}
-                            gridSize={400}
-                            setCurrentPicture= {handleSwipperChange}
-                        />
+                    <ReferenceSwiper
+                        refId={params.row.id}
+                        pictures={picture}
+                        gridSize={400}
+                        setCurrentPicture={handleSwipperChange}
+                    />
                     <div className="updatereference-modal-inputs">
                         <Button
                             className="updatereference-modal-footer-submit"
@@ -106,6 +135,25 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                         >
                             supprimer
                         </Button>
+                        <input
+                            accept=".jpg,.jpeg,.png, .webp"
+                            className="updatereference-modal-footer-submit"
+                            style={{ display: 'none' }}
+                            id="raised-button-file"
+                            multiple
+                            type="file"
+                            onChange={handleUpload}
+                        />
+                        <label htmlFor="raised-button-file">
+                            <Button
+                                variant="contained"
+                                component="span"
+                                className="updatereference-modal-footer-submit">
+                                Ajouter
+                            </Button>
+                        </label>
+                    </div>
+                    <div>
                         {alertMessage && severity && (
                             <AlertMessage
                                 message={alertMessage}

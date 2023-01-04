@@ -25,9 +25,10 @@ const api = {
             return err.response
         }
     },
-    async post(path, data) {
+    async post(path, data, multipart = false) {
         try {
-        return await connection.post(path, data, { headers: authHeader() });
+        let headers = multipart ? { headers: authHeader(), "Content-Type": "multipart/form-data" } : { headers: authHeader() }
+        return await connection.post(path, data, headers);
         } catch (err) {
             return err.response
         }
