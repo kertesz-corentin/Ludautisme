@@ -13,7 +13,7 @@ module.exports = {
             main,
         } = req.body;
         // now url is not required title is use as this place
-        const urlArray = req.file.path.split('\\');
+        const urlArray = req.file.path.split('/');
         const url = urlArray[urlArray.length - 1];
 
         // delete extension from picture name
