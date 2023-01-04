@@ -30,7 +30,7 @@ module.exports = {
         // I create the picture
         const picture = await pictureDataMapper.addPicture(obj);
         if (!picture[0].id) {
-            throw new ApiError(500, `erreur: ${picture[0].message}`);
+            throw new ApiError(500, `erreur picture: ${picture[0].message}`);
         }
         // If the picture is the main picture, pass the other images in secondary
         if (main === 'true') {
@@ -45,7 +45,7 @@ module.exports = {
         if (!result[0]) {
             res.json(picture).status(201);
         } else {
-            throw new ApiError(500, `erreur: ${result[0].message}`);
+            throw new ApiError(500, `erreur relation: ${result[0].message}`);
         }
     },
     async deletePicture(req, res) {
