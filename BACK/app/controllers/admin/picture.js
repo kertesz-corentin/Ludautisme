@@ -29,6 +29,9 @@ module.exports = {
         };
         // I create the picture
         const picture = await pictureDataMapper.addPicture(obj);
+        if (!picture[0].id) {
+            throw new ApiError(500, `erreur: ${picture[0].message}`);
+        }
         // If the picture is the main picture, pass the other images in secondary
         if (main === 'true') {
             const secondary = await pictureDataMapper.passSecondary(refId, picture[0].id);
