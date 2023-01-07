@@ -13,6 +13,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Grid, Link } from '@mui/material';
 import { useNavigate } from 'react-router';
 import api from '../../../requests/index';
+import RecoverPasswordModal from '../../Front-Office/User/RecoverPasswordModal/RecoverPasswordModal';
 
 import './adminlogin.scss';
 
@@ -22,6 +23,7 @@ export default function SignIn() {
 
     const [alertMessage, setAlertMessage] = useState();
     const [severity, setSeverity] = useState();
+    const [recover, setRecover] = useState(true);
 
 
     const handleSubmit = async (event) => {
@@ -32,7 +34,7 @@ export default function SignIn() {
         const password = data.get('password');
         try {
             const response = await api.login(email, password);
-            
+
             if (response.status === 200) {
                 navigate('/admin/home');
             } else {
@@ -45,6 +47,10 @@ export default function SignIn() {
             setSeverity("error");
             setAlertMessage(err.response.data.message);
         }
+    }
+
+    const handleRecover = () => {
+        setRecover(!recover);
     }
 
     return (
@@ -68,7 +74,7 @@ export default function SignIn() {
                         <Typography component="h1" variant="h5">
                             Se connecter
                         </Typography>
-                        {alertMessage && severity (
+                        {alertMessage && (
                             <AlertMessage
                                 message={alertMessage}
                                 severity={severity}
@@ -106,17 +112,23 @@ export default function SignIn() {
                             >
                                 Se connecter
                             </Button>
+
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Mot de passe oublié
-                                    </Link>
+                                    <Button variant="outlined" onClick={handleRecover}>
+                                        Mot de Passe oublié
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Box>
                     </Box>
                 </Container>
             </ThemeProvider>
+            <>
+                {!recover && (
+                    <RecoverPasswordModal/>
+                )}
+            </>
         </div>
     );
 }
