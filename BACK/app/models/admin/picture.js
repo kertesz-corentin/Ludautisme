@@ -63,9 +63,8 @@ module.exports = {
             SET "main" = false
             FROM "image"
             JOIN "reference_to_image" AS rti ON rti."id_image" = "image"."id"
-            WHERE rti."id_ref" = $1
-            AND img."id" != $2`,
-            [refId, id],
+            WHERE rti."id_ref" = $1`,
+            [refId],
         );
         return result.rows;
     },
@@ -76,7 +75,9 @@ module.exports = {
     },
     async getById(id) {
         const result = await sqlHandler(`SELECT * FROM "image"
-                                        WHERE "id" = $1`, [id]);
+                                        LEFT JOIN "reference_to_image" AS rti 
+                                        ON "id_image" = "image"."id" 
+                                        WHERE "image"."id" = $1`, [id]);
         return result.rows;
     },
     async getForOneRef(id) {

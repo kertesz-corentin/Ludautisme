@@ -60,7 +60,6 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             setSeverity("error");
             setAlertMessage(`${deleteResponse.data.message}`);
         }
-
     }
     const handleUpload = async ({ target }) => {
         let file = target.files[0];
@@ -88,6 +87,23 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             } catch (err) {
                 console.error(err);
             }
+        }
+    }
+
+    const handleMain = async () => {
+        let obj = { main: true };
+
+        const response = await api.put(`/admin/picture/${currentPicture}`, obj);
+        console.log(response);
+        if (response.status === 200) {
+            let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
+            setPicture(pictureResponse.data);
+
+            setSeverity("success");
+            setAlertMessage("Image principale changé");
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
         }
     }
 
@@ -152,6 +168,13 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                                 Ajouter
                             </Button>
                         </label>
+                        <Button
+                            className="updatereference-modal-footer-submit"
+                            variant="contained"
+                            onClick={handleMain}
+                        >
+                            photo principale
+                        </Button>
                     </div>
                     <div>
                         {alertMessage && severity && (

@@ -24,7 +24,7 @@ const AdminHome = ({isLogged, className, ...rest}) => {
             setBookings(data.length);
         }
         else {
-            console.log(response.data)
+            console.error(response.data)
         }
     }
 
@@ -35,7 +35,7 @@ const AdminHome = ({isLogged, className, ...rest}) => {
             setOverdueBookings(data.length);
         }
         else {
-            console.log(response.data)
+            console.error(response.data)
         }
     }
 
@@ -46,7 +46,7 @@ const AdminHome = ({isLogged, className, ...rest}) => {
             setUsers(data.length);
         }
         else {
-            console.log(response.data)
+            console.error(response.data)
         }
     }
 
@@ -57,11 +57,9 @@ const AdminHome = ({isLogged, className, ...rest}) => {
             setReferences(data.length);
         }
         else {
-            console.log(response.data)
+            console.error(response.data)
         }
     }
-
-    console.log('bookings', bookings);
 
     useEffect(() => {
         allBookings();

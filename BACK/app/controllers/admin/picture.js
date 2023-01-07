@@ -86,18 +86,23 @@ module.exports = {
         if (picture.length < 1) {
             throw new ApiError(404, 'L\'image demandé n\'existe pas');
         }
+        const obj = {};
         // If image is main, i pass other picture of this reference secondary
-        if (main && main === 'true') {
-            const secondary = await pictureDataMapper.passSecondary(picture[0].id_ref, id);
+        if (main && main === true) {
+            const secondary = await pictureDataMapper.passSecondary(picture[0].id_ref);
             if (secondary[0]) {
                 throw new ApiError(500, `erreur: ${secondary[0].message}`);
+            } else {
+                obj.main = main;
             }
         }
-        const obj = {
-            title,
-            alternative_text: description,
-            main,
-        };
+        if (title) {
+            obj.title = title;
+        }
+        if (description) {
+            obj.alternative_text = description;
+        }
+
         const newPicture = await pictureDataMapper.update(id, obj);
         res.json(newPicture);
     },
