@@ -65,7 +65,6 @@ export const initEndpoints = (builder) =>{
            
             // if (   typeof endpointLib[endpointName] === 'function'  //Si ok on les ajoute a endpoints
             //     && typeof endpointLib[endpointName]() === 'string'){
-                console.log(buildRequest(endpointLib[endpointName]));
                 endpoints = {...endpoints, ...{[endpointName] : buildRequest(endpointLib[endpointName])} };
             // }
             //Sinon on retourne une erreur
@@ -75,7 +74,6 @@ export const initEndpoints = (builder) =>{
         })
         .filter(elt => elt); // Filtre Object.keys().map pour supprimer les undefined retourné si requete ok
     });
-    console.log('endpoints',endpoints);
     (errors.length) && console.error('Redux[RequestError] :',errors.flat());
     return endpoints
 }

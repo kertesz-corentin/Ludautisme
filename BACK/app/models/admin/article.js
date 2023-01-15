@@ -29,6 +29,8 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} origin - The origin of the object
  * @property {string} date_buy - Date of purchase of object
  * @property {number} id_ref - ID of the parent reference
+ * @property {boolean} available - if article is available for borrow
+ * @property {boolean} archived - if article is archived
  */
 module.exports = {
     async findAll() {

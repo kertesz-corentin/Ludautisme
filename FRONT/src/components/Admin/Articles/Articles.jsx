@@ -6,24 +6,63 @@ import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../../Schemas';
 import { ToggleButton } from '@mui/material';
 import api from '../../../requests';
+import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
-const Articles = ({params, children, name, className, ...rest}) => {
+const Articles = ({ params, children, name, className, ...rest }) => {
 
     const [articles, setArticles] = useState([]);
+    const [alertMessage, setAlertMessage] = React.useState();
+    const [severity, setSeverity] = React.useState();
 
     const getReferenceWithArticles = async () => {
         try {
 
             const settings = {
-                "id_ref":params.row.id,
+                "id_ref": params.row.id,
             }
-            const response = await api.post(`/admin/articles/search`,settings);
-            const data = await response.data;
+            const response = await api.post(`/admin/articles/search`, settings);
 
-            setArticles(data);
+            setArticles(response.data);
         }
         catch (err) {
             console.error(err);
+        }
+    }
+
+    const handleToogle = async (artcileId, value, prop) => {
+        // toggle boolean value 
+        value = value ? false : true;
+
+        let response = null;
+        switch (prop) {
+            case "available":
+                // if value if true, delete article from his actual booking, otherwise just update is available value 
+                if (value) {
+                    response = await api.post(`/admin/booking/return/${artcileId}`);
+                } else {
+                    let option = {
+                        "available": value
+                    }
+                    response = await api.put(`/admin/articles/${artcileId}`, option);
+                }
+                break;
+            case "archived":
+                // for archived prop only update article 
+                let option = {
+                    "archived": value
+                }
+                response = await api.put(`/admin/articles/${artcileId}`, option);
+                break;
+            default:
+                break;
+        }
+
+        if (response.status === 200) {
+            getReferenceWithArticles();
+
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
         }
     }
 
@@ -35,28 +74,28 @@ const Articles = ({params, children, name, className, ...rest}) => {
         const columns = [];
         Object.keys(articleSchema).forEach(prop => {
             const propElt = articleSchema[prop];
+
             const config = {
                 type: propElt.type,
                 field: prop,
                 headerName: propElt.label,
                 width: propElt.width,
             }
-            if(propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "toggle":
                         config.renderCell = (params) => (
                             <ToggleButton
-                                value={params.value}
+                                value={params.value} P
                                 selected={params.value}
-                                onChange={async () => {
-                                    const newData = await getReferenceWithArticles();
-                                    setArticles(newData.data);
+                                onChange={() => {
+                                    handleToogle(params.row.number, params.value, params.field);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
-                    );
+                        );
                         break;
                     default:
                         break;
@@ -67,16 +106,16 @@ const Articles = ({params, children, name, className, ...rest}) => {
         return columns;
     })();
 
-   return (
-       <section
+    return (
+        <section
             className={classnames('articles', className)}
             {...rest}
-         >
+        >
             <div>
                 <h2>Liste des articles</h2>
             </div>
             {children}
-            <div className="articles-grid" style={{ height: 300, width: '100%'}}>
+            <div className="articles-grid" style={{ height: 300, width: '100%' }}>
                 <DataGrid
                     getRowId={(row) => row.id}
                     rows={articles}
@@ -109,14 +148,23 @@ const Articles = ({params, children, name, className, ...rest}) => {
                             },
                         },
                         sorting: {
-                            sortModel: [{field: 'number', sort: 'asc'}],
+                            sortModel: [{ field: 'number', sort: 'asc' }],
                         }
                     }}
                 >
                 </DataGrid>
+                <div>
+                    {alertMessage && severity && (
+                        <AlertMessage
+                            message={alertMessage}
+                            severity={severity}
+                        >
+                        </AlertMessage>
+                    )}
+                </div>
             </div>
         </section>
-   );
+    );
 };
 
 Articles.propTypes = {

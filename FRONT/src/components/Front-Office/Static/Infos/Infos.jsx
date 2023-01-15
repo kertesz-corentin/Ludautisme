@@ -30,7 +30,7 @@ const Infos = ({className, ...rest}) => {
         <div className="infos-header">
                 <img src={PhotoLudo} alt="local lud'autisme"/>
             <div className="infos-header-adresse">
-                <p>
+                <div>
                     <h2>
                         <img src={Epingler} alt="permanence" />
                         Venir aux permanences
@@ -41,8 +41,8 @@ const Infos = ({className, ...rest}) => {
                     </strong>
                     Place François Mitterrand<br />
                     29800 Landerneau<br />
-                </p>
-                <p>
+                </div>
+                <div>
                     <h2>
                         <img src={Lettre} alt="lettre" />
                         Nous contacter
@@ -52,7 +52,7 @@ const Infos = ({className, ...rest}) => {
                     29800 Landerneau<br />
                     06 72 63 38 77 - 09 51 85 03 55<br />
                     <a href="#contact">ludautisme@gmail.com</a>
-                </p>
+                </div>
             </div>
 
             <div className="infos-header-permap">
@@ -74,12 +74,8 @@ const Infos = ({className, ...rest}) => {
                 <div className='become-body'>
                     <p className='become-body-description'>
                         L'adhésion se fait sur place, au local de l'association. <br />
-
                         Consultez et téléchargez les documents relatifs ici: <br />
-
                     </p>
-
-
                         <ul className='become-body-list'>
                             {pdf.map((item, index) => (
                                 <InfosPdf

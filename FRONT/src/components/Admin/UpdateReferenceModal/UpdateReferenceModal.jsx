@@ -94,7 +94,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
         let obj = { main: true };
 
         const response = await api.put(`/admin/picture/${currentPicture}`, obj);
-        console.log(response);
+        
         if (response.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
             setPicture(pictureResponse.data);

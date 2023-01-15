@@ -32,7 +32,7 @@ const LazyImage = ({ src, alt, gridSize }) => {
 
 LazyImage.propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired
+  alt: PropTypes.string
 };
 
 export default LazyImage;

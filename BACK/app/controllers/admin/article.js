@@ -56,7 +56,7 @@ module.exports = {
         const id = [{ id: req.params.id }];
         const article = await articleDataMapper.findFiltered(id);
         if (article.length < 1) {
-            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+            throw new ApiError(404, 'Cet article n\'existe pas');
         }
         const updatedUser = await articleDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);

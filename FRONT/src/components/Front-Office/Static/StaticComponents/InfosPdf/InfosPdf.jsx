@@ -49,7 +49,7 @@ const AboutPdf = ({
     )
     }
     AboutPdf.propTypes = {
-        title: PropTypes.number,
+        title: PropTypes.string,
         year: PropTypes.string,
         link: PropTypes.string,
         alt: PropTypes.string,

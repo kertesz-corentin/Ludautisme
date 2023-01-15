@@ -46,7 +46,7 @@ const About = ({ className, ...rest }) => {
                             <h2 className='about-title'>Autisme mais pas que...</h2>
                             <div className='everybody-content'>
                                 <p> Notre association s'adresse à toutes les personnes ayant des besoins spécifiques.</p>
-                                <img class='wordcloud' src={'./pictures/wordcloud.png'} alt="accompagner" />
+                                <img className='wordcloud' src={'./pictures/wordcloud.png'} alt="accompagner" />
                             </div>
                         </div>
                     </div>
