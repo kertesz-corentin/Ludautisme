@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updatebookingmodal.scss';
 
-const UpdateBookingModal = ({params, className, ...rest}) => {
+const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -33,6 +33,7 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         handleClose();
         // const data = new FormData(event.currentTarget);
 
@@ -51,12 +52,10 @@ const UpdateBookingModal = ({params, className, ...rest}) => {
     }
 
      const handleDelete = async () => {
-        console.log('handleDelete',params.row.id);
         const response = await api.delete(`/admin/booking/${params.row.id}`);
-        console.log(response);
         if(response.status === 200) {
+            getBookings();
             handleClose();
-            window.location.reload();
         } else {
             setAlertMessage(response.statusText);
             setTimeout(()=>{setAlertMessage()},2000);

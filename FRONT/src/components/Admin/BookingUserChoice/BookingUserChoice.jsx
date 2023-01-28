@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
-import { Button, Box, TextField } from '@mui/material';
+import { Button, Box, TextField, Switch, FormControlLabel } from '@mui/material';
 import AddBookingModal from '../AddBookingModal/AddBookingModal';
 import classnames from 'classnames';
 import './bookinguserchoice.scss';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
-const BookingUserChoice = ({articles, params, className, ...rest}) => {
+const BookingUserChoice = ({ articles, params, className, setHistory, checked, getBookings, ...rest }) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
     const [value, setValue] = useState('');
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
+    
 
 
     const handleSearch = () => setSearch(true);
@@ -24,10 +25,10 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
         const data = new FormData(event.currentTarget);
         const memberNumber = Number(data.get('member_number'));
 
-        const response = await api.post('admin/users/search', {member_number: `${memberNumber}`})
+        const response = await api.post('admin/users/search', { member_number: `${memberNumber}` })
         const searchUser = await response.data;
 
-        if(response.status === 200) {
+        if (response.status === 200) {
             setUser(searchUser);
             setUserExist(true);
         } else {
@@ -37,53 +38,61 @@ const BookingUserChoice = ({articles, params, className, ...rest}) => {
     }
 
     const handleChange = (event) => {
-        console.log(event.target.value)
         setValue(event.target.value)
         setUserExist(false);
     }
+
+    const handleSwitchHistory = (event) => {
+        setHistory(event.target.checked);
+        getBookings();
+    };
 
     return (
         <div
             className={classnames('booking', className)}
             {...rest}
         >
-            <Button onClick={handleSearch} variant='outlined'>Ajouter réservation</Button>
-            {alertMessage && severity && (
+            <div className={classnames('booking-button', className)}>
+                <Button onClick={handleSearch} variant='outlined'>Ajouter réservation</Button>
+
+                {alertMessage && severity && (
                     <AlertMessage
                         message={alertMessage}
                         severity={severity}
                     >
                     </AlertMessage>
                 )}
-            <Box className='booking-search' component="form" onSubmit={handleSubmit}>
-                {search && (
-                    <TextField
-                        id='outlined'
-                        label='n° Adhérent'
-                        name='member_number'
-                        type='number'
-                        value={value}
-                        onChange={handleChange}
-                        className="booking-search-element"
-                    >
-                    </TextField>
-                )}
+                <Box className='booking-search' component="form" onSubmit={handleSubmit}>
+                    {search && (
+                        <TextField
+                            id='outlined'
+                            label='n° Adhérent'
+                            name='member_number'
+                            type='number'
+                            value={value}
+                            onChange={handleChange}
+                            className="booking-search-element"
+                        >
+                        </TextField>
+                    )}
 
-                {!userExist && search &&(
-                    <Button
-                    type='submit'
-                    className="booking-search-element"
-                    variant="outlined"
-                    >
-                        Valider
-                    </Button>
-                )}
+                    {!userExist && search && (
+                        <Button
+                            type='submit'
+                            className="booking-search-element"
+                            variant="outlined"
+                        >
+                            Valider
+                        </Button>
+                    )}
 
-                {userExist && search && (
-                        <AddBookingModal user={user} params={params} />
-                )}
+                    {userExist && search && (
+                        <AddBookingModal user={user} params={params} getBookings={getBookings} />
+                    )}
 
-            </Box>
+                </Box>
+            </div>
+            <FormControlLabel control={<Switch checked={checked} onChange={handleSwitchHistory} inputProps={{ 'aria-label': 'controlled' }} />} label="Historique complet" />
         </div>
     );
 };

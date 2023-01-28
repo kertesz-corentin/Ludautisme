@@ -19,22 +19,23 @@ import { GridCheckIcon } from '@mui/x-data-grid';
 
 import './adminbookings.scss';
 
-const AdminBookings = ({className, ...rest}) => {
+const AdminBookings = ({ className, ...rest }) => {
     const [bookings, setBookings] = useState([]);
+    const [history, setHistory] = React.useState(false);
 
     const [alertMessage, setAlertMessage] = useState();
 
-    const getBookings = async() => {
+    const getBookings = async () => {
         try {
-            const response = await api.get('/admin/booking');
+            const response = history ? await api.get('/admin/booking/ligth') : await  api.get('/admin/booking');
             const data = await response.data;
-            if(response.status === 200){
+            if (response.status === 200) {
                 setBookings(data);
             }
         }
         catch (err) {
             setAlertMessage(err.response.data.message);
-            console.error (err);
+            console.error(err);
         }
     }
 
@@ -53,18 +54,18 @@ const AdminBookings = ({className, ...rest}) => {
                 width: propElt.width,
             };
 
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "edit":
                         config.renderCell = (params) => (
                             <IconButton
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateBookingModal params={params} />
+                                <UpdateBookingModal params={params} getBookings={getBookings} />
                             </IconButton>
                         );
-                    break;
+                        break;
                     case "closed":
                         config.renderCell = (params) => (
                             <ToggleButton
@@ -72,15 +73,15 @@ const AdminBookings = ({className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const id = Number(params.row.id)
-                                    await api.post(`/admin/booking/close/${id}`, {[prop] : !params.value});
+                                    await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
                                     await getBookings();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
-                    );
-                    break;
+                        );
+                        break;
                     case "delivered":
                         config.renderCell = (params) => (
                             <ToggleButton
@@ -88,20 +89,20 @@ const AdminBookings = ({className, ...rest}) => {
                                 selected={params.value}
                                 onChange={async () => {
                                     const id = Number(params.row.id)
-                                    await api.post(`/admin/booking/deliver/${id}`, {[prop] : !params.value});
+                                    await api.post(`/admin/booking/deliver/${id}`, { [prop]: !params.value });
                                     await getBookings();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
-                    );
-                    break;
+                        );
+                        break;
                     case "date":
                         config.renderCell = (params) => (
                             moment(params.value).format('DD/MM/YYYY')
                         );
-                    break;
+                        break;
                     default:
                         break;
                 }
@@ -133,10 +134,13 @@ const AdminBookings = ({className, ...rest}) => {
                         },
                     },
                     sorting: {
-                        sortModel: [{field: 'id', sort: 'asc'}],
+                        sortModel: [{ field: 'id', sort: 'asc' }],
                     }
                 }}
-                children={<BookingUserChoice />}
+                children={<BookingUserChoice
+                    setHistory={setHistory}
+                    checked={history}
+                    getBookings = {getBookings} />}
             />
         </div>
     );

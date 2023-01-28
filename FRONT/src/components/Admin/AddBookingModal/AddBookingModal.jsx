@@ -16,7 +16,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({ user, className, ...rest }) => {
+const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
     const [open, setOpen] = useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
@@ -40,6 +40,7 @@ const AddBookingModal = ({ user, className, ...rest }) => {
         if (response.status === 200) {
             setSeverity("success");
             setAlertMessage("Réservation réussi");
+            getBookings();
             setTimeout(() => {handleClose()}, 5000);
         } else {
             setSeverity("error");

@@ -117,6 +117,56 @@ module.exports = {
         const result = await sqlHandler(query);
         return result.rows;
     },
+    async findTwoYearsLater() {
+        const query = `
+        WITH booking_full AS(
+			SELECT
+            b.id,
+            b.delivered,
+            b.closed,
+            b.id_permanency,
+            "user"."id" AS id_user,
+        	"user"."member_number" AS member_number,
+            "user"."first_name",
+            "user"."last_name",
+        	"user"."email",
+            "perm"."perm_date" AS date_permanency,
+        	"perm"."next_id" AS return_id_permanency,
+        	"perm"."next_date" AS return_date_permanency,
+            "perm"."active" AS active_permanency,
+        	(perm."next_date" < CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
+            json_agg(json_build_object (
+                'id', borrowed."id",
+                'number', borrowed."number",
+                'available', borrowed."available",
+                'archived', borrowed."archived",
+				'id_ref', "reference"."id",
+				'name_ref', "reference"."name",
+				'description_ref', "reference"."description"
+                )) AS "borrowed_articles"
+        FROM "booking" AS b
+	    INNER JOIN "full_perm" AS perm ON "perm"."id" = "b"."id_permanency"
+        INNER JOIN "user" ON "user"."id"="b"."id_user"
+        LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
+        LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
+        INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
+        WHERE "perm"."perm_date" BETWEEN NOW()-INTERVAL '2 YEARS' AND NOW ()
+		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                ,"user"."id"
+                ,"user"."member_number"
+                ,"user"."first_name"
+                ,"user"."last_name"
+                ,"user"."email"
+                ,"perm"."perm_date"
+                ,"perm"."next_id"
+                ,"perm"."next_date"
+                ,"perm"."active"
+        )
+        SELECT *
+        FROM booking_full`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
     async findFiltered(arr) {
         let query = `
         WITH booking_full AS(

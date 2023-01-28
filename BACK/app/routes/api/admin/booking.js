@@ -49,6 +49,15 @@ router.route('/article/:id')
  */
 router.route('/return/:id')
     .post(controllerHandler(bookingController.returnArticle));
+
+/**
+ * GET /api/admin/booking/ligth
+ * @summary Get detailled booking of two past years
+ * @tags [ADMIN] Booking
+ *@return {booking} 200 - success response - application/json
+ */
+router.route('/ligth')
+    .get(controllerHandler(bookingController.twoYearsBooking));
 /**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
@@ -87,6 +96,7 @@ router.route('/:id')
  */
 router.route('/add/:UserId')
     .post(controllerHandler(bookingController.addBookingByArticle));
+
 /**
  * POST /api/admin/booking/search
  * @summary Get detailed booking with details
@@ -101,9 +111,9 @@ router.route('/search')
  * GET /api/admin/booking
  * @summary Get all detailed booking
  * @tags [ADMIN] Booking
- * @param {paramSearch} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
+
 router.route('/')
     .get(controllerHandler(bookingController.getAll));
 router.use(() => {

@@ -10,12 +10,17 @@ module.exports = {
         res.json(booking);
     },
 
+    async twoYearsBooking(_, res) {
+        const booking = await bookingDataMapper.findTwoYearsLater();
+        res.json(booking);
+    },
+
     async getFiltered(req, res) {
         // Avoid injection on column
         const columns = [
             'id', 'delivered', 'closed',
             'id_permanency', 'date_permanency', 'active_permanency',
-            'id_user', 'email', 'first_name', 'last_name', 'member_number'];
+            'id_user', 'email', 'first_name', 'last_name', 'member_number', 'overdue'];
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
