@@ -16,7 +16,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
+const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
     const [open, setOpen] = useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
@@ -43,10 +43,36 @@ const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
             setSeverity("success");
             setAlertMessage("Réservation réussi");
             getBookings();
-            setTimeout(() => {handleClose()}, 5000);
+            setTimeout(() => { handleClose() }, 5000);
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
+        }
+    }
+
+    const handleDeliveredBooking = async (event) => {
+        event.preventDefault();
+
+        const listIds = {
+            "artIds": articleId
+        }
+
+        const booking = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
+
+        if (booking.status === 200) {
+            const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
+            if (response.status === 200) {
+                setSeverity("success");
+                setAlertMessage("Réservation réussi");
+                getBookings();
+                setTimeout(() => { handleClose() }, 5000);
+            } else {
+                setSeverity("error");
+                setAlertMessage(`${response.data.message}`);
+            }
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${booking.data.message}`);
         }
 
     }
@@ -250,14 +276,25 @@ const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
                             >
                             </AlertMessage>
                         )}
-                        <Button
-                            onClick={handleSubmitBooking}
-                            className="addbook-modal-footer-submit"
-                            variant='outlined'
-                            color='primary'
-                        >
-                            Valider la réservation
-                        </Button>
+                        <div className="addbook-modal-footer-button">
+                            <Button
+                                onClick={handleSubmitBooking}
+                                className="addbook-modal-footer-submit"
+                                variant='outlined'
+                                color='primary'
+                            >
+                                Valider
+                            </Button>
+                            <Button
+                                onClick={handleDeliveredBooking}
+                                className="addbook-modal-footer-submit"
+                                variant='outlined'
+                                color='success'
+                            >
+                                Valider et délivrer
+                            </Button>
+                        </div>
+
                     </div>
                 </Box>
             </Modal>
