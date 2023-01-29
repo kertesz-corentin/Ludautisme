@@ -21,13 +21,19 @@ import './adminbookings.scss';
 
 const AdminBookings = ({ className, ...rest }) => {
     const [bookings, setBookings] = useState([]);
-    const [history, setHistory] = React.useState(false);
+    const [history, setHistory] = useState(false);
 
     const [alertMessage, setAlertMessage] = useState();
 
     const getBookings = async () => {
         try {
-            const response = history ? await api.get('/admin/booking/ligth') : await  api.get('/admin/booking');
+            let response = null;
+            if(!bookings.length) {
+                response = await api.get('/admin/booking/ligth');
+            } else {
+                response = history ? await api.get('/admin/booking/ligth') : await  api.get('/admin/booking');
+            }
+            
             const data = await response.data;
             if (response.status === 200) {
                 setBookings(data);
@@ -35,7 +41,6 @@ const AdminBookings = ({ className, ...rest }) => {
         }
         catch (err) {
             setAlertMessage(err.response.data.message);
-            console.error(err);
         }
     }
 
@@ -68,11 +73,13 @@ const AdminBookings = ({ className, ...rest }) => {
                         break;
                     case "closed":
                         config.renderCell = (params) => (
+
                             <ToggleButton
+                                color= 'success'
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
-                                    const id = Number(params.row.id)
+                                    const id = Number(params.row.id);
                                     await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
                                     await getBookings();
                                 }}
@@ -85,6 +92,7 @@ const AdminBookings = ({ className, ...rest }) => {
                     case "delivered":
                         config.renderCell = (params) => (
                             <ToggleButton
+                                color= 'success'
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
@@ -134,7 +142,7 @@ const AdminBookings = ({ className, ...rest }) => {
                         },
                     },
                     sorting: {
-                        sortModel: [{ field: 'id', sort: 'asc' }],
+                        sortModel: [{ field: 'date_permanency', sort: 'desc' }],
                     }
                 }}
                 children={<BookingUserChoice

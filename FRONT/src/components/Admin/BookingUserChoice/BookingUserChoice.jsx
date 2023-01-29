@@ -15,8 +15,6 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
     
-
-
     const handleSearch = () => setSearch(true);
 
     const handleSubmit = async (event) => {

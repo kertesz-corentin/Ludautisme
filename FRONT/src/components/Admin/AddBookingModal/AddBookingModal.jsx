@@ -30,6 +30,8 @@ const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
     const [articleId, setArticleId] = useState([]);
     const [listArticle, setListArticle] = useState([]);
 
+    const inputRef = React.useRef(null);
+
     const handleSubmitBooking = async (event) => {
         event.preventDefault();
         const listIds = {
@@ -64,6 +66,7 @@ const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
 
         setListArticle(state => [...state, newArticle[0]]);
         setArticleId(state => [...state, newArticle[0].id]);
+        inputRef.current.value = "";
     }
 
     // create a function to delete an article in booking creation
@@ -172,6 +175,7 @@ const AddBookingModal = ({ user, className, getBookings,  ...rest }) => {
                             <Box className='article-search' component="form" onSubmit={handleSubmitSearch}>
                                 <TextField
                                     id='outlined'
+                                    inputRef={inputRef}
                                     label='n° article'
                                     name='number'
                                     type='number'
