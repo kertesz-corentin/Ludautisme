@@ -155,7 +155,7 @@ module.exports = {
     },
     async addToBooking(req, res) {
         const userId = Number(req.params.id);
-        const { articleNumber } = req.body;
+        const { articleNumber, bookingId } = req.body;
 
         if (!articleNumber) {
             throw new ApiError(400, 'La réservation ne peut pas être vide');
@@ -166,16 +166,11 @@ module.exports = {
         if (user[0].name === 'DatabaseError') {
             throw new ApiError(400, 'Cet utilisateur n\'existe pas');
         }
-        const activePerm = await permanencyDataMapper.findActive();
 
-        const getCurrentParams = [
-            { id_permanency: activePerm[0].next_id },
-            { id_user: userId },
-        ];
         //  Check exisiting booking for this permanency
-        const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
+        const bookingExist = await bookingDataMapper.findOne(bookingId);
         if (bookingExist.length !== 1) {
-            throw new ApiError(400, 'Cet utilisateur n\'as pas de réservation ou en a trop');
+            throw new ApiError(400, 'Cette réservation n\'existe pas');
         }
         const article = await articleDataMapper.getArticleAvaibility(articleNumber);
         if (!article) {
@@ -191,7 +186,7 @@ module.exports = {
         const newArticle = [article.id];
         const newArticleBooking = await bookingDataMapper.addArticlesToBooking(bookingExist[0].id, newArticle);
         if (newArticleBooking.name === 'DatabaseError') {
-            throw new ApiError(500, 'Echec de la création de la réservation');
+            throw new ApiError(500, 'Echec de l\'ajout de l\'article');
         }
         await bookingDataMapper.updateArticlesAvailability(newArticle);
         const confirm = {

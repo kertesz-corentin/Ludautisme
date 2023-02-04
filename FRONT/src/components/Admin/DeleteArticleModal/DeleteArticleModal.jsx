@@ -14,21 +14,18 @@ const DeleteArticleModal = ({params, closed, delivered, className, ...rest}) => 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    console.log('idArticle', params.row.id);
-    console.log('article', params.row);
 
     const handleDelete = async () => {
 
         const response = await api.delete(`/admin/booking/article/${params.row.id}`)
         if(response.status === 200){
             handleClose();
-            console.log('article supprimé');
         }
     }
 
     return (
         <div>
-            {!closed && !delivered && (
+            {!closed && (
                 <IconButton onClick={handleOpen}>
                     {/* {`# ${params.value}`} */}
                     <DeleteIcon />
@@ -56,15 +53,6 @@ const DeleteArticleModal = ({params, closed, delivered, className, ...rest}) => 
                             severity="error">
                                 Etes-vous sûr de vouloir supprimer l'article de la liste ?
                         </Alert>
-                        {/* <TextField
-                            id='outlined'
-                            name='name'
-                            type='string'
-                            disabled
-                            defaultValue={params.row.name_ref}
-                            className="delete-modal-inputs-item"
-                        >
-                        </TextField> */}
                     </div>
                     <div className="delete-modal-footer">
                         <Button

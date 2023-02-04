@@ -84,4 +84,8 @@
     align-items: center;
     width: 100%;
     justify-content: space-around;
+
+    & button {
+        margin-left: 1rem;
+    }
 }

@@ -26,6 +26,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
 /**
  * @typedef {object} BookingParam
  * @property {number} articleNumber - Number of concerned article
+ * @property {number} bookingId - Id of conderned booking
  */
 /**
  * @typedef {object} paramSearchBooking

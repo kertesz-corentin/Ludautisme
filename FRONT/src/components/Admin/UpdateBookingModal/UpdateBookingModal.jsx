@@ -11,14 +11,14 @@ import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage'
 import BookingArticles from '../BookingArticles/BookingArticles';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, IconButton, Chip }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Chip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updatebookingmodal.scss';
 
-const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
+const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -27,40 +27,59 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
     const [delivered, setDelivered] = useState(params.row.delivered);
     const [overdue, setOverdue] = useState(params.row.overdue);
 
-    const [articles, setArticles] = useState(params.row.borrowed_articles);
-
     const [alertMessage, setAlertMessage] = useState();
+    const [severity, setSeverity] = useState();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        handleClose();
-        // const data = new FormData(event.currentTarget);
-
-        // const reference = {
-        //     'name': data.get('name'),
-        //     'description': data.get('description'),
-        //     'valorisation': data.get('valorisation'),
-        //     'main_category': data.get('main_category'),
-        // };
-        // console.log('reference', reference)
-        // const response = await api.put(`/admin/references/${params.row.id}`, reference);
-        // if(response.status === 200) {
-        //     handleClose();
-        // }
-        // console.log('response', response);
-    }
-
-     const handleDelete = async () => {
+    const handleDelete = async () => {
         const response = await api.delete(`/admin/booking/${params.row.id}`);
-        if(response.status === 200) {
+        if (response.status === 200) {
             getBookings();
             handleClose();
         } else {
             setAlertMessage(response.statusText);
-            setTimeout(()=>{setAlertMessage()},2000);
+            setSeverity("error");
+            setTimeout(() => { setAlertMessage(); setSeverity() }, 2000);
         }
     }
+
+    const handleAddArticle = async (event) => {
+        event.preventDefault();
+        
+        const data = new FormData(event.currentTarget);
+        const article_number = (data.get('number'));
+
+        // on récupère les données de l'article avant insertion dans le state
+        const settings = {
+            number: article_number
+        }
+        const response = await api.post(`admin/articles/search`, settings)
+        const newArticle = response.data;
+
+        if (response.status !== 200){
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
+        } else if(!newArticle[0].available) {
+            setSeverity("error");
+            setAlertMessage("Article indisponible");
+        } else {
+            const settings = {
+                articleNumber: article_number,
+                bookingId: params.row.id
+            }
+            const addResponse = await api.put(`/admin/booking/article/${params.row.member_number}`, settings);
+
+            if (addResponse.status === 200) {
+                getBookings();
+
+                setSeverity();
+                setAlertMessage();
+            } else {
+                setSeverity("error");
+                setAlertMessage(`${addResponse.data.message}`);
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -72,7 +91,7 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box className="update-modal" component="form" onSubmit={handleSubmit}>
+                <Box className="update-modal">
                     <div className="update-modal-header">
                         <Typography className='update-modal-header-title'>
                             Détails Réservation
@@ -93,7 +112,7 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                             disabled
                             defaultValue={params.row.first_name}
                             className="update-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
 
                         </TextField>
@@ -104,7 +123,7 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                             disabled
                             defaultValue={params.row.last_name}
                             className="update-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                         <TextField
@@ -114,37 +133,37 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                             disabled
                             defaultValue={params.row.email}
                             className="update-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         >
                         </TextField>
                     </div>
                     <div className="update-modal-status">
                         {delivered && (
                             <Chip
-                            variant='contained'
-                            label='Délivrée'
-                            className="update-modal-status--item"
+                                variant='contained'
+                                label='Délivrée'
+                                className="update-modal-status--item"
                             />
                         )}
                         {overdue && (
                             <Chip
-                            variant='contained'
-                            color='secondary'
-                            label='Retard'
-                            className="update-modal-status--item"
+                                variant='contained'
+                                color='secondary'
+                                label='Retard'
+                                className="update-modal-status--item"
                             />
                         )}
                         {closed && (
                             <Chip
-                            variant='contained'
-                            label='Clôturée'
-                            className="update-modal-status--item"
+                                variant='contained'
+                                label='Clôturée'
+                                className="update-modal-status--item"
                             />
                         )}
                     </div>
-                    {!closed && !delivered && (
+                    {!closed && (
                         <div className="updatebook-modal-articles--add">
-                            <Box className='article-search' component="form" onSubmit>
+                            <Box className='article-search' component="form" onSubmit={handleAddArticle}>
                                 <TextField
                                     id='outlined'
                                     label='n° article'
@@ -155,31 +174,31 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                                 </TextField>
 
                                 <Button
-                                type='submit'
-                                className="article-search-submit"
-                                variant="outlined"
+                                    type='submit'
+                                    className="article-search-submit"
+                                    variant="outlined"
                                 >
                                     Ajouter à la liste
                                 </Button>
                             </Box>
                         </div>
                     )}
-                    <div class="update-modal-articles">
+                    <div className="update-modal-articles">
                         <div className="update-modal-articles--book">
-                            <BookingArticles  list={params.row.borrowed_articles} closed={closed} delivered={delivered} />
+                            <BookingArticles list={params.row.borrowed_articles} closed={closed} delivered={delivered} />
                         </div>
                     </div>
                     <div className="update-modal-footer">
-                    {!closed && (
-                        <Button
-                            type='submit'
-                            className="update-modal-footer-submit"
-                            variant="contained"
-                        >
-                            Valider
-                        </Button>
-                    )}
-                      {(!delivered && !closed) && (
+                        {!closed && (
+                            <Button
+                                type='submit'
+                                className="update-modal-footer-submit"
+                                variant="contained"
+                            >
+                                Valider
+                            </Button>
+                        )}
+                        {(!delivered && !closed) && (
                             <Button
                                 onClick={handleDelete}
                                 className="update-modal-footer-submit"
@@ -190,8 +209,8 @@ const UpdateBookingModal = ({params, className, getBookings, ...rest}) => {
                             </Button>
                         )}
                     </div>
-                     {alertMessage && (
-                        <AlertMessage message={alertMessage} />
+                    {alertMessage && (
+                        <AlertMessage message={alertMessage} severity={severity} />
                     )}
                 </Box>
             </Modal>
