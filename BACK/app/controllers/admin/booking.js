@@ -163,8 +163,7 @@ module.exports = {
 
         // Check if user exist
         const user = await usersDataMapper.findById(userId);
-        console.log(user);
-        if (user[0].name === 'DatabaseError') {
+        if (!user) {
             throw new ApiError(400, 'Cet utilisateur n\'existe pas');
         }
 
@@ -186,8 +185,7 @@ module.exports = {
         }
         const newArticle = [article.id];
         const newArticleBooking = await bookingDataMapper.addArticlesToBooking(bookingExist[0].id, newArticle);
-        console.log(newArticleBooking);
-        if (newArticleBooking.name === 'DatabaseError') {
+        if (!newArticleBooking) {
             throw new ApiError(500, 'Echec de l\'ajout de l\'article');
         }
         await bookingDataMapper.updateArticlesAvailability(newArticle);
