@@ -12,7 +12,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
 
-const BookingArticles = ({list, closed, delivered, className, ...rest}) => {
+const BookingArticles = ({list, closed, delivered, className, getBookings, ...rest}) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -32,7 +32,11 @@ const BookingArticles = ({list, closed, delivered, className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <DeleteArticleModal params={params} closed={closed} delivered={delivered} />
+                                <DeleteArticleModal 
+                                    params={params} 
+                                    closed={closed} 
+                                    delivered={delivered}
+                                    getBookings={getBookings} />
                             </IconButton>
                         );
                     break;

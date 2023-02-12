@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './deletearticlemodal.scss';
 import api from '../../../requests';
 
-const DeleteArticleModal = ({params, closed, delivered, className, ...rest}) => {
+const DeleteArticleModal = ({params, closed, delivered, className,getBookings, ...rest}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -18,7 +18,9 @@ const DeleteArticleModal = ({params, closed, delivered, className, ...rest}) => 
     const handleDelete = async () => {
 
         const response = await api.delete(`/admin/booking/article/${params.row.id}`)
+
         if(response.status === 200){
+            getBookings();
             handleClose();
         }
     }

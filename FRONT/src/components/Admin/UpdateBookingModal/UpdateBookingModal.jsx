@@ -185,7 +185,12 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
                     )}
                     <div className="update-modal-articles">
                         <div className="update-modal-articles--book">
-                            <BookingArticles list={params.row.borrowed_articles} closed={closed} delivered={delivered} />
+                            <BookingArticles 
+                                list={params.row.borrowed_articles} 
+                                closed={closed} 
+                                delivered={delivered}
+                                getBookings={getBookings}
+                                 />
                         </div>
                     </div>
                     <div className="update-modal-footer">
