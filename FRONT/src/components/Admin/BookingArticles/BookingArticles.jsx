@@ -63,8 +63,6 @@ const BookingArticles = ({list, closed, delivered, className, getBookings, ...re
                     getRowId={(row) => row.id}
                     rows={list}
                     columns={columnsBuilder}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
                     disableSelectionOnClick
                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                     components={{

@@ -76,8 +76,9 @@ module.exports = {
             throw new ApiError(404, 'Cet utilisateur n\'existe pas');
         }
 
+        const member_number = req.body.member_number ?? user.member_number;
         const memberNumberExist = await usersDataMapper.findFiltered([
-            { member_number: Number(req.body.member_number) },
+            { member_number },
         ]);
 
         if (memberNumberExist.length > 0) {
@@ -86,8 +87,9 @@ module.exports = {
             }
         }
 
+        const email = req.body.email ?? user.email;
         const emailExist = await usersDataMapper.findFiltered([
-            { email: req.body.email },
+            { email },
         ]);
 
         if (emailExist.length > 0) {

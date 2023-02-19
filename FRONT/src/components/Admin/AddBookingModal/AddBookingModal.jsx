@@ -83,16 +83,22 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
-        // on récupère les données de l'article avant insertion dans le state
-        const settings = {
-            number: article_number
-        }
-        const response = await api.post(`admin/articles/search`, settings)
-        const newArticle = await response.data;
 
-        setListArticle(state => [...state, newArticle[0]]);
-        setArticleId(state => [...state, newArticle[0].id]);
-        inputRef.current.value = "";
+        if (articleId.includes(Number(article_number))) {
+            setSeverity("error");
+            setAlertMessage("article déjà présent dans la réservation");
+        } else {
+            // on récupère les données de l'article avant insertion dans le state
+            const settings = {
+                number: article_number
+            }
+            const response = await api.post(`admin/articles/search`, settings)
+            const newArticle = await response.data;
+
+            setListArticle(state => [...state, newArticle[0]]);
+            setArticleId(state => [...state, newArticle[0].id]);
+            inputRef.current.value = "";
+        }
     }
 
     // create a function to delete an article in booking creation
