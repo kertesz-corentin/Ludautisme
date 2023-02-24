@@ -7,12 +7,14 @@ import DeleteArticleModal from '../DeleteArticleModal/DeleteArticleModal';
 import { articleSchema } from '../../../Schemas';
 
 // import material ui components
-import { IconButton } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
 
-const BookingArticles = ({list, closed, delivered, className, getBookings, ...rest}) => {
+const BookingArticles = ({ list, closed, delivered, className, getBookings, ...rest }) => {
+
+    const [returnArticle, setReturnArticle] = React.useState([]);
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -24,22 +26,22 @@ const BookingArticles = ({list, closed, delivered, className, getBookings, ...re
                 headerName: propElt.label,
                 width: propElt.width,
             };
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "delete":
                         config.renderCell = (params) => (
                             <IconButton
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <DeleteArticleModal 
-                                    params={params} 
-                                    closed={closed} 
+                                <DeleteArticleModal
+                                    params={params}
+                                    closed={closed}
                                     delivered={delivered}
                                     getBookings={getBookings} />
                             </IconButton>
                         );
-                    break;
+                        break;
 
                     default:
                         break;
@@ -50,21 +52,25 @@ const BookingArticles = ({list, closed, delivered, className, getBookings, ...re
         return columns;
     })();
 
-   return (
-       <section
+    return (
+        <section
             className={classnames('articles', className)}
             {...rest}
-         >
+        >
             <div>
                 <h2>Liste des articles</h2>
             </div>
-            <div className="articles-grid" style={{ height: 325, width: '100%'}}>
+            <div className="articles-grid" style={{ height: '50rem', width: '100%' }}>
                 <DataGrid
                     getRowId={(row) => row.id}
                     rows={list}
                     columns={columnsBuilder}
+                    checkboxSelection={true}
                     disableSelectionOnClick
                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+                    onSelectionModelChange={(value) => {
+                        setReturnArticle(value);
+                    }}
                     components={{
                         Toolbar: GridToolbar,
                     }}
@@ -88,13 +94,13 @@ const BookingArticles = ({list, closed, delivered, className, getBookings, ...re
                             },
                         },
                         sorting: {
-                            sortModel: [{field: 'number', sort: 'asc'}],
+                            sortModel: [{ field: 'number', sort: 'asc' }],
                         },
                         filter: {
                             filterModel: {
                                 items: [
-                                    {columnField: 'archived', value: false},
-                                    {columnField: 'available', value: true},
+                                    { columnField: 'archived', value: false },
+                                    { columnField: 'available', value: true },
                                 ]
                             }
                         }
@@ -102,9 +108,17 @@ const BookingArticles = ({list, closed, delivered, className, getBookings, ...re
                 >
 
                 </DataGrid>
+                <Button
+                    onClick={console.log(returnArticle)}
+                    className="addbook-modal-footer-submit"
+                    variant='outlined'
+                    color='success'
+                >
+                    Rendre la sélection
+                </Button>
             </div>
         </section>
-   );
+    );
 };
 
 BookingArticles.propTypes = {
