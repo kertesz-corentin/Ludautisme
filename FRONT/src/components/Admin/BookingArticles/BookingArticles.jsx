@@ -12,9 +12,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
 
-const BookingArticles = ({ list, closed, delivered, className, getBookings, ...rest }) => {
-
-    const [returnArticle, setReturnArticle] = React.useState([]);
+const BookingArticles = ({ list, closed, delivered, className, getBookings, setReturnArticle, ...rest }) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -108,14 +106,6 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, ...r
                 >
 
                 </DataGrid>
-                <Button
-                    onClick={console.log(returnArticle)}
-                    className="addbook-modal-footer-submit"
-                    variant='outlined'
-                    color='success'
-                >
-                    Rendre la sélection
-                </Button>
             </div>
         </section>
     );

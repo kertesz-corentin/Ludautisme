@@ -26,6 +26,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);
     const [overdue, setOverdue] = useState(params.row.overdue);
+    const [returnArticle, setReturnArticle] = React.useState([]);
 
     const [alertMessage, setAlertMessage] = useState();
     const [severity, setSeverity] = useState();
@@ -44,7 +45,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
 
     const handleAddArticle = async (event) => {
         event.preventDefault();
-        
+
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
 
@@ -55,10 +56,10 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
         const response = await api.post(`admin/articles/search`, settings)
         const newArticle = response.data;
 
-        if (response.status !== 200){
+        if (response.status !== 200) {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
-        } else if(!newArticle[0].available) {
+        } else if (!newArticle[0].available) {
             setSeverity("error");
             setAlertMessage("Article indisponible");
         } else {
@@ -78,6 +79,28 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
                 setAlertMessage(`${addResponse.data.message}`);
             }
         }
+    }
+
+    const handleReturn = async () => {
+
+        if (returnArticle.length) {
+            const options = {
+                return_article: returnArticle
+            }
+            const articles = await api.put(`admin/booking/return/${params.row.id}`, options);
+            if (articles.status === 200) {
+                setSeverity("success");
+                setAlertMessage("Articles rendu");
+                getBookings();
+            } else {
+                setSeverity("error");
+                setAlertMessage(`${articles.data.message}`);
+            }
+        } else {
+            setSeverity("error");
+            setAlertMessage("Auncun articles selectionnées");
+        }
+
     }
 
 
@@ -185,24 +208,23 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
                     )}
                     <div className="update-modal-articles">
                         <div className="update-modal-articles--book">
-                            <BookingArticles 
-                                list={params.row.borrowed_articles} 
-                                closed={closed} 
+                            <BookingArticles
+                                list={params.row.borrowed_articles}
+                                closed={closed}
                                 delivered={delivered}
                                 getBookings={getBookings}
-                                 />
+                                setReturnArticle={setReturnArticle}
+                            />
                         </div>
                     </div>
                     <div className="update-modal-footer">
-                        {!closed && (
-                            <Button
-                                type='submit'
-                                className="update-modal-footer-submit"
-                                variant="contained"
-                            >
-                                Valider
-                            </Button>
-                        )}
+                        <Button
+                            onClick={() => handleReturn()}
+                            className="addbook-modal-footer-submit"
+                            variant='outlined'
+                        >
+                            Rendre la sélection
+                        </Button>
                         {(!delivered && !closed) && (
                             <Button
                                 onClick={handleDelete}

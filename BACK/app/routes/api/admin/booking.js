@@ -47,8 +47,17 @@ router.route('/article/:id')
  * @param {number} request.params.required - ID of article
  * @return {Confirm} 200 - success response - applcation/json
  */
+/**
+ * PUT /api/admin/booking/return/:id
+ * @summary Return multiple article and close if it alla rticle of booking
+ * @tags [ADMIN] Booking
+ * @param {number[]} request.body.required - ids of articles
+ * @param {number} request.params.required - ID of booking
+ * @return {Confirm} 200 - success response - applcation/json
+ */
 router.route('/return/:id')
-    .post(controllerHandler(bookingController.returnArticle));
+    .post(controllerHandler(bookingController.returnArticle))
+    .put(controllerHandler(bookingController.returnOrClose));
 
 /**
  * GET /api/admin/booking/ligth
