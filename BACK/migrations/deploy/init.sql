@@ -46,7 +46,8 @@ CREATE TABLE "reference" (
     "name" TEXT NOT NULL UNIQUE,
     "description" TEXT,
     "valorisation" INT,
-    "main_category" INT REFERENCES "category"("id")
+    "main_category" INT REFERENCES "category"("id"),
+    "archived" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "image" (

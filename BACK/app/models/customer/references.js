@@ -54,6 +54,7 @@ module.exports = {
             LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
             LEFT JOIN "category" ON rtc."id_category" = "category"."id"
             LEFT JOIN "article" ON "article"."id_ref" = "r"."id"
+            WHERE "article"."archived" = false
             GROUP BY r.name, r.description, r.valorisation, r.id, cat.name`,
         );
         return result.rows;
@@ -135,6 +136,8 @@ module.exports = {
         LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
         `;
         const placeholders = [userId[0], limit, offset];
+
+        let queryEnd = null;
         // eslint-disable-next-line no-unused-expressions
         if (arr.length > 0) {
             queryStart += ` WHERE `;
@@ -153,9 +156,16 @@ module.exports = {
                     queryStart += ` AND `;
                 }
             });
+            queryEnd = ` 
+            AND ar."archived" = false
+            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, fav.id_user
+            LIMIT $2 OFFSET $3 `;
+        } else {
+            queryEnd = ` 
+            WHERE ar."archived" = false
+            GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, fav.id_user
+            LIMIT $2 OFFSET $3 `;
         }
-        const queryEnd = ` GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, fav.id_user
-        LIMIT $2 OFFSET $3 `;
 
         queryStart += queryEnd;
 
