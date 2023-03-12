@@ -30,6 +30,23 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
     const [currentPicture, setCurrentPicture] = useState();
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
+    const [articles, setArticles] = useState([]);
+
+    const getReferenceWithArticles = async () => {
+        try {
+
+            const settings = {
+                "id_ref": params.row.id,
+            }
+            const response = await api.post(`/admin/articles/search`, settings);
+
+            setArticles(response.data);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -111,6 +128,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
         try {
             const response = await api.delete(`/admin/references/${params.row.id}`);
              if (response.status === 200) {
+                    getReferenceWithArticles();
                     setSeverity("success");
                     setAlertMessage(response.data.message);
                 } else {
@@ -272,7 +290,12 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                             </Button>
                     </div>
                     <div className="updatereference-modal-articles">
-                        <Articles params={params} children={<AddModal reference={params.row.id} />} />
+                        <Articles 
+                        params={params}
+                        articles={articles}
+                        setArticles={setArticles}
+                        getReferenceWithArticles={getReferenceWithArticles}
+                        children={<AddModal reference={params.row.id} />} />
                     </div>
                 </Box>
             </Modal>

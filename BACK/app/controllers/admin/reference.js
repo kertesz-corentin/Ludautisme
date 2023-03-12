@@ -68,7 +68,7 @@ module.exports = {
             if (response?.name === 'DatabaseError') {
                 throw new ApiError(500, response?.message);
             }
-        };
+        }
 
         const confirm = {
             message: 'Reference archivé avec succès',

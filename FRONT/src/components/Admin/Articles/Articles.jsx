@@ -8,26 +8,10 @@ import { ToggleButton } from '@mui/material';
 import api from '../../../requests';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
-const Articles = ({ params, children, name, className, ...rest }) => {
+const Articles = ({ params, children, name, className, articles, setArticles, getReferenceWithArticles, ...rest }) => {
 
-    const [articles, setArticles] = useState([]);
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
-
-    const getReferenceWithArticles = async () => {
-        try {
-
-            const settings = {
-                "id_ref": params.row.id,
-            }
-            const response = await api.post(`/admin/articles/search`, settings);
-
-            setArticles(response.data);
-        }
-        catch (err) {
-            console.error(err);
-        }
-    }
 
     const handleToogle = async (artcileId, value, prop) => {
         // toggle boolean value 
