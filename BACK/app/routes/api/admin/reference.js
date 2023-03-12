@@ -36,9 +36,17 @@ router.route('/active')
  * @param {paramRefCreate} request.body.required - At least one of these
  * @returns {RefUpdate} 201 - succes response - application/json
  */
+/**
+ * DELETE api/admin/references/:id
+ * @summary Archive one reference with all articles
+ * @tags [ADMIN] Reference
+ * @param {number} request.params.id.required - Id of the reference to update
+ * @returns 201 - succes response - application/json
+ */
 router.route('/:id')
     .get(controllerHandler(referenceController.getOne))
-    .put(controllerHandler(referenceController.update));
+    .put(controllerHandler(referenceController.update))
+    .delete(controllerHandler(referenceController.archived));
 /**
  * GET api/admin/references
  * @summary Get all references for admin

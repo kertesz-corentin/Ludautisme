@@ -1,5 +1,6 @@
+/* eslint-disable no-restricted-syntax */
 const ApiError = require('../../errors/apiError');
-const { referenceDataMapper, pictureDataMapper } = require('../../models/admin');
+const { referenceDataMapper, pictureDataMapper, articleDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -49,5 +50,29 @@ module.exports = {
         }
         const updateRef = await referenceDataMapper.update(req.params.id, req.body);
         return res.json(updateRef);
+    },
+    async archived(req, res) {
+        const refId = req.params.id;
+
+        const arr = [{ id_ref: refId }];
+        const articles = await articleDataMapper.findFiltered(arr);
+
+        if (articles.length < 1) {
+            throw new ApiError(404, 'Aucun article trouvé pour cette référence');
+        }
+
+        for (const article of articles) {
+            const obj = { archived: true };
+            // eslint-disable-next-line no-await-in-loop
+            const response = await articleDataMapper.update(article.id, obj);
+            if (response?.name === 'DatabaseError') {
+                throw new ApiError(500, response?.message);
+            }
+        };
+
+        const confirm = {
+            message: 'Reference archivé avec succès',
+        };
+        return res.json(confirm);
     },
 };

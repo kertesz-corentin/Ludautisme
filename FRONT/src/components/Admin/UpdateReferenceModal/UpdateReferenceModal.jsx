@@ -107,6 +107,22 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
         }
     }
 
+    const handleArchive = async () => {
+        try {
+            const response = await api.delete(`/admin/references/${params.row.id}`);
+             if (response.status === 200) {
+                    setSeverity("success");
+                    setAlertMessage(response.data.message);
+                } else {
+                    setSeverity("error");
+                    setAlertMessage("Erreur lors de l'archivage");
+                }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
+
     const handleSwipperChange = (event) => {
         setCurrentPicture(event);
     }
@@ -246,6 +262,14 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                         >
                             Mettre à jour
                         </Button>
+                        <Button
+                                variant="contained"
+                                color='error'
+                                component="span"
+                                className="updatereference-modal-footer-submit"
+                                onClick={handleArchive}>
+                                Archiver
+                            </Button>
                     </div>
                     <div className="updatereference-modal-articles">
                         <Articles params={params} children={<AddModal reference={params.row.id} />} />
