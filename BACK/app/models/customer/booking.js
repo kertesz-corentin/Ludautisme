@@ -46,7 +46,7 @@ module.exports = {
                 ,"perm"."perm_date"
                 ,"perm"."next_id"
                 ,"perm"."next_date"
-                ,"perm"."active;"`;
+                ,"perm"."active"`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
@@ -100,7 +100,6 @@ module.exports = {
         WHERE `;
         const placeholders = [];
         try {
-         
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];
                 placeholders.push(filter[prop]);
@@ -111,10 +110,11 @@ module.exports = {
                 }
             });
             const result = await sqlHandler(query, placeholders);
-            
+
             return result.rows;
         } catch (err) {
             console.error(err);
+            return null;
         }
     },
     async findHistory(id) {

@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
-const { bookingDataMapper } = require('../../models/customer');
+const { userBookingDataMapper } = require('../../models/customer');
 const { usersDataMapper, permanencyDataMapper, referenceDataMapper } = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
 
@@ -10,13 +10,13 @@ module.exports = {
     async getActive(req, res) {
         const idUser = Number(req.params.id);
         testUser(req, idUser);
-        const booking = await bookingDataMapper.findActive(idUser);
+        const booking = await userBookingDataMapper.findActive(idUser);
         return res.json(booking);
     },
     async getHistory(req, res) {
         const idUser = Number(req.params.id);
         testUser(req, idUser);
-        const booking = await bookingDataMapper.findHistory(idUser);
+        const booking = await userBookingDataMapper.findHistory(idUser);
 
         return res.json(booking);
     },
@@ -48,13 +48,13 @@ module.exports = {
             { id_permanency: activePerm[0].next_id },
             { id_user: userId },
         ];
-        const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
+        const bookingExist = await userBookingDataMapper.findFiltered(getCurrentParams);
         if (bookingExist.length > 0) {
             throw new ApiError(403, 'Cet utilisateur à déjà une réservation pour cette permanence');
         }
 
         // Check if articles are available
-        const refAvailability = await bookingDataMapper.getRefsAvailability(refIds);
+        const refAvailability = await userBookingDataMapper.getRefsAvailability(refIds);
         if (refAvailability.length !== refIds.length) {
             const unknownRefIds = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
             const unknownRef = await referenceDataMapper.findManyWithRefId(unknownRefIds);
@@ -67,12 +67,12 @@ module.exports = {
                 id_user: userId,
             };
             // Add booking to get an id booking
-            const newBookingConfirm = await bookingDataMapper.addOne(newBooking);
+            const newBookingConfirm = await userBookingDataMapper.addOne(newBooking);
             // Join articles to booking
             const articlesIds = refAvailability.map((ref) => ref.article_id);
-            const articlesBooked = await bookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
+            const articlesBooked = await userBookingDataMapper.addArticlesToBooking(newBookingConfirm.id, articlesIds);
             // Update availability on each article booked to false
-            await bookingDataMapper.updateArticlesAvailability(articlesIds);
+            await userBookingDataMapper.updateArticlesAvailability(articlesIds);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
             res.json(err);

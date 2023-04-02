@@ -12,7 +12,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
 
-const BookingArticles = ({ list, closed, delivered, className, getBookings, setReturnArticle, ...rest }) => {
+const BookingArticles = ({ list, closed, delivered, className, getBookings, setReturnArticle, handleProlong, ...rest }) => {
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -40,7 +40,20 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                             </IconButton>
                         );
                         break;
-
+                    case "prolonge":
+                        config.renderCell = (params) => (
+                            <Button
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                onClick={(e) =>  {
+                                    e.stopPropagation();
+                                    handleProlong(params.row)
+                                }}
+                            >
+                                prolonger
+                            </Button>
+                        );
+                        break;
                     default:
                         break;
                 }

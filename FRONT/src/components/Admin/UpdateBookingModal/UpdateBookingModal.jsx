@@ -102,7 +102,23 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
         }
 
     }
-
+    const handleProlong = async (row) => {
+        let userId = params.row.member_number;
+        const options = {
+            prolong_article: row.id_ref
+        }
+        const response = await api.post(`admin/booking/article/${userId}`, options);
+        console.log(response);
+        if (response.status === 200) {
+            setSeverity("success");
+            setAlertMessage("Article prolongé");
+            getBookings();
+        } else {
+            setSeverity("error");
+            setAlertMessage(`${response.data.message}`);
+            getBookings();
+        }
+    }
 
     return (
         <div>
@@ -214,6 +230,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
                                 delivered={delivered}
                                 getBookings={getBookings}
                                 setReturnArticle={setReturnArticle}
+                                handleProlong={handleProlong}
                             />
                         </div>
                     </div>

@@ -20,7 +20,16 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
     const [open, setOpen] = useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
-    const handleOpen = () => setOpen(true)
+    const handleOpen = async () =>{
+        // get active booking of this user if exist 
+        let activeBooking = await api.get(`/customer/booking/active/${user[0].id}`);
+        console.log(activeBooking);
+        // get articles if booking exist
+
+        // séparer la listes pour l'affichage et la liste pour envoyer a réserver
+
+        setOpen(true);
+    } 
     const handleClose = () => {
         setOpen(false);
         setListArticle([]);
@@ -37,7 +46,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
         const listIds = {
             "artIds": articleId
         }
-
+        // TODO transphormer en crée si pas de booking actif, sinon ajoute
         const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
         if (response.status === 200) {
             setSeverity("success");
@@ -94,10 +103,18 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
             }
             const response = await api.post(`admin/articles/search`, settings)
             const newArticle = await response.data;
+            console.log(newArticle);
+            if (newArticle.length) {
+                setListArticle(state => [...state, newArticle[0]]);
+                setArticleId(state => [...state, newArticle[0].id]);
+                inputRef.current.value = "";
 
-            setListArticle(state => [...state, newArticle[0]]);
-            setArticleId(state => [...state, newArticle[0].id]);
-            inputRef.current.value = "";
+                setSeverity(null);
+                setAlertMessage(null);
+            } else {
+                setSeverity("error");
+                setAlertMessage(newArticle.data.message);
+            }
         }
     }
 
@@ -204,7 +221,12 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
                     <div className="addbook-modal-articles">
                         <div className="addbook-modal-articles--add">
-                            <Box className='article-search' component="form" onSubmit={handleSubmitSearch}>
+                            <Box className='article-search' 
+                                component="form" 
+                                onSubmit={(e) =>  {
+                                    e.stopPropagation();
+                                    handleSubmitSearch(e)
+                                }}>
                                 <TextField
                                     id='outlined'
                                     inputRef={inputRef}
@@ -231,8 +253,6 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                                     getRowId={(row) => row.id}
                                     rows={listArticle}
                                     columns={columnsBuilder}
-                                    pageSize={10}
-                                    rowsPerPageOptions={[10]}
                                     disableSelectionOnClick
                                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                                     components={{

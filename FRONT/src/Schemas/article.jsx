@@ -33,7 +33,7 @@ const articleSchema  = {
         type : "string",
         label : "Description",
         gridDisplay : "normal",
-        width : 400,
+        width : 200,
     },
     main_category:{
         type : "string",
@@ -58,6 +58,12 @@ const articleSchema  = {
         label : "Disponible",
         gridDisplay : "toggle",
         width : 150,
+    },
+    prolonge: {
+        type: "number",
+        label: "Prolongation",
+        gridDisplay: "prolonge",
+        width: 125
     },
     archived:{
         type : "boolean",

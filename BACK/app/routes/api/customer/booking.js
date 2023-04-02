@@ -6,8 +6,8 @@ const ApiError = require('../../../errors/apiError');
 const router = express.Router();
 
 /**
- * GET /api/admin/booking/active/:UserId
- * @summary Get a single booking
+ * GET /api/customer/booking/active/:UserId
+ * @summary Get active booking for one user
  * @tags [CUSTOMER] Booking
  * @param {number} UserId.params.required - At least one of these params
  * @return {booking} 200 - success response - application/json
@@ -17,7 +17,7 @@ router.route('/active/:id')
     .get(controllerHandler(bookingController.getActive));
 
 /**
- * GET /api/admin/booking/history/:UserId
+ * GET /api/customer/booking/history/:UserId
  * @summary Get all past Booking
  * @tags [CUSTOMER] Booking
  * @param {number} UserId.params.required - At least one of these params

@@ -3,6 +3,7 @@ const ApiError = require('../../errors/apiError');
 const {
     bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper,
 } = require('../../models/admin');
+const { userBookingDataMapper } = require('../../models/customer');
 
 module.exports = {
     async getAll(_, res) {
@@ -97,7 +98,7 @@ module.exports = {
             await bookingDataMapper.updateArticlesAvailability(articlesIds);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
-            res.json(err);
+            return res.json(err);
         }
     },
     async addBookingByArticle(req, res) {
@@ -150,7 +151,7 @@ module.exports = {
             const available = (articlesBooked.id) && await bookingDataMapper.updateArticlesAvailability(artIds);
             return res.json({ newBookingConfirm, articlesBooked });
         } catch (err) {
-            res.json(err);
+            return res.json(err);
         }
     },
     async addToBooking(req, res) {
@@ -361,5 +362,34 @@ module.exports = {
             throw new ApiError(404, 'Impossible de trouver cette reservation');
         }
         return res.json(deliver);
+    },
+    async prolongArticle(req, res) {
+        // params is user ID
+        const { id } = req.params;
+        const { prolong_article } = req.body;
+
+        // get active booking for this user
+        let booking = await userBookingDataMapper.findActive(id);
+        // if not create new active booking
+        if (!booking.length) {
+            // get activie permanency
+            const activePerm = await permanencyDataMapper.findActive();
+            const newBooking = {
+                id_permanency: activePerm[0].id,
+                id_user: id,
+            };
+            // create booking
+            booking = [await bookingDataMapper.addOne(newBooking)];
+        }
+        // remove article from old booking
+        await bookingDataMapper.deleteArticle(prolong_article);
+        // add article to new booking
+        await bookingDataMapper.addArticlesToBooking(booking[0].id, [prolong_article]);
+        const confirm = {
+            articles: prolong_article,
+            reservation: booking.id,
+            message: `Article n°${prolong_article} prolongé avec succès`,
+        };
+        return res.json(confirm);
     },
 };

@@ -31,6 +31,13 @@ router.route('/close/:id')
  * @return {Confirm} 200 - success response - application/json
  */
 /**
+ * POST /api/admin/booking/article/:userId
+ * @summary Prolong one article
+ * @tags [ADMIN] Booking
+ * @param {number} request.params.required - ID of article
+ * @param {BookingParam} request.body.required - ID of article
+ * @return {Confirm} 200 - success response - application/json
+/**
  * DELETE /api/admin/booking/article/:id
  * @summary Remove one article to booking
  * @tags [ADMIN] Booking
@@ -39,6 +46,7 @@ router.route('/close/:id')
  */
 router.route('/article/:id')
     .put(controllerHandler(bookingController.addToBooking))
+    .post(controllerHandler(bookingController.prolongArticle))
     .delete(controllerHandler(bookingController.removeToBooking));
 /**
  * POST /api/admin/booking/return/:id
