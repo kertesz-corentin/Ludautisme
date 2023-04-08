@@ -13,9 +13,9 @@ module.exports = {
         }
         const token = req.headers['x-access-token'];
         const decodedToken = jwt.verify(token, process.env.SALT);
-        const { userId } = decodedToken;
+        const { userId, role } = decodedToken;
 
-        if (userId !== idUser) {
+        if (userId !== idUser && role !== 'admin') {
             throw new ApiError(403, 'Identification invalide');
         }
     },
