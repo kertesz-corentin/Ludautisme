@@ -58,7 +58,11 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
-                const response = await api.put(`/admin/booking/${id}`);
+                let options = {
+                    articleNumber: id, 
+                    bookingId: currentBooking.id
+                }
+                const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
                     if (index === articleId.length) {
@@ -98,7 +102,11 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
-                const response = await api.put(`/admin/booking/${id}`);
+                let options = {
+                    articleNumber: id, 
+                    bookingId: currentBooking.id
+                }
+                const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
                     if (index === articleId.length) {
