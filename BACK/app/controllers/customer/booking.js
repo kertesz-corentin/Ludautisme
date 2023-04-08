@@ -10,8 +10,16 @@ module.exports = {
     async getActive(req, res) {
         const idUser = Number(req.params.id);
         testUser(req, idUser);
-        const booking = await userBookingDataMapper.findActive(idUser);
-        return res.json(booking);
+
+        //  Get active perm id and next perm id
+        const activePerm = await permanencyDataMapper.findActive();
+        //  Check exisiting booking for this permanency
+        const getCurrentParams = [
+            { id_permanency: activePerm[0].next_id },
+            { id_user: idUser },
+        ];
+        const bookingExist = await userBookingDataMapper.findFiltered(getCurrentParams);
+        return res.json(bookingExist);
     },
     async getHistory(req, res) {
         const idUser = Number(req.params.id);
