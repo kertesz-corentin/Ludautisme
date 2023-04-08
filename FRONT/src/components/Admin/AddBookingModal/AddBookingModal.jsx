@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
@@ -17,16 +17,19 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 import './addbookingmodal.scss';
 
 const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = React.useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
+    
     const handleOpen = async () =>{
         // get active booking of this user if exist 
-        console.log(user);
         let activeBooking = await api.get(`/customer/booking/active/${user[0].id}`);
-        console.log(activeBooking);
-        // get articles if booking exist
 
+        // get articles if booking exist
+        if (activeBooking.data) {
+                setCurrentBooking(activeBooking)
+                setListArticle(activeBooking.data.borrowed_articles)
+        }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
 
         setOpen(true);
@@ -35,10 +38,14 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
         setOpen(false);
         setListArticle([]);
         setArticleId([]);
+        setCurrentBooking(null);
+        setAlertMessage(null);
+        setSeverity(null);
     }
 
-    const [articleId, setArticleId] = useState([]);
-    const [listArticle, setListArticle] = useState([]);
+    const [articleId, setArticleId] = React.useState([]);
+    const [listArticle, setListArticle] = React.useState([]);
+    const [currentBooking, setCurrentBooking] = React.useState();
 
     const inputRef = React.useRef(null);
 
