@@ -22,6 +22,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
     const [severity, setSeverity] = React.useState();
     const handleOpen = async () =>{
         // get active booking of this user if exist 
+        console.log(user);
         let activeBooking = await api.get(`/customer/booking/active/${user[0].id}`);
         console.log(activeBooking);
         // get articles if booking exist
@@ -103,7 +104,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
             }
             const response = await api.post(`admin/articles/search`, settings)
             const newArticle = await response.data;
-            console.log(newArticle);
+
             if (newArticle.length) {
                 setListArticle(state => [...state, newArticle[0]]);
                 setArticleId(state => [...state, newArticle[0].id]);
