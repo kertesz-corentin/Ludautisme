@@ -28,7 +28,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
         // get articles if booking exist
         if (activeBooking.data) {
             console.log(activeBooking.data)
-            setCurrentBooking(activeBooking)
+            setCurrentBooking(activeBooking.data[0])
             setListArticle(activeBooking.data[0].borrowed_articles)
         }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
@@ -91,7 +91,6 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 setAlertMessage(`${response.data.message}`);
             }
         }
-
     }
 
     const handleDeliveredBooking = async (event) => {
