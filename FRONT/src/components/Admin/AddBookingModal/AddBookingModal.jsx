@@ -58,11 +58,11 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
+                console.log(currentBooking);
                 let options = {
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
-                console.log(options);
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
@@ -103,11 +103,11 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
+                console.log(currentBooking);
                 let options = {
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
-                console.log(options);
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
