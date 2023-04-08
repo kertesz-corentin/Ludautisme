@@ -58,7 +58,6 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
-                console.log(currentBooking);
                 let options = {
                     articleNumber: id, 
                     bookingId: currentBooking.id
@@ -66,6 +65,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
+                    console.log(index);
                     if (index === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
@@ -102,7 +102,6 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
-                console.log(currentBooking);
                 let options = {
                     articleNumber: id, 
                     bookingId: currentBooking.id
@@ -110,6 +109,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
+                    console.log(index);
                     if (index === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
