@@ -65,8 +65,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
-                    console.log(index);
-                    if (index === articleId.length) {
+                    if (index + 1 === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
                         getBookings();
@@ -109,8 +108,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
-                    console.log(index);
-                    if (index === articleId.length) {
+                    if (index + 1 === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
                         getBookings();
