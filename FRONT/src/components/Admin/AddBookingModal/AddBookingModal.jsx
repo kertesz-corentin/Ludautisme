@@ -27,6 +27,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
         // get articles if booking exist
         if (activeBooking.data) {
+                console.log(activeBooking.data)
                 setCurrentBooking(activeBooking)
                 setListArticle(activeBooking.data.borrowed_articles)
         }
