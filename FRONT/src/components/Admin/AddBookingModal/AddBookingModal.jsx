@@ -62,6 +62,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
+                console.log(options);
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
@@ -106,6 +107,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
+                console.log(options);
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
