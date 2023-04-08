@@ -20,21 +20,21 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
     const [open, setOpen] = React.useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
-    
-    const handleOpen = async () =>{
+
+    const handleOpen = async () => {
         // get active booking of this user if exist 
         let activeBooking = await api.get(`/customer/booking/active/${user[0].id}`);
 
         // get articles if booking exist
         if (activeBooking.data) {
-                console.log(activeBooking.data)
-                setCurrentBooking(activeBooking)
-                setListArticle(activeBooking.data[0].borrowed_articles)
+            console.log(activeBooking.data)
+            setCurrentBooking(activeBooking)
+            setListArticle(activeBooking.data[0].borrowed_articles)
         }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
 
         setOpen(true);
-    } 
+    }
     const handleClose = () => {
         setOpen(false);
         setListArticle([]);
@@ -55,30 +55,27 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
         const listIds = {
             "artIds": articleId
         }
-        // TODO transphormer en crée si pas de booking actif, sinon ajoute
-        const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
-        if (response.status === 200) {
-            setSeverity("success");
-            setAlertMessage("Réservation réussi");
-            getBookings();
-            setTimeout(() => { handleClose() }, 5000);
+
+        if (currentBooking) {
+            articleId.forEach(async (id, index) => {
+                const response = await api.put(`/admin/booking/${id}`);
+
+                if (response.status === 200) {
+                    if (index === articleId.length) {
+                        setSeverity("success");
+                        setAlertMessage("Réservation réussi");
+                        getBookings();
+                        setTimeout(() => { handleClose() }, 5000);
+                    }
+                } else {
+                    setSeverity("error");
+                    setAlertMessage(`${response.data.message}`);
+                    return;
+                }
+            })
+
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
-        }
-    }
-
-    const handleDeliveredBooking = async (event) => {
-        event.preventDefault();
-
-        const listIds = {
-            "artIds": articleId
-        }
-
-        const booking = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
-
-        if (booking.status === 200) {
-            const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
+            const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
             if (response.status === 200) {
                 setSeverity("success");
                 setAlertMessage("Réservation réussi");
@@ -88,11 +85,53 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 setSeverity("error");
                 setAlertMessage(`${response.data.message}`);
             }
-        } else {
-            setSeverity("error");
-            setAlertMessage(`${booking.data.message}`);
         }
 
+    }
+
+    const handleDeliveredBooking = async (event) => {
+        event.preventDefault();
+
+        const listIds = {
+            "artIds": articleId
+        }
+
+        if (currentBooking) {
+            articleId.forEach(async (id, index) => {
+                const response = await api.put(`/admin/booking/${id}`);
+
+                if (response.status === 200) {
+                    if (index === articleId.length) {
+                        setSeverity("success");
+                        setAlertMessage("Réservation réussi");
+                        getBookings();
+                        setTimeout(() => { handleClose() }, 5000);
+                    }
+                } else {
+                    setSeverity("error");
+                    setAlertMessage(`${response.data.message}`);
+                    return;
+                }
+            })
+        } else {
+            const booking = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
+
+            if (booking.status === 200) {
+                const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
+                if (response.status === 200) {
+                    setSeverity("success");
+                    setAlertMessage("Réservation réussi");
+                    getBookings();
+                    setTimeout(() => { handleClose() }, 5000);
+                } else {
+                    setSeverity("error");
+                    setAlertMessage(`${response.data.message}`);
+                }
+            } else {
+                setSeverity("error");
+                setAlertMessage(`${booking.data.message}`);
+            }
+        }
     }
 
     // creat a function to add an article in bookingList on creation
@@ -230,9 +269,9 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
 
                     <div className="addbook-modal-articles">
                         <div className="addbook-modal-articles--add">
-                            <Box className='article-search' 
-                                component="form" 
-                                onSubmit={(e) =>  {
+                            <Box className='article-search'
+                                component="form"
+                                onSubmit={(e) => {
                                     e.stopPropagation();
                                     handleSubmitSearch(e)
                                 }}>
