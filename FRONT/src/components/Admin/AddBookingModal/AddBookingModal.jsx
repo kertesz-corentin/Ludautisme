@@ -29,7 +29,9 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
         if (activeBooking.data) {
             console.log(activeBooking.data)
             setCurrentBooking(activeBooking.data[0])
-            setListArticle(activeBooking.data[0]?.borrowed_articles)
+            if (activeBooking.data[0]?.borrowed_articles) {
+                setListArticle(activeBooking.data[0]?.borrowed_articles)
+            }   
         }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
 
