@@ -368,6 +368,7 @@ module.exports = {
         const { id } = req.params;
         const { prolong_article } = req.body;
 
+        const article = Number(prolong_article);
         // get active booking for this user
         let booking = await userBookingDataMapper.findActive(id);
         // if not create new active booking
@@ -383,7 +384,7 @@ module.exports = {
             booking = [await bookingDataMapper.addOne(newBooking)];
         }
         // remove article from old booking
-        const deleteBooking = await bookingDataMapper.deleteArticle(prolong_article);
+        const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
         if (deleteBooking) {
             console.log(deleteBooking);
@@ -391,7 +392,7 @@ module.exports = {
             throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
         }
         // add article to new booking
-        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [prolong_article]);
+        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
         let confirm = null;
         if (newBooking) {
             console.log(newBooking);
@@ -399,7 +400,7 @@ module.exports = {
             confirm = {
                 articles: prolong_article,
                 reservation: booking.id,
-                message: `Article n°${prolong_article} prolongé avec succès`,
+                message: `Article n°${article} prolongé avec succès`,
             };
         } else {
             throw new ApiError(500, 'Impossible de prolonger');
