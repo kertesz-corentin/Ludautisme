@@ -103,6 +103,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
 
     }
     const handleProlong = async (row) => {
+        console.log(row);
         let userId = params.row.member_number;
         const options = {
             prolong_article: row.id_ref
