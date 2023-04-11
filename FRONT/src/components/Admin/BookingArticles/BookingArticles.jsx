@@ -82,6 +82,9 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                     onSelectionModelChange={(value) => {
                         setReturnArticle(value);
                     }}
+                    onRowClick={(e) => {
+                        e.stopPropagation();
+                    }}
                     components={{
                         Toolbar: GridToolbar,
                     }}
