@@ -107,6 +107,10 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
         const options = {
             prolong_article: row.id_ref
         }
+        console.log({
+            user: userId,
+            options
+        })
         const response = await api.post(`admin/booking/article/${userId}`, options);
 
         if (response.status === 200) {
