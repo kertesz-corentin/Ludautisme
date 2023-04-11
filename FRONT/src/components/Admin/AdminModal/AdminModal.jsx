@@ -5,7 +5,6 @@ import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, 
 import CloseIcon from '@mui/icons-material/Close';
 import './adminmodal.scss';
 import { userSchema } from '../../../Schemas'
-import { gridVisibleSortedRowEntriesSelector } from '@mui/x-data-grid';
 
 const AdminModal = ({name, fields, path, className, ...rest}) => {
     const [open, setOpen] = useState(false)
@@ -23,12 +22,10 @@ const AdminModal = ({name, fields, path, className, ...rest}) => {
             const value = entrie[1];
             user[prop]=value;
          }
-        console.log('user', user);
 
         const response = await api.post(path, user);
-        console.log('response', response);
+
         if(response.status === 200) {
-            console.log('data', response.data);
             handleClose();
         }
 
@@ -62,7 +59,7 @@ const AdminModal = ({name, fields, path, className, ...rest}) => {
 
                     {Object.keys(userSchema).map((prop) => {
                         const element = userSchema[prop];
-                        console.log(element)
+
                         if(element.type === "number"){
                             return (
                                 <TextField

@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-const { SqlError } = require('./errorHandler');
 const client = require('../config/db');
 
 /**

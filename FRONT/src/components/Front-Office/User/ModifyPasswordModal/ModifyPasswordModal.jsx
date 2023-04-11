@@ -60,7 +60,6 @@ const ModifyPasswordModal = ({ className, ...rest }) => {
 
     function handlePasswordChange(event) {
         setPasswordValue(event.target.value)
-        console.log(`Password`, event.target.value)
     }
 
     const [passwordValue, setPasswordValue] = useState()

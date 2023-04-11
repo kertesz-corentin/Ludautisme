@@ -78,7 +78,6 @@ const api = {
         }
     },
     async logout() {
-        console.log('logout');
         localStorage.removeItem("user");
         return { message: "logged Out" };
     },

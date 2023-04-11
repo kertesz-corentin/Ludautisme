@@ -48,13 +48,10 @@ const AddUserModal = ({className, ...rest}) => {
             'id_role': role,
         };
 
-        console.log('user', user);
-
         const response = await api.post('/admin/users', user)
         if(response.status === 200) {
             handleClose();
             window.location.reload();
-            console.log('response', response)
         }
         else {
             setAlertMessage(response.data.message);

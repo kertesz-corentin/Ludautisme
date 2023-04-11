@@ -19,7 +19,6 @@ export const initEndpoints = (builder) =>{
                                 (prev,curr)=>{const newProp = {[curr[0]]:curr[1]} ;
                                               return {...prev,...newProp}
                                             },{});
-        console.log(cleanedBody);
         return cleanedBody;
     }
     //On gère les différents dypes de requetes d'une api REST

@@ -14,8 +14,6 @@ if (process.env.NODE_ENV !== 'dev') {
     config.connectionString = process.env.DATABASE_DEV;
 }
 
-console.log(config);
-
 const pool = new Pool(config);
 
 module.exports = {

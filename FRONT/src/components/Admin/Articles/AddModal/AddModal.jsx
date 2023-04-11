@@ -19,13 +19,11 @@ const AddModal = ({reference, className, ...rest}) => {
             'date_buy': data.get('date_buy'),
             'id_ref': `${reference}`,
         };
-        console.log('addArticle', article);
-        console.log('reference', article);
+
         const response = await api.post('/admin/references/article', article)
         if(response.status === 200) {
             handleClose();
         }
-        console.log('response', response);
     }
 
     return (

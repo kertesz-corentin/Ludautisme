@@ -22,7 +22,6 @@ export default createSlice({
     updateUser:(state,action) => {
         console.log('state',state.users,'action',action);
         //const user = state.user.find((user)=>user.id === action.payload.id);
-        //console.log(user);
     }
   },
 })

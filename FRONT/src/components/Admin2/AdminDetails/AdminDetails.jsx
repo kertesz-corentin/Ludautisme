@@ -49,7 +49,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                                                             });
     }
     const handleChange = (event) => {
-        // console.log('pure target',event.target.name,event.target.value,event.target.checked);
         const newValue = (event.target.value === '@!ludo_checkbox')                                                                 //Hack to identify checkbox cause value is in checked not in value
                           ? event.target.checked 
                           : event.target.value;
@@ -83,7 +82,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
         const checkConform = (currentErrors) && currentErrors.every((entrie)=> (!entrie[1]) );                                                   //Check if there is no error
         
         setErrors((!checkConform) && errorsWithText.reduce((prev,curr)=>{return { ...prev, ...{[`${curr[0]}`]:curr[1]} } },{}));             //Go back from Entries (array) to object
-        console.log(checkModified);
         setIsSubmitable((checkModified && checkConform));                                                                                   //Set is conform (= conform to submit)
         setUpdated({...syncUpdated});
     }
@@ -126,11 +124,9 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                         },[])   //get bloc number
                                          .sort((a,b)=> {return (!a[0] || !b[0]) ? -1 : a[0] - b[0]})                                //order by bloc number from small to big AND undefined at the end
                                     )];                                                                                             //Result [[1(blocnum),'title1',1(field)],2,3,etc...,[undefined,undefined,undefined]
-    //console.log(blocNumb);
     
     //DYNAMIC INPUT
     const inputType = (type,label,value,name) => {
-        // console.log(type,label,value,name);
         const types = {
             checkbox    : () => {
                                 const cleanedValue = true;
@@ -202,7 +198,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                     {Object.entries(schema).filter((input) => input[1].bloc === bloc[0] && input[1].inputDisplay !== 'none')
                                             .sort((a,b)=>{ return a[1].field - b[1].field })                         //Sort inputs by field
                                             .map((input)=>{
-                                                // console.log(input);
                                                 return inputType(input[1].inputDisplay,
                                                                  input[1].label,
                                                                  (!mode)?details.content[input[0]]:updated[input[0]],   //name

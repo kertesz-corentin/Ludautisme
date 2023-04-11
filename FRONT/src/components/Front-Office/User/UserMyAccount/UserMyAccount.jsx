@@ -68,7 +68,6 @@ const UserMyAccount = ({
         //Handle response
         if (response.status === 200){
             setModifyBtn(!modifyBtn)
-            console.log(response.data);
         } else {
             console.error(response.data);
         }

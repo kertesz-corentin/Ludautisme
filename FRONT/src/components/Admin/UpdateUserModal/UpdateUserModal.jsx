@@ -58,7 +58,6 @@ const UpdateUserModal = ({params, className, ...rest}) => {
             'id_role': idRole,
         };
 
-        console.log('user', user);
         const response = await api.put(`/admin/users/${params.row.id}`, user)
         if(response.status === 200) {
             handleClose();

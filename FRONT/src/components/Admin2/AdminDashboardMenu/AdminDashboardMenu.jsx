@@ -9,8 +9,7 @@ import {Button} from '@mui/material';
 const AdminDashboardMenu = ({title, buttons, searchbar}) => {
     const { users } = useSelector(state => state); //Redux state 
 
-    const handleNewElement = (params) => {
-        console.log(params.submitAction,actions);
+    const handleNewElement = (params) => {;
         store.dispatch(actions.details.setContent({}));
         store.dispatch(actions.details.setReducer(params.reducer));
         store.dispatch(actions.details.setSubmitPayload({actionName:params.submitAction}));

@@ -43,7 +43,7 @@ export default function SignIn() {
         const email = data.get('email');
         const password =  data.get ('password');
         const response = await api.login(email,password,"user");
-        console.log(response);
+
         if(response.status === 200) {
             navigate('/user/account')
             setIsOpen(!isOpen)
@@ -84,7 +84,6 @@ export default function SignIn() {
 
 // Use to recover password
     function handleForgetPassword () {
-        console.log(`Envoyer le mot de passe`)
     }
 
   return (

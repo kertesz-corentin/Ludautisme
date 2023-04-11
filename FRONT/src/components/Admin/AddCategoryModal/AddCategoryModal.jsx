@@ -35,8 +35,6 @@ const AddCategoryModal = ({className, ...rest}) => {
             'main': mainCat,
         }
 
-        console.log('addedCategory', addedCategory);
-
         const response = await api.post('/admin/categorie', addedCategory)
         if(response.status === 200) {
             console.log(response.data)

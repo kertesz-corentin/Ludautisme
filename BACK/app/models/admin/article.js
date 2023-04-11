@@ -182,7 +182,6 @@ module.exports = {
         }
         const queryEnd = ` RETURNING *`;
         queryStart += queryEnd;
-        console.log(placeholders);
         const result = await sqlHandler(queryStart, placeholders);
         return result.rows;
     },

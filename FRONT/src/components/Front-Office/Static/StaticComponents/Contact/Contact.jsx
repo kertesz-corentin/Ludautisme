@@ -66,7 +66,6 @@ const Contact = ({ className, ...rest }) => {
     }
 
     const captchaError = (error) => {
-        console.log(error);
         setSeverity("error");
         setAlertMessage("Captcha invalide");
     }
