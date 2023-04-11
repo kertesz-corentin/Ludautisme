@@ -46,6 +46,7 @@ const ListOfReferences = ({
                         isLoading={isLoading}
                         idArticle={reference.art_id}
                         favorite={reference.favorite}
+                        reference={reference}
                     />
 
                 )
