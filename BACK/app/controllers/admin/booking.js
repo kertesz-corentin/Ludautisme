@@ -3,7 +3,7 @@ const ApiError = require('../../errors/apiError');
 const {
     bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper,
 } = require('../../models/admin');
-const { userBookingDataMapper } = require('../../models/customer');
+const { userBookingDataMapper, userDataMapper } = require('../../models/customer');
 
 module.exports = {
     async getAll(_, res) {
@@ -366,6 +366,10 @@ module.exports = {
         const { prolong_article } = req.body;
 
         const article = Number(prolong_article);
+        const user = await usersDataMapper.findFiltered([{ member_number: id }]);
+        if (!user) {
+            throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
+        }
         // get active booking for this user
         let booking = await userBookingDataMapper.findActive(id);
         // if not create new active booking
@@ -380,7 +384,7 @@ module.exports = {
             // create booking
             booking = [await bookingDataMapper.addOne(newBooking)];
         }
-        if (!booking) {
+        if (!booking[0]) {
             throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
         }
         // remove article from old booking
