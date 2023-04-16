@@ -107,19 +107,13 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
 
     }
     const handleProlong = async (row) => {
-        console.log(row);
         let userId = params.row.member_number;
         const options = {
             prolong_article: row.number
         }
-        console.log({
-            user: userId,
-            options
-        })
         const response = await api.post(`admin/booking/article/${userId}`, options);
 
         if (response.status === 200) {
-            console.log(response.data);
             setSeverity("success");
             setAlertMessage("Article prolongé");
             getBookings();

@@ -397,8 +397,6 @@ module.exports = {
         let confirm = null;
         if (newBooking) {
             confirm = {
-                user,
-                deleteBooking,
                 articles: prolong_article,
                 reservation: booking,
                 message: `Article n°${article} prolongé avec succès`,
