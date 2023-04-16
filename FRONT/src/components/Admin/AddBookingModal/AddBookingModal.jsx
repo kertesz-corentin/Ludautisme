@@ -169,7 +169,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 setAlertMessage(null);
             } else {
                 setSeverity("error");
-                setAlertMessage(newArticle.data.message);
+                setAlertMessage(newArticle.message);
             }
         }
     }
