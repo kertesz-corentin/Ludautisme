@@ -367,7 +367,7 @@ module.exports = {
 
         const article = Number(prolong_article);
         const user = await usersDataMapper.findFiltered([{ member_number: id }]);
-        if (!user) {
+        if (!user[0]) {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
         // get active booking for this user
@@ -379,7 +379,7 @@ module.exports = {
             const activePerm = await permanencyDataMapper.findActive();
             const newBooking = {
                 id_permanency: activePerm[0].id,
-                id_user: id,
+                id_user: user[0].id,
             };
             // create booking
             booking = [await bookingDataMapper.addOne(newBooking)];
