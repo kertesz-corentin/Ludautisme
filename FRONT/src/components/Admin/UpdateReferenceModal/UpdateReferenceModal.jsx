@@ -63,7 +63,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             handleClose();
         }
     }
-
+    // delete one picture
     const handleDelete = async (event) => {
         let deleteResponse = await api.delete(`/admin/picture/${currentPicture}`);
 
@@ -78,6 +78,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             setAlertMessage(`${deleteResponse.data.message}`);
         }
     }
+    // upload one picture 
     const handleUpload = async ({ target }) => {
         let file = target.files[0];
 
@@ -106,7 +107,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             }
         }
     }
-
+    // set one picture as main picture
     const handleMain = async () => {
         let obj = { main: true };
 
@@ -123,7 +124,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             setAlertMessage(`${response.data.message}`);
         }
     }
-
+    // archive one reference with all this article
     const handleArchive = async () => {
         try {
             const response = await api.delete(`/admin/references/${params.row.id}`);

@@ -237,9 +237,6 @@ module.exports = {
 
         const returnArticle = await bookingDataMapper.return([id]);
 
-        if (!returnArticle[0]) {
-            throw new ApiError(404, 'L\'article n\'est dans aucune réservation');
-        }
         const obj = { available: true };
         const availableArticle = await articleDataMapper.update(id, obj);
 
