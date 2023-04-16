@@ -374,11 +374,10 @@ module.exports = {
         let booking = await userBookingDataMapper.findActive(id);
         // if not create new active booking
         if (!booking.length) {
-            console.log('y a pas de booking');
             // get activie permanency
             const activePerm = await permanencyDataMapper.findActive();
             const newBooking = {
-                id_permanency: activePerm[0].id,
+                id_permanency: activePerm[0].next_id,
                 id_user: user[0].id,
             };
             // create booking
@@ -390,19 +389,16 @@ module.exports = {
         // remove article from old booking
         const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
-        if (deleteBooking) {
-            console.log(deleteBooking);
-        } else {
+        if (!deleteBooking) {
             throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
         }
         // add article to new booking
         const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
         let confirm = null;
         if (newBooking) {
-            console.log(newBooking);
-
             confirm = {
                 user,
+                deleteBooking,
                 articles: prolong_article,
                 reservation: booking,
                 message: `Article n°${article} prolongé avec succès`,
