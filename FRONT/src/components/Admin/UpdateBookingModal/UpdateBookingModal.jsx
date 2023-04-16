@@ -21,7 +21,11 @@ import './updatebookingmodal.scss';
 const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setAlertMessage(null);
+        setSeverity(null);
+    }
 
     const [closed, setClosed] = useState(params.row.closed);
     const [delivered, setDelivered] = useState(params.row.delivered);

@@ -20,7 +20,6 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
     };
 
     const handleClose = () => {
-
         setSeverity(null);
         setAlertMessage(null);
         setOpen(false);

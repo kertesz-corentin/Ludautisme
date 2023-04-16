@@ -16,7 +16,11 @@ import './addcategorymodal.scss';
 const AddCategoryModal = ({className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setAlertMessage(null);
+    }
+    
 
     const [mainCat, setMainCat] = useState(false);
 

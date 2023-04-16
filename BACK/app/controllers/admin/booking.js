@@ -244,8 +244,8 @@ module.exports = {
             throw new ApiError(404, 'L\'article n\'existe pas');
         }
         const confirm = {
-            article: returnArticle[0].id_article,
-            reservation: returnArticle[0].id_booking,
+            article: id,
+            reservation: returnArticle[0]?.id_booking,
             message: 'Article rendu',
         };
         return res.json(confirm);

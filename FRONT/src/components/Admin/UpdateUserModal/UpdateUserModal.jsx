@@ -19,7 +19,10 @@ import './updateusermodal.scss';
 const UpdateUserModal = ({params, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setAlertMessage(null);
+    }
     const [cotisationChecked, setCotisationChecked] = useState(params.row.cotisation_status);
     const [cautionChecked, setCautionChecked] = useState(params.row.caution_status);
     const [archivedChecked, setArchivedChecked] = useState(params.row.archived);
