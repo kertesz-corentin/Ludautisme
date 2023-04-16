@@ -399,7 +399,7 @@ module.exports = {
 
             confirm = {
                 articles: prolong_article,
-                reservation: booking.id,
+                reservation: booking,
                 message: `Article n°${article} prolongé avec succès`,
             };
         } else {
