@@ -3,7 +3,7 @@ const ApiError = require('../../errors/apiError');
 const {
     bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper,
 } = require('../../models/admin');
-const { userBookingDataMapper, userDataMapper } = require('../../models/customer');
+const { userBookingDataMapper } = require('../../models/customer');
 
 module.exports = {
     async getAll(_, res) {
@@ -384,7 +384,7 @@ module.exports = {
             // create booking
             booking = [await bookingDataMapper.addOne(newBooking)];
         }
-        if (!booking[0]) {
+        if (!booking[0]?.name === 'DatabaseError') {
             throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
         }
         // remove article from old booking
@@ -402,6 +402,7 @@ module.exports = {
             console.log(newBooking);
 
             confirm = {
+                user,
                 articles: prolong_article,
                 reservation: booking,
                 message: `Article n°${article} prolongé avec succès`,
