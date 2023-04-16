@@ -383,6 +383,9 @@ module.exports = {
             // create booking
             booking = [await bookingDataMapper.addOne(newBooking)];
         }
+        if (!booking) {
+            throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
+        }
         // remove article from old booking
         const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
