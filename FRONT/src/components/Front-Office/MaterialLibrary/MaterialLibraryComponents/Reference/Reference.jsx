@@ -19,34 +19,26 @@ import { FunctionContext } from '../../../../App/App';
 import CloseIcon from '@mui/icons-material/Close';
 
 const Reference = ({
-    className,
-    id,
-    name,
-    description,
-    maincategory,
-    picture,
-    tag,
-    valorisation,
-    article,
-    nb_available,
-    idArticle,
-    nb_total,
     display,
     currentItems,
     gridSize,
-    isLoading,
-    favorite,
+    reference
 }) => {
     const [open, setOpen] = React.useState(false);
-    const [articles, setArticles] = React.useState();
+    const [articleNumber, setArticleNumber] = React.useState();
     const handleOpen = async () => {
         // get article number of reference
-        
+        let numberList = [];
+        for (const articlNb of articles_list) {
+            numberList.push(articlNb.number)
+        }
+        setArticleNumber(`n° :${numberList.join(', ')}`);
         setOpen(true);
     };
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
+    const {valorisation, tag, picture, maincategory, name, id, description, articles_list} = reference;
 
     let itemToAdd = {
         id,
@@ -60,7 +52,7 @@ const Reference = ({
 
     // eslint-disable-next-line no-unused-vars
     const [cartItems, setCartItems] = useState(currentItems);
-    const [isFav, setIsFav] = useState(favorite);
+    const [isFav, setIsFav] = useState(reference.favorite);
 
     const updateCurrentItems = () => {
         setCartItems(currentItems);
@@ -94,17 +86,17 @@ const Reference = ({
             />
             <Box>
                 <Typography noWrap className="reference-card__name">
-                    {(display === 'booking') ? `N°${idArticle} ${name}` : name}
+                    {(display === 'booking') ? `N°${reference.art_id} ${name}` : name}
                 </Typography>
                 {(display !== "booking") &&
                     <Box className="reference-card__footer">
                         <Button onClick={handleOpen}>Détails</Button>
                         {(userToken) ?
                             <>
-                                <Button data-refid={id} data-favvalue={favorite} onClick={handleFavorite}>{
+                                <Button data-refid={id} data-favvalue={reference.favorite} onClick={handleFavorite}>{
                                     <FavoriteIcon color={(isFav) ? 'error' : 'disabled'} />}
                                 </Button>
-                                {(nb_available > 0 && currentItems) ?
+                                {(reference.nb_available > 0 && currentItems) ?
                                     <>
                                         {(!currentItems.map((item) => item.id).includes(id)) ?
                                             <Button
@@ -143,14 +135,10 @@ const Reference = ({
             >
                 <Fade in={open}>
                     <Box className="ref">
-                        <Box className='reference-card__close' onClick={handleClose}>
-                            <p>Fermer</p>
-                            <CloseIcon className='reference-card__close--icon' />
-                        </Box>
                         <Box className='reference-card__wrapper'>
                             <Box className="transition-modal-inline">
                                 <Typography className="transition-modal-title" variant="h6" component="h2">
-                                    {name}
+                                    {name} ({articleNumber})
                                 </Typography>
                                 <Button
                                     onClick={handleClose}>
@@ -173,11 +161,11 @@ const Reference = ({
                                 {(valorisation === 0) ? '' : `Caution : ${valorisation}€`}
                             </Typography>
                             <Box sx={{ marginBottom: "15px", display: 'flex', justifyContent: 'space-evenly' }}>
-                                {nb_available > 0 ? <Available nbAvailable={nb_available} nbTotal={nb_total} /> : <Unavailable />}
+                                {reference.nb_available > 0 ? <Available nbAvailable={reference.nb_available} nbTotal={reference.nb_total} /> : <Unavailable />}
 
                                 {(userToken) ?
                                     <>
-                                        {(nb_available > 0 && currentItems) ?
+                                        {(reference.nb_available > 0 && currentItems) ?
                                             <>
                                                 {(!currentItems.map((item) => item.id).includes(id)) ?
                                                     <Button

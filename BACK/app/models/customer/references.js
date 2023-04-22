@@ -115,6 +115,15 @@ module.exports = {
             'name',"category"."name"
             )) AS tag,
         COUNT(DISTINCT ar."id") AS nb_total,
+        json_agg(DISTINCT jsonb_build_object (
+            'id', ar."id",
+            'number', ar."number",
+            'origin', ar."origin",
+            'date_buy', ar."date_buy",
+            'available', ar."available",
+            'archived', ar."archived",
+            'created_at', ar."created_at"
+            )) AS "articles_list",
         COUNT(DISTINCT ar."id") FILTER (WHERE ar."available" = TRUE) AS nb_available,
         json_agg(DISTINCT jsonb_build_object (
             'id', "image"."id",
@@ -122,7 +131,7 @@ module.exports = {
             'name', "image"."title",
             'text', "image"."alternative_text",
             'main', "image"."main"
-        )) AS "picture" `;
+        )) AS "picture"`;
         queryStart += (userId) ? `, (fav."id_user" = $1) AS "favorite"` : '';
 
         queryStart += `

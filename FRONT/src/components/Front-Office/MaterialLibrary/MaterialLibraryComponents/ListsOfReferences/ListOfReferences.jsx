@@ -31,21 +31,7 @@ const ListOfReferences = ({
                     <Reference
                         currentItems={currentItems}
                         display={display}
-                        key = {`${reference.id}-${index}`}
-                        id={reference.id}
-                        result= {reference.id}
-                        name={reference.name}
-                        description={reference.description}
-                        maincategory={reference.maincategory}
-                        picture={reference.picture}
-                        tag={reference.tag}
-                        valorisation={reference.valorisation}
-                        nb_available={reference.nb_available}
-                        nb_total={reference.nb_total}
                         gridSize={gridSize}
-                        isLoading={isLoading}
-                        idArticle={reference.art_id}
-                        favorite={reference.favorite}
                         reference={reference}
                     />
 
