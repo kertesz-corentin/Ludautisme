@@ -377,7 +377,7 @@ module.exports = {
             { id_permanency: activePerm[0].next_id },
             { id_user: user.id },
         ];
-        let booking = await bookingDataMapper.findFiltered(getCurrentParams);
+        let booking = await userBookingDataMapper.findFiltered(getCurrentParams);
         console.error(booking);
         return res.json(booking);
         // let booking = await userBookingDataMapper.findActive(user.id);
