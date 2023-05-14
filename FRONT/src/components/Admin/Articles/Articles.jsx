@@ -27,6 +27,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                     let option = {
                         "available": value
                     }
+                    console.log(option);
                     response = await api.put(`/admin/articles/${artcileId}`, option);
                 }
                 break;
