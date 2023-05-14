@@ -381,14 +381,14 @@ module.exports = {
         console.error(booking);
         // let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
-        if (!booking.data.length) {
-            const newBooking = {
-                id_permanency: activePerm[0].next_id,
-                id_user: user[0].id,
-            };
-            // create booking
-            booking = [await bookingDataMapper.addOne(newBooking)];
-        }
+        // if (!booking.data.length) {
+        //     const newBooking = {
+        //         id_permanency: activePerm[0].next_id,
+        //         id_user: user[0].id,
+        //     };
+        //     // create booking
+        //     booking = [await bookingDataMapper.addOne(newBooking)];
+        // }
         if (!booking[0]?.name === 'DatabaseError') {
             throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
         }
