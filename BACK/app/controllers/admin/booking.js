@@ -361,6 +361,8 @@ module.exports = {
         return res.json(deliver);
     },
     async prolongArticle(req, res) {
+        console.log("je rentre dans la prolongation");
+        console.error("je rentre dans la prolongation");
         // params is user ID
         const { id } = req.params;
         const { prolong_article } = req.body;
