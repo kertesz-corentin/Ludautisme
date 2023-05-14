@@ -25,7 +25,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
                     let option = {
-                        "available": value
+                        "available": true
                     }
                     console.log(option);
                     response = await api.put(`/admin/articles/${artcileId}`, option);
