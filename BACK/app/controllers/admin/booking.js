@@ -370,12 +370,17 @@ module.exports = {
         if (!user[0]) {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
+        // get activie permanency
+        const activePerm = await permanencyDataMapper.findActive();
         // get active booking for this user
-        let booking = await userBookingDataMapper.findActive(user.id);
+        const getCurrentParams = [
+            { id_permanency: activePerm[0].next_id },
+            { id_user: user.id },
+        ];
+        let booking = await bookingDataMapper.findFiltered(getCurrentParams);
+        // let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
         if (!booking.length) {
-            // get activie permanency
-            const activePerm = await permanencyDataMapper.findActive();
             const newBooking = {
                 id_permanency: activePerm[0].next_id,
                 id_user: user[0].id,
