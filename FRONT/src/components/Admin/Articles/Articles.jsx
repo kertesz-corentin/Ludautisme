@@ -74,7 +74,8 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                             <ToggleButton
                                 value={params.value} P
                                 selected={params.value}
-                                onChange={() => {
+                                onChange={(e) => {
+                                    e.stopPropagation();
                                     handleToogle(params.row.number, params.value, params.field);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
