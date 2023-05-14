@@ -14,11 +14,11 @@ import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage'
 import { referenceSchema } from '../../../Schemas';
 
 // import material ui component
-import { IconButton } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 
 import './adminreferences.scss';
 
-const AdminReferences = ({className, ...rest}) => {
+const AdminReferences = ({ className, ...rest }) => {
     const [references, setReferences] = useState([]);
     const [categories, setCategories] = useState([]);
 
@@ -31,25 +31,25 @@ const AdminReferences = ({className, ...rest}) => {
         try {
             const response = await api.get('/admin/references');
             const data = await response.data;
-                setReferences(data);
+            setReferences(data);
         }
         catch (err) {
             setAlertMessage(err.response.data.message)
-            console.error (err);
+            console.error(err);
         }
     }
 
     const getMainCategories = async () => {
         try {
-            const response = await api.post('/admin/categorie/search', {"main": true});
+            const response = await api.post('/admin/categorie/search', { "main": true });
             const data = await response.data;
-            if(response.status === 200){
+            if (response.status === 200) {
                 setCategories(data);
             }
         }
         catch (err) {
             setAlertMessage(err.response.data.message)
-            console.error (err);
+            console.error(err);
         }
     }
 
@@ -64,13 +64,13 @@ const AdminReferences = ({className, ...rest}) => {
             const propElt = referenceSchema[prop];
             const config = {
                 type: propElt.type,
-                field:prop,
-                headerName:propElt.label,
+                field: prop,
+                headerName: propElt.label,
                 width: propElt.width
             };
 
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "edit":
                         config.renderCell = (params) => (
 
@@ -81,7 +81,7 @@ const AdminReferences = ({className, ...rest}) => {
                                 <UpdateReferenceModal params={params} categories={categories} />
                             </IconButton>
                         );
-                    break;
+                        break;
 
                     default:
                         break;
@@ -92,11 +92,19 @@ const AdminReferences = ({className, ...rest}) => {
         return columns;
     })();
 
-   return (
-       <div
+    const categoryButton =
+        <div className="addreference-modal--open">
+            <Button variant="outlined" href="/admin/category">
+                Gérer catégories
+            </Button>
+        </div>
+
+
+    return (
+        <div
             className={classnames('adminreferences', className)}
             {...rest}
-         >
+        >
             {alertMessage && (
                 <AlertMessage message={alertMessage} />
             )}
@@ -107,22 +115,19 @@ const AdminReferences = ({className, ...rest}) => {
                 path={path}
                 initialState={{
                     columns: {
-                      columnVisibilityModel: {
-                        id_maincat: false,
+                        columnVisibilityModel: {
+                            id_maincat: false,
 
-                      },
+                        },
                     },
                     sorting: {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                children={
-                    <AddReferenceModal categories={categories} />
-                }
-                category={<AddCategoryModal />}
+                buttonList={[<AddReferenceModal categories={categories} />, <AddCategoryModal />, categoryButton]}
             />
         </div>
-   );
+    );
 };
 
 AdminReferences.propTypes = {

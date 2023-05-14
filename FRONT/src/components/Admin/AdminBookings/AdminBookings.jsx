@@ -145,10 +145,10 @@ const AdminBookings = ({ className, ...rest }) => {
                         sortModel: [{ field: 'date_permanency', sort: 'desc' }],
                     }
                 }}
-                children={<BookingUserChoice
+                children={[<BookingUserChoice
                     setHistory={setHistory}
                     checked={history}
-                    getBookings = {getBookings} />}
+                    getBookings = {getBookings} />]}
             />
         </div>
     );

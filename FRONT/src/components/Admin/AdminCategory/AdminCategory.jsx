@@ -1,53 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
-// import requests
-import api from '../../../requests/index';
-
-// import react components
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import AdminSection from '../AdminSection/AdminSection';
-import AddUserModal from '../AddUserModal/AddUserModal';
-import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
-import { userSchema } from '../../../Schemas';
-
-// import material ui components
-import { ToggleButton, IconButton } from '@mui/material';
+import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
+import { IconButton, ToggleButton } from '@mui/material';
 import { GridCheckIcon } from '@mui/x-data-grid';
+import { categorySchema } from '../../../Schemas';
+import PropTypes from 'prop-types';
+import api from '../../../requests';
 
-import './adminusers.scss';
+const AdminCategory = ({ className, ...rest }) => {
+    const [alertMessage, setAlertMessage] = React.useState();
+    const [severity, setSeverity] = React.useState();
+    const [categories, setCategories] = React.useState ([]);
+    const [tags, setTags] = React.useState ([]);
 
-const AdminUsers = ({className, ...rest}) => {
-    const [users, setUsers] = useState([]);
-
-    const [alertMessage, setAlertMessage] = useState();
-
-    // config path for api route
-    const path = '/admin/users';
-
-    const getUsers = async () => {
+    let path = '/admin/categorie/search';
+    const getMainCategories = async () => {
         try {
-            const response = await api.get(path);
-            const data = await response.data;
-            if(response.status === 200){
-                setUsers(data);
+            let options = {
+                main: true
             }
+            const response = await api.post(path, options);
+            const data = await response.data;
+            console.log(response)
+            if (response.status === 200) {
+
+                setCategories(data);
+            } else {
+                setAlertMessage(response.data.message);
+            }
+        } catch (err) {
+            setAlertMessage(err.response.data.message)
+            console.error(err);
         }
-        catch (err) {
+    }
+
+    const getTags = async () => {
+        try {
+            const response = await api.post(path);
+            const data = await response.data;
+            if (response.status === 200) {
+                setTags(data);
+            }
+        } catch (err) {
             setAlertMessage(err.response.data.message)
             console.error(err);
         }
     }
 
     useEffect(() => {
-        getUsers();
+        getMainCategories();
+        getTags();
     }, []);
 
     const columnBuilder = (() => {
         const columns = [];
-        Object.keys(userSchema).forEach(prop => {
-            const propElt = userSchema[prop];
+        Object.keys(categorySchema).forEach(prop => {
+            const propElt = categorySchema[prop];
             const config = {
                 type: propElt.type,
                 field:prop,
@@ -62,8 +72,6 @@ const AdminUsers = ({className, ...rest}) => {
                                 value={params.value}
                                 selected={params.value}
                                 onChange={async () => {
-                                    await api.put(`${path}/${params.row.id}`, {[prop] : !params.value});
-                                    getUsers();
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
@@ -73,12 +81,10 @@ const AdminUsers = ({className, ...rest}) => {
                     break;
                     case "edit":
                         config.renderCell = (params) => (
-
                             <IconButton
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateUserModal params={params} />
                             </IconButton>
                     );
                     break;
@@ -97,38 +103,38 @@ const AdminUsers = ({className, ...rest}) => {
             className={classnames('adminusers', className)}
             {...rest}
         >
-            {alertMessage && (
-                <AlertMessage message={alertMessage} />
+            {alertMessage && severity && (
+                <AlertMessage
+                    message={alertMessage}
+                    severity={severity}
+                >
+                </AlertMessage>
             )}
             <AdminSection
-                title="Adhérents"
-                rows={users}
+                title="Catégories"
+                rows={categories}
                 columns={columnBuilder}
-                path={path}
                 initialState={{
                     columns: {
-                      columnVisibilityModel: {
-                        // Hide columns <column name>, the other columns will remain visible
-                        id_role: false,
-                        cotisation_expiration: false,
-                        caution_expiration: false,
-                      },
+                        columnVisibilityModel: {
+
+                        },
                     },
                     sorting: {
                         sortModel: [{ field: 'member_number', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddUserModal />]}
+                buttonList={[<AddCategoryModal />]}
             />
         </div>
     );
 };
 
-AdminUsers.propTypes = {
+AdminCategory.propTypes = {
     className: PropTypes.string,
 };
-AdminUsers.defaultProps = {
+AdminCategory.defaultProps = {
     className: '',
 };
 
-export default React.memo(AdminUsers);
+export default React.memo(AdminCategory);
