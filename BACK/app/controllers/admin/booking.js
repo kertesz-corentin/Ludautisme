@@ -375,8 +375,9 @@ module.exports = {
         // get active booking for this user
         const getCurrentParams = [
             { id_permanency: activePerm[0].next_id },
-            { id_user: user.id },
+            { id_user: user[0].id },
         ];
+        console.log("MERDE !!");
         let booking = await userBookingDataMapper.findFiltered(getCurrentParams);
         console.error(booking);
         return res.json(booking);
