@@ -379,6 +379,7 @@ module.exports = {
         ];
         let booking = await bookingDataMapper.findFiltered(getCurrentParams);
         console.error(booking);
+        return res.json(booking);
         // let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
         // if (!booking.data.length) {
@@ -389,9 +390,9 @@ module.exports = {
         //     // create booking
         //     booking = [await bookingDataMapper.addOne(newBooking)];
         // }
-        if (!booking[0]?.name === 'DatabaseError') {
-            throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
-        }
+        // if (!booking[0]?.name === 'DatabaseError') {
+        //     throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
+        // }
         // remove article from old booking
         // const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
@@ -412,6 +413,5 @@ module.exports = {
         // }
 
         // return res.json(confirm);
-        return res.json(booking);
     },
 };
