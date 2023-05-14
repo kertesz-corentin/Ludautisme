@@ -22,13 +22,13 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
-
+                    console.log("hetretire d'une réservation");
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
                     let option = {
                         "available": true
                     }
-                    console.log(option);
+                    console.log("je met juste a jour");
                     response = await api.put(`/admin/articles/${artcileId}`, option);
                 }
                 break;
