@@ -371,6 +371,7 @@ module.exports = {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
         // get activie permanency
+        console.log("MERDE DE BITE!!");
         const activePerm = await permanencyDataMapper.findActive();
         // get active booking for this user
         const getCurrentParams = [
