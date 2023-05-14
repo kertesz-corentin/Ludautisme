@@ -378,6 +378,7 @@ module.exports = {
             { id_user: user.id },
         ];
         let booking = await bookingDataMapper.findFiltered(getCurrentParams);
+        console.error(booking);
         // let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
         if (!booking.data.length) {
@@ -392,24 +393,25 @@ module.exports = {
             throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
         }
         // remove article from old booking
-        const deleteBooking = await bookingDataMapper.deleteArticle(article);
+        // const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
-        if (!deleteBooking) {
-            throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
-        }
-        // add article to new booking
-        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
-        let confirm = null;
-        if (newBooking) {
-            confirm = {
-                articles: prolong_article,
-                reservation: booking,
-                message: `Article n°${article} prolongé avec succès`,
-            };
-        } else {
-            throw new ApiError(500, 'Impossible de prolonger');
-        }
+        // if (!deleteBooking) {
+        //     throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
+        // }
+        // // add article to new booking
+        // const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
+        // let confirm = null;
+        // if (newBooking) {
+        //     confirm = {
+        //         articles: prolong_article,
+        //         reservation: booking,
+        //         message: `Article n°${article} prolongé avec succès`,
+        //     };
+        // } else {
+        //     throw new ApiError(500, 'Impossible de prolonger');
+        // }
 
-        return res.json(confirm);
+        // return res.json(confirm);
+        return res.json(booking);
     },
 };
