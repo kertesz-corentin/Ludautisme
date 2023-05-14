@@ -371,7 +371,7 @@ module.exports = {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
         // get active booking for this user
-        let booking = await userBookingDataMapper.findActive(id);
+        let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
         if (!booking.length) {
             // get activie permanency
