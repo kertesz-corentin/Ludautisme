@@ -22,6 +22,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
+
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
                     let option = {
@@ -44,7 +45,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
 
         if (response.status === 200) {
             getReferenceWithArticles();
-
+            console.log(response);
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
