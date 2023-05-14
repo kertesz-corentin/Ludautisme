@@ -380,7 +380,7 @@ module.exports = {
         let booking = await bookingDataMapper.findFiltered(getCurrentParams);
         // let booking = await userBookingDataMapper.findActive(user.id);
         // if not create new active booking
-        if (!booking.length) {
+        if (!booking.data.length) {
             const newBooking = {
                 id_permanency: activePerm[0].next_id,
                 id_user: user[0].id,
