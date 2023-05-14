@@ -361,8 +361,6 @@ module.exports = {
         return res.json(deliver);
     },
     async prolongArticle(req, res) {
-        console.log("je rentre dans la prolongation");
-        console.error("je rentre dans la prolongation");
         // params is user ID
         const { id } = req.params;
         const { prolong_article } = req.body;
@@ -373,49 +371,45 @@ module.exports = {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
         // get activie permanency
-        console.log("MERDE DE BITE!!");
         const activePerm = await permanencyDataMapper.findActive();
         // get active booking for this user
         const getCurrentParams = [
             { id_permanency: activePerm[0].next_id },
             { id_user: user[0].id },
         ];
-        console.log("MERDE !!");
         let booking = await userBookingDataMapper.findFiltered(getCurrentParams);
-        console.error(booking);
-        return res.json(booking);
-        // let booking = await userBookingDataMapper.findActive(user.id);
+
         // if not create new active booking
-        // if (!booking.data.length) {
-        //     const newBooking = {
-        //         id_permanency: activePerm[0].next_id,
-        //         id_user: user[0].id,
-        //     };
-        //     // create booking
-        //     booking = [await bookingDataMapper.addOne(newBooking)];
-        // }
-        // if (!booking[0]?.name === 'DatabaseError') {
-        //     throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
-        // }
+        if (!booking.length) {
+            const newBooking = {
+                id_permanency: activePerm[0].next_id,
+                id_user: user[0].id,
+            };
+            // create booking
+            booking = [await bookingDataMapper.addOne(newBooking)];
+        }
+        if (!booking[0]?.name === 'DatabaseError') {
+            throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
+        }
         // remove article from old booking
-        // const deleteBooking = await bookingDataMapper.deleteArticle(article);
+        const deleteBooking = await bookingDataMapper.deleteArticle(article);
 
-        // if (!deleteBooking) {
-        //     throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
-        // }
-        // // add article to new booking
-        // const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
-        // let confirm = null;
-        // if (newBooking) {
-        //     confirm = {
-        //         articles: prolong_article,
-        //         reservation: booking,
-        //         message: `Article n°${article} prolongé avec succès`,
-        //     };
-        // } else {
-        //     throw new ApiError(500, 'Impossible de prolonger');
-        // }
+        if (!deleteBooking) {
+            throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
+        }
+        // add article to new booking
+        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
+        let confirm = null;
+        if (newBooking) {
+            confirm = {
+                articles: prolong_article,
+                reservation: booking,
+                message: `Article n°${article} prolongé avec succès`,
+            };
+        } else {
+            throw new ApiError(500, 'Impossible de prolonger');
+        }
 
-        // return res.json(confirm);
+        return res.json(confirm);
     },
 };
