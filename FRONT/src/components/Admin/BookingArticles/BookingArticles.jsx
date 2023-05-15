@@ -7,7 +7,7 @@ import DeleteArticleModal from '../DeleteArticleModal/DeleteArticleModal';
 import { articleSchema } from '../../../Schemas';
 
 // import material ui components
-import { IconButton, Button } from '@mui/material';
+import { IconButton, Button, Chip } from '@mui/material';
 import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './bookingarticles.scss';
@@ -45,7 +45,7 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                             <Button
                                 className="updatereference-modal-footer-submit"
                                 variant="contained"
-                                onClick={(e) =>  {
+                                onClick={(e) => {
                                     e.stopPropagation();
                                     handleProlong(params.row)
                                 }}
@@ -57,6 +57,16 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                     default:
                         break;
                 }
+            }
+            if (propElt.label === "Disponible") {
+                config.renderCell = (params) => (
+                    <div>
+                        {params.value
+                            ? <Chip label="Rendu" color="success" />
+                            : <Chip label="A rendre" color="error" />
+                        }
+                    </div>
+                );
             }
             columns.push(config);
         });
