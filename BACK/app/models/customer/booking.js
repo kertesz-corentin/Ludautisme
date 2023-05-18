@@ -109,6 +109,7 @@ module.exports = {
                     query += `"${prop}"=$${index + 1} `;
                 }
             });
+            console.log(query);
             const result = await sqlHandler(query, placeholders);
 
             return result.rows;

@@ -28,6 +28,8 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
 
         if (response.status === 200) {
             setUser(searchUser);
+            setSeverity("");
+            setAlertMessage("");
             setUserExist(true);
         } else {
             setSeverity("error");

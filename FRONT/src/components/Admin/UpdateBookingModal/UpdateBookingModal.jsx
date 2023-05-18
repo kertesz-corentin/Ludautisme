@@ -114,6 +114,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
         const response = await api.post(`admin/booking/article/${userId}`, options);
 
         if (response.status === 200) {
+            console.log(response);
             setSeverity("success");
             setAlertMessage("Article prolongé");
             getBookings();

@@ -22,11 +22,13 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
+                    console.log("hetretire d'une réservation");
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
                     let option = {
-                        "available": value
+                        "available": true
                     }
+                    console.log("je met juste a jour");
                     response = await api.put(`/admin/articles/${artcileId}`, option);
                 }
                 break;
@@ -43,7 +45,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
 
         if (response.status === 200) {
             getReferenceWithArticles();
-
+            console.log(response);
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
@@ -72,7 +74,8 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                             <ToggleButton
                                 value={params.value} P
                                 selected={params.value}
-                                onChange={() => {
+                                onChange={(e) => {
+                                    e.stopPropagation();
                                     handleToogle(params.row.number, params.value, params.field);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
