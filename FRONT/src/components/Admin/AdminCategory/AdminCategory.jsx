@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import classnames from 'classnames';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import AdminSection from '../AdminSection/AdminSection';
 import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
-import { IconButton, ToggleButton } from '@mui/material';
+import { IconButton, ToggleButton, Chip } from '@mui/material';
 import { GridCheckIcon } from '@mui/x-data-grid';
 import { categorySchema } from '../../../Schemas';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
+import UpdateCategoryModal from '../UpdateCategoryModal/UpdateCategoryModal';
 
 const AdminCategory = ({ className, ...rest }) => {
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
-    const [categories, setCategories] = React.useState ([]);
-    const [tags, setTags] = React.useState ([]);
+    const [categories, setCategories] = React.useState([]);
+    const [tags, setTags] = React.useState([]);
 
-    let path = '/admin/categorie/search';
+    let path = '/admin/categorie';
     const getMainCategories = async () => {
         try {
-            let options = {
-                main: true
-            }
-            const response = await api.post(path, options);
+            const response = await api.get(path);
             const data = await response.data;
             console.log(response)
             if (response.status === 200) {
-
                 setCategories(data);
             } else {
                 setAlertMessage(response.data.message);
@@ -60,12 +57,13 @@ const AdminCategory = ({ className, ...rest }) => {
             const propElt = categorySchema[prop];
             const config = {
                 type: propElt.type,
-                field:prop,
-                headerName:propElt.label,
-                width: propElt.width};
+                field: prop,
+                headerName: propElt.label,
+                width: propElt.width
+            };
 
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "toggle":
                         config.renderCell = (params) => (
                             <ToggleButton
@@ -77,20 +75,30 @@ const AdminCategory = ({ className, ...rest }) => {
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
-                    );
-                    break;
+                        );
+                        break;
                     case "edit":
                         config.renderCell = (params) => (
                             <IconButton
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
+                                <UpdateCategoryModal params={params} categories={categories} getMainCategories={getMainCategories}/>
                             </IconButton>
-                    );
-                    break;
-
+                        );
+                        break;
+                    case "tags":
+                        config.renderCell = (params) => (
+                            <div>
+                                {params.value
+                                    ? <Chip label="Principale" color="success" />
+                                    : <Chip label="Secondaire" color="info" />
+                                }
+                            </div>
+                        )
+                        break;     
                     default:
-                    break;
+                        break;
                 }
             }
             columns.push(config);

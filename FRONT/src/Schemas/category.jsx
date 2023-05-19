@@ -16,6 +16,12 @@ const categorySchema  = {
         label : "Description",
         gridDisplay : "normal",
         width : 400,
+    },
+    main: {
+        type : "boolean",
+        label : "principale / secondaire",
+        gridDisplay: "tags",
+        width : 400
     }
 }
 
