@@ -1,6 +1,6 @@
 const ApiError = require('../../errors/apiError');
 
-const { categoryDataMapper } = require('../../models/admin');
+const { categoryDataMapper, adminReferenceDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -51,11 +51,33 @@ module.exports = {
         return res.json(updatedCategory);
     },
     async delete(req, res) {
-        const deletedCategory = await categoryDataMapper.delete(req.params.id);
+        const { id } = req.params;
+        const arr = [{ id: Number(id) }];
+        const category = await categoryDataMapper.findFiltered(arr);
+        if (!category.length) {
+            throw new ApiError(404, 'La catégorie n\'a pas été trouvé, rien n\'a été supprimé');
+        }
+        // if category is main update his ref to "without category"
+        if (category[0].main) {
+            // TODO récupérer tout les référence dans la catégorie en question
+            const arrMain = [{ main_category: [category[0].id] }];
+            const referencesInCategory = await adminReferenceDataMapper.findFiltered(arrMain);
+
+            referencesInCategory.forEach(async (r) => {
+                const options = {
+                    main_category: 23,
+                };
+                await adminReferenceDataMapper.update(r.id, options);
+            });
+        }
+        // !! interdire la suppréssion de la categorie "sans catégorie"
+        if (category.id === 23) {
+            throw new ApiError(401, 'Interdiction de supprimmer la catégorie "sans catégorie');
+        }
+        const deletedCategory = await categoryDataMapper.delete(id);
         if (!deletedCategory) {
             throw new ApiError(404, 'La catégorie n\'a pas été trouvé, rien n\'a été supprimé');
         }
         return res.json(deletedCategory);
     },
-
 };

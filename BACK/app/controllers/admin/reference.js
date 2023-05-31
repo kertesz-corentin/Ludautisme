@@ -1,35 +1,35 @@
 /* eslint-disable no-restricted-syntax */
 const ApiError = require('../../errors/apiError');
-const { referenceDataMapper, pictureDataMapper, articleDataMapper } = require('../../models/admin');
+const { adminReferenceDataMapper, pictureDataMapper, articleDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
-        const results = await referenceDataMapper.findAll();
+        const results = await adminReferenceDataMapper.findAll();
         if (!results) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
         return res.json(results);
     },
     async getActive(req, res) {
-        const results = await referenceDataMapper.findActive();
+        const results = await adminReferenceDataMapper.findActive();
         if (!results) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
         return res.json(results);
     },
     async getOne(req, res) {
-        const results = await referenceDataMapper.findOne(req.params.id);
+        const results = await adminReferenceDataMapper.findOne(req.params.id);
         if (!results[0]) {
             throw new ApiError(404, 'Aucun résultat trouvé');
         }
         return res.json(results);
     },
     async addRef(req, res) {
-        const reference = await referenceDataMapper.findByName(req.body.name);
+        const reference = await adminReferenceDataMapper.findByName(req.body.name);
         if (reference.length > 0) {
             throw new ApiError(400, 'Une référence avec le même nom existe déjà');
         }
-        const newRef = await referenceDataMapper.create(req.body);
+        const newRef = await adminReferenceDataMapper.create(req.body);
         if (!newRef) {
             throw new ApiError(500, 'Impossible de créer la référence');
         }
@@ -43,12 +43,12 @@ module.exports = {
         return res.json(newRef);
     },
     async update(req, res) {
-        const reference = await referenceDataMapper.findOne(req.params.id);
+        const reference = await adminReferenceDataMapper.findOne(req.params.id);
 
         if (reference.length < 1) {
-            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+            throw new ApiError(404, "Cette référence n'existe pas");
         }
-        const updateRef = await referenceDataMapper.update(req.params.id, req.body);
+        const updateRef = await adminReferenceDataMapper.update(req.params.id, req.body);
         return res.json(updateRef);
     },
     async archived(req, res) {

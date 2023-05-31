@@ -1,5 +1,5 @@
 const ApiError = require('../../errors/apiError');
-const { articleDataMapper, referenceDataMapper } = require('../../models/admin');
+const { articleDataMapper, adminReferenceDataMapper } = require('../../models/admin');
 
 module.exports = {
     async getAll(_, res) {
@@ -40,7 +40,7 @@ module.exports = {
     },
     async addArticle(req, res) {
         // je vérifie si la référence existe
-        const reference = await referenceDataMapper.findOne(req.body.id_ref);
+        const reference = await adminReferenceDataMapper.findOne(req.body.id_ref);
         if (reference.length < 1) {
             throw new ApiError(404, 'La référence parent n\'existe pas');
         }

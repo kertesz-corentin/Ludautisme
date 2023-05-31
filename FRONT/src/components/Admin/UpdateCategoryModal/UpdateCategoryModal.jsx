@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
 import './updateCategoryModal.scss';
-import { TextField, Box, Typography, Modal, Button, IconButton, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 const UpdateReferenceModal = ({ params, categories, className, getMainCategories, ...rest }) => {
@@ -38,6 +39,20 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
         if (response.status === 200) {
             handleClose();
             getMainCategories();
+        }
+    }
+
+    const handleDelete = async () => {
+        console.log(params.row);
+        const response = await api.delete(`/admin/categorie/${params.row.id}`);
+        console.log(response);
+        if (response.status === 200) {
+            getMainCategories();
+            handleClose();
+        } else {
+            setAlertMessage(response.statusText);
+            setSeverity("error");
+            setTimeout(() => { setAlertMessage(); setSeverity() }, 2000);
         }
     }
 
@@ -106,6 +121,14 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
                         >
                             Mettre à jour
                         </Button>
+                        <Button
+                                onClick={handleDelete}
+                                className="update-modal-footer-submit"
+                                variant="outlined"
+                                startIcon={<DeleteIcon />}
+                            >
+                                Supprimer
+                            </Button>
                     </div>
                 </Box>
             </Modal>

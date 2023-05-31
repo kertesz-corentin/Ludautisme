@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
 const { userBookingDataMapper } = require('../../models/customer');
-const { usersDataMapper, permanencyDataMapper, referenceDataMapper } = require('../../models/admin');
+const { usersDataMapper, permanencyDataMapper, adminReferenceDataMapper } = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
 
 const { testUser } = require('../../helpers/testUser');
@@ -65,7 +65,7 @@ module.exports = {
         const refAvailability = await userBookingDataMapper.getRefsAvailability(refIds);
         if (refAvailability.length !== refIds.length) {
             const unknownRefIds = refIds.filter((refId) => !refAvailability.map((ref) => ref.id).includes(refId));
-            const unknownRef = await referenceDataMapper.findManyWithRefId(unknownRefIds);
+            const unknownRef = await adminReferenceDataMapper.findManyWithRefId(unknownRefIds);
             throw new ApiError(403, `Référence(s) inconnues ou indisponibles : [ ${unknownRef.map((ref) => `idRef : ${ref.id} - ${ref.name}`)} ]`);
         }
 

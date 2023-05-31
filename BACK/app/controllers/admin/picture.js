@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 const fs = require('fs');
 const ApiError = require('../../errors/apiError');
-const { pictureDataMapper, referenceDataMapper } = require('../../models/admin');
+const { pictureDataMapper, adminReferenceDataMapper } = require('../../models/admin');
 
 module.exports = {
     async addPicture(req, res) {
@@ -108,7 +108,7 @@ module.exports = {
     },
     async getForOneRef(req, res) {
         const { id } = req.params;
-        const reference = await referenceDataMapper.findOne(id);
+        const reference = await adminReferenceDataMapper.findOne(id);
         if (!reference.length) {
             throw new ApiError(404, 'référence inexistante');
         }
