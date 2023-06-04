@@ -77,4 +77,16 @@ module.exports = {
         const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
+    async deleteTagFromRef(tagId, refId) {
+        const query = `DELETE FROM "reference_to_category" WHERE id_ref=$1 AND id_category=$2 RETURNING *`;
+        const placeholders = [refId, tagId];
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
+    },
+    async joinTagToRef(tagId, refId) {
+        const query = `INSERT INTO "reference_to_category" (id_ref, id_category) VALUES ($1, $2) RETURNING *`;
+        const placeholders = [refId, tagId];
+        const result = await sqlHandler(query, placeholders);
+        return result.rows[0];
+    },
 };

@@ -11,7 +11,7 @@ import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage'
 
 import './updatereferencemodal.scss';
 
-const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
+const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) => {
     const [open, setOpen] = useState(false)
     const handleOpen = async () => {
         setOpen(true)
@@ -30,15 +30,14 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
     const [articles, setArticles] = useState([]);
+    const [tag, setTags] = useState(params.row.tag.map((t) => {return t.id}));
 
     const getReferenceWithArticles = async () => {
         try {
-
             const settings = {
                 "id_ref": params.row.id,
             }
             const response = await api.post(`/admin/articles/search`, settings);
-
             setArticles(response.data);
         }
         catch (err) {
@@ -56,6 +55,7 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
             'main_category': data.get('main_category'),
+            'tags': data.get('tags')
         };
         const response = await api.put(`/admin/references/${params.row.id}`, reference);
         if (response.status === 200) {
@@ -147,6 +147,11 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
 
     const handleChange = (event) => {
         setCategory(event.target.value);
+    }
+
+    const handleChangeTag = (event) => {
+        console.log(event.target.value);
+        setTags(event.target.value);
     }
 
     return (
@@ -252,7 +257,6 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                             sx={{ mb: 2 }}
                         >
                         </TextField>
-
                         <FormControl fullWidth>
                             <InputLabel id="maincategory-label">Catégorie</InputLabel>
                             <Select
@@ -263,8 +267,29 @@ const UpdateReferenceModal = ({ params, categories, className, ...rest }) => {
                                 type='string'
                                 onChange={handleChange}
                                 value={category}
+                                style={{marginBottom: "16px"}}
                             >
                                 {categories.map((category) => {
+                                    return (
+                                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="tags-label">Catégories secondaires</InputLabel>
+                            <Select
+                                labelId="tags-label"
+                                id="tags"
+                                name="tags"
+                                label="Catégories secondaires"
+                                type='string'
+                                onChange={handleChangeTag}
+                                value={tag}
+                                multiple
+                            >
+                                {tags.map((category) => {
+                                    console.log(category)
                                     return (
                                         <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                                     )

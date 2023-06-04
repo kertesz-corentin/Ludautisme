@@ -1,6 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 const ApiError = require('../../errors/apiError');
-const { adminReferenceDataMapper, pictureDataMapper, articleDataMapper } = require('../../models/admin');
+const {
+    adminReferenceDataMapper, pictureDataMapper, articleDataMapper, categoryDataMapper,
+} = require('../../models/admin');
 
 module.exports = {
     async getAll(req, res) {
@@ -44,11 +46,62 @@ module.exports = {
     },
     async update(req, res) {
         const reference = await adminReferenceDataMapper.findOne(req.params.id);
-
         if (reference.length < 1) {
             throw new ApiError(404, "Cette référence n'existe pas");
         }
-        const updateRef = await adminReferenceDataMapper.update(req.params.id, req.body);
+        // comparer les tags du formulaire et ceux de la BDD
+        const existingTags = reference[0].tag.map((t) => String(t.id));
+        const tags = req.body.tags.split(',');
+        const promiseArrayAdd = [];
+        const promiseArrayDelete = [];
+        // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
+        if (!existingTags.length && tags.length) {
+            for (const tag of tags) {
+                const promise = new Promise(() => {
+                    categoryDataMapper.joinTagToRef(tag, reference.id);
+                });
+                promiseArrayAdd.push(promise);
+            }
+        } else {
+            if (existingTags.length) {
+                /* comparer si un tags existant n'est pas dans la liste depuis le
+                formulaire supprimer la relation */
+                for (const tag of existingTags) {
+                    if (!tags.includes(tag)) {
+                        const promise = new Promise(() => {
+                            categoryDataMapper.deleteTagFromRef(tag, reference[0].id);
+                        });
+                        promiseArrayDelete.push(promise);
+                    }
+                }
+            }
+            if (tags.length) {
+                /* comparer si un tag est dans le formulaire mais pas dans la
+                BDD créer la relation */
+                for (const tag of tags) {
+                    if (!existingTags.includes(tag)) {
+                        const promise = new Promise(() => {
+                            categoryDataMapper.joinTagToRef(tag, reference[0].id);
+                        });
+                        promiseArrayAdd.push(promise);
+                    }
+                }
+            }
+        }
+        if (promiseArrayAdd.length) {
+            await Promise.all(promiseArrayAdd);
+        }
+        if (promiseArrayDelete.length) {
+            await Promise.all(promiseArrayDelete);
+        }
+
+        const ref = {
+            name: req.body.name,
+            description: req.body.description,
+            valorisation: req.body.valorisation,
+            main_category: req.body.main_category,
+        };
+        const updateRef = await adminReferenceDataMapper.update(req.params.id, ref);
         return res.json(updateRef);
     },
     async archived(req, res) {

@@ -8,7 +8,6 @@ import api from '../../../requests/index';
 // import react components
 import AdminSection from '../AdminSection/AdminSection';
 import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
-import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { referenceSchema } from '../../../Schemas';
@@ -21,6 +20,7 @@ import './adminreferences.scss';
 const AdminReferences = ({ className, ...rest }) => {
     const [references, setReferences] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
 
     const [alertMessage, setAlertMessage] = useState();
 
@@ -53,9 +53,24 @@ const AdminReferences = ({ className, ...rest }) => {
         }
     }
 
+    const getTags = async () => {
+        try {
+            const response = await api.post('/admin/categorie/search', { "main": false });
+            const data = await response.data;
+            if (response.status === 200) {
+                setTags(data);
+            }
+        }
+        catch (err) {
+            setAlertMessage(err.response.data.message)
+            console.error(err);
+        }
+    }
+
     useEffect(() => {
         getReferences();
         getMainCategories();
+        getTags();
     }, []);
 
     const columnBuilder = (() => {
@@ -78,7 +93,7 @@ const AdminReferences = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateReferenceModal params={params} categories={categories} />
+                                <UpdateReferenceModal params={params} categories={categories} tags={tags} />
                             </IconButton>
                         );
                         break;
@@ -124,7 +139,7 @@ const AdminReferences = ({ className, ...rest }) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddReferenceModal categories={categories} />, <AddCategoryModal />, categoryButton]}
+                buttonList={[<AddReferenceModal categories={categories} />, categoryButton]}
             />
         </div>
     );
