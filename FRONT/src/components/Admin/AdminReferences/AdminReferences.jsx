@@ -139,7 +139,7 @@ const AdminReferences = ({ className, ...rest }) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddReferenceModal categories={categories} />, categoryButton]}
+                buttonList={[<AddReferenceModal categories={categories} tags={tags} />, categoryButton]}
             />
         </div>
     );

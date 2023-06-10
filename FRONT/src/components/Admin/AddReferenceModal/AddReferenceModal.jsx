@@ -12,11 +12,12 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './addreferencemodal.scss';
 
-const AddReferenceModal = ({categories, className, ...rest}) => {
+const AddReferenceModal = ({categories, tags, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [category, setCategory] = useState('');
+    const [tag, setTags] = useState([]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,6 +37,9 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
 
     const handleChange = (event) => {
         setCategory(event.target.value);
+    }
+    const handleChangeTag = (event) => {
+        setTags(event.target.value);
     }
 
     return (
@@ -95,6 +99,7 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                                 label="Catégorie"
                                 onChange={handleChange}
                                 value={category}
+                                style={{marginBottom: "16px"}}
                             >
                             {categories.map((category) => {
                                 return (
@@ -103,7 +108,26 @@ const AddReferenceModal = ({categories, className, ...rest}) => {
                             })}
                             </Select>
                         </FormControl>
-
+                        <FormControl fullWidth>
+                            <InputLabel id="tags-label">Catégories secondaires</InputLabel>
+                            <Select
+                                labelId="tags-label"
+                                id="tags"
+                                name="tags"
+                                label="Catégories secondaires"
+                                type='string'
+                                onChange={handleChangeTag}
+                                value={tag}
+                                multiple
+                            >
+                                {tags.map((category) => {
+                                    console.log(category)
+                                    return (
+                                        <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
                     </div>
                     <div className="modal-footer">
                         <Button

@@ -24,7 +24,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
         setAlertMessage(null);
         setOpen(false);
     }
-    const [category, setCategory] = useState(params.row.id_maincat);
+    const [category, setCategory] = useState(params.row.id_maincat); 
     const [picture, setPicture] = useState([]);
     const [currentPicture, setCurrentPicture] = useState();
     const [alertMessage, setAlertMessage] = React.useState();
@@ -150,7 +150,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
     }
 
     const handleChangeTag = (event) => {
-        console.log(event.target.value);
         setTags(event.target.value);
     }
 
