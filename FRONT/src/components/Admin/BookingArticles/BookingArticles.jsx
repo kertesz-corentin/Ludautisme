@@ -58,7 +58,7 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                         break;
                 }
             }
-            if (propElt.label === "Disponible") {
+            if (propElt.label === "Rendu") {
                 config.renderCell = (params) => (
                     <div>
                         {params.value

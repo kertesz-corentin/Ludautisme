@@ -59,6 +59,12 @@ const articleSchema  = {
         gridDisplay : "toggle",
         width : 150,
     },
+    returned:{
+        type:"boolean",
+        label: "Rendu",
+        gridDisplay: "toggle",
+        width : 150,
+    },
     prolonge: {
         type: "number",
         label: "Prolongation",
