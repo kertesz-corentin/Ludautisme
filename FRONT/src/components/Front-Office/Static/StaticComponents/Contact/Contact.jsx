@@ -57,7 +57,10 @@ const Contact = ({ className, ...rest }) => {
             if (response.status === 200) {
                 setSeverity("success");
                 setAlertMessage("email envoyé");
-
+                setName("");
+                setEmail("");
+                setObject("");
+                setMessage("");
             } else {
                 console.error(response.data);
             }
