@@ -125,6 +125,7 @@ const AdminReferences = ({ className, ...rest }) => {
             )}
             <AdminSection
                 title="Références"
+                link ='https://docs.google.com/document/d/1rkWT0BrwOoEZ24t1yPaiZLNRAB57SHKUIhaQoSqXp-M/edit?usp=sharing'
                 rows={references}
                 columns={columnBuilder}
                 path={path}

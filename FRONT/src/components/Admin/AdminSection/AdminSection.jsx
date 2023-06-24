@@ -3,25 +3,36 @@ import PropTypes from 'prop-types';
 
 // import material ui components
 import { DataGrid, GridToolbar, frFR } from '@mui/x-data-grid';
+import { Fab } from '@mui/material';
+import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
 
 import './adminsection.scss';
 
-const AdminSection = ({ title, rows, columns, initialState, children, buttonList }) => {
+const AdminSection = ({ title, link, rows, columns, initialState, children, buttonList }) => {
 
     return (
         <section className='section'>
-            <div className="section-element">
-                <h1 className="section-element-title">Tableau de bord - {title}</h1>
+            <div className='section-head'>
+                <div className="section-element">
+                    <h1 className="section-element-title">Tableau de bord - {title}</h1>
+                </div>
+                {link && (
+                    <div className='section-head-ask'>
+                        <Fab color="primary" aria-label="help" href={link} target='_blank' size='small'>
+                            <QuestionMarkOutlinedIcon color='' />
+                        </Fab>
+                    </div>
+                )}
             </div>
             <div className='section-element-modal'>
                 {children &&
-                    <div style={{width: "100%"}}>{children}</div>
+                    <div style={{ width: "100%" }}>{children}</div>
                 }
-                {buttonList && 
-                buttonList.map(button => {return <div>{button}</div>})}
+                {buttonList &&
+                    buttonList.map(button => { return <div>{button}</div> })}
             </div>
             <div className="section-element">
-                <div className="section-element-grid" style={{ height: 500, width: '100%'}}>
+                <div className="section-element-grid" style={{ height: 500, width: '100%' }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
@@ -29,11 +40,11 @@ const AdminSection = ({ title, rows, columns, initialState, children, buttonList
                         rowsPerPageOptions={[15]}
                         disableSelectionOnClick
                         GridColDef='center'
-                        localeText= {frFR.components.MuiDataGrid.defaultProps.localeText}
+                        localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                         components={{
                             Toolbar: GridToolbar,
                         }}
-                        initialState = {initialState}
+                        initialState={initialState}
                     />
                 </div>
             </div>

@@ -8,6 +8,14 @@
     justify-content: space-between;
     width: 100%;
 
+    &-head {
+        display: flex;
+        width: 100%;
+        &-ask {
+            align-self: center;
+            margin-right: 10px;
+        }
+    }
 
     &-element {
         width: 100%;
