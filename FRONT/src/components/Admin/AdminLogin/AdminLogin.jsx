@@ -10,10 +10,12 @@ import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import { Grid, Link } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 import api from '../../../requests/index';
 import RecoverPasswordModal from '../../Front-Office/User/RecoverPasswordModal/RecoverPasswordModal';
+import { Fab } from '@mui/material';
+import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
 
 import './adminlogin.scss';
 
@@ -55,7 +57,7 @@ export default function SignIn() {
 
     return (
 
-        <div className="admin-login">
+        <><div className="admin-login">
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -90,8 +92,7 @@ export default function SignIn() {
                                 label="Adresse email"
                                 name="email"
                                 autoComplete="email"
-                                autoFocus
-                            />
+                                autoFocus />
                             <TextField
                                 margin="normal"
                                 required
@@ -100,8 +101,7 @@ export default function SignIn() {
                                 label="Mot de passe"
                                 type="password"
                                 id="password"
-                                autoComplete="current-password"
-                            />
+                                autoComplete="current-password" />
                             {/* Ici voir pour rendre disablle le bouton se connecter si les deux input ne sont pas remplies */}
                             <Button
                                 type="submit"
@@ -126,10 +126,15 @@ export default function SignIn() {
             </ThemeProvider>
             <>
                 {!recover && (
-                    <RecoverPasswordModal/>
+                    <RecoverPasswordModal />
                 )}
             </>
         </div>
+        <div className='help'>
+                <Fab color="primary" aria-label="help" href="https://docs.google.com/document/d/1azHxxaSMG5iP1BnD2iVOMvsVlJFNHLw1SFzD0LNVbio/edit?usp=sharing" target='_blank' size='small'>
+                    <QuestionMarkOutlinedIcon color='' />
+                </Fab>
+        </div></>
     );
 }
 

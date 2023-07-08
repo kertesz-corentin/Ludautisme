@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './articles.scss';
@@ -22,13 +22,11 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
-                    console.log("hetretire d'une réservation");
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
                     let option = {
                         "available": true
                     }
-                    console.log("je met juste a jour");
                     response = await api.put(`/admin/articles/${artcileId}`, option);
                 }
                 break;
@@ -131,7 +129,8 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                                 main_category: false,
                                 valorisation: false,
                                 description: false,
-
+                                returned: false,
+                                prolonge: false
                             },
                         },
                         sorting: {

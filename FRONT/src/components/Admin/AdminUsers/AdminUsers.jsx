@@ -105,6 +105,7 @@ const AdminUsers = ({className, ...rest}) => {
                 rows={users}
                 columns={columnBuilder}
                 path={path}
+                link="https://docs.google.com/document/d/1cT8aMNb0chMp2M6to9Tkjl0EjgfojzS3MJ1WSJEAAho/edit?usp=sharing"
                 initialState={{
                     columns: {
                       columnVisibilityModel: {

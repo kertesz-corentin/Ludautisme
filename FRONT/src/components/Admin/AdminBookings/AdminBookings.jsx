@@ -133,6 +133,7 @@ const AdminBookings = ({ className, ...rest }) => {
                 rows={bookings}
                 columns={columnBuilder}
                 path={'/admin/booking'}
+                link="https://docs.google.com/document/d/1Xwl1SRZjGDQndHXfwGLWEyNPRm_r0EqEbTvD9P-a63c/edit?usp=sharing"
                 initialState={{
                     columns: {
                         columnVisibilityModel: {

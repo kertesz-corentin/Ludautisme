@@ -74,20 +74,22 @@ const AddReferenceModal = ({categories, tags, className, ...rest}) => {
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Description'
-                            name='description'
-                            type='textarea'
+                            label='Valorisation'
+                            name='valorisation'
+                            type='number'
                             className="addreference-modal-inputs-item"
                             sx={{mb: 2}}
                         >
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Valorisation'
-                            name='valorisation'
-                            type='number'
+                            label='Description'
+                            name='description'
+                            type='textarea'
                             className="addreference-modal-inputs-item"
                             sx={{mb: 2}}
+                            fullWidth
+                            multiline
                         >
                         </TextField>
                         <FormControl fullWidth>

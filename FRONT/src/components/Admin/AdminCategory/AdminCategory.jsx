@@ -122,6 +122,7 @@ const AdminCategory = ({ className, ...rest }) => {
                 title="Catégories"
                 rows={categories}
                 columns={columnBuilder}
+                link="https://docs.google.com/document/d/1K1u-nSsqXa0zNCJdBSWWafX0blfX0qdV87tsmDweSyM/edit?usp=sharing"
                 initialState={{
                     columns: {
                         columnVisibilityModel: {
