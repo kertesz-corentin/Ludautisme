@@ -104,7 +104,7 @@ CREATE TABLE "booking" (
 
 CREATE TABLE "article_to_booking"(
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "returned" BOOLEAN DEFAULT true,
+    "returned" BOOLEAN DEFAULT false,
     "id_article" INT REFERENCES "article"("id"),
     "id_booking" INT REFERENCES "booking"("id") ON DELETE CASCADE
 );
@@ -115,13 +115,6 @@ CREATE TABLE "favorite_user_to_reference"(
     "id_ref" INT REFERENCES "reference"("id"),
     UNIQUE ("id_user","id_ref")
 );
-
-
-
-
-
-
-
 
 DROP VIEW IF EXISTS "full_perm";
 CREATE OR REPLACE VIEW "full_perm" AS

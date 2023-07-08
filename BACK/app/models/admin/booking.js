@@ -91,6 +91,7 @@ module.exports = {
                 'id', borrowed."id",
                 'number', borrowed."number",
                 'available', borrowed."available",
+                'returned', borrowed_ar_to_book."returned",
                 'archived', borrowed."archived",
 				'id_ref', "reference"."id",
 				'name_ref', "reference"."name",

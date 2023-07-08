@@ -54,19 +54,19 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                             </Button>
                         );
                         break;
+                    case "return":
+                        config.renderCell = (params) => (
+                            <div>
+                                {params.value
+                                    ? <Chip label="Rendu" color="success" />
+                                    : <Chip label="A rendre" color="error" />
+                                }
+                            </div>
+                        );
+                        break;
                     default:
                         break;
                 }
-            }
-            if (propElt.label === "Rendu") {
-                config.renderCell = (params) => (
-                    <div>
-                        {params.value
-                            ? <Chip label="Rendu" color="success" />
-                            : <Chip label="A rendre" color="error" />
-                        }
-                    </div>
-                );
             }
             columns.push(config);
         });
@@ -112,6 +112,7 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                                 nb_prolongation: false,
                                 id_permanency: false,
                                 id_user: false,
+                                returned:false
                             },
                         },
                         sorting: {

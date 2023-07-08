@@ -331,6 +331,9 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                                                 nb_prolongation: false,
                                                 id_permanency: false,
                                                 id_user: false,
+                                                returned:false,
+                                                description: false,
+                                                prolonge: false
                                             },
                                         },
                                         sorting: {
