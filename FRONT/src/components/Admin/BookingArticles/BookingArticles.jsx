@@ -81,8 +81,9 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
             <div>
                 <h2>Liste des articles</h2>
             </div>
-            <div className="articles-grid" style={{ height: '50rem', width: '100%' }}>
+            <div className="articles-grid" style={{ width: '100%' }}>
                 <DataGrid
+                    autoHeight
                     getRowId={(row) => row.id}
                     rows={list}
                     columns={columnsBuilder}

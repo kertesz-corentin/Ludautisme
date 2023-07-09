@@ -32,8 +32,9 @@ const AdminSection = ({ title, link, rows, columns, initialState, children, butt
                     buttonList.map(button => { return <div>{button}</div> })}
             </div>
             <div className="section-element">
-                <div className="section-element-grid" style={{ height: 500, width: '100%' }}>
+                <div className="section-element-grid" style={{ width: '100%' }}>
                     <DataGrid
+                        autoHeight
                         rows={rows}
                         columns={columns}
                         pageSize={15}

@@ -304,8 +304,9 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                         </div>
                         <div className="addbook-modal-articles--book">
                             <h2>Liste des articles</h2>
-                            <div className="articles-grid" style={{ height: 325, width: '100%' }}>
+                            <div className="articles-grid" style={{ width: '100%' }}>
                                 <DataGrid
+                                    autoHeight
                                     getRowId={(row) => row.id}
                                     rows={listArticle}
                                     columns={columnsBuilder}
