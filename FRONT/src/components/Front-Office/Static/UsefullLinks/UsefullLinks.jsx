@@ -226,10 +226,6 @@ const UsefullLinks = ({ className, ...rest }) => {
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Autisme Espoir Vers l'École
                                         </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.autisme-france.fr/autisme-france">
-                                            <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
-                                            Autisme France
-                                        </a>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://autismeinfantile.com/">
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Autisme Infantile
@@ -242,17 +238,9 @@ const UsefullLinks = ({ className, ...rest }) => {
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Participate Autism (association belge)
                                         </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.proaidautisme.org/">
-                                            <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
-                                            Pro Aide Autisme
-                                        </a>
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.sesame-autisme.com/">
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Sesame Autisme
-                                        </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.vaincrelautisme.org/ ">
-                                            <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
-                                            Vaincre l'Autisme
                                         </a>
                                     </li>
                                 </ul>
@@ -414,10 +402,10 @@ const UsefullLinks = ({ className, ...rest }) => {
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Méthode PECS®
                                         </a>
-                                        <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.autisme.qc.ca/TED/programmes-et-interventions/methodes-educatives/quest-ce-que-le-programme-teacch.html">
+                                        {/* <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.autisme.qc.ca/TED/programmes-et-interventions/methodes-educatives/quest-ce-que-le-programme-teacch.html">
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Programme TEACCH
-                                        </a>
+                                        </a> */}
                                         <a target="_blank" rel="noreferrer" className='UsefullLinks-links-navlink' href="http://www.autismtreatmentcenter.org/">
                                             <LinkRoundedIcon fontSize="small" className='UsefullLinks-links-navlink-icon' />
                                             Programme Son-Rise  (site en anglais)
