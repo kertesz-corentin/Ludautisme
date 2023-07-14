@@ -108,6 +108,48 @@ module.exports = {
             console.error(err);
         }
     },
+    async findByArticleNumber(number) {
+        const query = `SELECT
+        r.id,
+        r.name,
+        r.description,
+        r.valorisation,
+        cat.id AS id_maincat,
+        cat.name AS name_maincat,
+        json_agg(DISTINCT jsonb_build_object(
+            'id',"category"."id",
+            'name',"category"."name"
+            )) AS tag,
+        json_agg(DISTINCT jsonb_build_object (
+            'id', "image"."id",
+            'url', "image"."url",
+            'title', "image"."title",
+            'text', "image"."alternative_text",
+            'main', "image"."main"
+            )) AS "picture",
+        json_agg(DISTINCT jsonb_build_object (
+            'id', ar."id",
+            'number', ar."number",
+            'origin', ar."origin",
+            'date_buy', ar."date_buy",
+            'available', ar."available",
+            'archived', ar."archived",
+            'created_at', ar."created_at"
+            )) AS "articles"
+        FROM "reference" AS r
+        LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+        LEFT JOIN "image" ON rti."id_image" = "image"."id"
+        LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+        LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+        LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+        LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+        WHERE ar.number=$1
+        GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, cat.id`;
+        const placeholders = [number];
+
+        const results = await sqlHandler(query, placeholders);
+        return results.rows;
+    },
     async findFiltered(arr) {
         let queryStart = `SELECT
         r.id,
@@ -270,7 +312,7 @@ module.exports = {
             console.error(err);
         }
     },
-    async  update(id, obj) {
+    async update(id, obj) {
         const props = Object.keys(obj);
 
         let query = `UPDATE "reference" SET `;

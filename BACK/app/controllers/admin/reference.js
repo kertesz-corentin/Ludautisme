@@ -26,6 +26,13 @@ module.exports = {
         }
         return res.json(results);
     },
+    async getOneByArticleNumber(req, res) {
+        const results = await adminReferenceDataMapper.findByArticleNumber(req.params.number);
+        if (!results[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+        return res.json(results);
+    },
     async addRef(req, res) {
         const reference = await adminReferenceDataMapper.findByName(req.body.name);
         if (reference.length > 0) {

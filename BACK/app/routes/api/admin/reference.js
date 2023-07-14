@@ -15,6 +15,15 @@ const router = express.Router();
 router.route('/article')
     .post(controllerHandler(articleController.addArticle));
 /**
+ * GET api/admin/references/article/:number
+ * @summary Get reference by article number
+ * @tags [ADMIN] Reference
+ * @param {number} request.params.id.required Article number
+ * @return {[Reference]}
+ */
+router.route('/article/:number')
+    .get(controllerHandler(referenceController.getOneByArticleNumber));
+/**
  * GET api/admin/references/actives
  * @summary Get all active references for admin
  * @tags [ADMIN] Reference

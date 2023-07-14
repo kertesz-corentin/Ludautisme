@@ -288,7 +288,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                                 multiple
                             >
                                 {tags.map((category) => {
-                                    console.log(category)
                                     return (
                                         <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                                     )

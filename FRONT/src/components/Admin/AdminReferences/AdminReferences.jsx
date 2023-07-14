@@ -11,11 +11,13 @@ import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { referenceSchema } from '../../../Schemas';
+import { TextField } from '@mui/material';
 
 // import material ui component
 import { IconButton, Button } from '@mui/material';
 
 import './adminreferences.scss';
+import '../BookingUserChoice/bookinguserchoice.scss';
 
 const AdminReferences = ({ className, ...rest }) => {
     const [references, setReferences] = useState([]);
@@ -23,15 +25,14 @@ const AdminReferences = ({ className, ...rest }) => {
     const [tags, setTags] = useState([]);
 
     const [alertMessage, setAlertMessage] = useState();
-
+    const [articleValue, setArticleValue] = useState('');
     // config path for api route
     const path = '/admin/references';
 
     const getReferences = async () => {
         try {
             const response = await api.get('/admin/references');
-            const data = await response.data;
-            setReferences(data);
+            setReferences(response.data);
         }
         catch (err) {
             setAlertMessage(err.response.data.message)
@@ -62,6 +63,25 @@ const AdminReferences = ({ className, ...rest }) => {
             }
         }
         catch (err) {
+            setAlertMessage(err.response.data.message)
+            console.error(err);
+        }
+    }
+
+    const handleSearchByArticleNUmber = async (event) => {
+        try {
+            setArticleValue(event.target.value);
+            console.log(event.target.value);
+            if (!event.target.value) {
+                const response = await api.get('/admin/references');
+                setReferences(response.data);
+            } else {
+                const response = await api.get(`/admin/references/article/${event.target.value}`);
+                if (response.status === 200) {
+                    setReferences(response.data);
+                }
+            }
+        } catch (err) {
             setAlertMessage(err.response.data.message)
             console.error(err);
         }
@@ -113,7 +133,18 @@ const AdminReferences = ({ className, ...rest }) => {
                 Gérer catégories
             </Button>
         </div>
-
+    const articleInput =
+        <TextField
+            id='outlined'
+            label="n° d'article"
+            name='article_number'
+            type='number'
+            value={articleValue}
+            onChange={handleSearchByArticleNUmber}
+            className="booking-search-element"
+            style={{ width: "150px" }}
+        >
+        </TextField>
 
     return (
         <div
@@ -125,7 +156,7 @@ const AdminReferences = ({ className, ...rest }) => {
             )}
             <AdminSection
                 title="Références"
-                link ='https://docs.google.com/document/d/1rkWT0BrwOoEZ24t1yPaiZLNRAB57SHKUIhaQoSqXp-M/edit?usp=sharing'
+                link='https://docs.google.com/document/d/1rkWT0BrwOoEZ24t1yPaiZLNRAB57SHKUIhaQoSqXp-M/edit?usp=sharing'
                 rows={references}
                 columns={columnBuilder}
                 path={path}
@@ -140,7 +171,7 @@ const AdminReferences = ({ className, ...rest }) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddReferenceModal categories={categories} tags={tags} />, categoryButton]}
+                buttonList={[<AddReferenceModal categories={categories} tags={tags} />, categoryButton, articleInput]}
             />
         </div>
     );
