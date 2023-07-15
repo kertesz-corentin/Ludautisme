@@ -22,10 +22,8 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
-                    console.log("cas retour");
                     response = await api.post(`/admin/booking/return/${artcileId}`);
                 } else {
-                    console.log("cas ");
                     let option = {
                         "available": true
                     }
@@ -42,10 +40,8 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
             default:
                 break;
         }
-        console.log(response);
         if (response.status === 200) {
             getReferenceWithArticles();
-            console.log(response);
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
