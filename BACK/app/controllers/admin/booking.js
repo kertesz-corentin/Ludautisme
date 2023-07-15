@@ -234,7 +234,7 @@ module.exports = {
     },
     async returnArticle(req, res) {
         const { id } = req.params;
-
+        const article = await articleDataMapper.findOne(id);
         const returnArticle = await bookingDataMapper.return([id]);
 
         const obj = { available: true };
@@ -244,6 +244,7 @@ module.exports = {
             throw new ApiError(404, 'L\'article n\'existe pas');
         }
         const confirm = {
+            articles: article,
             retour: returnArticle,
             update: availableArticle,
             article: id,
