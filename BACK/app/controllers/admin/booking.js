@@ -235,10 +235,13 @@ module.exports = {
     async returnArticle(req, res) {
         const { id } = req.params;
         const article = await articleDataMapper.findByCode(id);
-        const returnArticle = await bookingDataMapper.return([id]);
+        if (!article[0]) {
+            throw new ApiError(404, 'L\'article n\'existe pas');
+        }
+        const returnArticle = await bookingDataMapper.return([article[0].id]);
 
         const obj = { available: true };
-        const availableArticle = await articleDataMapper.update(id, obj);
+        const availableArticle = await articleDataMapper.update(article[0].id, obj);
 
         if (!availableArticle) {
             throw new ApiError(404, 'L\'article n\'existe pas');
