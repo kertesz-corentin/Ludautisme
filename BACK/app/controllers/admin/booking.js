@@ -234,7 +234,7 @@ module.exports = {
     },
     async returnArticle(req, res) {
         const { id } = req.params;
-        const article = await articleDataMapper.findOne(id);
+        const article = await articleDataMapper.findByCode(id);
         const returnArticle = await bookingDataMapper.return([id]);
 
         const obj = { available: true };
