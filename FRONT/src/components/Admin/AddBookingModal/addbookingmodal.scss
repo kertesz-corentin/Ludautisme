@@ -6,7 +6,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    height: auto;
+    max-height: 90%;
     padding: $gutter;
     width: 70%;
     border-radius: 10px;
@@ -14,6 +14,7 @@
     flex-direction: column;
     align-items: center;
     outline: none;
+    overflow: scroll;
 
     &-header {
         display: flex;
