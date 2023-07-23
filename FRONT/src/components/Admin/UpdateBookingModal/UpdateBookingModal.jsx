@@ -18,7 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updatebookingmodal.scss';
 
-const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
+const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, deleteOneRow, ...rest }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -38,7 +38,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
     const handleDelete = async () => {
         const response = await api.delete(`/admin/booking/${params.row.id}`);
         if (response.status === 200) {
-            getBookings();
+            deleteOneRow(params.row.id);
             handleClose();
         } else {
             setAlertMessage(response.statusText);
@@ -74,7 +74,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
             const addResponse = await api.put(`/admin/booking/article/${params.row.member_number}`, settings);
 
             if (addResponse.status === 200) {
-                getBookings();
+                updateOneBooking(params.row.id);
 
                 setSeverity();
                 setAlertMessage();
@@ -95,7 +95,7 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
             if (articles.status === 200) {
                 setSeverity("success");
                 setAlertMessage("Articles rendu");
-                getBookings();
+                updateOneBooking(params.row.id);
             } else {
                 setSeverity("error");
                 setAlertMessage(`${articles.data.message}`);
@@ -116,11 +116,12 @@ const UpdateBookingModal = ({ params, className, getBookings, ...rest }) => {
         if (response.status === 200) {
             setSeverity("success");
             setAlertMessage("Article prolongé");
-            getBookings();
+
+            updateOneBooking(params.row.id);
         } else {
             setSeverity("error");
             setAlertMessage(`${response.data.message}`);
-            getBookings();
+            updateOneBooking(params.row.id);
         }
     }
 

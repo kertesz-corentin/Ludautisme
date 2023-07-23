@@ -12,6 +12,7 @@ import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { bookingSchema } from '../../../Schemas';
+import { useGridApiRef } from '@mui/x-data-grid';
 
 // import mui components
 import { IconButton, ToggleButton } from '@mui/material';
@@ -24,6 +25,7 @@ const AdminBookings = ({ className, ...rest }) => {
     const [history, setHistory] = useState(false);
 
     const [alertMessage, setAlertMessage] = useState();
+    const apiRef = useGridApiRef();
 
     const getBookings = async () => {
         try {
@@ -38,10 +40,25 @@ const AdminBookings = ({ className, ...rest }) => {
             if (response.status === 200) {
                 setBookings(data);
             }
-        }
-        catch (err) {
+        } catch (err) {
             setAlertMessage(err.response.data.message);
         }
+    }
+    const updateOneBooking = async (id) => {
+        try {
+            let response = await api.get(`/admin/booking/${id}`);
+            if (response.status === 200) {
+                let data = response.data[0];
+                if(data) {
+                    apiRef.current.updateRows([data]);
+                }
+            }
+        } catch (e) {
+            setAlertMessage(e.response.data.message);
+        }
+    } 
+    const deleteOneRow = async (id) => {
+        apiRef.current.updateRows([{id: id, _action: 'delete'}]);
     }
 
     useEffect(() => {
@@ -67,7 +84,7 @@ const AdminBookings = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateBookingModal params={params} getBookings={getBookings} />
+                                <UpdateBookingModal params={params} getBookings={getBookings} updateOneBooking={updateOneBooking} deleteOneRow={deleteOneRow}/>
                             </IconButton>
                         );
                         break;
@@ -81,7 +98,7 @@ const AdminBookings = ({ className, ...rest }) => {
                                 onChange={async () => {
                                     const id = Number(params.row.id);
                                     await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
-                                    await getBookings();
+                                    await updateOneBooking(params.row.id);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
@@ -98,7 +115,7 @@ const AdminBookings = ({ className, ...rest }) => {
                                 onChange={async () => {
                                     const id = Number(params.row.id)
                                     await api.post(`/admin/booking/deliver/${id}`, { [prop]: !params.value });
-                                    await getBookings();
+                                    await updateOneBooking(params.row.id)
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
@@ -130,6 +147,7 @@ const AdminBookings = ({ className, ...rest }) => {
             )}
             <AdminSection
                 title="Réservations"
+                apiRef={apiRef}
                 rows={bookings}
                 columns={columnBuilder}
                 path={'/admin/booking'}
@@ -149,7 +167,8 @@ const AdminBookings = ({ className, ...rest }) => {
                 children={[<BookingUserChoice
                     setHistory={setHistory}
                     checked={history}
-                    getBookings = {getBookings} />]}
+                    getBookings = {getBookings}
+                    updateOneBooking = {updateOneBooking} />]}
             />
         </div>
     );

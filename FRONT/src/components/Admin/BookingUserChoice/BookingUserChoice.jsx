@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import './bookinguserchoice.scss';
 import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
-const BookingUserChoice = ({ articles, params, className, setHistory, checked, getBookings, ...rest }) => {
+const BookingUserChoice = ({ articles, params, className, setHistory, checked, getBookings, updateOneBooking, ...rest }) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
@@ -87,7 +87,7 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                     )}
 
                     {userExist && search && (
-                        <AddBookingModal user={user} params={params} getBookings={getBookings} />
+                        <AddBookingModal user={user} params={params} getBookings={getBookings} updateOneBooking={updateOneBooking}/>
                     )}
 
                 </Box>

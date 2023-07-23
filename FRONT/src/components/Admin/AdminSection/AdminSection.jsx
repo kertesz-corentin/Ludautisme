@@ -8,7 +8,7 @@ import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
 
 import './adminsection.scss';
 
-const AdminSection = ({ title, link, rows, columns, initialState, children, buttonList }) => {
+const AdminSection = ({ title, link, rows, columns, initialState, children, buttonList, apiRef }) => {
 
     return (
         <section className='section'>
@@ -34,6 +34,7 @@ const AdminSection = ({ title, link, rows, columns, initialState, children, butt
             <div className="section-element">
                 <div className="section-element-grid" style={{ width: '100%' }}>
                     <DataGrid
+                        apiRef={apiRef}
                         autoHeight
                         rows={rows}
                         columns={columns}

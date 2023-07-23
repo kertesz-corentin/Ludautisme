@@ -16,7 +16,7 @@ import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
 
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
+const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...rest }) => {
     const [open, setOpen] = React.useState(false)
     const [alertMessage, setAlertMessage] = React.useState();
     const [severity, setSeverity] = React.useState();
@@ -69,7 +69,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                     if (index + 1 === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
-                        getBookings();
+                        updateOneBooking(response.data.newBookingConfirm.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
@@ -84,7 +84,8 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
             if (response.status === 200) {
                 setSeverity("success");
                 setAlertMessage("Réservation réussi");
-                getBookings();
+
+                updateOneBooking(response.data.newBookingConfirm.id);
                 setTimeout(() => { handleClose() }, 5000);
             } else {
                 setSeverity("error");
@@ -107,12 +108,11 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                     bookingId: currentBooking.id
                 }
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
-
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
                         setSeverity("success");
                         setAlertMessage("Réservation réussi");
-                        getBookings();
+                        updateOneBooking(response.data.newBookingConfirm.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
@@ -129,7 +129,7 @@ const AddBookingModal = ({ user, className, getBookings, ...rest }) => {
                 if (response.status === 200) {
                     setSeverity("success");
                     setAlertMessage("Réservation réussi");
-                    getBookings();
+                    updateOneBooking(response.data.newBookingConfirm.id);
                     setTimeout(() => { handleClose() }, 5000);
                 } else {
                     setSeverity("error");
