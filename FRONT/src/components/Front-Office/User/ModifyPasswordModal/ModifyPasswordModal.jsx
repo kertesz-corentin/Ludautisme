@@ -11,12 +11,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import api from '../../../../requests';
 import { useNavigate } from "react-router-dom";
-import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const ModifyPasswordModal = ({ className, ...rest }) => {
 
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
     const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
 
     const user = JSON.parse(localStorage.getItem('user'));
@@ -46,13 +44,11 @@ const ModifyPasswordModal = ({ className, ...rest }) => {
                 handleClose()
             } else {
                 api.put(`/customer/user/${user.id}`, newPassword);
-                setSeverity("success");
-                setAlertMessage("Mot de passe changé");
+                toast.success("Mot de passe changé");
                 handleClose();
             }
         } else {
-            setSeverity("error");
-            setAlertMessage('Le mot de passe ne respecte pas les règles de sécurité');
+            toast.error('Le mot de passe ne respecte pas les règles de sécurité');
         }
         
     }
@@ -103,15 +99,6 @@ const ModifyPasswordModal = ({ className, ...rest }) => {
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={handlePasswordSubmit}>Valider</Button>
-                </DialogActions>
-                <DialogActions>
-                {alertMessage && severity && (
-                    <AlertMessage
-                        message={alertMessage}
-                        severity={severity}
-                    >
-                    </AlertMessage>
-                )}
                 </DialogActions>
             </Dialog>
         </div>

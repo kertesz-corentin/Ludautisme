@@ -6,12 +6,11 @@ import api from '../../../../requests/index';
 import RecoverPasswordModal from '../RecoverPasswordModal/RecoverPasswordModal';
 import './loginform.scss'
 import ButtonUnstyled  from '@mui/base/ButtonUnstyled';
-import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const LoginForm = ({handleCloseLogin, ...rest}) => {
     const navigate = useNavigate();
 
-    const [alertMessage, setAlertMessage] = useState();
     const [recover, setRecover] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,8 +39,7 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                 navigate('/user/account')
                 handleCloseLogin();
             } else {
-                setAlertMessage(response.data.message);
-                console.error(response);
+                toast.error(response.data.message);
             }
     };
 
@@ -94,12 +92,6 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                 </Grid>
 
             </Grid>
-            {alertMessage && (
-                        <AlertMessage
-                            message={alertMessage}
-                        >
-                        </AlertMessage>
-            )}
             <Popover
                         sx={{ borderRadius: 8, marginTop: "25px"}}
                         id={id}

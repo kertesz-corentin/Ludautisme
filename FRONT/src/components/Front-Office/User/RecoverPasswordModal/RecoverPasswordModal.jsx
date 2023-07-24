@@ -4,13 +4,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { TextField , Typography} from '@mui/material';
 import { useState } from 'react';
-import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
 import api from '../../../../requests';
+import { toast } from 'react-toastify';
 
 const RecoverPasswordModal = ({className, ...rest}) => {
-
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
   function handleMailChange (event) {
     setMailValue(event.target.value)
@@ -25,11 +22,9 @@ const handleMailSubmit = async(event) => {
         const response = await api.post('/login/forgot-password',mail)
 
         if (response.status === 200) {
-            setSeverity("success");
-            setAlertMessage("email envoyé");
+            toast.success("email envoyé");
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data}`);
+            toast.error(response.data);
         }
 }
 
@@ -59,13 +54,6 @@ const [mailValue, setMailValue]= useState()
             >
                 Envoyer le mail
             </Button>
-            {alertMessage && severity && (
-                    <AlertMessage
-                        message={alertMessage}
-                        severity={severity}
-                    >
-                    </AlertMessage>
-                )}
     </Box>
     );
 };

@@ -4,14 +4,11 @@ import PropTypes from 'prop-types';
 import './resetpwd.scss';
 import { TextField, Box, Button } from '@mui/material';
 import api from '../../../../requests/index';
-import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
 import Logo from '../../../../public/logo.png';
+import { toast } from 'react-toastify';
 
 
 const ResetPassword = ({ className, ...rest }) => {
-
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
     const [passwordValue] = useState();
     const { token } = useParams();
@@ -30,16 +27,12 @@ const ResetPassword = ({ className, ...rest }) => {
         if (regex.test(passwordValue)) {
             const response = await api.resetPassword('/login/reset-password', newPassword);
             if (response.status === 200) {
-                setSeverity("success");
-                setAlertMessage("Mot de passe changé");
-
+                toast.success("Mot de passe changé");
             } else {
-                setSeverity("error");
-                setAlertMessage(`changement impossible`);
+                toast.error(`changement impossible`);
             }
         } else {
-            setSeverity("error");
-            setAlertMessage('Le mot de passe ne respecte pas les règles de sécurité');
+            toast.error('Le mot de passe ne respecte pas les règles de sécurité');
         }
 
     }
@@ -80,13 +73,6 @@ const ResetPassword = ({ className, ...rest }) => {
                 >
                     Valider
                 </Button>
-                {alertMessage && severity && (
-                    <AlertMessage
-                        message={alertMessage}
-                        severity={severity}
-                    >
-                    </AlertMessage>
-                )}
             </Box>
         </div>
     );

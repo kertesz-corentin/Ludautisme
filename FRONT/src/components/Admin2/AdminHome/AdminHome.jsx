@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import './adminhome.scss';
 import PropTypes from 'prop-types';
 // import { Box } from '@mui/material';

@@ -138,6 +138,7 @@ const MaterialLibrary = ({className,
 
     useEffect(() => {
         getReferences();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tags,ids,categories,available,page,limit,favorite]);
 
 

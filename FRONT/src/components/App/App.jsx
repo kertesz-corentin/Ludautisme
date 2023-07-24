@@ -24,6 +24,8 @@ import { useState } from 'react';
 import * as cartReq from '../../requests/customer/cart';
 import Privacy from '../Privacy/Privacy';
 import Notice from '../Notice/Notice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const FunctionContext= React.createContext();
 
 
@@ -129,6 +131,18 @@ function App() {
             {/* 404 */}
             <Route path = "*" element = {<Error />}></Route>
         </Routes>
+        <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
     </div>
     );
 }

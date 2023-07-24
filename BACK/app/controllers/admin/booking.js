@@ -390,6 +390,7 @@ module.exports = {
             const newBooking = {
                 id_permanency: activePerm[0].next_id,
                 id_user: user[0].id,
+                delivered: true,
             };
             // create booking
             booking = [await bookingDataMapper.addOne(newBooking)];

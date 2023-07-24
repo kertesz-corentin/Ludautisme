@@ -75,6 +75,7 @@ const UserMyAccount = ({
 
 
     // Each time page is loading, want to call requestGetDatasOneUser
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {requestGetDatasOneUser()},[]);
 
    return (

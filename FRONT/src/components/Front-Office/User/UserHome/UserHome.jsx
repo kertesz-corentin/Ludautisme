@@ -58,6 +58,7 @@ const UserHome = ({
 
     useEffect(()=>{
         setCurrUrl();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[navigate]);
 
    return (

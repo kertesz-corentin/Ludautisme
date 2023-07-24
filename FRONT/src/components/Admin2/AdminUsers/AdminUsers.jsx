@@ -7,7 +7,7 @@ import { userSchema } from '../../../Schemas';
 // import users from '../../../store/features/Admin/UsersList';
 import store from '../../../store';
 import {actions} from '../../../store/reducers';
-import { useGetUsersQuery, apiSlice } from '../../../store/api/apiSlice.js';
+import { useGetUsersQuery } from '../../../store/api/apiSlice.js';
 import {useSelector} from 'react-redux';
 const AdminUsers2 = () => {
     const getUsers = useGetUsersQuery(); //Mandatory on top-level for useEffect usage

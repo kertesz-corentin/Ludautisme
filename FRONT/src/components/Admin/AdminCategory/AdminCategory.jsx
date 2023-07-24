@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import classnames from 'classnames';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import AdminSection from '../AdminSection/AdminSection';
 import AddCategoryModal from '../AddCategoryModal/AddCategoryModal';
 import { IconButton, ToggleButton, Chip } from '@mui/material';
@@ -9,12 +8,11 @@ import { categorySchema } from '../../../Schemas';
 import PropTypes from 'prop-types';
 import api from '../../../requests';
 import UpdateCategoryModal from '../UpdateCategoryModal/UpdateCategoryModal';
+import { toast } from 'react-toastify';
 
 const AdminCategory = ({ className, ...rest }) => {
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
     const [categories, setCategories] = React.useState([]);
-    const [tags, setTags] = React.useState([]);
+    const [, setTags] = React.useState([]);
 
     let path = '/admin/categorie';
     const getMainCategories = async () => {
@@ -25,10 +23,10 @@ const AdminCategory = ({ className, ...rest }) => {
             if (response.status === 200) {
                 setCategories(data);
             } else {
-                setAlertMessage(response.data.message);
+                toast.error(response.data.message);
             }
         } catch (err) {
-            setAlertMessage(err.response.data.message)
+            toast.error(err.response.data.message);
             console.error(err);
         }
     }
@@ -41,7 +39,7 @@ const AdminCategory = ({ className, ...rest }) => {
                 setTags(data);
             }
         } catch (err) {
-            setAlertMessage(err.response.data.message)
+            toast.error(err.response.data.message);
             console.error(err);
         }
     }
@@ -49,6 +47,7 @@ const AdminCategory = ({ className, ...rest }) => {
     useEffect(() => {
         getMainCategories();
         getTags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const columnBuilder = (() => {
@@ -111,13 +110,6 @@ const AdminCategory = ({ className, ...rest }) => {
             className={classnames('adminusers', className)}
             {...rest}
         >
-            {alertMessage && severity && (
-                <AlertMessage
-                    message={alertMessage}
-                    severity={severity}
-                >
-                </AlertMessage>
-            )}
             <AdminSection
                 title="Catégories"
                 rows={categories}

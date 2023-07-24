@@ -30,8 +30,7 @@ const AdminPermanency = ({className, ...rest}) => {
             ?setDate(format(new Date(activePermanency[0].next_date), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}))
             :setDate(format(new Date(), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
             (activePermanency[0].next_date)&&setIsDefined(true);
-        }
-        else {
+        } else {
             console.error(response);
         }
     }

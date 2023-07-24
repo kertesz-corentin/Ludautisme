@@ -5,15 +5,13 @@ import { Button, Box, TextField, Switch, FormControlLabel } from '@mui/material'
 import AddBookingModal from '../AddBookingModal/AddBookingModal';
 import classnames from 'classnames';
 import './bookinguserchoice.scss';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const BookingUserChoice = ({ articles, params, className, setHistory, checked, getBookings, updateOneBooking, ...rest }) => {
     const [search, setSearch] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
     const [value, setValue] = useState('');
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
     
     const handleSearch = () => setSearch(true);
 
@@ -28,12 +26,9 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
 
         if (response.status === 200) {
             setUser(searchUser);
-            setSeverity("");
-            setAlertMessage("");
             setUserExist(true);
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
+            toast.error(response.data.message);
         }
     }
 
@@ -55,13 +50,6 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
             <div className={classnames('booking-button', className)}>
                 <Button onClick={handleSearch} variant='outlined'>Ajouter réservation</Button>
 
-                {alertMessage && severity && (
-                    <AlertMessage
-                        message={alertMessage}
-                        severity={severity}
-                    >
-                    </AlertMessage>
-                )}
                 <Box className='booking-search' component="form" onSubmit={handleSubmit}>
                     {search && (
                         <TextField

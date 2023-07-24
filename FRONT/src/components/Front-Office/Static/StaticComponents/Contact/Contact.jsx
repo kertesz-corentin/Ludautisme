@@ -7,16 +7,14 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import MessageLogo from '../../../../../public/icones/un-message.png';
 import api from '../../../../../requests';
-import AlertMessage from '../../../Reusable/AlertMessage/AlertMessage';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
+import { toast } from 'react-toastify';
 
 const Contact = ({ className, ...rest }) => {
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [object, setObject] = React.useState('');
     const [message, setMessage] = React.useState('');
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
     const [token, setToken] = React.useState(null);
     const captchaRef = React.useRef(null);
@@ -38,14 +36,11 @@ const Contact = ({ className, ...rest }) => {
 
     const validForm = async () => {
         if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-            setSeverity("error");
-            setAlertMessage("email invalide");
+            toast.error("email invalide");
         } else if (!name || !object || !message) {
-            setSeverity("error");
-            setAlertMessage("formulaire incomplet");
+            toast.error("formulaire incomplet");
         } else if (!token) {
-            setSeverity("error");
-            setAlertMessage("captcha invalide");
+            toast.error("captcha invalide");
         } else {
             const request = {
                 name,
@@ -55,8 +50,7 @@ const Contact = ({ className, ...rest }) => {
             };
             const response = await api.post('/customer/contact/send', request);
             if (response.status === 200) {
-                setSeverity("success");
-                setAlertMessage("email envoyé");
+                toast.success("email envoyé");
                 setName("");
                 setEmail("");
                 setObject("");
@@ -69,8 +63,7 @@ const Contact = ({ className, ...rest }) => {
     }
 
     const captchaError = (error) => {
-        setSeverity("error");
-        setAlertMessage("Captcha invalide");
+        toast.error("Captcha invalide")
     }
 
     return (
@@ -135,13 +128,6 @@ const Contact = ({ className, ...rest }) => {
                         ref={captchaRef}
                     />
                 </div>
-                {alertMessage && severity && (
-                    <AlertMessage
-                        message={alertMessage}
-                        severity={severity}
-                    >
-                    </AlertMessage>
-                )}
                 <div>
                     <Button className="contact-button" onClick={validForm} variant="contained">Envoyer votre message</Button>
                 </div>

@@ -6,7 +6,7 @@ import { TextField, Box, Typography, Modal, Button, IconButton } from '@mui/mate
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const UpdateReferenceModal = ({ params, categories, className, getMainCategories, ...rest }) => {
     const [open, setOpen] = React.useState(false)
@@ -16,12 +16,8 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
     };
 
     const handleClose = () => {
-        setSeverity(null);
-        setAlertMessage(null);
         setOpen(false);
     }
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
     // const handleMainChecked = (event) => {
     //     setMainChecked(event.target.checked)
@@ -43,16 +39,12 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
     }
 
     const handleDelete = async () => {
-        console.log(params.row);
         const response = await api.delete(`/admin/categorie/${params.row.id}`);
-        console.log(response);
         if (response.status === 200) {
             getMainCategories();
             handleClose();
         } else {
-            setAlertMessage(response.statusText);
-            setSeverity("error");
-            setTimeout(() => { setAlertMessage(); setSeverity() }, 2000);
+            toast.error(response.statusText);
         }
     }
 
@@ -77,15 +69,6 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
                         >
                             <CloseIcon />
                         </Button>
-                    </div>
-                    <div>
-                        {alertMessage && severity && (
-                            <AlertMessage
-                                message={alertMessage}
-                                severity={severity}
-                            >
-                            </AlertMessage>
-                        )}
                     </div>
                     <div className="updatereference-modal-inputs">
                         <TextField

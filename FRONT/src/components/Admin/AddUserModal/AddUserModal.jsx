@@ -1,11 +1,9 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 // import requests
 import api from '../../../requests';
-
-// import react components
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 // import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
@@ -18,14 +16,11 @@ const AddUserModal = ({className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
-        setAlertMessage(null);
     }
     const [cotisationChecked, setCotisationChecked] = useState(false);
     const [cautionChecked, setCautionChecked] = useState(false);
     const [archivedChecked, setArchivedChecked] = useState(false);
     const [role, setRole] = useState(1)
-
-    const [alertMessage, setAlertMessage] = useState();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -53,9 +48,8 @@ const AddUserModal = ({className, ...rest}) => {
         if(response.status === 200) {
             handleClose();
             window.location.reload();
-        }
-        else {
-            setAlertMessage(response.data.message);
+        } else {
+            toast.error(response.data.message);
         }
 
     }
@@ -209,9 +203,6 @@ const AddUserModal = ({className, ...rest}) => {
                             Valider
                         </Button>
                     </div>
-                    {alertMessage && (
-                        <AlertMessage message={alertMessage} />
-                    )}
                 </Box>
             </Modal>
 

@@ -43,6 +43,7 @@ const Cart = ({
     //Persistent cart initialisation
     useEffect(()=> {
         getPersistentCart();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
 
     const getPersistentCart = async () => {
@@ -67,6 +68,7 @@ const Cart = ({
         return _ => {
             window.removeEventListener('resize', handleResize)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
 
 
@@ -124,6 +126,7 @@ const Cart = ({
         if(userToken){
         setCartFloating();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[scroll]);
 
    return (

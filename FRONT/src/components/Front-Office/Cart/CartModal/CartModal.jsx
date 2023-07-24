@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import './cartmodal.scss';
 import Backdrop from '@mui/material/Backdrop';
@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
 import CurrentReference from '../../MaterialLibrary/MaterialLibraryComponents/CurrentReference/CurrentReference';
 import api from '../../../../requests/index';
-import AlertMessage from '../../Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const CartModal = ({
     open,
@@ -23,7 +23,6 @@ const CartModal = ({
     cartManager,
      ...rest
     }) => {
-    const [alertMessage, setAlertMessage] = useState();
 
     function handleRemoveItemClick  () {
         (currentItems.length === 0) && handleClose() ;
@@ -37,19 +36,9 @@ const CartModal = ({
         };
             const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
         if (response.status === 200){
-            setAlertMessage({
-                message : 'Votre réservation a bien été prise en compte',
-                severity : 'success'});
-            setTimeout(()=>{handleClose();
-                            setAlertMessage();
-                            cartManager.remove("all")},1000);
-        }
-        else
-        {
-            setAlertMessage({
-                message : response.data.message}
-                );
-                setTimeout(()=>{handleClose();},1000);
+            toast.success('Votre réservation a bien été prise en compte');
+        } else {
+            toast.error(response.data.message);
         };
     }
     //CALLBACK USED IN CURRENT REFERENCE TO GET ITEM AND DELETE HERE IN currentCart
@@ -59,6 +48,7 @@ const CartModal = ({
 
     useEffect(()=> {
         countSentence();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[open]);
 
 
@@ -122,13 +112,6 @@ const CartModal = ({
                             >
                             Valider le panier
                             </Button>
-                            {alertMessage && (
-                                    <AlertMessage
-                                        message={alertMessage.message}
-                                        severity={alertMessage.severity}
-                                    >
-                                    </AlertMessage>
-                            )}
                 </Box>
                 }
               </Box>

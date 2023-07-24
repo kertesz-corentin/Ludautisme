@@ -9,9 +9,9 @@ import api from '../../../requests/index';
 import AdminSection from '../AdminSection/AdminSection';
 import AddReferenceModal from '../AddReferenceModal/AddReferenceModal';
 import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { referenceSchema } from '../../../Schemas';
 import { TextField } from '@mui/material';
+import { toast } from 'react-toastify';
 
 // import material ui component
 import { IconButton, Button } from '@mui/material';
@@ -24,7 +24,6 @@ const AdminReferences = ({ className, ...rest }) => {
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
 
-    const [alertMessage, setAlertMessage] = useState();
     const [articleValue, setArticleValue] = useState('');
     // config path for api route
     const path = '/admin/references';
@@ -33,10 +32,8 @@ const AdminReferences = ({ className, ...rest }) => {
         try {
             const response = await api.get('/admin/references');
             setReferences(response.data);
-        }
-        catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err);
+        } catch (err) {
+            toast.error(err.response.data.message);
         }
     }
 
@@ -47,10 +44,8 @@ const AdminReferences = ({ className, ...rest }) => {
             if (response.status === 200) {
                 setCategories(data);
             }
-        }
-        catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err);
+        } catch (err) {
+            toast.error(err.response.data.message);
         }
     }
 
@@ -61,10 +56,8 @@ const AdminReferences = ({ className, ...rest }) => {
             if (response.status === 200) {
                 setTags(data);
             }
-        }
-        catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err);
+        } catch (err) {
+            toast.error(err.response.data.message);
         }
     }
 
@@ -82,8 +75,7 @@ const AdminReferences = ({ className, ...rest }) => {
                 }
             }
         } catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err);
+            toast.error(err.response.data.message);
         }
     }
 
@@ -151,9 +143,6 @@ const AdminReferences = ({ className, ...rest }) => {
             className={classnames('adminreferences', className)}
             {...rest}
         >
-            {alertMessage && (
-                <AlertMessage message={alertMessage} />
-            )}
             <AdminSection
                 title="Références"
                 link='https://docs.google.com/document/d/1rkWT0BrwOoEZ24t1yPaiZLNRAB57SHKUIhaQoSqXp-M/edit?usp=sharing'

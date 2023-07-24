@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 
 // import react components
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 // import material ui components
 import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
@@ -21,15 +21,12 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
-        setAlertMessage(null);
     }
     const [cotisationChecked, setCotisationChecked] = useState(params.row.cotisation_status);
     const [cautionChecked, setCautionChecked] = useState(params.row.caution_status);
     const [archivedChecked, setArchivedChecked] = useState(params.row.archived);
     const [role, setRole] = useState(false)
     const [idRole, setIdRole] = useState(params.row.id_role)
-
-    const [alertMessage, setAlertMessage] = useState();
 
     const admin = () => {
         if(params.row.id_role === 2){
@@ -39,6 +36,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
 
     useEffect(() => {
         admin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleSubmit = async (event) => {
@@ -65,11 +63,9 @@ const UpdateUserModal = ({params, className, ...rest}) => {
         if(response.status === 200) {
             handleClose();
             window.location.reload();
+        } else {
+            toast.error(response.data.message);
         }
-        else {
-            setAlertMessage(response.data.message);
-        }
-
     }
 
     const handleCotisationCheck = (event) => {
@@ -100,8 +96,7 @@ const UpdateUserModal = ({params, className, ...rest}) => {
             handleClose();
             window.location.reload();
         } else {
-            setAlertMessage(response.statusText);
-            setTimeout(()=>{setAlertMessage()},2000);
+            toast.error(response.statusText);
         }
     }
 
@@ -256,12 +251,8 @@ const UpdateUserModal = ({params, className, ...rest}) => {
                         )}
 
                     </div>
-                    {alertMessage && (
-                        <AlertMessage message={alertMessage} />
-                    )}
                 </Box>
             </Modal>
-
         </div>
     );
 };

@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Articles from '../Articles/Articles';
 import AddModal from '../Articles/AddModal/AddModal';
 import ReferenceSwiper from '../../Front-Office/MaterialLibrary/MaterialLibraryComponents/ReferenceSwiper/ReferenceSwiper';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 import './updatereferencemodal.scss';
 
@@ -20,15 +20,11 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
     };
 
     const handleClose = () => {
-        setSeverity(null);
-        setAlertMessage(null);
         setOpen(false);
     }
     const [category, setCategory] = useState(params.row.id_maincat); 
     const [picture, setPicture] = useState([]);
     const [currentPicture, setCurrentPicture] = useState();
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
     const [articles, setArticles] = useState([]);
     const [tag, setTags] = useState(params.row.tag.map((t) => {return t.id}));
 
@@ -69,12 +65,9 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
         if (deleteResponse.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
             setPicture(pictureResponse.data);
-
-            setSeverity("success");
-            setAlertMessage("Image supprimé");
+            toast.success("Image supprimé");
         } else {
-            setSeverity("error");
-            setAlertMessage(`${deleteResponse.data.message}`);
+            toast.error(deleteResponse.data.message);
         }
     }
     // upload one picture 
@@ -94,12 +87,9 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                 if (response.status === 200) {
                     let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
                     setPicture(pictureResponse.data);
-
-                    setSeverity("success");
-                    setAlertMessage("Image ajouté");
+                    toast.success("Image ajouté");
                 } else {
-                    setSeverity("error");
-                    setAlertMessage(`${response.data.message}`);
+                    toast.error(response.data.message);
                 }
             } catch (err) {
                 console.error(err);
@@ -115,12 +105,9 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
         if (response.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
             setPicture(pictureResponse.data);
-
-            setSeverity("success");
-            setAlertMessage("Image principale changé");
+            toast.success("Image principale changé");
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
+            toast.error(response.data.message);
         }
     }
     // archive one reference with all this article
@@ -129,14 +116,11 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
             const response = await api.delete(`/admin/references/${params.row.id}`);
              if (response.status === 200) {
                     getReferenceWithArticles();
-                    setSeverity("success");
-                    setAlertMessage(response.data.message);
+                    toast.success(response.data.message);
                 } else {
-                    setSeverity("error");
-                    setAlertMessage("Erreur lors de l'archivage");
+                    toast.error("Erreur lors de l'archivage");
                 }
-        }
-        catch (err) {
+        } catch (err) {
             console.error(err);
         }
     }
@@ -213,15 +197,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                         >
                             photo principale
                         </Button>
-                    </div>
-                    <div>
-                        {alertMessage && severity && (
-                            <AlertMessage
-                                message={alertMessage}
-                                severity={severity}
-                            >
-                            </AlertMessage>
-                        )}
                     </div>
                     <div className="updatereference-modal-inputs">
                         <TextField

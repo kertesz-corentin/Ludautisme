@@ -1,11 +1,9 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 // import requests
 import api from '../../../requests';
-
-// import react components
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 
 // import material ui components
 import { TextField, Box, Typography, Modal, Button, FormGroup, FormControlLabel, Checkbox }  from '@mui/material';
@@ -18,13 +16,10 @@ const AddCategoryModal = ({className, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
-        setAlertMessage(null);
     }
     
 
     const [mainCat, setMainCat] = useState(false);
-
-    const [alertMessage, setAlertMessage] = useState();
 
     const handleMainCatCheck = (event) => {
         setMainCat(event.target.checked)
@@ -41,10 +36,9 @@ const AddCategoryModal = ({className, ...rest}) => {
 
         const response = await api.post('/admin/categorie', addedCategory)
         if(response.status === 200) {
-            console.log(response.data)
-        }
-        else {
-            setAlertMessage(response.data.message);
+            toast.success("catégorie créé");
+        } else {
+            toast.error(response.data.message);
         }
     }
 
@@ -97,9 +91,6 @@ const AddCategoryModal = ({className, ...rest}) => {
                         >
                             Valider
                         </Button>
-                        {alertMessage && (
-                            <AlertMessage message={alertMessage} />
-                        )}
                     </div>
                 </Box>
             </Modal>

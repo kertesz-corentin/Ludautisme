@@ -20,8 +20,7 @@ import './loginuser.scss';
 import {useNavigate} from "react-router-dom";
 // import AccountMenu from '../AccountMenu/AccountMenu';
 import RecoverPassworldModal from '../RecoverPassworldModal/RecoverPasswordModal';
-import AlertMessage from '../../AlertMessage/AlertMessage';
-
+import { toast } from 'react-toastify';
 
 
 const theme = createTheme();
@@ -32,9 +31,6 @@ export default function SignIn() {
   const onToggleOpen = () => {
       setIsOpen(!isOpen)
   }
-
-  const [alertMessage, setAlertMessage] = useState();
-
 
     //Submit user connection form
   const handleSubmit = async(event) => {
@@ -48,8 +44,7 @@ export default function SignIn() {
             navigate('/user/account')
             setIsOpen(!isOpen)
         } else {
-            setAlertMessage(response.data.message);
-            console.error(response);
+            toast.error(response.data.message);
         }
   };
 
@@ -186,12 +181,6 @@ export default function SignIn() {
                                              </Popover>
                                          </Grid>
                                      </Grid>
-                                     {alertMessage && (
-                                         <AlertMessage
-                                             message={alertMessage}
-                                         >
-                                         </AlertMessage>
-                                     )}
                                  </Box>
                                  </Box>
                              </Container>

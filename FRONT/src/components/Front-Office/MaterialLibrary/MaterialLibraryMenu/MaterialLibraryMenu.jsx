@@ -74,6 +74,7 @@ const MaterialLibraryMenu = ({
     useEffect(()=>{
         initCategories();
         initNames();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
    return (
        <div

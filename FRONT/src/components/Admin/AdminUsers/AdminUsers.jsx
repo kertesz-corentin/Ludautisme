@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { toast } from 'react-toastify';
 
 // import requests
 import api from '../../../requests/index';
 
 // import react components
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import AdminSection from '../AdminSection/AdminSection';
 import AddUserModal from '../AddUserModal/AddUserModal';
 import UpdateUserModal from '../UpdateUserModal/UpdateUserModal';
@@ -21,8 +21,6 @@ import './adminusers.scss';
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
 
-    const [alertMessage, setAlertMessage] = useState();
-
     // config path for api route
     const path = '/admin/users';
 
@@ -33,10 +31,8 @@ const AdminUsers = ({className, ...rest}) => {
             if(response.status === 200){
                 setUsers(data);
             }
-        }
-        catch (err) {
-            setAlertMessage(err.response.data.message)
-            console.error(err);
+        } catch (err) {
+            toast.error(err.response.data.message);
         }
     }
 
@@ -97,9 +93,6 @@ const AdminUsers = ({className, ...rest}) => {
             className={classnames('adminusers', className)}
             {...rest}
         >
-            {alertMessage && (
-                <AlertMessage message={alertMessage} />
-            )}
             <AdminSection
                 title="Adhérents"
                 rows={users}

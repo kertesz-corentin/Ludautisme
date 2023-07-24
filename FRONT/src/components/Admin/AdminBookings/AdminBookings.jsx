@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 // import requests
 import api from '../../../requests';
@@ -10,7 +11,6 @@ import api from '../../../requests';
 import AdminSection from '../AdminSection/AdminSection';
 import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { bookingSchema } from '../../../Schemas';
 import { useGridApiRef } from '@mui/x-data-grid';
 
@@ -24,7 +24,6 @@ const AdminBookings = ({ className, ...rest }) => {
     const [bookings, setBookings] = useState([]);
     const [history, setHistory] = useState(false);
 
-    const [alertMessage, setAlertMessage] = useState();
     const apiRef = useGridApiRef();
 
     const getBookings = async () => {
@@ -41,7 +40,7 @@ const AdminBookings = ({ className, ...rest }) => {
                 setBookings(data);
             }
         } catch (err) {
-            setAlertMessage(err.response.data.message);
+            toast.error(err.response.data.message);
         }
     }
     const updateOneBooking = async (id) => {
@@ -54,7 +53,7 @@ const AdminBookings = ({ className, ...rest }) => {
                 }
             }
         } catch (e) {
-            setAlertMessage(e.response.data.message);
+            toast.error(e.response.data.message);
         }
     } 
     const deleteOneRow = async (id) => {
@@ -63,6 +62,7 @@ const AdminBookings = ({ className, ...rest }) => {
 
     useEffect(() => {
         getBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const columnBuilder = (() => {
@@ -142,9 +142,6 @@ const AdminBookings = ({ className, ...rest }) => {
             className={classnames('adminbookings', className)}
             {...rest}
         >
-            {alertMessage && (
-                <AlertMessage message={alertMessage} />
-            )}
             <AdminSection
                 title="Réservations"
                 apiRef={apiRef}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 // import requests
 import api from '../../../requests';
@@ -18,8 +18,6 @@ import './addbookingmodal.scss';
 
 const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...rest }) => {
     const [open, setOpen] = React.useState(false)
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
     const handleOpen = async () => {
         // get active booking of this user if exist 
@@ -41,8 +39,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         setListArticle([]);
         setArticleId([]);
         setCurrentBooking(null);
-        setAlertMessage(null);
-        setSeverity(null);
     }
 
     const [articleId, setArticleId] = React.useState([]);
@@ -67,14 +63,12 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
-                        setSeverity("success");
-                        setAlertMessage("Réservation réussi");
+                        toast.success("Réservation réussi");
                         updateOneBooking(response.data.newBookingConfirm.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
-                    setSeverity("error");
-                    setAlertMessage(`${response.data.message}`);
+                    toast.error(response.data.message)
                     return;
                 }
             })
@@ -82,14 +76,12 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         } else {
             const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
             if (response.status === 200) {
-                setSeverity("success");
-                setAlertMessage("Réservation réussi");
+                toast.success("Réservation réussi");
 
                 updateOneBooking(response.data.newBookingConfirm.id);
                 setTimeout(() => { handleClose() }, 5000);
             } else {
-                setSeverity("error");
-                setAlertMessage(`${response.data.message}`);
+                toast.error(response.data.message);
             }
         }
     }
@@ -110,14 +102,12 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 const response = await api.put(`/admin/booking/${user[0].id}`, options);
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
-                        setSeverity("success");
-                        setAlertMessage("Réservation réussi");
+                        toast.success("Réservation réussi");
                         updateOneBooking(response.data.newBookingConfirm.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
-                    setSeverity("error");
-                    setAlertMessage(`${response.data.message}`);
+                    toast.error(response.data.message);
                     return;
                 }
             })
@@ -127,17 +117,14 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             if (booking.status === 200) {
                 const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
                 if (response.status === 200) {
-                    setSeverity("success");
-                    setAlertMessage("Réservation réussi");
+                    toast.success("Réservation réussi");
                     updateOneBooking(response.data.newBookingConfirm.id);
                     setTimeout(() => { handleClose() }, 5000);
                 } else {
-                    setSeverity("error");
-                    setAlertMessage(`${response.data.message}`);
+                    toast.error(response.data.message);
                 }
             } else {
-                setSeverity("error");
-                setAlertMessage(`${booking.data.message}`);
+                toast.error(booking.data.message);
             }
         }
     }
@@ -150,8 +137,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         const article_number = (data.get('number'));
 
         if (articleId.includes(Number(article_number))) {
-            setSeverity("error");
-            setAlertMessage("article déjà présent dans la réservation");
+            toast.error("article déjà présent dans la réservation");
         } else {
             // on récupère les données de l'article avant insertion dans le state
             const settings = {
@@ -164,12 +150,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 setListArticle(state => [...state, newArticle[0]]);
                 setArticleId(state => [...state, newArticle[0].id]);
                 inputRef.current.value = "";
-
-                setSeverity(null);
-                setAlertMessage(null);
             } else {
-                setSeverity("error");
-                setAlertMessage(newArticle.message);
+                toast.error(newArticle.message);
             }
         }
     }
@@ -355,13 +337,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                         </div>
                     </div>
                     <div className="addbook-modal-footer">
-                        {alertMessage && severity && (
-                            <AlertMessage
-                                message={alertMessage}
-                                severity={severity}
-                            >
-                            </AlertMessage>
-                        )}
                         <div className="addbook-modal-footer-button">
                             <Button
                                 onClick={handleSubmitBooking}

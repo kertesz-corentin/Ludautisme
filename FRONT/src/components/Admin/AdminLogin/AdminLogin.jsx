@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -16,6 +15,8 @@ import api from '../../../requests/index';
 import RecoverPasswordModal from '../../Front-Office/User/RecoverPasswordModal/RecoverPasswordModal';
 import { Fab } from '@mui/material';
 import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './adminlogin.scss';
 
@@ -23,8 +24,6 @@ const theme = createTheme();
 export default function SignIn() {
     const navigate = useNavigate();
 
-    const [alertMessage, setAlertMessage] = useState();
-    const [severity, setSeverity] = useState();
     const [recover, setRecover] = useState(true);
 
 
@@ -40,14 +39,12 @@ export default function SignIn() {
             if (response.status === 200) {
                 navigate('/admin/home');
             } else {
-                setSeverity("error");
-                setAlertMessage(`email ou mot de passe incorrect`);
+                toast.error(`email ou mot de passe incorrect`);
             }
             return response
         }
         catch (err) {
-            setSeverity("error");
-            setAlertMessage(err.response.data.message);
+            toast.error(err.response.data.message);
         }
     }
 
@@ -76,13 +73,6 @@ export default function SignIn() {
                         <Typography component="h1" variant="h5">
                             Se connecter
                         </Typography>
-                        {alertMessage && (
-                            <AlertMessage
-                                message={alertMessage}
-                                severity={severity}
-                            >
-                            </AlertMessage>
-                        )}
                         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
@@ -130,11 +120,11 @@ export default function SignIn() {
                 )}
             </>
         </div>
-        <div className='help'>
+            <div className='help'>
                 <Fab color="primary" aria-label="help" href="https://docs.google.com/document/d/1azHxxaSMG5iP1BnD2iVOMvsVlJFNHLw1SFzD0LNVbio/edit?usp=sharing" target='_blank' size='small'>
                     <QuestionMarkOutlinedIcon color='' />
                 </Fab>
-        </div></>
+            </div></>
     );
 }
 

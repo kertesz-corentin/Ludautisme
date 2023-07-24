@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 
 // import react components
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 // import react components
 import BookingArticles from '../BookingArticles/BookingArticles';
@@ -23,17 +23,12 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
-        setAlertMessage(null);
-        setSeverity(null);
     }
 
-    const [closed, setClosed] = useState(params.row.closed);
-    const [delivered, setDelivered] = useState(params.row.delivered);
-    const [overdue, setOverdue] = useState(params.row.overdue);
+    const [closed] = useState(params.row.closed);
+    const [delivered] = useState(params.row.delivered);
+    const [overdue] = useState(params.row.overdue);
     const [returnArticle, setReturnArticle] = React.useState([]);
-
-    const [alertMessage, setAlertMessage] = useState();
-    const [severity, setSeverity] = useState();
 
     const handleDelete = async () => {
         const response = await api.delete(`/admin/booking/${params.row.id}`);
@@ -41,9 +36,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             deleteOneRow(params.row.id);
             handleClose();
         } else {
-            setAlertMessage(response.statusText);
-            setSeverity("error");
-            setTimeout(() => { setAlertMessage(); setSeverity() }, 2000);
+            toast.error(response.statusText);
         }
     }
 
@@ -61,11 +54,9 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         const newArticle = response.data;
 
         if (response.status !== 200) {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
+            toast.error(response.data.message);
         } else if (!newArticle[0].available) {
-            setSeverity("error");
-            setAlertMessage("Article indisponible");
+            toast.error("Article indisponible");
         } else {
             const settings = {
                 articleNumber: article_number,
@@ -75,12 +66,8 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
             if (addResponse.status === 200) {
                 updateOneBooking(params.row.id);
-
-                setSeverity();
-                setAlertMessage();
             } else {
-                setSeverity("error");
-                setAlertMessage(`${addResponse.data.message}`);
+                toast.error(addResponse.data.message);
             }
         }
     }
@@ -93,16 +80,13 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             }
             const articles = await api.put(`admin/booking/return/${params.row.id}`, options);
             if (articles.status === 200) {
-                setSeverity("success");
-                setAlertMessage("Articles rendu");
+                toast.success("Articles rendu");
                 updateOneBooking(params.row.id);
             } else {
-                setSeverity("error");
-                setAlertMessage(`${articles.data.message}`);
+                toast.error(articles.data.message);
             }
         } else {
-            setSeverity("error");
-            setAlertMessage("Auncun articles selectionnées");
+            toast.error("Auncun articles selectionnées");
         }
 
     }
@@ -114,13 +98,10 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         const response = await api.post(`admin/booking/article/${userId}`, options);
 
         if (response.status === 200) {
-            setSeverity("success");
-            setAlertMessage("Article prolongé");
-
+            toast.success("Article prolongé");
             updateOneBooking(params.row.id);
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
+            toast.success(response.data.message);
             updateOneBooking(params.row.id);
         }
     }
@@ -258,9 +239,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                             </Button>
                         )}
                     </div>
-                    {alertMessage && (
-                        <AlertMessage message={alertMessage} severity={severity} />
-                    )}
                 </Box>
             </Modal>
 

@@ -6,12 +6,9 @@ import { DataGrid, frFR, GridToolbar, GridCheckIcon } from '@mui/x-data-grid';
 import { articleSchema } from '../../../Schemas';
 import { ToggleButton } from '@mui/material';
 import api from '../../../requests';
-import AlertMessage from '../../Front-Office/Reusable/AlertMessage/AlertMessage';
+import { toast } from 'react-toastify';
 
 const Articles = ({ params, children, name, className, articles, setArticles, getReferenceWithArticles, ...rest }) => {
-
-    const [alertMessage, setAlertMessage] = React.useState();
-    const [severity, setSeverity] = React.useState();
 
     const handleToogle = async (artcileId, value, prop) => {
         // toggle boolean value 
@@ -43,13 +40,13 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
         if (response.status === 200) {
             getReferenceWithArticles();
         } else {
-            setSeverity("error");
-            setAlertMessage(`${response.data.message}`);
+            toast.error(response.data.message);
         }
     }
 
     useEffect(() => {
         getReferenceWithArticles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const columnsBuilder = (() => {
@@ -138,15 +135,6 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                     }}
                 >
                 </DataGrid>
-                <div>
-                    {alertMessage && severity && (
-                        <AlertMessage
-                            message={alertMessage}
-                            severity={severity}
-                        >
-                        </AlertMessage>
-                    )}
-                </div>
             </div>
         </section>
     );

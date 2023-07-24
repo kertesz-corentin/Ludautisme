@@ -28,7 +28,6 @@ const AdminModal = ({name, fields, path, className, ...rest}) => {
         if(response.status === 200) {
             handleClose();
         }
-
     }
 
     const handleCheckBoxChange = (event) => {
