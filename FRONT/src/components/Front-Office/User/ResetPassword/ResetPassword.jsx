@@ -2,31 +2,33 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import './resetpwd.scss';
-import { TextField, Box, Button } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import api from '../../../../requests/index';
 import Logo from '../../../../public/logo.png';
 import { toast } from 'react-toastify';
+import PasswordChecklist from "react-password-checklist";
 
 
 const ResetPassword = ({ className, ...rest }) => {
 
-    const [passwordValue] = useState();
     const { token } = useParams();
+    const [password, setPassword] = useState("")
+    const [passwordAgain, setPasswordAgain] = useState("")
+    const [validPassword, setValidPassword] = useState(false)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const passwordValue = data.get('password');
-        const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*+-€])(?=.{8,})');
 
         const newPassword = {
             token: token,
             password: passwordValue
         }
 
-        if (regex.test(passwordValue)) {
+        if (validPassword) {
             const response = await toast.promise(
-                api.resetPassword('/login/reset-password', newPassword), 
+                api.resetPassword('/login/reset-password', newPassword),
                 {
                     pending: `Changement du mot de passe`,
                     error: 'Erreur lors du changement'
@@ -52,25 +54,49 @@ const ResetPassword = ({ className, ...rest }) => {
                 </div>
 
                 <h1>Veuillez entrer votre nouveau mot de passe</h1>
-                <TextField
-                    id='outlined'
-                    label='password'
-                    name='password'
-                    type='string'
-                    className="modal-inputs-item"
-                    value={passwordValue}
-                >
-                </TextField>
-                <p>
-                    Votre mot de passe doit respecter les règles suivantes
-                </p>
-                <ul class="password_limit">
-                    <li>8 caractères minimum</li>
-                    <li>Une majuscule</li>
-                    <li>Une minuscule</li>
-                    <li>Un chiffre et une lettre</li>
-                    <li>Un des caractères spéciaux suivants: ! @ $ % + - & # ^ €</li>
-                </ul>
+                <form>
+                    <div>
+                        <TextField
+                            id='outlined'
+                            label='Mot de passe'
+                            name='member_number'
+                            type='password'
+                            className="updateuser-modal-inputs-item"
+                            sx={{ mb: 2 }}
+                            fullWidth
+                            onChange={e => setPassword(e.target.value)}
+                        >
+                        </TextField>
+                    </div>
+                    <div>
+                        <TextField
+                            id='outlined'
+                            label='Confirmation mot de passe'
+                            name='member_number'
+                            type='password'
+                            className="updateuser-modal-inputs-item"
+                            sx={{ mb: 2 }}
+                            fullWidth
+                            onChange={e => setPasswordAgain(e.target.value)}
+                        >
+                        </TextField>
+                    </div>
+
+                    <PasswordChecklist
+                        rules={["minLength", "specialChar", "number", "capital", "match"]}
+                        minLength={8}
+                        value={password}
+                        valueAgain={passwordAgain}
+                        messages={{
+                            minLength: "8 caractères minimum",
+                            specialChar: "Au moins un caractère spécial",
+                            number: "Au moins un chiffre",
+                            capital: "Au moins une majuscule",
+                            match: "Les deux mots de passe correspondent",
+                        }}
+                        onChange={(isValid) => { if (isValid) { setValidPassword(true) } else { setValidPassword(false) } }}
+                    />
+                </form>
                 <Button
                     type='submit'
                     onSubmit={handleSubmit}

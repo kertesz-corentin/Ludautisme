@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-lazyload": "^3.2.0",
+    "react-password-checklist": "^1.4.3",
     "react-redux": "^8.0.2",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",

@@ -51,9 +51,9 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                 error: 'Erreur lors de la création'
             }
         );
-
+        console.log(response);
         if(response.status === 200) {
-            toast.succes("Adhérent créée");
+            toast.success("Adhérent créée");
             getUsers();
         } else {
             toast.error(response.data.message);
