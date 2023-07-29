@@ -59,7 +59,16 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
-                const response = await api.put(`/admin/booking/${user[0].id}`, options);
+                const response = await toast.promise(
+                    api.put(`/admin/booking/${user[0].id}`, options),
+                    {
+                        pending: 'Réservation en cours',
+                        error: 'Erreur lors de la réservation'
+                    }
+                )
+                
+                api.put(`/admin/booking/${user[0].id}`, options);
+
 
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
@@ -74,7 +83,13 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             })
 
         } else {
-            const response = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
+            const response = await toast.promise(
+                api.post(`/admin/booking/add/${user[0].id}`, listIds), 
+                {
+                    pending: 'Réservation en cours',
+                    error: 'Erreur lors de la réservation'
+                }
+            )
             if (response.status === 200) {
                 toast.success("Réservation réussi");
 
@@ -99,7 +114,13 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     articleNumber: id, 
                     bookingId: currentBooking.id
                 }
-                const response = await api.put(`/admin/booking/${user[0].id}`, options);
+                const response = await toast.promise(
+                    api.put(`/admin/booking/${user[0].id}`, options), 
+                    {
+                        pending: 'Réservation en cours',
+                        error: 'Erreur lors de la réservation'
+                    }
+                )
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussi");
@@ -112,7 +133,13 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 }
             })
         } else {
-            const booking = await api.post(`/admin/booking/add/${user[0].id}`, listIds);
+            const booking = await toast.promise(
+                api.post(`/admin/booking/add/${user[0].id}`, listIds), 
+                {
+                    pending: 'Réservation en cours',
+                    error: 'Erreur lors de la réservation'
+                }
+            )
 
             if (booking.status === 200) {
                 const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
@@ -143,7 +170,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             const settings = {
                 number: article_number
             }
-            const response = await api.post(`admin/articles/search`, settings)
+            const response = await api.post(`admin/articles/search`, settings);
             const newArticle = await response.data;
 
             if (newArticle.length) {

@@ -34,9 +34,16 @@ const AddCategoryModal = ({className, ...rest}) => {
             'main': mainCat,
         }
 
-        const response = await api.post('/admin/categorie', addedCategory)
+        const response = await toast.promise(
+            api.post('/admin/categorie', addedCategory), 
+            {
+                pending: 'Création de la catégorie',
+                error: 'Erreur lors de la création'
+            }
+        )
+        
         if(response.status === 200) {
-            toast.success("catégorie créé");
+            toast.success("Catégorie créé");
         } else {
             toast.error(response.data.message);
         }

@@ -31,7 +31,11 @@ const AdminReferences = ({ className, ...rest }) => {
     const getReferences = async () => {
         try {
             const response = await api.get('/admin/references');
-            setReferences(response.data);
+            if (response.status === 200) {
+                setReferences(response.data);
+            } else {
+                toast.error(response.data.message);
+            }
         } catch (err) {
             toast.error(err.response.data.message);
         }
@@ -43,6 +47,8 @@ const AdminReferences = ({ className, ...rest }) => {
             const data = await response.data;
             if (response.status === 200) {
                 setCategories(data);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
@@ -55,6 +61,8 @@ const AdminReferences = ({ className, ...rest }) => {
             const data = await response.data;
             if (response.status === 200) {
                 setTags(data);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
@@ -64,7 +72,6 @@ const AdminReferences = ({ className, ...rest }) => {
     const handleSearchByArticleNUmber = async (event) => {
         try {
             setArticleValue(event.target.value);
-            console.log(event.target.value);
             if (!event.target.value) {
                 const response = await api.get('/admin/references');
                 setReferences(response.data);
@@ -72,6 +79,8 @@ const AdminReferences = ({ className, ...rest }) => {
                 const response = await api.get(`/admin/references/article/${event.target.value}`);
                 if (response.status === 200) {
                     setReferences(response.data);
+                } else {
+                    toast.error(response.data.message);
                 }
             }
         } catch (err) {

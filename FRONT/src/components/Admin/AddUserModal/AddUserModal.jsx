@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './addusermodal.scss';
 
-const AddUserModal = ({className, ...rest}) => {
+const AddUserModal = ({getUsers, className, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
@@ -44,10 +44,17 @@ const AddUserModal = ({className, ...rest}) => {
             'id_role': role,
         };
 
-        const response = await api.post('/admin/users', user)
+        const response = await toast.promise(
+            api.post('/admin/users', user), 
+            {
+                pending: `Création de l'utilisateur`,
+                error: 'Erreur lors de la création'
+            }
+        );
+
         if(response.status === 200) {
-            handleClose();
-            window.location.reload();
+            toast.succes("Adhérent créée");
+            getUsers();
         } else {
             toast.error(response.data.message);
         }

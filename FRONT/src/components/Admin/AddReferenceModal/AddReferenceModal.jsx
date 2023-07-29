@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // import requests
 import api from '../../../requests';
+import { toast } from 'react-toastify';
 
 // import react components
 
@@ -29,9 +30,18 @@ const AddReferenceModal = ({categories, tags, className, ...rest}) => {
             'main_category': data.get('main_category'),
         };
 
-        const response = await api.post('/admin/references', reference)
+        const response = await toast.promise(
+            api.post('/admin/references', reference), 
+            {
+                pending: 'Création de la référence',
+                error: 'Erreur lors de la création'
+            }
+        );
+
         if(response.status === 200) {
-            handleClose();
+            toast.success("Référence créée");
+        } else {
+            toast.error(response.data.message);
         }
     }
 

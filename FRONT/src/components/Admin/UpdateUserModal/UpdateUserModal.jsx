@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updateusermodal.scss';
 
-const UpdateUserModal = ({params, className, ...rest}) => {
+const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
@@ -58,11 +58,17 @@ const UpdateUserModal = ({params, className, ...rest}) => {
             'archived': data.get('archived'),
             'id_role': idRole,
         };
+        const response = await toast.promise(
+            api.put(`/admin/users/${params.row.id}`, user), 
+            {
+                pending: `Mise a jour de l'utilisateur`,
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
 
-        const response = await api.put(`/admin/users/${params.row.id}`, user)
         if(response.status === 200) {
-            handleClose();
-            window.location.reload();
+            toast.success("Utilisateur mis a jour");
+            getUsers();
         } else {
             toast.error(response.data.message);
         }
@@ -91,10 +97,16 @@ const UpdateUserModal = ({params, className, ...rest}) => {
     }
 
     const handleDelete = async () => {
-        const response = await api.delete(`/admin/users/${params.row.id}`);
+        const response = await toast.promise(
+            api.delete(`/admin/users/${params.row.id}`), 
+            {
+                pending: `Suppression de l'utilisateur`,
+                error: 'Erreur lors de la suppression'
+            }
+        );
         if(response.status === 200) {
-            handleClose();
-            window.location.reload();
+            toast.success("Utilisateur supprimé");
+            getUsers();
         } else {
             toast.error(response.statusText);
         }

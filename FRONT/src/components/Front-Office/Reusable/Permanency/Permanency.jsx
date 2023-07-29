@@ -26,7 +26,6 @@ const Permanency = ({className,display, ...rest}) => {
                     moment().add(1, 'M').format('MMMM')
 
                     setPermDate(nextMonth);
-
             }
         } else {
             console.error(response.data);

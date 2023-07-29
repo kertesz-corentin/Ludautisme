@@ -30,14 +30,28 @@ const AdminBookings = ({ className, ...rest }) => {
         try {
             let response = null;
             if(!bookings.length) {
-                response = await api.get('/admin/booking/ligth');
+                response = await toast.promise(
+                    api.get('/admin/booking/ligth'), 
+                    {
+                        pending: `Récupération des réservations`,
+                        error: 'Erreur lors de la récupération'
+                    }
+                );
             } else {
-                response = history ? await api.get('/admin/booking/ligth') : await  api.get('/admin/booking');
+                let url = history ? '/admin/booking/ligth' : '/admin/booking';
+                response = await toast.promise(
+                    api.get(url), 
+                    {
+                        pending: `Récupération des réservations`,
+                        error: 'Erreur lors de la récupération'
+                    }
+                )
             }
             
-            const data = await response.data;
             if (response.status === 200) {
-                setBookings(data);
+                setBookings(response.data);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
@@ -45,12 +59,20 @@ const AdminBookings = ({ className, ...rest }) => {
     }
     const updateOneBooking = async (id) => {
         try {
-            let response = await api.get(`/admin/booking/${id}`);
+            let response = await toast.promise(
+                api.get(`/admin/booking/${id}`), 
+                {
+                    pending: `Mise a jour de la réservation`,
+                    error: 'Erreur lors de la mise à jour'
+                }
+            )
             if (response.status === 200) {
                 let data = response.data[0];
                 if(data) {
                     apiRef.current.updateRows([data]);
                 }
+            } else {
+                toast.error(response.data.message);
             }
         } catch (e) {
             toast.error(e.response.data.message);

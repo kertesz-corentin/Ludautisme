@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 // import materiel ui components
 import { IconButton, Modal, Typography, Box, Button, Alert } from '@mui/material';
@@ -16,12 +17,19 @@ const DeleteArticleModal = ({params, closed, delivered, className,getBookings, .
 
 
     const handleDelete = async () => {
-
-        const response = await api.delete(`/admin/booking/article/${params.row.id}`)
+        const response = await toast.promise(
+            api.delete(`/admin/booking/article/${params.row.id}`), 
+            {
+                pending: `Suppression de l'article`,
+                error: 'Erreur lors de la suppression'
+            }
+        )
 
         if(response.status === 200){
+            toast.success("Article supprimé");
             getBookings();
-            handleClose();
+        } else {
+            toast.error(response.data.message);
         }
     }
 

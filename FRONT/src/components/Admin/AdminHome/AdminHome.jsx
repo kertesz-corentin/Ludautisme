@@ -10,6 +10,7 @@ import AdminPermanency from '../AdminPermanency/AdminPermanency';
 import AdminHomeCard from '../AdminHomeCard/AdminHomeCard';
 import { Fab } from '@mui/material';
 import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
+import { toast } from 'react-toastify';
 
 import './adminhome.scss';
 
@@ -21,45 +22,37 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
 
     const allBookings = async () => {
         const response = await api.get('/admin/booking');
-        const data = await response.data;
         if (response.status === 200) {
-            setBookings(data.length);
-        }
-        else {
-            console.error(response.data)
+            setBookings(response.data.length);
+        } else {
+            toast.error(response.data.message);
         }
     }
 
     const delayBookings = async () => {
         const response = await api.post('/admin/booking/search', { overdue: true });
-        const data = await response.data;
         if (response.status === 200) {
-            setOverdueBookings(data.length);
-        }
-        else {
-            console.error(response.data)
+            setOverdueBookings(response.data.length);
+        } else {
+            toast.error(response.data.message);
         }
     }
 
     const allUsers = async () => {
         const response = await api.get('/admin/users');
-        const data = await response.data;
         if (response.status === 200) {
-            setUsers(data.length);
-        }
-        else {
-            console.error(response.data)
+            setUsers(response.data.length);
+        } else {
+            toast.error(response.data.message);
         }
     }
 
     const allReferences = async () => {
         const response = await api.get('/admin/references');
-        const data = await response.data;
         if (response.status === 200) {
-            setReferences(data.length);
-        }
-        else {
-            console.error(response.data)
+            setReferences(response.data.length);
+        } else {
+            toast.error(response.data.message);
         }
     }
 

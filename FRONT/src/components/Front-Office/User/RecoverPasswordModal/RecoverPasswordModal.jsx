@@ -18,8 +18,14 @@ const handleMailSubmit = async(event) => {
         const mail = {
             email:mailValue,
             url:window.location.origin
-        }
-        const response = await api.post('/login/forgot-password',mail)
+        };
+        const response = await toast.promise(
+            api.post('/login/forgot-password',mail), 
+            {
+                pending: `Envoi de l'email`,
+                error: `Erreur lors de l'envoi`
+            }
+        );
 
         if (response.status === 200) {
             toast.success("email envoyé");

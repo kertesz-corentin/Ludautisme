@@ -31,20 +31,35 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
             'name': data.get('name'),
             'description': data.get('description')
         };
-        const response = await api.put(`/admin/categorie/${params.row.id}`, reference);
+        const response = await toast.promise(
+            api.put(`/admin/categorie/${params.row.id}`, reference), 
+            {
+                pending: 'Mise a jour de la catégorie',
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
+        
         if (response.status === 200) {
-            handleClose();
+            toast.success("Catégorie mise a jour");
             getMainCategories();
+        } else {
+            toast.error(response.data.message);
         }
     }
 
     const handleDelete = async () => {
-        const response = await api.delete(`/admin/categorie/${params.row.id}`);
+        const response = await toast.promise(
+            api.delete(`/admin/categorie/${params.row.id}`), 
+            {
+                pending: 'Suppression a jour de la catégorie',
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
         if (response.status === 200) {
+            toast.success("Catégorie supprimé");
             getMainCategories();
-            handleClose();
         } else {
-            toast.error(response.statusText);
+            toast.error(response.data.message);
         }
     }
 

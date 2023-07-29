@@ -42,8 +42,7 @@ export default function SignIn() {
                 toast.error(`email ou mot de passe incorrect`);
             }
             return response
-        }
-        catch (err) {
+        } catch (err) {
             toast.error(err.response.data.message);
         }
     }
@@ -53,7 +52,6 @@ export default function SignIn() {
     }
 
     return (
-
         <><div className="admin-login">
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">

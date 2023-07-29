@@ -21,11 +21,16 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
         const data = new FormData(event.currentTarget);
         const memberNumber = Number(data.get('member_number'));
 
-        const response = await api.post('admin/users/search', { member_number: `${memberNumber}` })
-        const searchUser = await response.data;
+        const response = await toast.promise(
+            api.post('admin/users/search', { member_number: `${memberNumber}` }), 
+            {
+                pending: `Recherche de l'utilisateur`,
+                error: 'Erreur lors de la recherche'
+            }
+        );
 
         if (response.status === 200) {
-            setUser(searchUser);
+            setUser(response.data);
             setUserExist(true);
         } else {
             toast.error(response.data.message);

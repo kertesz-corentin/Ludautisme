@@ -5,6 +5,7 @@ import 'date-fns'
 import frLocale from 'date-fns/locale/fr';
 
 import api from '../../../requests';
+import { toast } from 'react-toastify';
 
 // import material ui components
 import {TextField,Chip} from '@mui/material';
@@ -24,14 +25,14 @@ const AdminPermanency = ({className, ...rest}) => {
 
     const getActivePermanency = async () => {
         const response = await api.get('/admin/permanency/active');
-        const activePermanency = await response.data;
+        const activePermanency = response.data;
         if(response.status === 200){
             (activePermanency[0].next_date)
             ?setDate(format(new Date(activePermanency[0].next_date), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}))
             :setDate(format(new Date(), 'yyyy-MM-dd', {timeZone: 'Europe/Paris'}));
             (activePermanency[0].next_date)&&setIsDefined(true);
         } else {
-            console.error(response);
+            toast.error(response.data.message);
         }
     }
 
@@ -58,15 +59,15 @@ const AdminPermanency = ({className, ...rest}) => {
                     message : 'Succès',
                     severity : 'success'});
                 setTimeout(()=>{setAlertMessage()},1000);
-            }
-            else {
-                console.log(response.data)
+            } else {
+                toast.error(response.data.message);
             }
         }
     }
 
     const closePermanency = async () => {
         await api.get('/admin/permanency/active/close');
+        
         setDate();
         setIsDefined(false);
     }

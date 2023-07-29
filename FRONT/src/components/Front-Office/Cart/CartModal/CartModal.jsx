@@ -34,7 +34,14 @@ const CartModal = ({
         const refIds = {
             refIds : currentItems.map((item)=>{return item.id}),
         };
-            const response =  await api.post(`/customer/booking/add/${userId}`, refIds)
+
+        const response = await toast.promise(
+            api.post(`/customer/booking/add/${userId}`, refIds), 
+            {
+                pending: `Ajout de la réservation`,
+                error: 'Erreur lors de la réservation'
+            }
+        );
         if (response.status === 200){
             toast.success('Votre réservation a bien été prise en compte');
         } else {

@@ -25,7 +25,13 @@ const ResetPassword = ({ className, ...rest }) => {
         }
 
         if (regex.test(passwordValue)) {
-            const response = await api.resetPassword('/login/reset-password', newPassword);
+            const response = await toast.promise(
+                api.resetPassword('/login/reset-password', newPassword), 
+                {
+                    pending: `Changement du mot de passe`,
+                    error: 'Erreur lors du changement'
+                }
+            );
             if (response.status === 200) {
                 toast.success("Mot de passe changé");
             } else {

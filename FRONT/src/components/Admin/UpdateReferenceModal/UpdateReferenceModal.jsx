@@ -34,9 +34,12 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                 "id_ref": params.row.id,
             }
             const response = await api.post(`/admin/articles/search`, settings);
-            setArticles(response.data);
-        }
-        catch (err) {
+            if (response.status === 200) {
+                setArticles(response.data);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (err) {
             console.error(err);
         }
     }
@@ -53,14 +56,28 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
             'main_category': data.get('main_category'),
             'tags': data.get('tags')
         };
-        const response = await api.put(`/admin/references/${params.row.id}`, reference);
+        const response = await toast.promise(
+            api.put(`/admin/references/${params.row.id}`, reference), 
+            {
+                pending: 'Mise a jour de la référence',
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
         if (response.status === 200) {
-            handleClose();
+            toast.success("Référence mise a jour");
+        } else {
+            toast.error(response.data.message);
         }
     }
     // delete one picture
     const handleDelete = async (event) => {
-        let deleteResponse = await api.delete(`/admin/picture/${currentPicture}`);
+        const deleteResponse = await toast.promise(
+            api.delete(`/admin/picture/${currentPicture}`), 
+            {
+                pending: `Suppression de l'image`,
+                error: 'Erreur lors de la suppression'
+            }
+        );
 
         if (deleteResponse.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
@@ -83,7 +100,13 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                 formData.append("title", file.name);
                 formData.append("description", "");
 
-                let response = await api.post('/admin/picture', formData, true);
+                const response = await toast.promise(
+                    api.post('/admin/picture', formData, true), 
+                    {
+                        pending: `Ajout de l'image`,
+                        error: `Erreur lors de l'ajout`
+                    }
+                );
                 if (response.status === 200) {
                     let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
                     setPicture(pictureResponse.data);
@@ -100,7 +123,13 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
     const handleMain = async () => {
         let obj = { main: true };
 
-        const response = await api.put(`/admin/picture/${currentPicture}`, obj);
+        const response = await toast.promise(
+            api.put(`/admin/picture/${currentPicture}`, obj), 
+            {
+                pending: `Désignation comme image principale`,
+                error: `Erreur de changement`
+            }
+        );
         
         if (response.status === 200) {
             let pictureResponse = await api.get(`/admin/picture/${params.row.id}`);
@@ -113,7 +142,13 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
     // archive one reference with all this article
     const handleArchive = async () => {
         try {
-            const response = await api.delete(`/admin/references/${params.row.id}`);
+            const response = await toast.promise(
+                api.delete(`/admin/references/${params.row.id}`), 
+                {
+                    pending: `Archivage de la référence`,
+                    error: `Erreur lors de l'archivage`
+                }
+            );
              if (response.status === 200) {
                     getReferenceWithArticles();
                     toast.success(response.data.message);
@@ -293,7 +328,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                         articles={articles}
                         setArticles={setArticles}
                         getReferenceWithArticles={getReferenceWithArticles}
-                        children={<AddModal reference={params.row.id} />} />
+                        children={<AddModal reference={params.row.id} getReferenceWithArticles={getReferenceWithArticles} />} />
                     </div>
                 </Box>
             </Modal>

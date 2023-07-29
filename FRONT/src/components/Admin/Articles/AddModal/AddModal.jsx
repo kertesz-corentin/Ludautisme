@@ -4,8 +4,9 @@ import api from '../../../../requests';
 import { Button, Typography, Box, TextField, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import './addmodal.scss';
+import { toast } from 'react-toastify';
 
-const AddModal = ({reference, className, ...rest}) => {
+const AddModal = ({reference, className, getReferenceWithArticles, ...rest}) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
@@ -22,7 +23,11 @@ const AddModal = ({reference, className, ...rest}) => {
 
         const response = await api.post('/admin/references/article', article)
         if(response.status === 200) {
+            toast.success("Article ajouté");
+            getReferenceWithArticles();
             handleClose();
+        } else {
+            toast.error(response.data.message);
         }
     }
 

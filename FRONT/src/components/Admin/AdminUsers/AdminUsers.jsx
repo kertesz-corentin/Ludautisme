@@ -27,9 +27,10 @@ const AdminUsers = ({className, ...rest}) => {
     const getUsers = async () => {
         try {
             const response = await api.get(path);
-            const data = await response.data;
-            if(response.status === 200){
-                setUsers(data);
+            if (response.status === 200){
+                setUsers(response.data);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
@@ -74,7 +75,7 @@ const AdminUsers = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateUserModal params={params} />
+                                <UpdateUserModal params={params} getUsers={getUsers}/>
                             </IconButton>
                     );
                     break;
@@ -112,7 +113,7 @@ const AdminUsers = ({className, ...rest}) => {
                         sortModel: [{ field: 'member_number', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddUserModal />]}
+                buttonList={[<AddUserModal getUsers={getUsers}/>]}
             />
         </div>
     );

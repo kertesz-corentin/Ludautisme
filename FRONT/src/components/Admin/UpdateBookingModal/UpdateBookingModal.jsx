@@ -31,10 +31,18 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     const [returnArticle, setReturnArticle] = React.useState([]);
 
     const handleDelete = async () => {
-        const response = await api.delete(`/admin/booking/${params.row.id}`);
+
+        const response = await toast.promise(
+            api.delete(`/admin/booking/${params.row.id}`), 
+            {
+                pending: `Suppression de la réservation`,
+                error: 'Erreur lors de la suppression'
+            }
+        );
+
         if (response.status === 200) {
+            toast.success("réservation supprimé");
             deleteOneRow(params.row.id);
-            handleClose();
         } else {
             toast.error(response.statusText);
         }
@@ -73,7 +81,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const handleReturn = async () => {
-
         if (returnArticle.length) {
             const options = {
                 return_article: returnArticle
@@ -88,7 +95,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         } else {
             toast.error("Auncun articles selectionnées");
         }
-
     }
     const handleProlong = async (row) => {
         let userId = params.row.member_number;

@@ -48,7 +48,13 @@ const Contact = ({ className, ...rest }) => {
                 object,
                 message
             };
-            const response = await api.post('/customer/contact/send', request);
+            const response = await toast.promise(
+                api.post('/customer/contact/send', request), 
+                {
+                    pending: `Envoi de l'email`,
+                    error: `Erreur lors de l'envoi`
+                }
+            );
             if (response.status === 200) {
                 toast.success("email envoyé");
                 setName("");
@@ -56,7 +62,7 @@ const Contact = ({ className, ...rest }) => {
                 setObject("");
                 setMessage("");
             } else {
-                console.error(response.data);
+                toast.error(response.data.message);
             }
         }
 

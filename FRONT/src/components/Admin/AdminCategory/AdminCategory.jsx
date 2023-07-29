@@ -18,29 +18,26 @@ const AdminCategory = ({ className, ...rest }) => {
     const getMainCategories = async () => {
         try {
             const response = await api.get(path);
-            const data = await response.data;
-            console.log(response)
             if (response.status === 200) {
-                setCategories(data);
+                setCategories(response.data);
             } else {
                 toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
-            console.error(err);
         }
     }
 
     const getTags = async () => {
         try {
             const response = await api.post(path);
-            const data = await response.data;
             if (response.status === 200) {
-                setTags(data);
+                setTags(response.data);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (err) {
             toast.error(err.response.data.message);
-            console.error(err);
         }
     }
 
