@@ -94,7 +94,7 @@ const ResetPassword = ({ className, ...rest }) => {
                             capital: "Au moins une majuscule",
                             match: "Les deux mots de passe correspondent",
                         }}
-                        onChange={(isValid) => { if (isValid) { setValidPassword(true) } else { setValidPassword(false) } }}
+                        onChange={(isValid) => { setValidPassword(isValid) }}
                     />
                 </form>
                 <Button

@@ -9,15 +9,16 @@ import api from '../../../requests';
 import { toast } from 'react-toastify';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup, Select, MenuItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import './updateusermodal.scss';
 
-const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
+const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
     const [open, setOpen] = useState(false)
+    const [status, setStatus] = useState(params.row.id_status);
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
@@ -29,14 +30,14 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
     const [idRole, setIdRole] = useState(params.row.id_role)
 
     const admin = () => {
-        if(params.row.id_role === 2){
+        if (params.row.id_role === 2) {
             setRole(true)
         }
     }
 
     useEffect(() => {
         admin();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleSubmit = async (event) => {
@@ -56,17 +57,19 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
             'cotisation_status': data.get('cotisation_status'),
             'caution_status': data.get('caution_status'),
             'archived': data.get('archived'),
+            'social_reason': data.get('social_reason'),
             'id_role': idRole,
+            'id_status': data.get('user_status')
         };
         const response = await toast.promise(
-            api.put(`/admin/users/${params.row.id}`, user), 
+            api.put(`/admin/users/${params.row.id}`, user),
             {
                 pending: `Mise a jour de l'utilisateur`,
                 error: 'Erreur lors de la mise a jour'
             }
         );
 
-        if(response.status === 200) {
+        if (response.status === 200) {
             toast.success("Utilisateur mis a jour");
             getUsers();
         } else {
@@ -87,7 +90,7 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
     }
 
     const handleRole = (event) => {
-        if(event.target.checked === false){
+        if (event.target.checked === false) {
             setIdRole(1)
         }
         else {
@@ -98,19 +101,23 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
 
     const handleDelete = async () => {
         const response = await toast.promise(
-            api.delete(`/admin/users/${params.row.id}`), 
+            api.delete(`/admin/users/${params.row.id}`),
             {
                 pending: `Suppression de l'utilisateur`,
                 error: 'Erreur lors de la suppression'
             }
         );
-        if(response.status === 200) {
+        if (response.status === 200) {
             toast.success("Utilisateur supprimé");
             getUsers();
         } else {
             toast.error(response.statusText);
         }
     }
+
+    const handleChange = (event) => {
+        setStatus(event.target.value);
+      };
 
     return (
         <div className="updateuser">
@@ -142,9 +149,8 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='number'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.member_number}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Email'
@@ -152,9 +158,17 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='email'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.email}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            id='outlined'
+                            label='Raison sociale'
+                            name='social_reason'
+                            type='string'
+                            className="updateuser-modal-inputs-item"
+                            defaultValue={params.row.social_reason}
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Prénom'
@@ -162,9 +176,8 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.first_name}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Nom'
@@ -172,9 +185,8 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.last_name}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Téléphone'
@@ -182,9 +194,8 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.phone}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='n° de rue'
@@ -192,9 +203,8 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_number}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Nom de rue'
@@ -202,23 +212,21 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_street}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Code Postal'
                             name='adress_zipcode'
-                            placeholder= 'ex: 75000'
+                            placeholder='ex: 75000'
                             inputProps={{
                                 inputMode: 'numeric',
                                 pattern: '[0-9]*'
                             }}
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_zipcode}
-                            sx={{mb: 2}}
-                        >
-                        </TextField>
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Ville'
@@ -226,9 +234,32 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             type='string'
                             className="updateuser-modal-inputs-item"
                             defaultValue={params.row.adress_city}
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
+                        />
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                width: '40%',
+                                flexDirection: 'row',
+                                justifyContent: 'space-around'
+                            }}
                         >
-                        </TextField>
+                            <Select
+                                fullWidth
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                name='user_status'
+                                value={status}
+                                label="Status"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={1}>Particulier</MenuItem>
+                                <MenuItem value={2}>Professionel</MenuItem>
+                                <MenuItem value={3}>AESH</MenuItem>
+                                <MenuItem value={4}>Structure</MenuItem>
+                                <MenuItem value={5}>Sans Status</MenuItem>
+                            </Select>
+                        </FormGroup>
                         <FormGroup
                             sx={{
                                 display: 'flex',
@@ -242,6 +273,7 @@ const UpdateUserModal = ({params, className, getUsers, ...rest}) => {
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />
                             <FormControlLabel control={<Checkbox name='id_role' checked={role} onChange={handleRole} />} label="Admin" />
                         </FormGroup>
+
                     </div>
                     <div className="updateuser-modal-footer">
                         <Button

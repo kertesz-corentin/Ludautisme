@@ -22,6 +22,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {boolean} caution_status - caution status
  * @property {string} caution_expiration - caution expiration
  * @property {number} id_role - role id
+ * @property {number} id_status - status id
  * @property {string} created_at - date creation
  */
 
@@ -56,23 +57,52 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {boolean} archived - User archived status
  */
 
+const userList = `
+        "user"."id",
+        "user"."adress_city",
+        "user"."adress_number",
+        "user"."adress_street",
+        "user"."adress_zipcode",
+        "user"."archived",
+        "user"."caution_expiration",
+        "user"."caution_status",
+        "user"."cotisation_expiration",
+        "user"."cotisation_status",
+        "user"."email",
+        "user"."first_name",
+        "user"."id_role",
+        "user"."last_name",
+        "user"."member_number",
+        "user"."phone",
+        "user"."social_reason",
+        "user"."id_status",
+        "user_status"."name"`;
+
 module.exports = {
     //  Return all users in db
     async findAll() {
-        const query = 'SELECT * FROM "user"';
+        const query = `SELECT ${userList} FROM "user" 
+        INNER JOIN "role" ON "role"."id" = "user"."id_role" 
+        INNER JOIN "user_status" ON "user_status"."id" = "user"."id_status" `;
         const result = await sqlHandler(query);
         return result.rows;
     },
 
     async findById(id) {
-        const query = 'SELECT * FROM "user" WHERE id=$1';
+        const query = `SELECT ${userList} FROM "user" 
+        INNER JOIN "role" ON "role"."id" = "user"."id_role" 
+        INNER JOIN "user_status" ON "user_status"."id" = "user"."id_status" 
+        WHERE "user".id=$1`;
         const placeholders = [id];
         const result = await sqlHandler(query, placeholders);
         return result.rows;
     },
 
     async findFiltered(arr) {
-        let query = `SELECT "user".*, role.name FROM "user" INNER JOIN "role" ON "role"."id" = "user"."id_role" WHERE `;
+        let query = `SELECT "user".*, role.name FROM "user" 
+                    INNER JOIN "role" ON "role"."id" = "user"."id_role" 
+                    INNER JOIN "user_status" ON "user_status"."id" = "user"."id_status" 
+                    WHERE `;
         const placeholders = [];
         arr.forEach((filter, index) => {
             const prop = Object.keys(filter)[0];

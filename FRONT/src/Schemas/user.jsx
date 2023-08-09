@@ -49,6 +49,24 @@ const userSchema  = {
         regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
         errorInfo : 'La saisie doit être du type adresse@nomdedomaine.ext',
     },
+    social_reason:{
+        type : "string",
+        label : "Raison sociale",
+        gridDisplay : "normal",
+        width : 125,
+        title : 2,
+        bloc  : 1,
+        field : 2,
+    },
+    // status name
+    name:{
+        type : "string",
+        label : "Status",
+        gridDisplay : "normal",
+        width : 100,
+        bloc : 2,
+        field : 5,
+    },
     last_name:{
         type : "string",
         label : "Nom",
@@ -167,7 +185,7 @@ const userSchema  = {
         bloc : 2,
         field : 5,
         inputDisplay : 'checkbox',
-    },
+    }
 }
 
 export {userSchema}

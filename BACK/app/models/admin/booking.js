@@ -328,7 +328,7 @@ module.exports = {
     async getRefsAvailability(arr) {
         let query = `
         WITH add_row_number AS (
-            SELECT
+            SELECT 
             "reference"."id",
             "reference"."name",
             "article"."id" AS "article_id" ,

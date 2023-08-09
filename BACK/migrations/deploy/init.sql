@@ -4,6 +4,10 @@ CREATE TABLE "role" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "name" TEXT NOT NULL
 );
+CREATE TABLE "user_status" (
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "name" TEXT NOT NULL
+);
 CREATE TABLE "user" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "email" TEXT NOT NULL UNIQUE,
@@ -22,7 +26,9 @@ CREATE TABLE "user" (
     "caution_expiration" DATE,
     "archived" BOOLEAN DEFAULT false,
     "id_role" INT REFERENCES "role"("id") DEFAULT 1,
-    "created_at" TIMESTAMPTZ DEFAULT NOW()
+    "id_status" INT REFERENCES "user_status"("id") DEFAULT 5,
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "social_reason" TEXT
 );
 
 CREATE TABLE "permanency" (
