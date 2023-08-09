@@ -6,13 +6,14 @@ import { toast } from 'react-toastify';
 import api from '../../../requests';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup, Select, MenuItem }  from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './addusermodal.scss';
 
 const AddUserModal = ({getUsers, className, ...rest}) => {
     const [open, setOpen] = useState(false)
+    const [status, setStatus] = useState(5);
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
@@ -42,8 +43,14 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
             'caution_status': cautionChecked,
             'archived': archivedChecked,
             'id_role': role,
+            'social_reason': data.get('social_reason'),
+            'id_status': Number(data.get('user_status'))
         };
 
+        if(user['id_status'] === 5) {
+            toast.error("Ajoutez un status à votre utilisateur");
+            return;
+        }
         const response = await toast.promise(
             api.post('/admin/users', user), 
             {
@@ -51,14 +58,12 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                 error: 'Erreur lors de la création'
             }
         );
-        console.log(response);
         if(response.status === 200) {
             toast.success("Adhérent créée");
             getUsers();
         } else {
             toast.error(response.data.message);
         }
-
     }
 
     const handleCotisationCheck = (event) => {
@@ -78,6 +83,9 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
             setRole(2)
         }
     }
+    const handleChange = (event) => {
+        setStatus(event.target.value);
+      };
 
     return (
         <div className="adduser-modal--open">
@@ -109,8 +117,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='number'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Email'
@@ -118,8 +125,15 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='email'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
+                        <TextField
+                            id='outlined'
+                            label='Raison sociale'
+                            name='social_reason'
+                            type='string'
+                            className="updateuser-modal-inputs-item"
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             id='outlined'
                             label='Prénom'
@@ -127,8 +141,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Nom'
@@ -136,8 +149,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Téléphone'
@@ -145,8 +157,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='n° de rue'
@@ -154,8 +165,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Nom de rue'
@@ -163,8 +173,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Code Postal'
@@ -176,8 +185,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             }}
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
-                        >
-                        </TextField>
+                        />
                         <TextField
                             id='outlined'
                             label='Ville'
@@ -185,8 +193,31 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='string'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
+                        />
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                width: '40%',
+                                flexDirection: 'row',
+                                justifyContent: 'space-around'
+                            }}
                         >
-                        </TextField>
+                            <Select
+                                fullWidth
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                name='user_status'
+                                value={status}
+                                label="Status"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={1}>Particulier</MenuItem>
+                                <MenuItem value={2}>Professionel</MenuItem>
+                                <MenuItem value={3}>AESH</MenuItem>
+                                <MenuItem value={4}>Structure</MenuItem>
+                                <MenuItem value={5}>Sans Status</MenuItem>
+                            </Select>
+                        </FormGroup>
                         <FormGroup
                             sx={{
                                 display: 'flex',

@@ -59,8 +59,13 @@ const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
             'archived': data.get('archived'),
             'social_reason': data.get('social_reason'),
             'id_role': idRole,
-            'id_status': data.get('user_status')
+            'id_status': Number(data.get('user_status'))
         };
+
+        if(user['id_status'] === 5) {
+            toast.error("Ajoutez un status à votre utilisateur");
+            return;
+        }
         const response = await toast.promise(
             api.put(`/admin/users/${params.row.id}`, user),
             {
