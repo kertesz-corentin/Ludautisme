@@ -48,13 +48,13 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-
+        let tags = data.get('tags');
         const reference = {
             'name': data.get('name'),
             'description': data.get('description'),
             'valorisation': data.get('valorisation'),
             'main_category': data.get('main_category'),
-            'tags': data.get('tags')
+            'tags': tags ?? null
         };
         console.log(reference)
         const response = await toast.promise(
