@@ -70,6 +70,7 @@ module.exports = {
             }
         }
         console.error(validatedTag);
+        console.error(existingTags);
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
