@@ -49,6 +49,11 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let tags = data.get('tags');
+        let tagArray = tags.split(',');
+        for (const tag of tagArray) {
+            if(Number.isNaN(tag)) tags = null;
+        };
+
         const reference = {
             'name': data.get('name'),
             'description': data.get('description'),
