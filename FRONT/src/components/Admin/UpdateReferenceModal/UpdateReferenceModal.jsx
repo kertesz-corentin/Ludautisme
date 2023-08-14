@@ -63,7 +63,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
             'tags': tags ?? null
         };
 
-        const response = api.put(`/admin/references/${params.row.id}`, reference);
+        const response = await api.put(`/admin/references/${params.row.id}`, reference);
         console.log(response);
         if (response.status === 200) {
             toast.success("Référence mise a jour");
