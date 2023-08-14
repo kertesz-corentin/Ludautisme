@@ -78,7 +78,7 @@ module.exports = {
                 /* comparer si un tags existant n'est pas dans la liste depuis le
                 formulaire supprimer la relation */
                 for (const tag of existingTags) {
-                    if (!tags.includes(tag)) {
+                    if (tags.length && !tags.includes(tag)) {
                         const promise = new Promise(() => {
                             categoryDataMapper.deleteTagFromRef(tag, reference[0].id);
                         });
