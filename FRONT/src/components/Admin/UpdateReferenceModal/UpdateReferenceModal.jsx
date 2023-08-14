@@ -56,6 +56,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
             'main_category': data.get('main_category'),
             'tags': data.get('tags')
         };
+        console.log(reference)
         const response = await toast.promise(
             api.put(`/admin/references/${params.row.id}`, reference), 
             {
@@ -63,6 +64,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
                 error: 'Erreur lors de la mise a jour'
             }
         );
+        console.log(response)
         if (response.status === 200) {
             toast.success("Référence mise a jour");
         } else {
