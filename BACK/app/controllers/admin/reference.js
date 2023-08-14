@@ -61,6 +61,7 @@ module.exports = {
         // comparer les tags du formulaire et ceux de la BDD
         const existingTags = reference[0].tag.map((t) => String(t.id));
         const tags = req.body.tags.split(',');
+        console.error(tags);
         const validatedTag = [];
         for (const tag of tags) {
             if (!Number.isNaN(tag)) {
