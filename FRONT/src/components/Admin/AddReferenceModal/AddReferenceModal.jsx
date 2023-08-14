@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './addreferencemodal.scss';
 
-const AddReferenceModal = ({categories, tags, className, ...rest}) => {
+const AddReferenceModal = ({categories, tags, className, getReferences, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false);
@@ -40,6 +40,7 @@ const AddReferenceModal = ({categories, tags, className, ...rest}) => {
 
         if(response.status === 200) {
             toast.success("Référence créée");
+            getReferences();
         } else {
             toast.error(response.data.message);
         }
