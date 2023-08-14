@@ -42,12 +42,14 @@ module.exports = {
         if (!newRef) {
             throw new ApiError(500, 'Impossible de créer la référence');
         }
-        if (!req.body.picture) {
-            req.body.picture = 6;
-        }
-        const picture = await pictureDataMapper.addRelation(newRef.id, req.body.picture);
-        if (picture[0]) {
-            throw new ApiError(500, 'Impossible d\'ajouter l\'image');
+        // if (!req.body.picture) {
+        //     req.body.picture = 6;
+        // }
+        if (req.body.picture) {
+            const picture = await pictureDataMapper.addRelation(newRef.id, req.body.picture);
+            if (picture[0]) {
+                throw new ApiError(500, 'Impossible d\'ajouter l\'image');
+            }
         }
         return res.json(newRef);
     },
