@@ -60,13 +60,13 @@ module.exports = {
         }
         // comparer les tags du formulaire et ceux de la BDD
         const existingTags = reference[0].tag.map((t) => String(t.id));
-        let tags = null;
+        let tags = [];
         if (req.body.tags !== '') tags = req.body.tags.split(',');
 
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
-        if (!existingTags.length && tags.length) {
+        if (!existingTags.length && tags?.length) {
             for (const tag of tags) {
                 const promise = new Promise(() => {
                     categoryDataMapper.joinTagToRef(tag, reference.id);
