@@ -64,11 +64,12 @@ module.exports = {
         console.error(tags);
         const validatedTag = [];
         for (const tag of tags) {
-            if (!Number.isNaN(tag)) {
+            if (tag && !Number.isNaN(tag)) {
+                console.error(tag);
                 validatedTag.push(tag);
             }
         }
-
+        console.error(validatedTag);
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
