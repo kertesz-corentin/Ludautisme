@@ -64,7 +64,7 @@ module.exports = {
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
-        if (!existingTags.length && tags.length) {
+        if (existingTags && !existingTags.length && tags.length) {
             for (const tag of tags) {
                 const promise = new Promise(() => {
                     categoryDataMapper.joinTagToRef(tag, reference.id);
