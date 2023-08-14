@@ -61,11 +61,18 @@ module.exports = {
         // comparer les tags du formulaire et ceux de la BDD
         const existingTags = reference[0].tag.map((t) => String(t.id));
         const tags = req.body.tags.split(',');
+        const validatedTag = [];
+        for (const tag of tags) {
+            if (!Number.isNaN(tag)) {
+                validatedTag.push(tag);
+            }
+        }
+
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
-        if (existingTags && !existingTags.length && tags.length) {
-            for (const tag of tags) {
+        if (!existingTags.length && validatedTag.length) {
+            for (const tag of validatedTag) {
                 const promise = new Promise(() => {
                     categoryDataMapper.joinTagToRef(tag, reference.id);
                 });
@@ -84,10 +91,10 @@ module.exports = {
                     }
                 }
             }
-            if (tags.length) {
+            if (validatedTag.length) {
                 /* comparer si un tag est dans le formulaire mais pas dans la
                 BDD créer la relation */
-                for (const tag of tags) {
+                for (const tag of validatedTag) {
                     if (!existingTags.includes(tag)) {
                         const promise = new Promise(() => {
                             categoryDataMapper.joinTagToRef(tag, reference[0].id);
