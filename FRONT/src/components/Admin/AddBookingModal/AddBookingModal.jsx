@@ -9,7 +9,7 @@ import api from '../../../requests';
 import { articleSchema } from '../../../Schemas';
 
 // import material ui components
-import { Button, Modal, Box, Typography, TextField, IconButton } from '@mui/material';
+import { Button, Modal, Box, Typography, TextField, IconButton, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
@@ -18,6 +18,9 @@ import './addbookingmodal.scss';
 
 const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...rest }) => {
     const [open, setOpen] = React.useState(false)
+    const [notAvailableOpen, setNotAvailableOpen] = React.useState(false);
+
+    const [modalMessage, setModalMessage] = React.useState('');
 
     const handleOpen = async () => {
         // get active booking of this user if exist 
@@ -28,7 +31,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             setCurrentBooking(activeBooking.data[0])
             if (activeBooking.data[0]?.borrowed_articles) {
                 setListArticle(activeBooking.data[0]?.borrowed_articles)
-            }   
+            }
         }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
 
@@ -39,6 +42,12 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         setListArticle([]);
         setArticleId([]);
         setCurrentBooking(null);
+    }
+
+    const handleNotAvailableClose = () => {
+        inputRef.current.value = "";
+        setModalMessage("")
+        setNotAvailableOpen(false)
     }
 
     const [articleId, setArticleId] = React.useState([]);
@@ -56,7 +65,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
                 let options = {
-                    articleNumber: id, 
+                    articleNumber: id,
                     bookingId: currentBooking.id
                 }
                 const response = await toast.promise(
@@ -66,7 +75,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                         error: 'Erreur lors de la réservation'
                     }
                 )
-                
+
                 api.put(`/admin/booking/${user[0].id}`, options);
 
 
@@ -84,7 +93,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         } else {
             const response = await toast.promise(
-                api.post(`/admin/booking/add/${user[0].id}`, listIds), 
+                api.post(`/admin/booking/add/${user[0].id}`, listIds),
                 {
                     pending: 'Réservation en cours',
                     error: 'Erreur lors de la réservation'
@@ -111,11 +120,11 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
                 let options = {
-                    articleNumber: id, 
+                    articleNumber: id,
                     bookingId: currentBooking.id
                 }
                 const response = await toast.promise(
-                    api.put(`/admin/booking/${user[0].id}`, options), 
+                    api.put(`/admin/booking/${user[0].id}`, options),
                     {
                         pending: 'Réservation en cours',
                         error: 'Erreur lors de la réservation'
@@ -134,7 +143,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             })
         } else {
             const booking = await toast.promise(
-                api.post(`/admin/booking/add/${user[0].id}`, listIds), 
+                api.post(`/admin/booking/add/${user[0].id}`, listIds),
                 {
                     pending: 'Réservation en cours',
                     error: 'Erreur lors de la réservation'
@@ -171,14 +180,32 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 number: article_number
             }
             const response = await api.post(`admin/articles/search`, settings);
-            const newArticle = await response.data;
+            if (response.status === 200 && response.data.length) {
+                const newArticle = response.data[0];
 
-            if (newArticle.length) {
-                setListArticle(state => [...state, newArticle[0]]);
-                setArticleId(state => [...state, newArticle[0].id]);
-                inputRef.current.value = "";
+                if (newArticle.available) {
+                    setListArticle(state => [...state, newArticle]);
+                    setArticleId(state => [...state, newArticle.id]);
+                    inputRef.current.value = "";
+                } else {
+                    let booking = await api.get(`admin/booking/article/${newArticle.id}`);
+                    let bookingData = booking.data[0];
+
+                    let userName = `${bookingData.first_name} ${bookingData.last_name}`;
+
+                    if(!bookingData) {
+
+                        setModalMessage("Cet article n'est pas disponible mais dans aucune réservation");
+                    } else if (!bookingData.delivered) {
+                        setModalMessage(`Cet article est réservé par ${userName}`);
+                    } else {
+                        setModalMessage(`Cet article est dans la réservation de ${userName} du ${bookingData.perm_date}`)
+                    }
+
+                    setNotAvailableOpen(true);
+                }
             } else {
-                toast.error(newArticle.message);
+                toast.error(response.data.message);
             }
         }
     }
@@ -234,10 +261,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             >
                 Continuer
             </Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-            >
+            <Modal open={open} onClose={handleClose}>
                 <Box className="addbook-modal">
                     <div className="addbook-modal-header">
                         <Typography className='addbook-modal-header-title'>
@@ -341,7 +365,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                                                 nb_prolongation: false,
                                                 id_permanency: false,
                                                 id_user: false,
-                                                returned:false,
+                                                returned: false,
                                                 description: false,
                                                 prolonge: false
                                             },
@@ -383,6 +407,41 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                             </Button>
                         </div>
 
+                    </div>
+                </Box>
+            </Modal>
+            <Modal open={notAvailableOpen} onClose={handleNotAvailableClose} >
+                <Box className="delete-modal">
+                    <div className="delete-modal-header">
+                        <Typography className='delete-modal-header-title'>
+                            Article non disponible
+                        </Typography>
+                    </div>
+                    <div className="delete-modal-inputs">
+                        <Alert variant="outlined"
+                            severity="error">
+                           {modalMessage}
+                        </Alert>
+                    </div>
+                    <div className="delete-modal-footer">
+                        <Button
+                            type='button'
+                            onClick={handleNotAvailableClose}
+                            className="addbook-modal-footer-submit"
+                            variant="contained"
+                            style={{ "margin-right": '10px' }}
+                        >
+                            Rendre disponible et ajouter
+                        </Button>
+                        <Button
+                            type='button'
+                            onClick={handleNotAvailableClose}
+                            className="addbook-modal-footer-submit"
+                            variant="contained"
+                            color='error'
+                        >
+                            Ne pas ajouter
+                        </Button>
                     </div>
                 </Box>
             </Modal>
