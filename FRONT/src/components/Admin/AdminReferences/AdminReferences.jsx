@@ -114,7 +114,7 @@ const AdminReferences = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateReferenceModal params={params} categories={categories} tags={tags} />
+                                <UpdateReferenceModal params={params} categories={categories} tags={tags} getReferences={getReferences}/>
                             </IconButton>
                         );
                         break;

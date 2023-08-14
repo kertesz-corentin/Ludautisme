@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 import './updatereferencemodal.scss';
 
-const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) => {
+const UpdateReferenceModal = ({ params, categories, tags, className, getReferences, ...rest}) => {
     const [open, setOpen] = useState(false)
     const handleOpen = async () => {
         setOpen(true)
@@ -57,16 +57,12 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
             'tags': data.get('tags')
         };
         console.log(reference)
-        const response = await toast.promise(
-            api.put(`/admin/references/${params.row.id}`, reference), 
-            {
-                pending: 'Mise a jour de la référence',
-                error: 'Erreur lors de la mise a jour'
-            }
-        );
+        const response = await api.put(`/admin/references/${params.row.id}`, reference);
+
         console.log(response)
         if (response.status === 200) {
             toast.success("Référence mise a jour");
+            getReferences();
         } else {
             toast.error(response.data.message);
         }
