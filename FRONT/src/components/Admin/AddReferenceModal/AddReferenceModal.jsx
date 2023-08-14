@@ -30,6 +30,19 @@ const AddReferenceModal = ({categories, tags, className, getReferences, ...rest}
             'main_category': data.get('main_category'),
         };
 
+        if(!reference['name']) {
+            toast.error("Veuillez remplir le champ nom");
+            return;
+        }
+        if(!reference['valorisation']) {
+            toast.error("Veuillez remplir le champ valorisation");
+            return;
+        }
+        if(!reference['main_category']) {
+            toast.error("Veuillez remplir le champ catégorie principale");
+            return;
+        }
+
         const response = await toast.promise(
             api.post('/admin/references', reference), 
             {
