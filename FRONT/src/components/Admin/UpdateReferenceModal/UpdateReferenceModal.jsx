@@ -49,6 +49,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let tags = data.get('tags');
+
         let tagArray = tags.split(',');
         for (const tag of tagArray) {
             if(Number.isNaN(tag)) tags = null;
@@ -61,7 +62,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
             'main_category': data.get('main_category'),
             'tags': tags ?? null
         };
-        console.log(reference)
         const response = await toast.promise(
             api.put(`/admin/references/${params.row.id}`, reference), 
             {
@@ -70,7 +70,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
             }
         );
 
-        console.log(response)
         if (response.status === 200) {
             toast.success("Référence mise a jour");
             getReferences();

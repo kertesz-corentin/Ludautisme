@@ -60,22 +60,14 @@ module.exports = {
         }
         // comparer les tags du formulaire et ceux de la BDD
         const existingTags = reference[0].tag.map((t) => String(t.id));
-        const tags = req.body.tags.split(',');
-        console.error(tags);
-        const validatedTag = [];
-        for (const tag of tags) {
-            if (tag && !Number.isNaN(tag)) {
-                console.error(tag);
-                validatedTag.push(tag);
-            }
-        }
-        console.error(validatedTag);
-        console.error(existingTags);
+        let tags = null;
+        if (req.body.tags !== '') tags = req.body.tags.split(',');
+
         const promiseArrayAdd = [];
         const promiseArrayDelete = [];
         // si il n'y pas de tags dans la base de données ajouter les tags sur la référence
-        if (!existingTags.length && validatedTag.length) {
-            for (const tag of validatedTag) {
+        if (!existingTags.length && tags.length) {
+            for (const tag of tags) {
                 const promise = new Promise(() => {
                     categoryDataMapper.joinTagToRef(tag, reference.id);
                 });
@@ -86,7 +78,7 @@ module.exports = {
                 /* comparer si un tags existant n'est pas dans la liste depuis le
                 formulaire supprimer la relation */
                 for (const tag of existingTags) {
-                    if (!validatedTag.includes(tag)) {
+                    if (!tags.includes(tag)) {
                         const promise = new Promise(() => {
                             categoryDataMapper.deleteTagFromRef(tag, reference[0].id);
                         });
@@ -94,10 +86,10 @@ module.exports = {
                     }
                 }
             }
-            if (validatedTag.length) {
+            if (tags.length) {
                 /* comparer si un tag est dans le formulaire mais pas dans la
                 BDD créer la relation */
-                for (const tag of validatedTag) {
+                for (const tag of tags) {
                     if (!existingTags.includes(tag)) {
                         const promise = new Promise(() => {
                             categoryDataMapper.joinTagToRef(tag, reference[0].id);
