@@ -36,7 +36,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, ...rest }) 
             const response = await api.post(`/admin/articles/search`, settings);
             if (response.status === 200) {
                 setArticles(response.data);
-            } else {
+            } else if (response.status !== 400) {
                 toast.error(response.data.message);
             }
         } catch (err) {
