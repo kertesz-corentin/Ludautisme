@@ -32,7 +32,6 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                 let option = {
                     "archived": value
                 }
-                console.log(params);
                 response = await api.put(`/admin/articles/${artcileId}`, option);
                 break;
             default:
