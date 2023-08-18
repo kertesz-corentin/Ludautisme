@@ -70,7 +70,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                                 selected={params.value}
                                 onChange={(e) => {
                                     e.stopPropagation();
-                                    handleToogle(params.row.number, params.value, params.field);
+                                    handleToogle(params.row.id, params.value, params.field);
                                 }}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
