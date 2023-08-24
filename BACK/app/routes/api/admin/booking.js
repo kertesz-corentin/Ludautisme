@@ -23,6 +23,13 @@ router.route('/deliver/:id')
 router.route('/close/:id')
     .post(controllerHandler(bookingController.close));
 /**
+ * GET /api/admin/booking/article/:id
+ * @summary Get booking information for one article
+ * @tags [ADMIN] Booking
+ * @param {number} request.params.required - ID of article
+ * @return {bookingData} 200 - success response -application/json
+ */
+/**
  * PUT /api/admin/booking/article/:userId
  * @summary Add one article to booking
  * @tags [ADMIN] Booking
@@ -45,6 +52,7 @@ router.route('/close/:id')
  * @return {Confirm} 200 - success response - application/json
  */
 router.route('/article/:id')
+    .get(controllerHandler(bookingController.getByArticle))
     .put(controllerHandler(bookingController.addToBooking))
     .post(controllerHandler(bookingController.prolongArticle))
     .delete(controllerHandler(bookingController.removeToBooking));
@@ -57,7 +65,7 @@ router.route('/article/:id')
  */
 /**
  * PUT /api/admin/booking/return/:id
- * @summary Return multiple article and close if it alla rticle of booking
+ * @summary Return multiple article and close if it all article of booking
  * @tags [ADMIN] Booking
  * @param {number[]} request.body.required - ids of articles
  * @param {number} request.params.required - ID of booking

@@ -134,6 +134,8 @@ module.exports = {
             }
         }
 
+        // TODO archiver aussi la référence
+
         const confirm = {
             message: 'Reference archivé avec succès',
         };

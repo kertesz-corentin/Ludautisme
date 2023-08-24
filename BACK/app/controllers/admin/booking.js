@@ -419,4 +419,10 @@ module.exports = {
 
         return res.json(confirm);
     },
+    async getByArticle(req, res) {
+        const { id } = req.params;
+
+        const response = await bookingDataMapper.getArticleBooking(id);
+        return res.json(response);
+    },
 };

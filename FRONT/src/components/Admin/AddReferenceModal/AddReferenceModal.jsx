@@ -50,7 +50,6 @@ const AddReferenceModal = ({categories, tags, className, getReferences, ...rest}
                 error: 'Erreur lors de la création'
             }
         );
-        console.log(response)
 
         if(response.status === 200) {
             toast.success("Référence créée");

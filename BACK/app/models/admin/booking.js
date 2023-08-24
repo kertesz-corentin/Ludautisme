@@ -68,6 +68,15 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} valorisation - The price of the reference
  * @property {number} main_category - Id of the main category of the reference
  */
+/**
+ * @typedef {object} bookingData
+ * @property {number} id - ID of booking
+ * @property {boolean} delivered - if booking is delivered
+ * @property {string} first_name - First name of user
+ * @property {string} last_name - Last name of user
+ * @property {string} perm_date - Date of permanency
+ */
+
 module.exports = {
     async findAll() {
         const query = `
@@ -375,6 +384,7 @@ module.exports = {
         const result = await sqlHandler(`
         DELETE FROM "article_to_booking"
         WHERE "id_article" = $1
+        AND "returned" = false
         RETURNING *`, [id]);
         return result.rows;
     },
@@ -430,6 +440,25 @@ module.exports = {
         WHERE "id"=$1
         RETURNING *
         `, [id]);
+        return result.rows;
+    },
+    async getArticleBooking(id) {
+        const query = `SELECT 
+        "booking"."id",
+        "booking"."delivered",
+        "user"."first_name",
+        "user"."last_name",
+        "permanency"."perm_date"
+        FROM "article_to_booking"
+        INNER JOIN "booking" ON "booking"."id"="id_booking"
+        INNER JOIN "user" ON "booking"."id_user"="user"."id"
+        LEFT JOIN "permanency" ON "booking"."id_permanency"="permanency"."id"
+        WHERE id_article=$1 AND returned=false`;
+
+        const placeholders = [id];
+
+        const result = await sqlHandler(query, placeholders);
+
         return result.rows;
     },
 };

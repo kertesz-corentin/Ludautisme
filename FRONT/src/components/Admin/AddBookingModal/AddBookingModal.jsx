@@ -20,6 +20,16 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
     const [open, setOpen] = React.useState(false)
     const [notAvailableOpen, setNotAvailableOpen] = React.useState(false);
 
+    const [articleId, setArticleId] = React.useState([]);
+    const [listArticle, setListArticle] = React.useState([]);
+    const [currentBooking, setCurrentBooking] = React.useState();
+    const [currentArticle, setCurrentArticle] = React.useState();
+    // status of non available article 
+    // 1 = just not available 
+    // 2 = in booking not delivered 
+    // 3 = in booking delivered
+    const [noAvailableStatus, setNoAvailableStatus] = React.useState();
+
     const [modalMessage, setModalMessage] = React.useState('');
 
     const handleOpen = async () => {
@@ -44,15 +54,58 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         setCurrentBooking(null);
     }
 
+    const handleFreeAndAdd = async () => {
+        let response = null;
+        switch(noAvailableStatus) {
+            // just non available
+            case 1: 
+                let option = {
+                    "available": true
+                }
+                response = await api.put(`/admin/articles/${currentArticle.id}`, option);
+                break;
+            // in booking not delivered
+            case 2: 
+                response = await api.delete(`/admin/booking/article/${currentArticle.id}`);
+                break;
+            // in booking delivered
+            case 3: 
+                response = await api.post(`/admin/booking/return/${currentArticle.id}`);
+                break;
+            default:
+                toast.error("Cas d'article indisponible non géré");
+                return;
+        }
+
+        if (response.status === 200) {
+
+            const settings = {
+                number: currentArticle.number
+            }
+            const updatedArticle = await api.post(`admin/articles/search`, settings);
+
+            if (updatedArticle.status === 200) {
+                setCurrentArticle(updatedArticle.data[0]);
+                setListArticle(state => [...state, updatedArticle.data[0]]);
+                setArticleId(state => [...state, updatedArticle.data[0].id]);
+                inputRef.current.value = "";
+                toast.success("Article libéré et ajouté");
+            } else {
+                toast.error(response.data.message);
+            }
+        } else {
+            toast.error(response.data.message);
+        }
+
+        setModalMessage("");
+        setNotAvailableOpen(false);
+    }
+
     const handleNotAvailableClose = () => {
         inputRef.current.value = "";
         setModalMessage("")
-        setNotAvailableOpen(false)
+        setNotAvailableOpen(false);
     }
-
-    const [articleId, setArticleId] = React.useState([]);
-    const [listArticle, setListArticle] = React.useState([]);
-    const [currentBooking, setCurrentBooking] = React.useState();
 
     const inputRef = React.useRef(null);
 
@@ -77,7 +130,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 )
 
                 api.put(`/admin/booking/${user[0].id}`, options);
-
 
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
@@ -182,7 +234,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             const response = await api.post(`admin/articles/search`, settings);
             if (response.status === 200 && response.data.length) {
                 const newArticle = response.data[0];
-
+                setCurrentArticle(newArticle);
                 if (newArticle.available) {
                     setListArticle(state => [...state, newArticle]);
                     setArticleId(state => [...state, newArticle.id]);
@@ -191,14 +243,16 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     let booking = await api.get(`admin/booking/article/${newArticle.id}`);
                     let bookingData = booking.data[0];
 
-                    let userName = `${bookingData.first_name} ${bookingData.last_name}`;
+                    let userName = `${bookingData?.first_name} ${bookingData?.last_name}`;
 
                     if(!bookingData) {
-
+                        setNoAvailableStatus(1);
                         setModalMessage("Cet article n'est pas disponible mais dans aucune réservation");
                     } else if (!bookingData.delivered) {
-                        setModalMessage(`Cet article est réservé par ${userName}`);
+                        setNoAvailableStatus(2);
+                        setModalMessage(`Cet article est réservé par ${userName}, il est déconseillé de le prêter a une autre personne`);
                     } else {
+                        setNoAvailableStatus(3);
                         setModalMessage(`Cet article est dans la réservation de ${userName} du ${bookingData.perm_date}`)
                     }
 
@@ -426,10 +480,10 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     <div className="delete-modal-footer">
                         <Button
                             type='button'
-                            onClick={handleNotAvailableClose}
+                            onClick={handleFreeAndAdd}
                             className="addbook-modal-footer-submit"
                             variant="contained"
-                            style={{ "margin-right": '10px' }}
+                            style={{ marginRight: '10px' }}
                         >
                             Rendre disponible et ajouter
                         </Button>

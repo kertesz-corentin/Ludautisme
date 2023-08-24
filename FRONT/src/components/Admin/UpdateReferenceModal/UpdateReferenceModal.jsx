@@ -64,7 +64,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
         };
 
         const response = await api.put(`/admin/references/${params.row.id}`, reference);
-        console.log(response);
+        
         if (response.status === 200) {
             toast.success("Référence mise a jour");
             getReferences();
@@ -249,7 +249,7 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
                         </TextField>
                         <TextField
                             id='outlined'
-                            label='Valorisation'
+                            label='Caution'
                             name='valorisation'
                             type='number'
                             className="updatereference-modal-inputs-item"
