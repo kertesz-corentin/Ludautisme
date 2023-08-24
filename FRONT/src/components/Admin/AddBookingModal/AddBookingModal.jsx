@@ -244,6 +244,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     let bookingData = booking.data[0];
 
                     let userName = `${bookingData?.first_name} ${bookingData?.last_name}`;
+                    let permDate = new Date(bookingData.perm_date);
+                    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
                     if(!bookingData) {
                         setNoAvailableStatus(1);
@@ -253,7 +255,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                         setModalMessage(`Cet article est réservé par ${userName}, il est déconseillé de le prêter a une autre personne`);
                     } else {
                         setNoAvailableStatus(3);
-                        setModalMessage(`Cet article est dans la réservation de ${userName} du ${bookingData.perm_date}`)
+                        setModalMessage(`Cet article est dans la réservation de ${userName} du ${permDate.toLocaleString('fr-FR', dateOptions)}`)
                     }
 
                     setNotAvailableOpen(true);
