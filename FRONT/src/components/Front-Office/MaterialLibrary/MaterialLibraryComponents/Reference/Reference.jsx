@@ -156,9 +156,6 @@ const Reference = ({
                                 {description}
 
                             </Typography>
-                            <Typography className="reference-card__caution">
-                                {(valorisation === 0) ? '' : `Caution : ${valorisation}€`}
-                            </Typography>
                             <Box sx={{ marginBottom: "15px", display: 'flex', justifyContent: 'space-evenly' }}>
                                 {reference.nb_available > 0 ? <Available nbAvailable={reference.nb_available} nbTotal={reference.nb_total} /> : <Unavailable />}
 
