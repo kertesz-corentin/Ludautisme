@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import BookingArticles from '../BookingArticles/BookingArticles';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, IconButton, Chip } from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, IconButton, Chip, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,10 +30,76 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     const [overdue] = useState(params.row.overdue);
     const [returnArticle, setReturnArticle] = React.useState([]);
 
+    const [notAvailableOpen, setNotAvailableOpen] = React.useState(false);
+    const [modalMessage, setModalMessage] = React.useState('');
+    const [currentArticle, setCurrentArticle] = React.useState();
+    const [noAvailableStatus, setNoAvailableStatus] = React.useState();
+
+    const handleNotAvailableClose = () => {
+        setModalMessage("")
+        setNotAvailableOpen(false);
+    }
+
+    const handleFreeAndAdd = async () => {
+        let response = null;
+        switch (noAvailableStatus) {
+            // just non available
+            case 1:
+                let option = {
+                    "available": true
+                }
+                response = await api.put(`/admin/articles/${currentArticle.id}`, option);
+                break;
+            // in booking not delivered
+            case 2:
+                response = await api.delete(`/admin/booking/article/${currentArticle.id}`);
+                break;
+            // in booking delivered
+            case 3:
+                response = await api.post(`/admin/booking/return/${currentArticle.id}`);
+                break;
+            default:
+                toast.error("Cas d'article indisponible non géré");
+                return;
+        }
+
+        if (response.status === 200) {
+
+            const settings = {
+                number: currentArticle.number
+            }
+            const updatedArticle = await api.post(`admin/articles/search`, settings);
+
+            if (updatedArticle.status === 200) {
+                setCurrentArticle(updatedArticle.data[0]);
+                
+                const settings = {
+                    articleNumber: updatedArticle.number,
+                    bookingId: params.row.id
+                }
+                const addResponse = await api.put(`/admin/booking/article/${params.row.member_number}`, settings);
+    
+                if (addResponse.status === 200) {
+                    updateOneBooking(params.row.id);
+                } else {
+                    toast.error(addResponse.data.message);
+                }
+                toast.success("Article libéré et ajouté");
+            } else {
+                toast.error(response.data.message);
+            }
+        } else {
+            toast.error(response.data.message);
+        }
+
+        setModalMessage("");
+        setNotAvailableOpen(false);
+    }
+
     const handleDelete = async () => {
 
         const response = await toast.promise(
-            api.delete(`/admin/booking/${params.row.id}`), 
+            api.delete(`/admin/booking/${params.row.id}`),
             {
                 pending: `Suppression de la réservation`,
                 error: 'Erreur lors de la suppression'
@@ -59,12 +125,31 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             number: article_number
         }
         const response = await api.post(`admin/articles/search`, settings)
-        const newArticle = response.data;
+        const newArticle = response.data[0];
+        setCurrentArticle(newArticle);
 
         if (response.status !== 200) {
             toast.error(response.data.message);
-        } else if (!newArticle[0].available) {
-            toast.error("Article indisponible");
+        } else if (!newArticle.available) {
+            let booking = await api.get(`admin/booking/article/${newArticle.id}`);
+            let bookingData = booking.data[0];
+
+            let userName = `${bookingData?.first_name} ${bookingData?.last_name}`;
+
+            if (!bookingData) {
+                setNoAvailableStatus(1);
+                setModalMessage("Cet article n'est pas disponible mais dans aucune réservation");
+            } else if (!bookingData.delivered) {
+                setNoAvailableStatus(2);
+                setModalMessage(`Cet article est réservé par ${userName}, il est déconseillé de le prêter a une autre personne`);
+            } else {
+                let permDate = new Date(bookingData.perm_date);
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                setNoAvailableStatus(3);
+                setModalMessage(`Cet article est dans la réservation de ${userName} du ${permDate.toLocaleString('fr-FR', dateOptions)}`)
+            }
+
+            setNotAvailableOpen(true);
         } else {
             const settings = {
                 articleNumber: article_number,
@@ -247,7 +332,41 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                     </div>
                 </Box>
             </Modal>
-
+            <Modal open={notAvailableOpen} onClose={handleNotAvailableClose} >
+                <Box className="delete-modal">
+                    <div className="delete-modal-header">
+                        <Typography className='delete-modal-header-title'>
+                            Article non disponible
+                        </Typography>
+                    </div>
+                    <div className="delete-modal-inputs">
+                        <Alert variant="outlined"
+                            severity="error">
+                            {modalMessage}
+                        </Alert>
+                    </div>
+                    <div className="delete-modal-footer">
+                        <Button
+                            type='button'
+                            onClick={handleFreeAndAdd}
+                            className="addbook-modal-footer-submit"
+                            variant="contained"
+                            style={{ marginRight: '10px' }}
+                        >
+                            Rendre disponible et ajouter
+                        </Button>
+                        <Button
+                            type='button'
+                            onClick={handleNotAvailableClose}
+                            className="addbook-modal-footer-submit"
+                            variant="contained"
+                            color='error'
+                        >
+                            Ne pas ajouter
+                        </Button>
+                    </div>
+                </Box>
+            </Modal>
         </div>
     );
 };
