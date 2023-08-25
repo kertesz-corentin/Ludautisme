@@ -192,8 +192,22 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             toast.success("Article prolongé");
             updateOneBooking(params.row.id);
         } else {
-            toast.success(response.data.message);
+            toast.error(response.data.message);
             updateOneBooking(params.row.id);
+        }
+
+        let notReturnedArticle = false; 
+        for (const art of params.row.borrowed_articles) {
+            if (!art.returned) notReturnedArticle = true;
+        }
+
+        if (!notReturnedArticle) {
+            const closeResponse = await api.post(`admin/booking/close/${params.row.id}`, options);
+            if(closeResponse.status === 200) {
+                updateOneBooking(params.row.id);
+            } else {
+                toast.error(closeResponse.data.message);
+            }
         }
     }
 
