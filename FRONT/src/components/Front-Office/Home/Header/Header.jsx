@@ -27,7 +27,7 @@ const Header = ({
     const pages = {
         test1: { url: '/', display: <HomeIcon /> },
         test2: { url: '/about', display: 'Association' },
-        // test3: { url: '/materiallibrary', display: 'Mathériathèque' },
+        test3: { url: '/materiallibrary', display: 'Mathériathèque' },
         test4: { url: '/infos', display: 'Infos pratiques' },
         test5: { url: '/usefullLinks', display: 'Liens utiles' },
     };

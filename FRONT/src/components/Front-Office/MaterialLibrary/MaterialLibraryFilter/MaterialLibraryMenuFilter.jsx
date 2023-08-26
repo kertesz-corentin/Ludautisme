@@ -37,7 +37,7 @@ const MaterialLibraryMenuFilter = ({
                                 }
                             />
                         </Paper>
-                        <Paper elevation={3} sx={{borderRadius: '2rem'}}className='materiallibrarymenu-tags'>
+                        {/* <Paper elevation={3} sx={{borderRadius: '2rem'}}className='materiallibrarymenu-tags'>
                             <InputAutocomplete
                                 autoComplete
                                 clearOnEscape
@@ -57,7 +57,7 @@ const MaterialLibraryMenuFilter = ({
                                     }
                                 }
                             />
-                        </Paper>
+                        </Paper> */}
                         <Box className='materiallibrarymenu-filters-row-flex'>
                             <p className='materiallibrarymenu-filters-row-flex-title'>Disponible</p>
                         <InputSwitch

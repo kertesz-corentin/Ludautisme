@@ -90,7 +90,9 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
                 <Fab color="primary" aria-label="help" href="https://docs.google.com/document/d/1kofKMn2T7YS-YfCv9o4-zQC-8MhM0y4a0gy7X-PBWUU/edit?usp=sharing" target='_blank' size='small'>
                     <QuestionMarkOutlinedIcon color='' />
                 </Fab>
-            </div></>
+            </div>
+            <a href="https://docs.google.com/document/d/1K4pBXObkm-6A3bvy8fsh9MEBQd-raL6SB0wnO1e9q-s/edit?usp=sharing">Note de mise a jour</a>
+            </>
     );
 };
 
