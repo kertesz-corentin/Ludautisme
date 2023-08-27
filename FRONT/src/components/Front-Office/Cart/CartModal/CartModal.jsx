@@ -61,6 +61,7 @@ const CartModal = ({
 
     const countSentence = ()=>{
         let limit = Number(process.env.REACT_APP_BORROW_LIMIT);
+        console.log(process.env.REACT_APP_BORROW_LIMIT);
         console.log(limit)
         console.log(typeof limit)
         if (currentItems === null){
