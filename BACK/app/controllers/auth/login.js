@@ -9,7 +9,6 @@ require('dotenv').config();
 
 const loginDatamapper = require('../../models/auth/login');
 const { usersDataMapper } = require('../../models/admin');
-const { usersController } = require('../admin');
 const ApiError = require('../../errors/apiError');
 /**
  * @typedef {object} login
@@ -71,6 +70,10 @@ module.exports = {
         if (!user) {
             res.status(500).json('Cette adresse email ne corresponds a aucun contact');
             return;
+        }
+        if (user.id_role !== 2) {
+            // TODO retirer quand ouverture de leur espace aux adhérents
+            res.status(500).json('Vous devex être administrateur pour créer un mot de passe');
         }
         if (user.temptoken) {
             await loginDatamapper.resetUserTempToken(req.body.email);
