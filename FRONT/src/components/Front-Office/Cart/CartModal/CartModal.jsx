@@ -60,10 +60,7 @@ const CartModal = ({
 
 
     const countSentence = ()=>{
-        let limit = Number(process.env.REACT_APP_BORROW_LIMIT);
-        console.log(process.env.REACT_APP_BORROW_LIMIT);
-        console.log(limit)
-        console.log(typeof limit)
+        let limit = 10;
         if (currentItems === null){
             return `Votre panier est vide`
         }
