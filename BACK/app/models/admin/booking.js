@@ -162,7 +162,7 @@ module.exports = {
         LEFT JOIN "article_to_booking" AS borrowed_ar_to_book ON "b"."id" = "borrowed_ar_to_book"."id_booking"
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
-        WHERE "perm"."perm_date" BETWEEN NOW()-INTERVAL '2 YEARS' AND NOW ()
+        WHERE "perm"."perm_date" > NOW()-INTERVAL '2 YEARS'
 		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
                 ,"user"."id"
                 ,"user"."member_number"

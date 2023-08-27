@@ -60,16 +60,18 @@ const CartModal = ({
 
 
     const countSentence = ()=>{
+        let limit = Number(process.env.REACT_APP_BORROW_LIMIT);
+
         if (currentItems === null){
             return `Votre panier est vide`
         }
-         if (currentItems.length ===0){
+         if (currentItems.length === 0){
              return `Votre panier est vide`
           } else
-        if (currentItems.length > process.env.REACT_APP_BORROW_LIMIT) {
-             return `Vous ne pouvez pas réserver plus de ${process.env.REACT_APP_BORROW_LIMIT} articles`
+        if (currentItems.length > limit) {
+             return `Vous ne pouvez pas réserver plus de ${limit} articles`
          } else {
-             return `Vous pouvez encore réserver ${process.env.REACT_APP_BORROW_LIMIT - currentItems.length} articles`
+             return `Vous pouvez encore réserver ${limit - currentItems.length} articles`
          }
 
     }
