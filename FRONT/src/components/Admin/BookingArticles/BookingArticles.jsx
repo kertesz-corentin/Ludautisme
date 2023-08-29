@@ -41,18 +41,24 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                         );
                         break;
                     case "prolonge":
-                        config.renderCell = (params) => (
-                            <Button
-                                className="updatereference-modal-footer-submit"
-                                variant="contained"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleProlong(params.row)
-                                }}
-                            >
-                                prolonger
-                            </Button>
-                        );
+                        if (!closed && delivered) {
+                            config.renderCell = (params) => (
+                                <div>
+                                    {!closed && (
+                                        <Button
+                                            className="updatereference-modal-footer-submit"
+                                            variant="contained"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleProlong(params.row)
+                                            }}
+                                        >
+                                            prolonger
+                                        </Button>
+                                    )}
+                                </div>
+                            );
+                        }
                         break;
                     case "return":
                         config.renderCell = (params) => (
