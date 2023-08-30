@@ -73,7 +73,6 @@ const CartModal = ({
             } else {
                 return `Vous pouvez encore réserver ${limit - currentItems.length} articles`
             }
-
     }
 
     return (

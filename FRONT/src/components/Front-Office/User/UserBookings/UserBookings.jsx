@@ -28,6 +28,7 @@ const UserBookings = ({className, ...rest}) => {
             //Get bookings
             const response = await api.get(`/customer/booking/history/${id}`);
             let data = await response.data;
+            console.log(data)
             data = data.map((booking) => {
                 booking['references'] = booking.articles.map((article) => {
                     return {
@@ -71,9 +72,6 @@ const UserBookings = ({className, ...rest}) => {
             : [];
 
             setOldBookings(oldFilter.sort((a,b)=>{return (a.id - b.id > 0) ? -1 : 1}));
-
-
-
         }
         catch (err) {
             console.error (err);
