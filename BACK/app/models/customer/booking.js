@@ -156,7 +156,7 @@ module.exports = {
         INNER JOIN "reference" ON "reference"."id" = ar."id_ref"
 		LEFT JOIN "reference_to_image" AS rti ON "reference"."id" = rti."id_ref"
         LEFT JOIN "image" ON rti."id_image" = "image"."id"
-		WHERE "image"."main" = TRUE AND "user"."id"=$1
+		WHERE "user"."id"=$1
         GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
                 ,"user"."id"
                 ,"user"."member_number"
