@@ -18,6 +18,11 @@
     background-color: aquamarine;
 }
 
+.button-div{
+    display: flex;
+    justify-content: center;
+}
+
 @media all and (max-width: 1080px) {
     .shopmodal{
         width: 90%;
