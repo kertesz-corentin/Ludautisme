@@ -15,6 +15,8 @@ const MaterialLibraryMenu = ({
     removeFilterState,
     style,
     typeDisplay,
+    setRef,
+    getReferences,
      ...rest}) => {
 
      //Init variables used to create select inputs
@@ -133,6 +135,8 @@ const MaterialLibraryMenu = ({
                 nameList={nameList}
                 isDesktop = {isDesktop}
                 typeDisplay = {typeDisplay}
+                setRef = {setRef}
+                getReferences = {getReferences}
                 //handleCloseMenu = {handleCloseMenu}
                 />
                 <Box sx={{display:'flex',alignItems:'center',alignContent:'center',borderRadius:'2rem',border:'1px solid black',padding:'5px 10px'}} onClick={handleCloseMenu}>
@@ -159,6 +163,8 @@ const MaterialLibraryMenu = ({
                 nameList={nameList}
                 isDesktop = {isDesktop}
                 typeDisplay = {typeDisplay}
+                setRef = {setRef}
+                getReferences = {getReferences}
                 />
         </Box>
                 <Paper elevation={3} sx={{borderRadius: '2rem'}} className='materiallibrarymenu-searchbar'>

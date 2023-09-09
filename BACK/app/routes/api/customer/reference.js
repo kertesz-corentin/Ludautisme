@@ -34,6 +34,15 @@ router.route('/namelist')
 router.route('/single/:id')
     .get(controllerHandler(referenceController.getOne));
 /**
+ * GET api/admin/references/article/:number
+ * @summary Get reference by article number
+ * @tags [ADMIN] Reference
+ * @param {number} request.params.id.required Article number
+ * @return {[Reference]}
+ */
+router.route('/article/:number')
+    .get(controllerHandler(referenceController.getOneByArticleNumber));
+/**
 * GET /api/customer/articles
 * @summary Get all references with picture
 * @tags [CUSTOMER] Reference

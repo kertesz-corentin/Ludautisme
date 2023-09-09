@@ -68,6 +68,52 @@ module.exports = {
         );
         return result.rows;
     },
+    async findByArticleNumber(number) {
+        const query = `SELECT
+                 r.name,
+                 r.id,
+                 r."description",
+                 r.valorisation,
+                 cat.name AS mainCategory,
+                 json_agg(DISTINCT jsonb_build_object(
+                     'id',"category"."id",
+                     'name',"category"."name"
+                     )) AS tag,
+                 COUNT(DISTINCT ar."id") AS nb_total,
+                 json_agg(DISTINCT jsonb_build_object (
+                     'id', ar."id",
+                     'number', ar."number",
+                     'origin', ar."origin",
+                     'date_buy', ar."date_buy",
+                     'available', ar."available",
+                     'archived', ar."archived",
+                     'created_at', ar."created_at"
+                     )) AS "articles_list",
+                 COUNT(DISTINCT ar."id") FILTER (WHERE ar."available" = TRUE) AS nb_available,
+                 json_agg(DISTINCT jsonb_build_object (
+                     'id', "image"."id",
+                     'url', "image"."url",
+                     'name', "image"."title",
+                     'text', "image"."alternative_text",
+                     'main', "image"."main"
+                 )) AS "picture", (fav."id_user" = $1) AS "favorite"
+                 FROM "reference" AS r
+                 LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+                 LEFT JOIN "image" ON rti."id_image" = "image"."id"
+                 LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+                 LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+                 LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+                 LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+                 LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
+                WHERE ar.number = $1
+                     AND ar."archived" = false
+                     GROUP BY r.name, r.description, r.valorisation, r.id, cat.name, fav.id_user
+        `;
+        const placeholders = [number];
+
+        const results = await sqlHandler(query, placeholders);
+        return results.rows;
+    },
     async findOne(id) {
         const result = await sqlHandler(
             `SELECT
@@ -181,7 +227,25 @@ module.exports = {
         const results = await sqlHandler(queryStart, placeholders);
         return results.rows;
     },
-    async findCountResult(arr) {
+    async findCountResult(number) {
+        const queryStart = `SELECT
+        COUNT(DISTINCT r."id") AS nb_total
+        FROM "reference" AS r
+        LEFT JOIN "reference_to_image" AS rti ON r."id" = rti."id_ref"
+        LEFT JOIN "image" ON rti."id_image" = "image"."id"
+        LEFT JOIN "category" AS cat ON r."main_category" = cat."id"
+        LEFT JOIN "reference_to_category" AS rtc ON rtc."id_ref" = r."id"
+        LEFT JOIN "category" ON rtc."id_category" = "category"."id"
+        LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
+        LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
+        WHERE ar.number = $1
+        AND ar."archived" = false
+        `;
+        const placeholders = [number];
+        const results = await sqlHandler(queryStart, placeholders);
+        return results.rows;
+    },
+    async findCountResultByArticle(arr) {
         let queryStart = `SELECT
         COUNT(DISTINCT r."id") AS nb_total
         FROM "reference" AS r
@@ -192,6 +256,7 @@ module.exports = {
         LEFT JOIN "category" ON rtc."id_category" = "category"."id"
         LEFT JOIN "article" AS ar ON ar."id_ref" = r."id"
         LEFT JOIN "favorite_user_to_reference" AS fav ON fav."id_ref" = r."id"
+        WHERE 
         `;
         const placeholders = [];
         if (arr.length > 0) {

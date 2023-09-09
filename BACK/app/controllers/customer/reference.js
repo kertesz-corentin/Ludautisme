@@ -24,6 +24,19 @@ module.exports = {
         }
         return res.json(references);
     },
+    async getOneByArticleNumber(req, res) {
+        const results = await userReferenceDataMapper.findByArticleNumber(req.params.number);
+        if (!results[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+
+        const total = await userReferenceDataMapper.findCountResult(req.params.number);
+        if (!total[0]) {
+            throw new ApiError(404, 'Aucun résultat trouvé');
+        }
+        const refWithCount = results.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
+        return res.json(refWithCount);
+    },
     async search(req, res) {
         // Get userId to check favorite
         const userId = [userIdToken(req)];
