@@ -97,7 +97,6 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                     disableSelectionOnClick
                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                     onRowSelectionModelChange={(value) => {
-                        console.log(value);
                         setReturnArticle(value);
                     }}
                     components={{

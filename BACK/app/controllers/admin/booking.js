@@ -175,7 +175,7 @@ module.exports = {
         }
         const article = await articleDataMapper.getArticleAvaibility(articleNumber);
         if (!article) {
-            throw new ApiError(400, 'Cet article n\'existe pas');
+            throw new ApiError(400, `Cet article n'existe pas ${articleNumber}`);
         }
         if (article.returned === false) {
             throw new ApiError(400, 'Cet article est dans une réservation');
