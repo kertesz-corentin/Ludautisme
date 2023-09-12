@@ -134,7 +134,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussi");
-                        updateOneBooking(response.data.newBookingConfirm.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
@@ -142,6 +141,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     return;
                 }
             })
+            updateOneBooking(currentBooking.id);
 
         } else {
             const response = await toast.promise(
@@ -174,7 +174,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 let options = {
                     articleNumber: id,
                     bookingId: currentBooking.id
-                }
+                } 
                 const response = await toast.promise(
                     api.put(`/admin/booking/${user[0].id}`, options),
                     {
@@ -224,7 +224,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
 
-        if (articleId.includes(Number(article_number))) {
+        if (articleId.includes(Number(article_number))) { 
             toast.error("article déjà présent dans la réservation");
         } else {
             // on récupère les données de l'article avant insertion dans le state
@@ -232,6 +232,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 number: article_number
             }
             const response = await api.post(`admin/articles/search`, settings);
+            console.log(response);
             if (response.status === 200 && response.data.length) {
                 const newArticle = response.data[0];
                 setCurrentArticle(newArticle);
