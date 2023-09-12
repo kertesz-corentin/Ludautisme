@@ -165,6 +165,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const handleReturn = async () => {
+        console.log(returnArticle);
         if (returnArticle.length) {
             const options = {
                 return_article: returnArticle
