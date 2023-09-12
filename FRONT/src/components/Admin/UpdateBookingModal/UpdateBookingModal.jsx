@@ -64,7 +64,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         }
 
         if (response.status === 200) {
-
             const settings = {
                 number: currentArticle.number
             }
@@ -170,7 +169,9 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             const options = {
                 return_article: returnArticle
             }
+            console.log(options);
             const articles = await api.put(`admin/booking/return/${params.row.id}`, options);
+            console.log(articles);
             if (articles.status === 200) {
                 toast.success("Articles rendu");
                 updateOneBooking(params.row.id);
