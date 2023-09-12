@@ -40,6 +40,10 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         setNotAvailableOpen(false);
     }
 
+    const addToReturnList = (value) => {
+        console.log(value);
+        setReturnArticle(value);
+    }
     const handleFreeAndAdd = async () => {
         let response = null;
         switch (noAvailableStatus) {
@@ -322,7 +326,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                                 closed={closed}
                                 delivered={delivered}
                                 getBookings={getBookings}
-                                setReturnArticle={setReturnArticle}
+                                setReturnArticle={addToReturnList}
                                 handleProlong={handleProlong}
                             />
                         </div>
