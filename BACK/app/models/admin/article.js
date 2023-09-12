@@ -160,7 +160,7 @@ module.exports = {
         atb.returned
         FROM "article" AS art
         LEFT JOIN "article_to_booking" AS atb ON atb."id_article" = art."id"
-        WHERE art."number" = $1
+        WHERE art.id = $1
         `, [number]);
         return result.rows[0];
     },
