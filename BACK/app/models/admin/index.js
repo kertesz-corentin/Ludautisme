@@ -5,8 +5,10 @@ const pictureDataMapper = require('./picture');
 const adminReferenceDataMapper = require('./reference');
 const usersDataMapper = require('./users');
 const categoryDataMapper = require('./category');
+const adminCommentDataMapper = require('./comment');
 
 module.exports = {
+    adminCommentDataMapper,
     articleDataMapper,
     bookingDataMapper,
     permanencyDataMapper,

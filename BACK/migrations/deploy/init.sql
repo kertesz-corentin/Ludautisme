@@ -122,6 +122,15 @@ CREATE TABLE "favorite_user_to_reference"(
     UNIQUE ("id_user","id_ref")
 );
 
+CREATE TABLE "article_comment"(
+    "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "id_article" INT REFERENCES "article"("id"),
+    "id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMPTZ DEFAULT NOW(),
+    "comment" TEXT NOT NULL,
+    "validated" BOOLEAN DEFAULT false
+);
+
 DROP VIEW IF EXISTS "full_perm";
 CREATE OR REPLACE VIEW "full_perm" AS
 SELECT * ,

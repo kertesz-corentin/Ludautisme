@@ -19,4 +19,11 @@ module.exports = {
             throw new ApiError(403, 'Identification invalide');
         }
     },
+    getUserId(req) {
+        const token = req.headers['x-access-token'];
+        const decodedToken = jwt.verify(token, process.env.SALT);
+        const { userId } = decodedToken;
+
+        return userId;
+    },
 };

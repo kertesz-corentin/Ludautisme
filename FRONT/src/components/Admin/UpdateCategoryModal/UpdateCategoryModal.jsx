@@ -19,10 +19,6 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
         setOpen(false);
     }
 
-    // const handleMainChecked = (event) => {
-    //     setMainChecked(event.target.checked)
-    // }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -40,7 +36,7 @@ const UpdateReferenceModal = ({ params, categories, className, getMainCategories
         );
         
         if (response.status === 200) {
-            toast.success("Catégorie mise a jour");
+            toast.success("Catégorie mise à jour");
             getMainCategories();
         } else {
             toast.error(response.data.message);

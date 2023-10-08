@@ -1,0 +1,45 @@
+@import 'src/styles/vars';
+
+.comment-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: auto;
+    padding: $gutter;
+    max-width: 70%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    outline: none;
+
+    &-header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+
+
+        &-title {
+            flex: 1;
+            text-align: left;
+            position: relative;
+            text-transform: uppercase;
+        }
+    }
+
+    &-inputs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: $gutter;
+
+        &-item {
+            width: 45%;
+        }
+    }
+}
