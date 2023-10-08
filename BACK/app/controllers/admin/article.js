@@ -1,5 +1,7 @@
 const ApiError = require('../../errors/apiError');
-const { articleDataMapper, adminReferenceDataMapper } = require('../../models/admin');
+const { articleDataMapper, adminReferenceDataMapper, adminCommentDataMapper } = require('../../models/admin');
+const { userDataMapper } = require('../../models/customer');
+const { getUserId } = require('../../helpers/testUser');
 
 module.exports = {
     async getAll(_, res) {
@@ -60,5 +62,65 @@ module.exports = {
         }
         const updatedUser = await articleDataMapper.update(req.params.id, req.body);
         return res.json(updatedUser);
+    },
+    async getComment(req, res) {
+        const id = Number(req.params.id);
+        // test if article exist
+        const article = await articleDataMapper.findFiltered([{ id }]);
+        if (article.length < 1) {
+            throw new ApiError(404, 'Cet article n\'existe pas');
+        }
+
+        const comments = await adminCommentDataMapper.findByArticle(id);
+        return res.json(comments);
+    },
+    async addComment(req, res) {
+        const id = Number(req.params.id);
+        const id_user = getUserId(req);
+        const { comment } = req.body;
+        // test if article exist
+        const article = await articleDataMapper.findFiltered([{ id }]);
+        if (article.length < 1) {
+            throw new ApiError(404, 'Cet article n\'existe pas');
+        }
+        // test if user exist
+        const user = await userDataMapper.findById(id_user);
+        if (user.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
+
+        const newComment = await adminCommentDataMapper.addComment(id, id_user, comment);
+        return res.json(newComment);
+    },
+    async deleteComment(req, res) {
+        const id = Number(req.params.id);
+        // test if comment exist
+        const comment = await adminCommentDataMapper.getById(id);
+        if (comment.length < 1) {
+            throw new ApiError(404, 'Ce commentaire n\'existe pas');
+        }
+
+        const deleteComment = await adminCommentDataMapper.deleteComment(id);
+        return res.json(deleteComment);
+    },
+    async validateComment(req, res) {
+        const id = Number(req.params.id);
+        // test if comment exist
+        const comment = await adminCommentDataMapper.getById(id);
+        if (comment.length < 1) {
+            throw new ApiError(404, 'Ce commentaire n\'existe pas');
+        }
+
+        const validate = await adminCommentDataMapper.validateComment(id);
+        return res.json(validate);
+    },
+    async update(req, res) {
+        const id = [{ id: req.params.id }];
+        const comment = await adminCommentDataMapper.getById(id);
+        if (comment.length < 1) {
+            throw new ApiError(404, 'Cette catégorie n\'existe pas');
+        }
+        const updatedCategory = await adminCommentDataMapper.update(req.params.id, req.body);
+        return res.json(updatedCategory);
     },
 };

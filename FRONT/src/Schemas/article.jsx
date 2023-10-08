@@ -50,7 +50,7 @@ const articleSchema  = {
     date_buy:{
         type : "string",
         label : "Date d'achat",
-        gridDisplay : "normal",
+        gridDisplay : "date",
         width : 150,
     },
     available:{
@@ -123,6 +123,12 @@ const articleSchema  = {
         type: "number",
         label: "Id Adhérent",
         gridDisplay: "normal",
+        width: 125
+    },
+    comment: {
+        type: "number",
+        label: "Commentaires",
+        gridDisplay: "comment",
         width: 125
     },
 }

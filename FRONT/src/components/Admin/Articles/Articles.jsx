@@ -7,6 +7,8 @@ import { articleSchema } from '../../../Schemas';
 import { ToggleButton } from '@mui/material';
 import api from '../../../requests';
 import { toast } from 'react-toastify';
+import CommentModale from '../CommentModale/CommentModale';
+import moment from 'moment';
 
 const Articles = ({ params, children, name, className, articles, setArticles, getReferenceWithArticles, ...rest }) => {
 
@@ -46,7 +48,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
 
     useEffect(() => {
         getReferenceWithArticles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const columnsBuilder = (() => {
@@ -75,6 +77,18 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                             >
                                 <GridCheckIcon />
                             </ToggleButton>
+                        );
+                        break;
+                    case "comment":
+                        config.renderCell = (params) => (
+                            <CommentModale
+                                params={params}
+                            />
+                        );
+                        break;
+                    case "date":
+                        config.renderCell = (params) => (
+                            moment(params.value).format('DD/MM/YYYY')
                         );
                         break;
                     default:
@@ -126,7 +140,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                                 valorisation: false,
                                 description: false,
                                 returned: false,
-                                prolonge: false
+                                prolonge: false,
                             },
                         },
                         sorting: {

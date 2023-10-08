@@ -44,7 +44,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
         }
     }
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -335,7 +334,6 @@ const UpdateReferenceModal = ({ params, categories, tags, className, getReferenc
                     </div>
                 </Box>
             </Modal>
-
         </div>
     );
 };
