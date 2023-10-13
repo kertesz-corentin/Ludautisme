@@ -34,25 +34,19 @@ const ModifyPasswordModal = ({ className, ...rest }) => {
             password: passwordValue
         }
         if (regex.test(passwordValue)) {
-            if (!user.token) {
-                const response = api.resetPassword('/login/reset-password', newPassword);
-                if (response.status === 200) {
-                    navigate('/');
-                } else {
-                    console.error(response.data);
-                }
-                handleClose()
-            } else {
-                api.put(`/customer/user/${user.id}`, newPassword);
+            const response = api.resetPassword('/login/reset-password', newPassword);
+            if (response.status === 200) {
                 toast.success("Mot de passe changé");
-                handleClose();
+                navigate('/');
+            } else {
+                toast.error("Impossible de changer le mot de passe");
+                console.error(response.data);
             }
+            handleClose()
         } else {
             toast.error('Le mot de passe ne respecte pas les règles de sécurité');
         }
-        
     }
-
 
     function handlePasswordChange(event) {
         setPasswordValue(event.target.value)
@@ -61,7 +55,6 @@ const ModifyPasswordModal = ({ className, ...rest }) => {
     const [passwordValue, setPasswordValue] = useState()
 
     return (
-
         <div>
             <Button className='ModifyPasswordModal-button' variant="outlined" onClick={handleClickOpen}>
                 Modifier mon mot de passe
