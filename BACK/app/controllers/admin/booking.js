@@ -371,7 +371,7 @@ module.exports = {
         const { id } = req.params;
         const { prolong_article } = req.body;
 
-        const article = Number(prolong_article);
+        const article_number = Number(prolong_article);
         const user = await usersDataMapper.findFiltered([{ member_number: id }]);
         if (!user[0]) {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
@@ -398,14 +398,17 @@ module.exports = {
         if (!booking[0]?.name === 'DatabaseError') {
             throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
         }
+
+        const article = await articleDataMapper.findByCode(article_number);
+
         // remove article from old booking
-        const deleteBooking = await bookingDataMapper.deleteArticle(article);
+        const deleteBooking = await bookingDataMapper.deleteArticle(article.id);
 
         if (!deleteBooking) {
             throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
         }
         // add article to new booking
-        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article]);
+        const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article.id]);
         let confirm = null;
         if (newBooking) {
             confirm = {
