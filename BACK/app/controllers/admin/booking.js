@@ -400,7 +400,6 @@ module.exports = {
         }
 
         const article = await articleDataMapper.findByCode(article_number);
-
         // remove article from old booking
         const deleteBooking = await bookingDataMapper.deleteArticle(article.id);
 
@@ -412,7 +411,7 @@ module.exports = {
         let confirm = null;
         if (newBooking) {
             confirm = {
-                articles: prolong_article,
+                articles: article,
                 reservation: booking,
                 message: `Article n°${article} prolongé avec succès`,
             };
