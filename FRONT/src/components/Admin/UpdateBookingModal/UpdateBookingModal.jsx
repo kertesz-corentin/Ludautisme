@@ -192,6 +192,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         const response = await api.post(`admin/booking/article/${userId}`, options);
 
         if (response.status === 200) {
+            console.log(response);
             toast.success("Article prolongé");
             updateOneBooking(params.row.id);
         } else {
