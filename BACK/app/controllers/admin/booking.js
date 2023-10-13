@@ -234,7 +234,7 @@ module.exports = {
     },
     async returnArticle(req, res) {
         const { id } = req.params;
-        const article = await articleDataMapper.findByCode(id);
+        const article = await articleDataMapper.findById(id);
         if (!article[0]) {
             throw new ApiError(404, 'L\'article n\'existe pas');
         }

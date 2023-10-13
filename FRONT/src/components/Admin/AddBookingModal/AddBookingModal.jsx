@@ -133,7 +133,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
-                        toast.success("Réservation réussi");
+                        toast.success("Réservation réussie");
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {

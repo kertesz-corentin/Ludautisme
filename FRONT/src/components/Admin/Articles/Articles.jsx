@@ -17,7 +17,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
         value = value ? false : true;
 
         let response = null;
-        switch (prop) {
+                switch (prop) {
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
