@@ -25,6 +25,7 @@ const ResetPassword = ({ className, ...rest }) => {
             token: token,
             password: passwordValue
         }
+        console.log(newPassword);
 
         if (validPassword) {
             const response = await toast.promise(
@@ -59,7 +60,7 @@ const ResetPassword = ({ className, ...rest }) => {
                         <TextField
                             id='outlined'
                             label='Mot de passe'
-                            name='member_number'
+                            name='password'
                             type='password'
                             className="updateuser-modal-inputs-item"
                             sx={{ mb: 2 }}
