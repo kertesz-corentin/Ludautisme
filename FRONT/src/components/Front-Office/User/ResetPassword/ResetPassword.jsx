@@ -18,12 +18,10 @@ const ResetPassword = ({ className, ...rest }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const passwordValue = data.get('password');
 
         const newPassword = {
             token: token,
-            password: passwordValue
+            password
         }
         console.log(newPassword);
 
