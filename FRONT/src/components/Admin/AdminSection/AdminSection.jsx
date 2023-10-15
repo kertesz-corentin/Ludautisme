@@ -42,7 +42,13 @@ const AdminSection = ({ title, link, rows, columns, initialState, children, butt
                         rowsPerPageOptions={[15]}
                         disableSelectionOnClick
                         GridColDef='center'
+                        disableColumnSelector
                         localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+                        slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                            },
+                          }}
                         components={{
                             Toolbar: GridToolbar,
                         }}

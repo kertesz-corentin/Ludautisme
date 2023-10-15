@@ -23,7 +23,6 @@ const ResetPassword = ({ className, ...rest }) => {
             token: token,
             password
         }
-        console.log(newPassword);
 
         if (validPassword) {
             const response = await toast.promise(
