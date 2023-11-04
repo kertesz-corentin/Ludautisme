@@ -115,7 +115,7 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                             </div>
                             <div className="delete-modal-inputs">
                                 <Alert variant="outlined"
-                                    severity="error">
+                                    severity="info">
                                     {modalMessage}
                                 </Alert>
                             </div>
