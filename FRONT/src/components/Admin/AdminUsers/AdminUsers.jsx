@@ -15,11 +15,14 @@ import { userSchema } from '../../../Schemas';
 // import material ui components
 import { ToggleButton, IconButton } from '@mui/material';
 import { GridCheckIcon } from '@mui/x-data-grid';
+import { useGridApiRef } from '@mui/x-data-grid';
 
 import './adminusers.scss';
 
 const AdminUsers = ({className, ...rest}) => {
     const [users, setUsers] = useState([]);
+
+    const apiRef = useGridApiRef();
 
     // config path for api route
     const path = '/admin/users';
@@ -40,6 +43,29 @@ const AdminUsers = ({className, ...rest}) => {
     useEffect(() => {
         getUsers();
     }, []);
+
+    const updateOneUser = async (id) => {
+        try {
+            let response = await toast.promise(
+                api.get(`/admin/users/${id}`), 
+                {
+                    pending: `Mise a jour de l'utilisateur`,
+                    error: 'Erreur lors de la mise à jour'
+                }
+            )
+            console.log(response);
+            if (response.status === 200) {
+                let data = response.data[0];
+                if(data) {
+                    apiRef.current.updateRows([data]);
+                }
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (e) {
+            toast.error(e.response.data.message);
+        }
+    }
 
     const columnBuilder = (() => {
         const columns = [];
@@ -75,7 +101,7 @@ const AdminUsers = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateUserModal params={params} getUsers={getUsers}/>
+                                <UpdateUserModal params={params} getUsers={getUsers} updateOneUser={updateOneUser}/>
                             </IconButton>
                     );
                     break;
@@ -98,6 +124,7 @@ const AdminUsers = ({className, ...rest}) => {
                 title="Adhérents"
                 rows={users}
                 columns={columnBuilder}
+                apiRef={apiRef}
                 path={path}
                 link="https://docs.google.com/document/d/1cT8aMNb0chMp2M6to9Tkjl0EjgfojzS3MJ1WSJEAAho/edit?usp=sharing"
                 initialState={{
@@ -114,7 +141,7 @@ const AdminUsers = ({className, ...rest}) => {
                         sortModel: [{ field: 'member_number', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddUserModal getUsers={getUsers}/>]}
+                buttonList={[<AddUserModal getUsers={getUsers} updateOneUser={updateOneUser}/>]}
             />
         </div>
     );

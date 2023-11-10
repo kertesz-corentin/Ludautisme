@@ -13,18 +13,20 @@ import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, 
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import moment from 'moment';
+import Chip from '@mui/material/Chip';
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import './updateusermodal.scss';
 
-const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
+const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }) => {
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(params.row.id_status);
     const handleOpen = () => setOpen(true)
     const handleClose = () => {
         setOpen(false);
     }
-    const [cotisationChecked, setCotisationChecked] = useState(params.row.cotisation_status);
-    const [cautionChecked, setCautionChecked] = useState(params.row.caution_status);
     const [archivedChecked, setArchivedChecked] = useState(params.row.archived);
     const [role, setRole] = useState(false)
     const [idRole, setIdRole] = useState(params.row.id_role)
@@ -62,7 +64,7 @@ const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
             'id_status': Number(data.get('user_status'))
         };
 
-        if(user['id_status'] === 5) {
+        if (user['id_status'] === 5) {
             toast.error("Ajoutez un status à votre utilisateur");
             return;
         }
@@ -76,18 +78,54 @@ const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
 
         if (response.status === 200) {
             toast.success("Utilisateur mis a jour");
-            getUsers();
+            updateOneUser(params.row.id);
         } else {
             toast.error(response.data.message);
         }
     }
 
-    const handleCotisationCheck = (event) => {
-        setCotisationChecked(event.target.checked)
-    }
+    const handleUpdateCotisation = async () => {
+        const user = {
+            'cotisation_status': true,
+            'cotisation_expiration': moment(Date.now()).format()
+        };
 
-    const handleCautionCheck = (event) => {
-        setCautionChecked(event.target.checked)
+        const response = await toast.promise(
+            api.put(`/admin/users/${params.row.id}`, user),
+            {
+                pending: `Mise a jour de l'utilisateur`,
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
+
+        if (response.status === 200) {
+            toast.success("Utilisateur mis a jour");
+            updateOneUser(params.row.id);
+        } else {
+            toast.error(response.data.message);
+        }
+    }
+    
+    const handleUpdateCaution = async () => {
+        const user = {
+            'caution_status': true,
+            'caution_expiration': moment(Date.now()).format()
+        };
+
+        const response = await toast.promise(
+            api.put(`/admin/users/${params.row.id}`, user),
+            {
+                pending: `Mise a jour de l'utilisateur`,
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
+
+        if (response.status === 200) {
+            toast.success("Utilisateur mis a jour");
+            updateOneUser(params.row.id);
+        } else {
+            toast.error(response.data.message);
+        }
     }
 
     const handleArchivedCheck = (event) => {
@@ -122,7 +160,7 @@ const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
 
     const handleChange = (event) => {
         setStatus(event.target.value);
-      };
+    };
 
     return (
         <div className="updateuser">
@@ -273,10 +311,46 @@ const UpdateUserModal = ({ params, className, getUsers, ...rest }) => {
                                 justifyContent: 'space-around'
                             }}
                         >
-                            <FormControlLabel control={<Checkbox name='cotisation_status' checked={cotisationChecked} onChange={handleCotisationCheck} />} label="Cotisation" />
-                            <FormControlLabel control={<Checkbox name='caution_status' checked={cautionChecked} onChange={handleCautionCheck} />} label="Caution" />
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />
                             <FormControlLabel control={<Checkbox name='id_role' checked={role} onChange={handleRole} />} label="Admin" />
+                        </FormGroup>
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                                marginTop: '1rem'
+                            }}
+                        >
+                            {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} />}
+                            <Button
+                                onClick={handleUpdateCotisation}
+                                variant='contained'
+                                sx={{
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                Renouveler cotisation
+                            </Button>
+                        </FormGroup>
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                                marginTop: '1rem'
+                            }}
+                        >
+                            {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} />}
+                            <Button
+                                onClick={handleUpdateCaution}
+                                variant='contained'
+                                sx={{
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                Renouveler caution
+                            </Button>
                         </FormGroup>
 
                     </div>
