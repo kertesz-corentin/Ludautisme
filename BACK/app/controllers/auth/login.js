@@ -71,10 +71,6 @@ module.exports = {
             res.status(500).json('Cette adresse email ne corresponds a aucun contact');
             return;
         }
-        if (user.id_role !== 2) {
-            // TODO retirer quand ouverture de leur espace aux adhérents
-            res.status(500).json('Vous devex être administrateur pour créer un mot de passe');
-        }
         if (user.temptoken) {
             await loginDatamapper.resetUserTempToken(req.body.email);
         }
