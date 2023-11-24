@@ -153,7 +153,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             )
             if (response.status === 200) {
                 toast.success("Réservation réussi");
-
                 updateOneBooking(response.data.newBookingConfirm.id);
                 setTimeout(() => { handleClose() }, 5000);
             } else {
@@ -185,7 +184,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussi");
-                        updateOneBooking(response.data.newBookingConfirm.id);
+                        updateOneBooking(response.data[0].id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {
@@ -204,10 +203,9 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
             if (booking.status === 200) {
                 const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
-                console.log(response);
                 if (response.status === 200) {
                     toast.success("Réservation réussi");
-                    updateOneBooking(response.data.newBookingConfirm.id);
+                    updateOneBooking(response.data[0].id);
                     setTimeout(() => { handleClose() }, 5000);
                 } else {
                     toast.error(response.data.message);
@@ -233,7 +231,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 number: article_number
             }
             const response = await api.post(`admin/articles/search`, settings);
-            console.log(response);
             if (response.status === 200 && response.data.length) {
                 const newArticle = response.data[0];
                 setCurrentArticle(newArticle);
