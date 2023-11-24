@@ -53,8 +53,7 @@ const AdminUsers = ({className, ...rest}) => {
                     error: 'Erreur lors de la mise à jour'
                 }
             )
-            console.log(response);
-            if (response.status === 200) {
+            if (response.status === 200) { 
                 let data = response.data[0];
                 if(data) {
                     apiRef.current.updateRows([data]);
