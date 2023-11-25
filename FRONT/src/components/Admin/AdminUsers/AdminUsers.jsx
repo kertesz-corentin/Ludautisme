@@ -16,10 +16,12 @@ import { userSchema } from '../../../Schemas';
 import { ToggleButton, IconButton } from '@mui/material';
 import { GridCheckIcon } from '@mui/x-data-grid';
 import { useGridApiRef } from '@mui/x-data-grid';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../../styles/theme';
 
 import './adminusers.scss';
 
-const AdminUsers = ({className, ...rest}) => {
+const AdminUsers = ({ className, ...rest }) => {
     const [users, setUsers] = useState([]);
 
     const apiRef = useGridApiRef();
@@ -30,7 +32,7 @@ const AdminUsers = ({className, ...rest}) => {
     const getUsers = async () => {
         try {
             const response = await api.get(path);
-            if (response.status === 200){
+            if (response.status === 200) {
                 setUsers(response.data);
             } else {
                 toast.error(response.data.message);
@@ -47,15 +49,15 @@ const AdminUsers = ({className, ...rest}) => {
     const updateOneUser = async (id) => {
         try {
             let response = await toast.promise(
-                api.get(`/admin/users/${id}`), 
+                api.get(`/admin/users/${id}`),
                 {
                     pending: `Mise a jour de l'utilisateur`,
                     error: 'Erreur lors de la mise à jour'
                 }
             )
-            if (response.status === 200) { 
+            if (response.status === 200) {
                 let data = response.data[0];
-                if(data) {
+                if (data) {
                     apiRef.current.updateRows([data]);
                 }
             } else {
@@ -72,27 +74,29 @@ const AdminUsers = ({className, ...rest}) => {
             const propElt = userSchema[prop];
             const config = {
                 type: propElt.type,
-                field:prop,
-                headerName:propElt.label,
+                field: prop,
+                headerName: propElt.label,
                 width: propElt.width};
 
-            if (propElt.gridDisplay !== "normal"){
-                switch (propElt.gridDisplay){
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
                     case "toggle":
                         config.renderCell = (params) => (
-                            <ToggleButton
-                                value={params.value}
-                                selected={params.value}
-                                onChange={async () => {
-                                    await api.put(`${path}/${params.row.id}`, {[prop] : !params.value});
-                                    getUsers();
-                                }}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                <GridCheckIcon />
-                            </ToggleButton>
-                    );
-                    break;
+                            <ThemeProvider theme={theme}>
+                                <ToggleButton
+                                    value={params.value}
+                                    selected={params.value}
+                                    onChange={async () => {
+                                        await api.put(`${path}/${params.row.id}`, { [prop]: !params.value });
+                                        getUsers();
+                                    }}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                >
+                                    <GridCheckIcon />
+                                </ToggleButton>
+                            </ThemeProvider>
+                        );
+                        break;
                     case "edit":
                         config.renderCell = (params) => (
 
@@ -100,13 +104,13 @@ const AdminUsers = ({className, ...rest}) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateUserModal params={params} getUsers={getUsers} updateOneUser={updateOneUser}/>
+                                <UpdateUserModal params={params} getUsers={getUsers} updateOneUser={updateOneUser} />
                             </IconButton>
-                    );
-                    break;
+                        );
+                        break;
 
                     default:
-                    break;
+                        break;
                 }
             }
             columns.push(config);
@@ -128,19 +132,19 @@ const AdminUsers = ({className, ...rest}) => {
                 link="https://docs.google.com/document/d/1cT8aMNb0chMp2M6to9Tkjl0EjgfojzS3MJ1WSJEAAho/edit?usp=sharing"
                 initialState={{
                     columns: {
-                      columnVisibilityModel: {
-                        // Hide columns <column name>, the other columns will remain visible
-                        id_role: false,
-                        cotisation_expiration: false,
-                        caution_expiration: false,
-                        name: false
-                      },
+                        columnVisibilityModel: {
+                            // Hide columns <column name>, the other columns will remain visible
+                            id_role: false,
+                            cotisation_expiration: false,
+                            caution_expiration: false,
+                            name: false
+                        },
                     },
                     sorting: {
                         sortModel: [{ field: 'member_number', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddUserModal getUsers={getUsers} updateOneUser={updateOneUser}/>]}
+                buttonList={[<AddUserModal getUsers={getUsers} updateOneUser={updateOneUser} />]}
             />
         </div>
     );

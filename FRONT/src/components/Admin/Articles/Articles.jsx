@@ -9,6 +9,8 @@ import api from '../../../requests';
 import { toast } from 'react-toastify';
 import CommentModale from '../CommentModale/CommentModale';
 import moment from 'moment';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../../styles/theme'
 
 const Articles = ({ params, children, name, className, articles, setArticles, getReferenceWithArticles, ...rest }) => {
 
@@ -17,7 +19,7 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
         value = value ? false : true;
 
         let response = null;
-                switch (prop) {
+        switch (prop) {
             case "available":
                 // if value if true, delete article from his actual booking, otherwise just update is available value 
                 if (value) {
@@ -66,17 +68,19 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                 switch (propElt.gridDisplay) {
                     case "toggle":
                         config.renderCell = (params) => (
-                            <ToggleButton
-                                value={params.value} P
-                                selected={params.value}
-                                onChange={(e) => {
-                                    e.stopPropagation();
-                                    handleToogle(params.row.id, params.value, params.field);
-                                }}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                <GridCheckIcon />
-                            </ToggleButton>
+                            <ThemeProvider theme={theme}>
+                                <ToggleButton
+                                    value={params.value} P
+                                    selected={params.value}
+                                    onChange={(e) => {
+                                        e.stopPropagation();
+                                        handleToogle(params.row.id, params.value, params.field);
+                                    }}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                >
+                                    <GridCheckIcon />
+                                </ToggleButton>
+                            </ThemeProvider>
                         );
                         break;
                     case "comment":

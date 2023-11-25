@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import api from '../../../requests';
 import UpdateCategoryModal from '../UpdateCategoryModal/UpdateCategoryModal';
 import { toast } from 'react-toastify';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../../styles/theme'
 
 const AdminCategory = ({ className, ...rest }) => {
     const [categories, setCategories] = React.useState([]);
@@ -44,7 +46,7 @@ const AdminCategory = ({ className, ...rest }) => {
     useEffect(() => {
         getMainCategories();
         getTags();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const columnBuilder = (() => {
@@ -62,15 +64,17 @@ const AdminCategory = ({ className, ...rest }) => {
                 switch (propElt.gridDisplay) {
                     case "toggle":
                         config.renderCell = (params) => (
-                            <ToggleButton
-                                value={params.value}
-                                selected={params.value}
-                                onChange={async () => {
-                                }}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                <GridCheckIcon />
-                            </ToggleButton>
+                            <ThemeProvider theme={theme}>
+                                <ToggleButton
+                                    value={params.value}
+                                    selected={params.value}
+                                    onChange={async () => {
+                                    }}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                >
+                                    <GridCheckIcon />
+                                </ToggleButton>
+                            </ThemeProvider>
                         );
                         break;
                     case "edit":
@@ -79,7 +83,7 @@ const AdminCategory = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateCategoryModal params={params} categories={categories} getMainCategories={getMainCategories}/>
+                                <UpdateCategoryModal params={params} categories={categories} getMainCategories={getMainCategories} />
                             </IconButton>
                         );
                         break;
@@ -92,7 +96,7 @@ const AdminCategory = ({ className, ...rest }) => {
                                 }
                             </div>
                         )
-                        break;     
+                        break;
                     default:
                         break;
                 }

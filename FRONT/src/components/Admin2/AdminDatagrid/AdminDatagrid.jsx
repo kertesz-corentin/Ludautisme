@@ -1,10 +1,12 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './admindatagrid.scss';
 import store from '../../../store';
 import details from '../../../store/features/Admin/details';
-import { ToggleButton, IconButton  } from '@mui/material';
+import { ToggleButton, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridToolbar, frFR, GridCheckIcon } from '@mui/x-data-grid';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../../styles/theme'
 
 function debounce(fn, ms) {
     let timer;
@@ -26,13 +28,13 @@ const AdminDatagrid = ({
 
     // RESPONSIVE DATAGRID HEIGHT
     const [height, setHeight] = useState(null);
-    const [clientHeight,setClientHeight] = useState(window.innerHeight);
+    const [clientHeight, setClientHeight] = useState(window.innerHeight);
     const parentSize = useRef();
 
 
     //Help to filter too many renderer, without, rendering each ms you are resising who makes brower bug.
     const debouncedHandleResize = debounce(() => {
-        const delta = (window.innerHeight < clientHeight ) ?  clientHeight - window.innerHeight : 0;
+        const delta = (window.innerHeight < clientHeight) ? clientHeight - window.innerHeight : 0;
         setClientHeight(window.innerHeight);
         setHeight(parentSize.current.getBoundingClientRect().height - delta);
     }, 16);
@@ -43,7 +45,7 @@ const AdminDatagrid = ({
         return (_) => {
             window.removeEventListener('resize', debouncedHandleResize);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clientHeight]);
     // END RESPONSIVE DATAGRID HEIGHT
 
@@ -52,11 +54,12 @@ const AdminDatagrid = ({
 
     //Configure custom render cell
     const customCellBuilder = {
-        date : (params) => (
+        date: (params) => (
             <span>{(params.value) ? new Date(Date.parse(params.value)).toLocaleDateString("fr") : ''} </span>
         ),
-        toggle : (params) => (
-             <ToggleButton
+        toggle: (params) => (
+            <ThemeProvider theme={theme}>
+                <ToggleButton
                     value={params.value || 'Undefined'}
                     selected={params.value}
                     onChange={async () => {
@@ -66,36 +69,37 @@ const AdminDatagrid = ({
                     }}
                     aria-label={`testtoggle-${params.row.id}`}
                 >
-                                <GridCheckIcon />
-            </ToggleButton>
+                    <GridCheckIcon />
+                </ToggleButton>
+            </ThemeProvider >
         ),
-        edit   : (params) => (
+        edit: (params) => (
             <IconButton
                 value={params.value}
                 aria-label={`testEdit-${params.row.id}`}
-                 onClick={()=>{
-                                store.dispatch(details.actions.setReducer(reducer));
-                                store.dispatch(details.actions.setSubmitPayload({actionName:submitAction,params :{param:params.row.id, body:params.row}}));
-                                store.dispatch(details.actions.setContent(params.row));
-                                store.dispatch(details.actions.setMode());
-                                store.dispatch(details.actions.setOpen());
-                              }
-                          }
+                onClick={() => {
+                    store.dispatch(details.actions.setReducer(reducer));
+                    store.dispatch(details.actions.setSubmitPayload({ actionName: submitAction, params: { param: params.row.id, body: params.row } }));
+                    store.dispatch(details.actions.setContent(params.row));
+                    store.dispatch(details.actions.setMode());
+                    store.dispatch(details.actions.setOpen());
+                }
+                }
             >
                 <EditIcon />
             </IconButton>
-                    ),
+        ),
     }
 
 
-    const columnBuilder = (()=>{
+    const columnBuilder = (() => {
         return Object.keys(schema).map((field) => {
             return {
-                type : schema[field].type,
-                field : field,
+                type: schema[field].type,
+                field: field,
                 headerName: schema[field].label,
-                width : schema[field].width,
-                renderCell : customCellBuilder[schema[field].gridDisplay] || ''
+                width: schema[field].width,
+                renderCell: customCellBuilder[schema[field].gridDisplay] || ''
             }
 
         });
@@ -104,16 +108,16 @@ const AdminDatagrid = ({
 
 
     return (
-       <div className="datagrid__availableSpace" 
+        <div className="datagrid__availableSpace"
             ref={parentSize}
         >
             <div
-                style={{ height: height || 200, width: '100%' }} 
+                style={{ height: height || 200, width: '100%' }}
                 className="datagrid__container"
             >
                 <DataGrid
                     rows={rows}
-                    columns={(schema)? columnBuilder() : columns}
+                    columns={(schema) ? columnBuilder() : columns}
                     GridColDef="center"
                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                     components={{

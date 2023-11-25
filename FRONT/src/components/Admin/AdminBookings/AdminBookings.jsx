@@ -13,6 +13,8 @@ import BookingUserChoice from '../BookingUserChoice/BookingUserChoice';
 import UpdateBookingModal from '../UpdateBookingModal/UpdateBookingModal';
 import { bookingSchema } from '../../../Schemas';
 import { useGridApiRef } from '@mui/x-data-grid';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../../styles/theme';
 
 // import mui components
 import { IconButton, ToggleButton } from '@mui/material';
@@ -29,9 +31,9 @@ const AdminBookings = ({ className, ...rest }) => {
     const getBookings = async () => {
         try {
             let response = null;
-            if(!bookings.length) {
+            if (!bookings.length) {
                 response = await toast.promise(
-                    api.get('/admin/booking/ligth'), 
+                    api.get('/admin/booking/ligth'),
                     {
                         pending: `Récupération des réservations`,
                         error: 'Erreur lors de la récupération'
@@ -40,14 +42,14 @@ const AdminBookings = ({ className, ...rest }) => {
             } else {
                 let url = history ? '/admin/booking/ligth' : '/admin/booking';
                 response = await toast.promise(
-                    api.get(url), 
+                    api.get(url),
                     {
                         pending: `Récupération des réservations`,
                         error: 'Erreur lors de la récupération'
                     }
                 )
             }
-            
+
             if (response.status === 200) {
                 setBookings(response.data);
             } else {
@@ -60,7 +62,7 @@ const AdminBookings = ({ className, ...rest }) => {
     const updateOneBooking = async (id) => {
         try {
             let response = await toast.promise(
-                api.get(`/admin/booking/${id}`), 
+                api.get(`/admin/booking/${id}`),
                 {
                     pending: `Mise a jour de la réservation`,
                     error: 'Erreur lors de la mise à jour'
@@ -69,7 +71,7 @@ const AdminBookings = ({ className, ...rest }) => {
             console.log(response);
             if (response.status === 200) {
                 let data = response.data[0];
-                if(data) {
+                if (data) {
                     apiRef.current.updateRows([data]);
                 }
             } else {
@@ -78,14 +80,14 @@ const AdminBookings = ({ className, ...rest }) => {
         } catch (e) {
             toast.error(e.response.data.message);
         }
-    } 
+    }
     const deleteOneRow = async (id) => {
-        apiRef.current.updateRows([{id: id, _action: 'delete'}]);
+        apiRef.current.updateRows([{ id: id, _action: 'delete' }]);
     }
 
     useEffect(() => {
         getBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const columnBuilder = (() => {
@@ -107,43 +109,46 @@ const AdminBookings = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateBookingModal params={params} getBookings={getBookings} updateOneBooking={updateOneBooking} deleteOneRow={deleteOneRow}/>
+                                <UpdateBookingModal params={params} getBookings={getBookings} updateOneBooking={updateOneBooking} deleteOneRow={deleteOneRow} />
                             </IconButton>
                         );
                         break;
                     case "closed":
                         config.renderCell = (params) => (
-
-                            <ToggleButton
-                                color= 'success'
-                                value={params.value}
-                                selected={params.value}
-                                onChange={async () => {
-                                    const id = Number(params.row.id);
-                                    await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
-                                    await updateOneBooking(params.row.id);
-                                }}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                <GridCheckIcon />
-                            </ToggleButton>
+                            <ThemeProvider theme={theme}>
+                                <ToggleButton
+                                    color='success'
+                                    value={params.value}
+                                    selected={params.value}
+                                    onChange={async () => {
+                                        const id = Number(params.row.id);
+                                        await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
+                                        await updateOneBooking(params.row.id);
+                                    }}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                >
+                                    <GridCheckIcon />
+                                </ToggleButton>
+                            </ThemeProvider>
                         );
                         break;
                     case "delivered":
                         config.renderCell = (params) => (
-                            <ToggleButton
-                                color= 'success'
-                                value={params.value}
-                                selected={params.value}
-                                onChange={async () => {
-                                    const id = Number(params.row.id)
-                                    await api.post(`/admin/booking/deliver/${id}`, { [prop]: !params.value });
-                                    await updateOneBooking(params.row.id)
-                                }}
-                                aria-label={`${prop}-${params.row.id}`}
-                            >
-                                <GridCheckIcon />
-                            </ToggleButton>
+                            <ThemeProvider theme={theme}>
+                                <ToggleButton
+                                    color='success'
+                                    value={params.value}
+                                    selected={params.value}
+                                    onChange={async () => {
+                                        const id = Number(params.row.id)
+                                        await api.post(`/admin/booking/deliver/${id}`, { [prop]: !params.value });
+                                        await updateOneBooking(params.row.id)
+                                    }}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                >
+                                    <GridCheckIcon />
+                                </ToggleButton>
+                            </ThemeProvider>
                         );
                         break;
                     case "date":
@@ -187,8 +192,8 @@ const AdminBookings = ({ className, ...rest }) => {
                 children={[<BookingUserChoice
                     setHistory={setHistory}
                     checked={history}
-                    getBookings = {getBookings}
-                    updateOneBooking = {updateOneBooking} />]}
+                    getBookings={getBookings}
+                    updateOneBooking={updateOneBooking} />]}
             />
         </div>
     );
