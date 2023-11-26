@@ -8,6 +8,7 @@ import api from '../../../requests';
 import { Pagination, TablePagination } from '@mui/material';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import ViewComfyIcon from '@mui/icons-material/ViewComfy';
+import { toast } from 'react-toastify';
 
 const MaterialLibrary = ({ className,
     currentItems,
@@ -46,15 +47,19 @@ const MaterialLibrary = ({ className,
         }
         settings.limit = (limit !== -1) ? limit : null;
         let references = await api.post('/customer/articles/search', settings);
-                setDisplayRef(references.data);
-        if (references.data[0]) {
-            setCountRef(Number(references.data[0].countresult));
-            const pages = references.data[0].countresult / limit;
-            if (pages !== numberPages) {
-                setNumberPages(Math.ceil(pages));
+        if (references.status === 200) {
+            setDisplayRef(references.data);
+            if (references.data[0]) {
+                setCountRef(Number(references.data[0].countresult));
+                const pages = references.data[0].countresult / limit;
+                if (pages !== numberPages) {
+                    setNumberPages(Math.ceil(pages));
+                }
             }
+            setIsLoading(false);
+        } else {
+            toast.error(references.data.message);
         }
-        setIsLoading(false);    // updateDisplayRef();
     }
     function setRef(refs) {
         setDisplayRef(refs);

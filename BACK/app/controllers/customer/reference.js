@@ -101,7 +101,7 @@ module.exports = {
         });
 
         const references = await userReferenceDataMapper.findFiltered(arr, offset, limit, userId);
-        const total = await userReferenceDataMapper.findCountResult(arr);
+        const total = await userReferenceDataMapper.findCountResultByArticle(arr);
         const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
         return res.json(refWithCount);
     },
