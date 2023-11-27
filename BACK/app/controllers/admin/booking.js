@@ -173,18 +173,20 @@ module.exports = {
         if (bookingExist.length !== 1) {
             throw new ApiError(400, 'Cette réservation n\'existe pas');
         }
-        const article = await articleDataMapper.getArticleAvaibility(articleNumber);
-        if (!article) {
+        const article = await articleDataMapper.findByCode(articleNumber);
+
+        const available = await articleDataMapper.getArticleAvaibility(article.id);
+        if (!available) {
             throw new ApiError(400, `Cet article n'existe pas ${articleNumber}`);
         }
-        if (article.returned === false) {
+        if (available.returned === false) {
             throw new ApiError(400, 'Cet article est dans une réservation');
-        } else if (article.archived === true) {
+        } else if (available.archived === true) {
             throw new ApiError(400, 'Cet article est archivé');
-        } else if (article.available === false) {
+        } else if (available.available === false) {
             throw new ApiError(400, 'Cet article n\'est pas disponible');
         }
-        const newArticle = [article.id];
+        const newArticle = [available.id];
         const newArticleBooking = await bookingDataMapper.addArticlesToBooking(bookingExist[0].id, newArticle);
         if (!newArticleBooking) {
             throw new ApiError(500, 'Echec de l\'ajout de l\'article');
