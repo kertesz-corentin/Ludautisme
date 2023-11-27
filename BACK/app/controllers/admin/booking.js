@@ -180,11 +180,11 @@ module.exports = {
             throw new ApiError(400, `Cet article n'existe pas ${articleNumber}`);
         }
         if (available.returned === false) {
-            throw new ApiError(400, 'Cet article est dans une réservation');
+            throw new ApiError(400, `Cet article est dans une réservation article N°:${articleNumber}`);
         } else if (available.archived === true) {
-            throw new ApiError(400, 'Cet article est archivé');
+            throw new ApiError(400, `Cet article est archivé, N°: ${articleNumber}`);
         } else if (available.available === false) {
-            throw new ApiError(400, 'Cet article n\'est pas disponible');
+            throw new ApiError(400, `Cet article n'est pas disponible N°: ${articleNumber}`);
         }
         const newArticle = [available.id];
         const newArticleBooking = await bookingDataMapper.addArticlesToBooking(bookingExist[0].id, newArticle);
