@@ -78,7 +78,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         }
 
         if (response.status === 200) {
-
             const settings = {
                 number: currentArticle.number
             }
@@ -117,8 +116,15 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
+                const article = await toast.promise(
+                    api.get(`/admin/articles/${id}`),
+                    {
+                        pending: 'Réservation en cours',
+                        error: 'Erreur lors de la réservation'
+                    }
+                )
                 let options = {
-                    articleNumber: id,
+                    articleNumber: article[0].number,
                     bookingId: currentBooking.id
                 }
                 const response = await toast.promise(
