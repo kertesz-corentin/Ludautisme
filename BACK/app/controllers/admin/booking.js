@@ -175,7 +175,7 @@ module.exports = {
         }
         const article = await articleDataMapper.findByCode(articleNumber);
 
-        const available = await articleDataMapper.getArticleAvaibility(article.id);
+        const available = await articleDataMapper.getArticleAvaibility(article[0].id);
         if (!available) {
             throw new ApiError(400, `Cet article n'existe pas ${articleNumber}`);
         }
