@@ -124,7 +124,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     }
                 )
                 let options = {
-                    articleNumber: article[0].number,
+                    articleNumber: article.data[0].number,
                     bookingId: currentBooking.id
                 }
                 const response = await toast.promise(
