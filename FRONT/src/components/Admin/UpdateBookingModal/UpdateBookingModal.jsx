@@ -195,6 +195,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             console.log(response);
             toast.success("Article prolongé");
             updateOneBooking(params.row.id);
+            updateOneBooking(response.data.reservation[0].id);
         } else {
             toast.error(response.data.message);
             updateOneBooking(params.row.id);
