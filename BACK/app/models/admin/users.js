@@ -161,4 +161,16 @@ module.exports = {
         const result = await sqlHandler(query, placeholders);
         return result.rows[0];
     },
+
+    async getExpiredCotisation() {
+        const query = `SELECT * FROM "user" WHERE cotisation_status=true AND cotisation_expiration < NOW()-INTERVAL '1 YEARS'`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
+
+    async getExpiredCaution() {
+        const query = `SELECT * FROM "user" WHERE caution_status=true AND caution_expiration < NOW()-INTERVAL '1 YEARS'`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
 };

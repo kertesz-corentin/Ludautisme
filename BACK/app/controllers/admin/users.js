@@ -1,5 +1,8 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 /* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
+const mailer = require('../../config/mailer');
 
 const saltRounds = 10;
 
@@ -112,5 +115,38 @@ module.exports = {
             throw new ApiError(404, 'L\'utilisateur n\'a pas été trouvé, rien n\'a été supprimé');
         }
         return res.json(deletedUser);
+    },
+    async updateUserData() {
+        const expiredCotisation = await usersDataMapper.getExpiredCotisation();
+
+        const expiredCaution = await usersDataMapper.getExpiredCaution();
+
+        const subject = 'utilisateur mis a jour';
+        const text = "l'utilisateur a été mis a jour";
+
+        for (const user of expiredCotisation) {
+            // update user
+            const body = {
+                cotisation_status: false,
+            };
+            await usersDataMapper.update(user.id, body);
+
+            // send mail to user
+            // mailer.send(user.email, subject, text);
+        }
+
+        for (const user of expiredCaution) {
+            // update user
+            const body = {
+                caution_status: false,
+            };
+            await usersDataMapper.update(user.id, body);
+
+            // send email to user
+            // mailer.send(user.email, subject, text);
+        }
+
+        // TODO mail de rapport
+        mailer.send('carniguide@hotmail.fr', subject, text);
     },
 };
