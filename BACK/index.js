@@ -9,7 +9,7 @@ const port = process.env.PORT ?? 3000;
 const server = http.createServer(app);
 
 // tache cron une fois par semaine
-const task = cron.schedule('* * * * 7', () => {
+const task = cron.schedule('* 2 * * 7', () => {
     usersController.updateUserData();
 }, {
     scheduled: true,
