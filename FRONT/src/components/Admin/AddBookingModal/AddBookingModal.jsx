@@ -140,6 +140,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussie");
+                        updateOneBooking(currentBooking.id);
                         setTimeout(() => { handleClose() }, 5000);
                     }
                 } else {

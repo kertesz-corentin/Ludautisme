@@ -53,6 +53,12 @@ const bookingSchema  = {
         gridDisplay : "normal",
         width : 150,
     },
+    social_reason: {
+        type:"string",
+        label: "Raison Sociale",
+        gridDisplay:"normal",
+        width: 150
+    },
     id_permanency:{
         type : "number",
         label : "id Permanence",

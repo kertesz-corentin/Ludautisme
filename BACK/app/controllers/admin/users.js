@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable camelcase */
@@ -8,9 +9,9 @@ const saltRounds = 10;
 
 const ApiError = require('../../errors/apiError');
 const { usersDataMapper } = require('../../models/admin');
+const template = require('../../template/mail');
 
 //  Enable it when Post, update...
-//  const { ApiError } = require('../../../helpers/errorHandler');
 
 module.exports = {
     async getAll(_, res) {
@@ -121,9 +122,6 @@ module.exports = {
 
         const expiredCaution = await usersDataMapper.getExpiredCaution();
 
-        const subject = 'utilisateur mis a jour';
-        const text = "l'utilisateur a été mis a jour";
-
         for (const user of expiredCotisation) {
             // update user
             const body = {
@@ -132,7 +130,8 @@ module.exports = {
             await usersDataMapper.update(user.id, body);
 
             // send mail to user
-            // mailer.send(user.email, subject, text);
+            const mailTemplate = template.sendLateAdhesion(user.first_name, user.cotisation_expiration);
+            mailer.send(user.email, mailTemplate.subject, mailTemplate.text);
         }
 
         for (const user of expiredCaution) {
@@ -143,10 +142,30 @@ module.exports = {
             await usersDataMapper.update(user.id, body);
 
             // send email to user
-            // mailer.send(user.email, subject, text);
+            const mailTemplate = template.sendLateAdhesion(user.first_name, user.caution_expiration);
+            mailer.send(user.email, mailTemplate.subject, mailTemplate.text);
+        }
+        // mail de rapport
+        const subject = 'utilisateur mis a jour';
+        let text = null;
+        if (!expiredCaution.length && !expiredCotisation.length) {
+            text = 'aucun utilisateur en retard !!';
+        } else {
+            text = '<p> Voici les utilisateurs mis a jour </p>';
+            if (expiredCotisation.length) {
+                text += '<p> Liste des utilisateurs dont la cotisation est expiré </p>';
+                for (const user of expiredCotisation) {
+                    text += `<p> Utilisateur: ${user.number}, Date: ${user.cotisation_expiration} </p>`;
+                }
+            }
+            if (expiredCaution.length) {
+                text += '<p> Liste des utilisateurs dont la caution à axpiré </p>';
+                for (const user of expiredCotisation) {
+                    text += `<p> Utilisateur: ${user.number}, Date: ${user.caution_expiration} </p>`;
+                }
+            }
         }
 
-        // TODO mail de rapport
         mailer.send('carniguide@hotmail.fr', subject, text);
     },
 };

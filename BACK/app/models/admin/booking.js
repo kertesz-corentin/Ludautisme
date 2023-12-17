@@ -141,6 +141,7 @@ module.exports = {
             "user"."first_name",
             "user"."last_name",
         	"user"."email",
+            "user"."social_reason",
             "perm"."perm_date" AS date_permanency,
         	"perm"."next_id" AS return_id_permanency,
         	"perm"."next_date" AS return_date_permanency,
@@ -169,6 +170,7 @@ module.exports = {
                 ,"user"."first_name"
                 ,"user"."last_name"
                 ,"user"."email"
+                ,"user"."social_reason"
                 ,"perm"."perm_date"
                 ,"perm"."next_id"
                 ,"perm"."next_date"
@@ -192,6 +194,7 @@ module.exports = {
             "user"."first_name",
             "user"."last_name",
         	"user"."email",
+            "user"."social_reason",
             "perm"."perm_date" AS date_permanency,
         	"perm"."next_id" AS return_id_permanency,
         	"perm"."next_date" AS return_date_permanency,
@@ -219,6 +222,7 @@ module.exports = {
                 ,"user"."first_name"
                 ,"user"."last_name"
                 ,"user"."email"
+                ,"user"."social_reason"
                 ,"perm"."perm_date"
                 ,"perm"."next_id"
                 ,"perm"."next_date"

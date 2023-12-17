@@ -18,6 +18,7 @@ import { GridCheckIcon } from '@mui/x-data-grid';
 import { useGridApiRef } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../../styles/theme';
+import moment from 'moment';
 
 import './adminusers.scss';
 
@@ -87,7 +88,22 @@ const AdminUsers = ({ className, ...rest }) => {
                                     value={params.value}
                                     selected={params.value}
                                     onChange={async () => {
-                                        await api.put(`${path}/${params.row.id}`, { [prop]: !params.value });
+                                        let options = {
+                                            [prop]: !params.value
+                                        };
+                                        if (prop === "cotisation_status" && params.value === true) {
+                                            options = {
+                                                [prop]: !params.value,
+                                                cotisation_expiration: moment(Date.now()).format()
+                                            }
+                                        } else if ( prop === "caution_status" && params.value === true){
+                                            options = {
+                                                [prop]: !params.value,
+                                                caution_status: moment(Date.now()).format()
+                                            }
+                                        }
+
+                                        await api.put(`${path}/${params.row.id}`, options);
                                         getUsers();
                                     }}
                                     aria-label={`${prop}-${params.row.id}`}

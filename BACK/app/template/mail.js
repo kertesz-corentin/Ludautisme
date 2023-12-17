@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const automaticalMail = "Ce mail est un mail automatique, nous vous remercions de ne pas y répondre mais nous restons joignables à l'adresse suivante : ludautisme@gmail.com";
 
 module.exports = {
@@ -69,11 +70,28 @@ module.exports = {
      * @param adhesionDate subscription date
      * @returns subject and text of the mail
      */
-    sendLateContribution(name, adhesionDate) {
+    sendLateAdhesion(name, adhesionDate) {
         const subject = 'Votre adhésion à Ludautisme';
         const text = `
         <p>Bonjour ${name},</p>
         <p>Votre adhésion à l'association Lud'Autisme est arrivée à son terme depuis le ${adhesionDate}. Pour continuer à profiter des avantages de notre association, pensez à réadhérer lors de la prochaine permanence !</p>
+        <p>A bientôt !</p>
+        <p>L'équipe de Lud'Autisme</p>
+        <p>${automaticalMail}</p>`;
+
+        return { subject, text };
+    },
+    /**
+     * return the mail for late contribution
+     * @param name first name of adherent
+     * @param adhesionDate subscription date
+     * @returns subject and text of the mail
+     */
+    sendLateCaution(name, cautionDate) {
+        const subject = 'Votre Caution à Ludautisme';
+        const text = `
+        <p>Bonjour ${name},</p>
+        <p>Votre caution à l'association Lud'Autisme est arrivée à son terme depuis le ${cautionDate}. Pour continuer à profiter des avantages de notre association, pensez à réadhérer lors de la prochaine permanence !</p>
         <p>A bientôt !</p>
         <p>L'équipe de Lud'Autisme</p>
         <p>${automaticalMail}</p>`;
@@ -123,4 +141,17 @@ module.exports = {
 
         return { subject, text };
     },
+
+    /**
+     * template for rapport after the clean of non delivered booking
+     * @param listOfBooking list of non delivered booking format : { user: number, articles: number[]}[]
+     * @returns subject and text of the mail
+     */
+    // cleanBookingTemplate(listOfBooking) {
+    //     const now = moment();
+    //     const subject = `Rapport de suppression des réservation non récupéré ${}`;
+
+    //     const text = ``
+
+    // }
 };

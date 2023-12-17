@@ -56,8 +56,6 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
             'adress_street': data.get('adress_street'),
             'adress_zipcode': data.get('adress_zipcode'),
             'adress_city': data.get('adress_city'),
-            'cotisation_status': data.get('cotisation_status'),
-            'caution_status': data.get('caution_status'),
             'archived': data.get('archived'),
             'social_reason': data.get('social_reason'),
             'id_role': idRole,

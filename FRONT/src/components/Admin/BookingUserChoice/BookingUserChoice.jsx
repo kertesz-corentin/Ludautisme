@@ -45,11 +45,11 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                 setOpenModal(true);
             } else if (response.data[0].cotisation_status === false || response.data[0].caution_status === false) {
                 if (response.data[0].cotisation_status === false && response.data[0].caution_status === false) {
-                    setModalMessage(`La cotisation est la caution de l'hadhérent sont expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
+                    setModalMessage(`La cotisation et la caution de l'adhérent sont expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
                 } else if (response.data[0].cotisation_status === false) {
-                    setModalMessage(`La cotisation de l'hadhérent est expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
+                    setModalMessage(`La cotisation de l'adhérent est expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
                 } else {
-                    setModalMessage(`La caution de l'hadhérent est expirée depuis le ${moment(response.data[0].caution_expiration).format('DD/MM/YYYY')}`);
+                    setModalMessage(`La caution de l'adhérent est expirée depuis le ${moment(response.data[0].caution_expiration).format('DD/MM/YYYY')}`);
                 }
                 setOpenModal(true);
             } else {

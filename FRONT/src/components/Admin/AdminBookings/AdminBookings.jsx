@@ -101,7 +101,6 @@ const AdminBookings = ({ className, ...rest }) => {
                 headerName: propElt.label,
                 width: propElt.width,
             };
-
             if (propElt.gridDisplay !== "normal") {
                 switch (propElt.gridDisplay) {
                     case "edit":
