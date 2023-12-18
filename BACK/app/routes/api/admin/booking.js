@@ -138,9 +138,15 @@ router.route('/search')
  * @tags [ADMIN] Booking
  * @return {booking} 200 - success response - application/json
  */
-
+/**
+ * PUT /api/admin/booking
+ * @summary Clean the non delivered booking of the current permanency
+ * @tags [ADMIN] Booking
+ * @return {Confirm} 200 - success response - application/json
+ */
 router.route('/')
-    .get(controllerHandler(bookingController.getAll));
+    .get(controllerHandler(bookingController.getAll))
+    .put(controllerHandler(bookingController.cleanBooking));
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
 });

@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 const automaticalMail = "Ce mail est un mail automatique, nous vous remercions de ne pas y répondre mais nous restons joignables à l'adresse suivante : ludautisme@gmail.com";
+const moment = require('moment');
 
 module.exports = {
     /**
@@ -147,11 +149,15 @@ module.exports = {
      * @param listOfBooking list of non delivered booking format : { user: number, articles: number[]}[]
      * @returns subject and text of the mail
      */
-    // cleanBookingTemplate(listOfBooking) {
-    //     const now = moment();
-    //     const subject = `Rapport de suppression des réservation non récupéré ${}`;
+    cleanBookingTemplate(listOfBooking) {
+        const subject = `Rapport de suppression des réservation non récupéré ${moment(Date.now()).format()}`;
 
-    //     const text = ``
+        let text = '<h1> Listes des réservations nom récupéré supprimé </h1>';
 
-    // }
+        for (const booking of listOfBooking) {
+            text += `<p> Utilisateur n°:${booking.user}, numéros des articles ${booking.articles.toString()} </p>`;
+        }
+
+        return { subject, text };
+    },
 };

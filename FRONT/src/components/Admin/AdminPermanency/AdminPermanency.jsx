@@ -66,6 +66,7 @@ const AdminPermanency = ({className, ...rest}) => {
     }
 
     const closePermanency = async () => {
+        await api.put('/admin/booking');
         await api.get('/admin/permanency/active/close');
         
         setDate();

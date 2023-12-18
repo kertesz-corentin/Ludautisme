@@ -1,4 +1,3 @@
-const ApiError = require('../../errors/apiError');
 const { permanencyDataMapper } = require('../../models/admin');
 
 module.exports = {

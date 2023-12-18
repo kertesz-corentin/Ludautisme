@@ -1,9 +1,12 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 const ApiError = require('../../errors/apiError');
 const {
     bookingDataMapper, permanencyDataMapper, articleDataMapper, usersDataMapper,
 } = require('../../models/admin');
 const { userBookingDataMapper } = require('../../models/customer');
+const mailer = require('../../config/mailer');
+const template = require('../../template/mail');
 
 module.exports = {
     async getAll(_, res) {
@@ -428,5 +431,36 @@ module.exports = {
 
         const response = await bookingDataMapper.getArticleBooking(id);
         return res.json(response);
+    },
+    async cleanBooking() {
+        const activePerm = await permanencyDataMapper.findActive();
+        const listOfBooking = [];
+
+        // get the non delivered booking of this permanency
+        const getCurrentParams = [
+            { id_permanency: activePerm[0].next_id },
+            { delivered: false },
+        ];
+        const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
+
+        // delete this bookings
+        for (const booking of bookingExist) {
+            const resume = {
+                user: booking.id_user,
+                articles: [],
+            };
+            for (const article of booking.borrowed_articles) {
+                resume.articles.push(article.number);
+            }
+            listOfBooking.push(resume);
+            this.removeBooking(booking.id);
+        }
+
+        const mail = template.cleanBookingTemplate(listOfBooking);
+
+        // send the rapport to ludautisme and me
+
+        mailer.send(process.ENV.MAIL_TARGET, mail.subject, mail.text);
+        mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
     },
 };
