@@ -152,12 +152,11 @@ module.exports = {
     cleanBookingTemplate(listOfBooking) {
         const subject = `Rapport de suppression des réservation non récupéré ${moment(Date.now()).format()}`;
 
-        let text = '<h1> Listes des réservations nom récupéré supprimé </h1>';
+        let text = '<h1> Listes des réservations non récupéré supprimé </h1>';
 
         for (const booking of listOfBooking) {
             text += `<p> Utilisateur n°:${booking.user}, numéros des articles ${booking.articles.toString()} </p>`;
         }
-
         return { subject, text };
     },
 };

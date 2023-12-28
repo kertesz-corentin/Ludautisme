@@ -121,16 +121,6 @@ const AdminPermanency = ({className, ...rest}) => {
                     </Button>
                 }
             </div>
-            {/* <div className="adminpermanency-element">
-                <LocalizationProvider dateAdapter={AdapterDateMoment}>
-                    <StaticDateTimePicker
-                        renderInput={(params) => <TextField {...params} />}
-                        label="Date de fin"
-                        value={endTime}
-                        onChange={date2 => setEndTime(date2)}
-                    />
-                </LocalizationProvider>
-            </div> */}
         </div>
     );
 };

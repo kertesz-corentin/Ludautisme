@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 const ApiError = require('../../errors/apiError');
@@ -432,7 +433,7 @@ module.exports = {
         const response = await bookingDataMapper.getArticleBooking(id);
         return res.json(response);
     },
-    async cleanBooking() {
+    async cleanBooking(req, res) {
         const activePerm = await permanencyDataMapper.findActive();
         const listOfBooking = [];
 
@@ -442,25 +443,41 @@ module.exports = {
             { delivered: false },
         ];
         const bookingExist = await bookingDataMapper.findFiltered(getCurrentParams);
-
         // delete this bookings
         for (const booking of bookingExist) {
             const resume = {
                 user: booking.id_user,
                 articles: [],
             };
+            const articleToReturn = [];
             for (const article of booking.borrowed_articles) {
                 resume.articles.push(article.number);
+                articleToReturn.push(article.id);
             }
             listOfBooking.push(resume);
-            this.removeBooking(booking.id);
+
+            const testBooking = await bookingDataMapper.findOne(booking.id);
+            if (testBooking.length === 0 || !testBooking[0].id) {
+                throw new ApiError(400, 'Cette réservation n\'existe pas');
+            }
+            if (testBooking[0].delivered || testBooking[0].closed) {
+                throw new ApiError(400, 'Cette reservation ne peut être supprimée');
+            }
+
+            // Make the article available
+            if (articleToReturn.length > 0) {
+                await articleDataMapper.return(articleToReturn);
+            }
+            if (booking.length === 1) {
+                await bookingDataMapper.deleteAllArticles(testBooking.id);
+                await bookingDataMapper.deleteBooking(testBooking.id);
+            }
         }
-
         const mail = template.cleanBookingTemplate(listOfBooking);
-
         // send the rapport to ludautisme and me
 
         mailer.send(process.ENV.MAIL_TARGET, mail.subject, mail.text);
         mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
+        return res.json('Réservation nettoyées');
     },
 };
