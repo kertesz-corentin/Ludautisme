@@ -230,6 +230,13 @@ module.exports = {
         if (booking[0].delivered || booking[0].closed) {
             throw new ApiError(400, 'Cette reservation ne peut être supprimée');
         }
+        for (const article of booking[0].borrowed_articles) {
+            console.log(article);
+
+            const obj = { available: true };
+            await articleDataMapper.update(article.id, obj);
+        }
+
         if (booking.length === 1) {
             await bookingDataMapper.deleteAllArticles(bookingId);
             await bookingDataMapper.deleteBooking(bookingId);
