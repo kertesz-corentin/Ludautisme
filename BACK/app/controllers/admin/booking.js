@@ -231,8 +231,6 @@ module.exports = {
             throw new ApiError(400, 'Cette reservation ne peut être supprimée');
         }
         for (const article of booking[0].borrowed_articles) {
-            console.log(article);
-
             const obj = { available: true };
             await articleDataMapper.update(article.id, obj);
         }

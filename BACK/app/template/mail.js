@@ -159,4 +159,52 @@ module.exports = {
         }
         return { subject, text };
     },
+    /**
+     * template for validation of user coment
+     * @param articleNumber number of article
+     * @param name name of user
+     * @param message
+     * @returns subject and text of the mail
+     */
+    validatedComment(articleNumber, name, message) {
+        const subject = 'Votre Commentaire a été validé';
+        let text = `
+        <p>Bonjour ${name},</p>
+        <p>Votre commentaire pour l'article n°${articleNumber} a été validé.</p>`;
+        if (message) {
+            text += `
+            <p> Le message suivant vous a été laissé par les bénévoles : </p>
+            <p>${message}.</p>`;
+        }
+        text += `
+        <p>A bientôt !</p>
+        <p>L'équipe de Lud'Autisme</p>
+        <p>${automaticalMail}</p>
+        `;
+        return { subject, text };
+    },
+    /**
+     * template for delete of user coment
+     * @param articleNumber number of article
+     * @param name name of user
+     * @param message
+     * @returns subject and text of the mail
+     */
+    deletedComment(articleNumber, name, message) {
+        const subject = 'Votre Commentaire a été supprimé';
+        let text = `
+        <p>Bonjour ${name},</p>
+        <p>Votre commentaire pour l'article n°${articleNumber} a été supprimé.</p>`;
+        if (message) {
+            text += `
+            <p> Le message suivant vous a été laissé par les bénévoles : </p>
+            <p>${message}.</p>`;
+        }
+        text += `
+        <p>A bientôt !</p>
+        <p>L'équipe de Lud'Autisme</p>
+        <p>${automaticalMail}</p>
+        `;
+        return { subject, text };
+    },
 };

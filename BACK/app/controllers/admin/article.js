@@ -2,6 +2,8 @@ const ApiError = require('../../errors/apiError');
 const { articleDataMapper, adminReferenceDataMapper, adminCommentDataMapper } = require('../../models/admin');
 const { userDataMapper } = require('../../models/customer');
 const { getUserId } = require('../../helpers/testUser');
+const mailer = require('../../config/mailer');
+const template = require('../../template/mail');
 
 module.exports = {
     async getAll(_, res) {
@@ -74,6 +76,10 @@ module.exports = {
         const comments = await adminCommentDataMapper.findByArticle(id);
         return res.json(comments);
     },
+    async getAllNoValidatedComment(req, res) {
+        const comments = await adminCommentDataMapper.getNoValidated();
+        return res.json(comments);
+    },
     async addComment(req, res) {
         const id = Number(req.params.id);
         const id_user = getUserId(req);
@@ -122,5 +128,33 @@ module.exports = {
         }
         const updatedCategory = await adminCommentDataMapper.update(req.params.id, req.body);
         return res.json(updatedCategory);
+    },
+    async userComment(req, res) {
+        const { id } = req.params;
+        const { message, type } = req.body;
+        const commentResponse = await adminCommentDataMapper.getById(id);
+        if (commentResponse.length) {
+            const comment = commentResponse[0];
+            if (type === 'valid') {
+                await adminCommentDataMapper.validateComment(id);
+                const article = await articleDataMapper.findOne(comment.id_article); // array
+                const user = await userDataMapper.findById(comment.id_user); // not array
+                const mail = template.validatedComment(article[0].number, user.first_name, message);
+
+                mailer.send(user.email, mail.subject, mail.text);
+                return res.status(200).json('commentaire validé');
+            } if (type === 'delete') {
+                await adminCommentDataMapper.deleteComment(id);
+                const article = await articleDataMapper.findOne(comment.id_article); // array
+                const user = await userDataMapper.findById(comment.id_user); // not array
+
+                const mail = template.deletedComment(article[0].number, user.first_name, message);
+                mailer.send(user.email, mail.subject, mail.text);
+                return res.status(200).json('commentaire supprimé');
+            }
+            throw new ApiError(404, 'Mauvais type d\'action sur le commentaire');
+        } else {
+            throw new ApiError(404, 'Ce commentaire n\'existe pas');
+        }
     },
 };

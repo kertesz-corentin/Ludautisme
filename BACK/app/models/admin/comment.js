@@ -20,6 +20,29 @@ module.exports = {
         const result = await sqlHandler(query);
         return result.rows;
     },
+    async getNoValidated() {
+        const query = `
+        SELECT 
+        art_com.id,
+        art_com.id_article,
+        art_com.id_user,
+        art_com.comment,
+        art_com.created_at,
+        art_com.validated,
+        "user".first_name,
+        "user".last_name,
+        "user".email, 
+        "user".member_number,
+        "article"."number",
+        "reference"."name"
+        FROM "article_comment" AS art_com
+        INNER JOIN "user" ON "user"."id"=art_com."id_user"
+        INNER JOIN "article" ON "article"."id"=art_com."id_article"
+        INNER JOIN "reference" ON "reference"."id"="article"."id_ref"
+        WHERE "validated"= false`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
     async getById(id) {
         const query = 'SELECT * FROM "article_comment" WHERE id=$1';
         const placeholders = [id];
@@ -51,7 +74,7 @@ module.exports = {
         return result.rows;
     },
     async addComment(articleId, userId, comment) {
-        const query = 'INSERT INTO "article_comment"("id_article","id_user","comment") VALUES ($1,$2,$3)';
+        const query = 'INSERT INTO "article_comment"("id_article","id_user","comment", "validated") VALUES ($1,$2,$3, true)';
         const placeholders = [articleId, userId, comment];
         const result = await sqlHandler(query, placeholders);
         return result.rows;

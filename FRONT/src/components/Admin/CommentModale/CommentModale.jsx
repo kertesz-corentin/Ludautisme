@@ -240,7 +240,10 @@ const CommentModale = ({ params, closed, ...rest }) => {
                                     columns: {
                                         columnVisibilityModel: {
                                             id_article: false,
-                                            id_user: false
+                                            id_user: false,
+                                            email: false,
+                                            name: false,
+                                            number: false
                                         },
                                     },
                                     sorting: {

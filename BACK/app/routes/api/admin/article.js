@@ -32,6 +32,14 @@ router.route('/:id')
 router.route('/search')
     .post(controllerHandler(articleController.getFiltered));
 /**
+ * GET /api/admin/articles/comment/
+ * @summary geta all comment not validated
+ * @tags [ADMIN] Comment
+ * @return {Comment} 200 - success response - application/json
+ */
+router.route('/comment/novalid')
+    .get(controllerHandler(articleController.getAllNoValidatedComment));
+/**
  * GET /api/admin/articles/comment/:id
  * @summary get all comments for one article
  * @tags [ADMIN] Comment
@@ -60,12 +68,21 @@ router.route('/search')
  * @param {number} request.params.id - ID of comment
  * @return {Comment} 200 - success response - application/json
  */
+/**
+ * PATCH /api/admin/articles/comment/:id
+ * @summary valid or delete user comment and send a confirm mail
+ * @tags [ADMIN] Comment
+ * @param {number} request.params.id - ID od comment
+ * @param {string} req.body.message - message for the user
+ * @param {string} req.body.type - type of action "delete" or "valid" available
+ * @return {Comment} 200 - success response - application/json
+ */
 router.route('/comment/:id')
     .get(controllerHandler(articleController.getComment))
     .post(controllerHandler(articleController.addComment))
     .delete(controllerHandler(articleController.deleteComment))
-    .put(controllerHandler(articleController.update));
-
+    .put(controllerHandler(articleController.update))
+    .patch(controllerHandler(articleController.userComment));
 /**
  * GET /api/admin/articles
  * @summary Get all articles

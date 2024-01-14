@@ -1,4 +1,10 @@
 const commentSchema  = {
+    number: {
+        type: "string",
+        label: "N° article",
+        gridDisplay: "normal",
+        width: 100
+    },
     id:{
         type: "number",
         label: "Editer",
@@ -34,6 +40,12 @@ const commentSchema  = {
         width: 100,
         inputDisplay : 'none'
     },
+    email: {
+        type: "string",
+        label: "Email",
+        gridDisplay: "normal",
+        width: 200,
+    },
     comment:{
         type: "string",
         label: "Commentaire",
@@ -48,7 +60,7 @@ const commentSchema  = {
     },
     validated:{
         type: "boolean",
-        label: "Validé",
+        label: "Validation",
         gridDisplay: "validate",
         width: 100,
     },
@@ -56,6 +68,12 @@ const commentSchema  = {
         type: "number",
         label: "Suppression",
         gridDisplay: "delete",
+        width: 100
+    },
+    name: {
+        type: "string",
+        label: "Nom référence",
+        gridDisplay: "normal",
         width: 100
     },
 }
