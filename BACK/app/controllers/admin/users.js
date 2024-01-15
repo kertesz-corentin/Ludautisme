@@ -119,7 +119,6 @@ module.exports = {
     },
     async updateUserData() {
         const expiredCotisation = await usersDataMapper.getExpiredCotisation();
-
         const expiredCaution = await usersDataMapper.getExpiredCaution();
 
         for (const user of expiredCotisation) {
@@ -155,13 +154,13 @@ module.exports = {
             if (expiredCotisation.length) {
                 text += '<p> Liste des utilisateurs dont la cotisation est expiré </p>';
                 for (const user of expiredCotisation) {
-                    text += `<p> Utilisateur: ${user.number}, Date: ${user.cotisation_expiration} </p>`;
+                    text += `<p> Utilisateur: ${user.member_number}, Date: ${user.cotisation_expiration} </p>`;
                 }
             }
             if (expiredCaution.length) {
                 text += '<p> Liste des utilisateurs dont la caution à axpiré </p>';
                 for (const user of expiredCotisation) {
-                    text += `<p> Utilisateur: ${user.number}, Date: ${user.caution_expiration} </p>`;
+                    text += `<p> Utilisateur: ${user.member_number}, Date: ${user.caution_expiration} </p>`;
                 }
             }
         }
