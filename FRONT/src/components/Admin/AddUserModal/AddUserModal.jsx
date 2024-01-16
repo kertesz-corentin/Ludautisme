@@ -11,10 +11,17 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import './addusermodal.scss';
 
-const AddUserModal = ({getUsers, className, ...rest}) => {
+const AddUserModal = ({getUsers, className, users, ...rest}) => {
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(5);
-    const handleOpen = () => setOpen(true)
+    const [nextNumber, setNextNumber] = useState(null);
+
+    const handleOpen = () => {
+        let userNumberArray = users.map((u) => u.member_number);
+        let maxNumber = Math.max(...userNumberArray);
+        setNextNumber(maxNumber+1);
+        setOpen(true)}
+
     const handleClose = () => {
         setOpen(false);
     }
@@ -117,6 +124,7 @@ const AddUserModal = ({getUsers, className, ...rest}) => {
                             type='number'
                             className="adduser-modal-inputs-item"
                             sx={{mb: 2}}
+                            defaultValue={nextNumber}
                         />
                         <TextField
                             id='outlined'

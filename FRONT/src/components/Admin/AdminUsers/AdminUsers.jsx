@@ -160,7 +160,7 @@ const AdminUsers = ({ className, ...rest }) => {
                         sortModel: [{ field: 'member_number', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddUserModal getUsers={getUsers} updateOneUser={updateOneUser} />]}
+                buttonList={[<AddUserModal getUsers={getUsers} updateOneUser={updateOneUser} users={users} />]}
             />
         </div>
     );
