@@ -25,6 +25,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         setOpen(false);
     }
 
+    const inputRef = React.useRef(null);
     const [closed] = useState(params.row.closed);
     const [delivered] = useState(params.row.delivered);
     const [overdue] = useState(params.row.overdue);
@@ -123,6 +124,14 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
 
+        // tester si l'article est déjà dans la réservation
+        let articlesArray = params.row.borrowed_articles;
+        let sameArticle = articlesArray.find(a => a.number === Number(article_number));
+
+        if (sameArticle) {
+            toast.error("L'article est déjà dans la réservation");
+            return
+        }
         // on récupère les données de l'article avant insertion dans le state
         const settings = {
             number: article_number
@@ -162,6 +171,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
             if (addResponse.status === 200) {
                 updateOneBooking(params.row.id);
+                inputRef.current.value = "";
             } else {
                 toast.error(addResponse.data.message);
             }
@@ -305,6 +315,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                                     name='number'
                                     type='number'
                                     className="article-search-item"
+                                    inputRef={inputRef}
                                 >
                                 </TextField>
 
