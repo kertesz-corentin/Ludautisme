@@ -135,7 +135,7 @@ module.exports = {
 
         // send email to admin
         const mail = template.newUserComment(comment, reference[0].name, article[0].number);
-        mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
+        mailer.send(process.ENV.MAIL_TARGET, mail.subject, mail.text);
         return res.json(newComment);
     },
 };
