@@ -86,7 +86,7 @@ const CommentModale = ({ params, closed, ...rest }) => {
             const response = await toast.promise(
                 api.post(`/admin/articles/comment/${params.id}`, option),
                 {
-                    pending: `Ajout de la réservation`,
+                    pending: `Ajout du commentaire`,
                     error: "Erreur lors de l'ajout"
                 }
             );

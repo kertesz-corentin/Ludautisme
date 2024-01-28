@@ -207,4 +207,23 @@ module.exports = {
         `;
         return { subject, text };
     },
+    /**
+     * template for notify admin where new comment is post by user
+     * @param comment
+     */
+    newUserComment(comment, referenceName, articleNumber) {
+        const subject = 'Un nouveau commentaire a été ajouté';
+
+        const text = `
+            <p> Bonjour </p>
+            <p> Un nouveau commentaire à été ajouté pour l'article ${referenceName} (N° ${articleNumber}) </p>
+            <p> le commentaire est le suivant </p> 
+            <p> "${comment}"</p>
+            <p> Vous pourvez le valider ou le supprimer dans <a href="https://ludautisme.org/admin/home">L'espace administrateur</a> </p>
+            <p> A bientôt !</p>
+            <p> ${automaticalMail}</p>
+        `;
+
+        return { subject, text };
+    },
 };

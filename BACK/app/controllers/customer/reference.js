@@ -1,6 +1,11 @@
 const ApiError = require('../../errors/apiError');
 const userIdToken = require('../../helpers/userIdToken');
 const userReferenceDataMapper = require('../../models/customer/references');
+const commentDataMapper = require('../../models/customer/comment');
+const { getUserId } = require('../../helpers/testUser');
+const { articleDataMapper, usersDataMapper } = require('../../models/admin');
+const mailer = require('../../config/mailer');
+const template = require('../../template/mail');
 
 module.exports = {
     async getAll(_, res) {
@@ -104,5 +109,33 @@ module.exports = {
         const total = await userReferenceDataMapper.findCountResultByArticle(arr);
         const refWithCount = references.map((ref) => ({ ...ref, countresult: total[0].nb_total }));
         return res.json(refWithCount);
+    },
+    async addOneComment(req, res) {
+        // id == article id
+        const id = Number(req.params.id);
+        const id_user = getUserId(req);
+        const { comment } = req.body;
+        // test if article exist
+        const article = await articleDataMapper.findFiltered([{ id }]);
+        if (article.length < 1) {
+            throw new ApiError(404, 'Cet article n\'existe pas');
+        }
+        // test if user exist
+        const user = await usersDataMapper.findById(id_user);
+        if (user.length < 1) {
+            throw new ApiError(404, 'Cet utilisateur n\'existe pas');
+        }
+
+        const reference = await userReferenceDataMapper.findByArticleNumber(article[0].number);
+        if (!reference[0]) {
+            throw new ApiError(404, 'Impossible de retrouver la reference');
+        }
+
+        const newComment = await commentDataMapper.addComment(id, id_user, comment);
+
+        // send email to admin
+        const mail = template.newUserComment(comment, reference[0].name, article[0].number);
+        mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
+        return res.json(newComment);
     },
 };

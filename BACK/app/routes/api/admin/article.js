@@ -73,8 +73,8 @@ router.route('/comment/novalid')
  * @summary valid or delete user comment and send a confirm mail
  * @tags [ADMIN] Comment
  * @param {number} request.params.id - ID od comment
- * @param {string} req.body.message - message for the user
- * @param {string} req.body.type - type of action "delete" or "valid" available
+ * @param {string} request.body.message - message for the user
+ * @param {string} request.body.type - type of action "delete" or "valid" available
  * @return {Comment} 200 - success response - application/json
  */
 router.route('/comment/:id')

@@ -17,6 +17,9 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../../../../App/App';
 import CloseIcon from '@mui/icons-material/Close';
+import AddCommentIcon from '@mui/icons-material/AddComment';
+import EditCommentModale from '../../../../Admin/EditCommentModal/EditCommentModal';
+import { toast } from 'react-toastify';
 
 const Reference = ({
     display,
@@ -72,6 +75,28 @@ const Reference = ({
         cartManager.add(itemToAdd);
     }
 
+    const handleAddComment = async (comment) => {
+        try {
+            let option = {
+                'comment': comment
+            }
+
+            const response = await toast.promise(
+                api.post(`/customer/articles/comment/${reference.art_id}`, option),
+                {
+                    pending: `Ajout du commentaire`,
+                    error: "Erreur lors de l'ajout"
+                }
+            );
+            if (response.status === 200) {
+                toast.success("Commentaire ajouté")
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
 
 
     return (
@@ -119,6 +144,13 @@ const Reference = ({
                             </>
                         }
                     </Box>
+                }
+                {(display === "booking") &&
+                    <EditCommentModale
+                        button={<AddCommentIcon />}
+                        title={"Envoyer un commentaire"}
+                        callBack={handleAddComment}
+                    />
                 }
             </Box>
             <Modal

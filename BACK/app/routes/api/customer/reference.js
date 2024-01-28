@@ -34,14 +34,25 @@ router.route('/namelist')
 router.route('/single/:id')
     .get(controllerHandler(referenceController.getOne));
 /**
- * GET api/admin/references/article/:number
+ * GET api/customer/references/article/:number
  * @summary Get reference by article number
- * @tags [ADMIN] Reference
+ * @tags [CUSTOMER] Reference
  * @param {number} request.params.id.required Article number
  * @return {[Reference]}
  */
 router.route('/article/:number')
     .get(controllerHandler(referenceController.getOneByArticleNumber));
+
+/**
+ * POST /api/customer/articles/comment/:id
+ * @summary add on comment to one article
+ * @tags [CUSTOMER] Comment
+ * @param {number} request.params.id - ID of article
+ * @param {CommentCreate} request.body.required - All required
+ * @return {Comment} 200 - success response - application/json
+ */
+router.route('/comment/:id')
+    .post(controllerHandler(referenceController.addOneComment));
 /**
 * GET /api/customer/articles
 * @summary Get all references with picture
