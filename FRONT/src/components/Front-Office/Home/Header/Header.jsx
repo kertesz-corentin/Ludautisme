@@ -131,9 +131,9 @@ const Header = ({
                 </nav>
 
             </Box>
-            <Box className="maintenance">
+            {/* <Box className="maintenance">
                 <span>🚧 Bienvenue sur notre nouveau site, celui-ci est encore en travaux, à bientôt pour des nouveautés 😉</span>
-            </Box>
+            </Box> */}
         </header>
         
     );
