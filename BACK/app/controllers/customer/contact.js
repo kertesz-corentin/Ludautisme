@@ -13,7 +13,7 @@ module.exports = {
                         <p>Objet: ${object}</p>
                         <p>Message: ${message}</p>
                     </div>`;
-        const send = mailer.send(process.env.MAIL_TARGET, `Message ludautisme ${object}`, html);
+        const send = mailer.send(process.ENV.MAIL_TARGET, `Message ludautisme ${object}`, html);
         if (send === 'error') {
             res.status(500).json("erreur d'envoi");
         } else {
