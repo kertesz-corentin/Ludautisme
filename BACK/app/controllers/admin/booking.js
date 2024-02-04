@@ -481,7 +481,7 @@ module.exports = {
         const mail = template.cleanBookingTemplate(listOfBooking);
         // send the rapport to ludautisme and me
 
-        mailer.send(process.ENV.MAIL_TARGET, mail.subject, mail.text);
+        mailer.send(process.env.MAIL_TARGET, mail.subject, mail.text);
         mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
         return res.json('Réservation nettoyées');
     },
