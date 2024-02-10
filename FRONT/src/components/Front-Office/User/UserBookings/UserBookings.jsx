@@ -28,23 +28,30 @@ const UserBookings = ({className, ...rest}) => {
             //Get bookings
             const response = await api.get(`/customer/booking/history/${id}`);
             let data = await response.data;
-            console.log(data)
             data = data.map((booking) => {
-                booking['references'] = booking.articles.map((article) => {
-                    return {
-                            id: article.id_ref,
-                            name: article.name_ref,
-                            description: article.description_ref,
-                            art_id: article.id,
-                            picture: [
-                                {
-                                    id:article.id_picture_ref,
-                                    url:article.url_picture_ref,
-                                    text:article.text_picture_ref,
-                                }
-                            ],
-                        }
+                booking['references'] = [];
+                
+                booking.articles.map((article) => {
+                    if (!booking['references'].find((e) => e.art_id === article.id)) {
+                        booking['references'].push(
+                            {
+                                id: article.id_ref,
+                                name: article.name_ref,
+                                description: article.description_ref,
+                                art_id: article.id,
+                                art_number: article.number,
+                                picture: [
+                                    {
+                                        id:article.id_picture_ref,
+                                        url:article.url_picture_ref,
+                                        text:article.text_picture_ref,
+                                    }
+                                ],
+                            } 
+                        )
+                    }
                 });
+
                 booking.date_permanency = (booking.date_permanency)
                 ? `le : ${moment(booking.date_permanency).format("DD MMMM YYYY")}`
                 :  `en ${moment(activePerm[0].perm_date).add(1, 'M').format("MMMM YYYY")}`;
@@ -57,18 +64,18 @@ const UserBookings = ({className, ...rest}) => {
 
             //Next Permanency
             const nextFilter = (data) ?
-            await data.filter((booking)=> booking.is_next_permanency && !booking.delivered)
+            await data.filter((booking)=> booking.is_next_permanency || !booking.delivered)
             : [];
             setNextBooking(nextFilter);
 
             //Active permanency
             const activeFilter = (data) ?
-            await data.filter((booking)=> booking.active_permanency || (booking.is_next_permanency && booking.delivered && !booking.closed ))
+            await data.filter((booking)=> booking.delivered && !booking.closed )
             : [];
             setActiveBooking(activeFilter);
             //Old Bookings
             const oldFilter = (data) ?
-            await data.filter((booking)=> (!booking.active_permanency && !booking.is_next_permanency) || booking.closed)
+            await data.filter((booking)=> booking.closed )
             : [];
 
             setOldBookings(oldFilter.sort((a,b)=>{return (a.id - b.id > 0) ? -1 : 1}));
@@ -101,7 +108,7 @@ const UserBookings = ({className, ...rest}) => {
                         <>
                         <Typography className="booking__info">#{nextBooking[0].id} - A venir récupérer {nextBooking[0].date_permanency}</Typography>
                         {/* <Permanency/> */}
-                        <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
+                        <Box sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
                                     display="booking"
                                     references= {nextBooking[0].references}
@@ -122,7 +129,7 @@ const UserBookings = ({className, ...rest}) => {
                         { (activeBooking[0]) ?
                         <>
                         <Typography className="booking__info">#{activeBooking[0].id} - A rendre {activeBooking[0].return_date_permanency}</Typography>
-                        <Box className="clay" sx={{ bgcolor: 'background.paper' }}>
+                        <Box sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
                                     display="booking"
                                     references= {activeBooking[0].references}

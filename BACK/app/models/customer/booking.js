@@ -109,12 +109,10 @@ module.exports = {
                     query += `"${prop}"=$${index + 1} `;
                 }
             });
-            console.log(query);
             const result = await sqlHandler(query, placeholders);
 
             return result.rows;
         } catch (err) {
-            console.error(err);
             return null;
         }
     },
@@ -138,7 +136,7 @@ module.exports = {
         (perm."next_date" > CURRENT_DATE) AND (b.delivered = true ) AND (b.closed = false) AS overdue,
 	    json_agg(json_build_object (
                 'id', ar."id",
-                'number', ar."id",
+                'number', ar."number",
                 'available', ar."available",
                 'archived', ar."archived",
 				'id_ref', "reference"."id",

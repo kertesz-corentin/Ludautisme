@@ -110,7 +110,7 @@ const Reference = ({
             />
             <Box>
                 <Typography noWrap className="reference-card__name">
-                    {(display === 'booking') ? `N°${reference.art_id} ${name}` : name}
+                    {(display === 'booking') ? `N°${reference.art_number} ${name}` : name}
                 </Typography>
                 {(display !== "booking") &&
                     <Box className="reference-card__footer">
