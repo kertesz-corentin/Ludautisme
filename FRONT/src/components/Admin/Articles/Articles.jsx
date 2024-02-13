@@ -13,6 +13,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../../styles/theme'
 
 const Articles = ({ params, children, name, className, articles, setArticles, getReferenceWithArticles, ...rest }) => {
+    const [articleStatus, setArticleStatus] = React.useState("");
 
     const handleToogle = async (artcileId, value, prop) => {
         // toggle boolean value 
@@ -48,8 +49,17 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
         }
     }
 
+    const getArticleStatus = async (article) => {
+        let response = await api.get(`/admin/articles/status/${article.row.articles[0].id}`);
+        setArticleStatus(response.data);
+    }
+
     useEffect(() => {
         getReferenceWithArticles();
+
+        for (const article of articles) {
+            console.log(article);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -94,6 +104,12 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                         config.renderCell = (params) => (
                             moment(params.value).format('DD/MM/YYYY')
                         );
+                        break;
+                    case "status": 
+                            getArticleStatus(params);
+                            config.renderCell = () => (
+                                <div>{articleStatus}</div>
+                            );
                         break;
                     default:
                         break;

@@ -157,4 +157,18 @@ module.exports = {
             throw new ApiError(404, 'Ce commentaire n\'existe pas');
         }
     },
+    async getStatus(req, res) {
+        const { articleId } = req.params;
+        // test the article
+        const article = await articleDataMapper.findOne(articleId);
+        if (!article.length) return res.status(404).json('Article introuvable');
+        // get the data of linked user if the article is booked
+        const user = await articleDataMapper.getStatus(articleId);
+        if (!user) {
+            return res.json('Article disponible');
+        }
+        const response = `Chez ${user.first_name} ${user.last_name} N°${user.member_number}`;
+
+        return res.json(response);
+    },
 };

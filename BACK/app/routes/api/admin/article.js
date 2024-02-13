@@ -72,7 +72,7 @@ router.route('/comment/novalid')
  * PATCH /api/admin/articles/comment/:id
  * @summary valid or delete user comment and send a confirm mail
  * @tags [ADMIN] Comment
- * @param {number} request.params.id - ID od comment
+ * @param {number} request.params.id - ID of comment
  * @param {string} request.body.message - message for the user
  * @param {string} request.body.type - type of action "delete" or "valid" available
  * @return {Comment} 200 - success response - application/json
@@ -83,6 +83,15 @@ router.route('/comment/:id')
     .delete(controllerHandler(articleController.deleteComment))
     .put(controllerHandler(articleController.update))
     .patch(controllerHandler(articleController.userComment));
+/**
+ * GET /api/admin/articles/status/:articleId
+ * @summary get status of one article
+ * @tags [ADMIN] Article
+ * @param {number} request.params.articleId.required - ID of article
+ * @return 200 - success response - application/json
+ */
+router.route('/status/:articleId')
+    .get(controllerHandler(articleController.getStatus));
 /**
  * GET /api/admin/articles
  * @summary Get all articles

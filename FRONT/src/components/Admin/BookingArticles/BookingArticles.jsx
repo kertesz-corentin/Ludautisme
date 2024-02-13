@@ -119,7 +119,8 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                                 nb_prolongation: false,
                                 id_permanency: false,
                                 id_user: false,
-                                available: false
+                                available: false,
+                                emplacement: false
                             },
                         },
                         sorting: {

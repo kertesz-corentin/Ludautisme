@@ -27,7 +27,7 @@ const articleSchema  = {
         type : "string",
         label : "Origine",
         gridDisplay : "normal",
-        width : 400,
+        width : 200,
     },
     description:{
         type : "string",
@@ -131,6 +131,12 @@ const articleSchema  = {
         gridDisplay: "comment",
         width: 125
     },
+    emplacement: {
+        type: "number",
+        label: "Emplacement",
+        gridDisplay: "status",
+        width: 200
+    }
 }
 
 export {articleSchema}

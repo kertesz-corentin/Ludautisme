@@ -185,4 +185,17 @@ module.exports = {
         const result = await sqlHandler(queryStart, placeholders);
         return result.rows;
     },
+    async getStatus(articleId) {
+        const result = await sqlHandler(`
+        SELECT
+        "user"."first_name",
+        "user"."last_name",
+        "user"."member_number"
+        FROM "article_to_booking"
+        INNER JOIN "booking" ON "article_to_booking"."id_article" = "booking"."id"
+        INNER JOIN "user" ON "user"."id" = "booking"."id_user"
+        WHERE id_article = $1 AND returned = false
+        `, [articleId]);
+        return result.rows[0];
+    },
 };

@@ -429,7 +429,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                                                 id_user: false,
                                                 returned: false,
                                                 description: false,
-                                                prolonge: false
+                                                prolonge: false,
+                                                emplacement: false
                                             },
                                         },
                                         sorting: {

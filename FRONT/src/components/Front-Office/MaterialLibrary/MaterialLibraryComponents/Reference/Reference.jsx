@@ -69,7 +69,14 @@ const Reference = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { updateCurrentItems() }, [currentItems])
+    useEffect(() => { 
+        // get article number of reference
+        let numberList = [];
+        for (const articlNb of articles_list) {
+            numberList.push(articlNb.number)
+        }
+        setArticleNumber(`n° :${numberList.join(', ')}`);
+        updateCurrentItems() }, [currentItems])
 
     function handleClick() {
         cartManager.add(itemToAdd);
@@ -110,7 +117,7 @@ const Reference = ({
             />
             <Box>
                 <Typography noWrap className="reference-card__name">
-                    {(display === 'booking') ? `N°${reference.art_number} ${name}` : name}
+                    {(display === 'booking') ? `N°${reference.art_number} ${name}` : `${name} ${articleNumber}`}
                 </Typography>
                 {(display !== "booking") &&
                     <Box className="reference-card__footer">
