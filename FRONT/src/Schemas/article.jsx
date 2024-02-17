@@ -132,9 +132,9 @@ const articleSchema  = {
         width: 125
     },
     emplacement: {
-        type: "number",
+        type: "string",
         label: "Emplacement",
-        gridDisplay: "status",
+        gridDisplay: "normal",
         width: 200
     }
 }

@@ -40,6 +40,19 @@ module.exports = {
         if (articles.length < 1) {
             throw new ApiError(400, 'Nous n\'avons rien trouvé avec ces critères');
         }
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const article of articles) {
+            // eslint-disable-next-line no-await-in-loop
+            const user = await articleDataMapper.getStatus(article.id);
+
+            let response = 'Article disponible';
+            if (user) {
+                response = `Chez ${user.first_name} ${user.last_name} N°${user.member_number}`;
+            }
+            article.emplacement = response;
+        }
+
         return res.json(articles);
     },
     async addArticle(req, res) {
