@@ -192,7 +192,7 @@ module.exports = {
         "user"."last_name",
         "user"."member_number"
         FROM "article_to_booking"
-        INNER JOIN "booking" ON "article_to_booking"."id_article" = "booking"."id"
+        INNER JOIN "booking" ON "article_to_booking"."id_booking" = "booking"."id"
         INNER JOIN "user" ON "user"."id" = "booking"."id_user"
         WHERE id_article = $1 AND returned = false
         `, [articleId]);
