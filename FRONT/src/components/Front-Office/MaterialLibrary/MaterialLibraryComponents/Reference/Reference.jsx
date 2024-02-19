@@ -28,14 +28,7 @@ const Reference = ({
     reference
 }) => {
     const [open, setOpen] = React.useState(false);
-    const [articleNumber, setArticleNumber] = React.useState();
     const handleOpen = async () => {
-        // get article number of reference
-        let numberList = [];
-        for (const articlNb of articles_list) {
-            numberList.push(articlNb.number)
-        }
-        setArticleNumber(`n° :${numberList.join(', ')}`);
         setOpen(true);
     };
     const handleClose = () => setOpen(false);
@@ -69,14 +62,7 @@ const Reference = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { 
-        // get article number of reference
-        let numberList = [];
-        for (const articlNb of articles_list) {
-            numberList.push(articlNb.number)
-        }
-        setArticleNumber(`n° :${numberList.join(', ')}`);
-        updateCurrentItems() }, [currentItems])
+    useEffect(() => { updateCurrentItems()}, [currentItems])
 
     function handleClick() {
         cartManager.add(itemToAdd);
@@ -117,7 +103,7 @@ const Reference = ({
             />
             <Box>
                 <Typography noWrap className="reference-card__name">
-                    {(display === 'booking') ? `N°${reference.art_number} ${name}` : `${name} ${articleNumber}`}
+                    {(display === 'booking') ? `N°${reference.art_number} ${name}` : `${name} ${reference.numberList}`}
                 </Typography>
                 {(display !== "booking") &&
                     <Box className="reference-card__footer">
@@ -176,7 +162,7 @@ const Reference = ({
                         <Box className='reference-card__wrapper'>
                             <Box className="transition-modal-inline">
                                 <Typography className="transition-modal-title" variant="h6" component="h2">
-                                    {name} ({articleNumber})
+                                    {name} ({reference.numberList})
                                 </Typography>
                                 <Button
                                     onClick={handleClose}>

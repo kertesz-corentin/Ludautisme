@@ -48,6 +48,16 @@ const MaterialLibrary = ({ className,
         settings.limit = (limit !== -1) ? limit : null;
         let references = await api.post('/customer/articles/search', settings);
         if (references.status === 200) {
+            let refArray = [];
+
+            for (const reference of references.data) {
+                let numberList = [];
+                for (const article of reference.articles_list) {
+                    numberList.push(article.number);
+                }
+                reference.numberList = `n° : ${numberList.join(', ')}`;
+                refArray.push(reference);
+            }
             setDisplayRef(references.data);
             if (references.data[0]) {
                 setCountRef(Number(references.data[0].countresult));
