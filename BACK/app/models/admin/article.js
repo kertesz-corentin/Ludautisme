@@ -198,4 +198,15 @@ module.exports = {
         `, [articleId]);
         return result.rows[0];
     },
+
+    async getLastNumber() {
+        const result = await sqlHandler(`
+        SELECT 
+        number 
+        FROM "article" 
+        ORDER BY article.number 
+        DESC LIMIT 1
+        `);
+        return result.rows[0];
+    },
 };

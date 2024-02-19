@@ -6,9 +6,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import './addmodal.scss';
 import { toast } from 'react-toastify';
 
-const AddModal = ({reference, className, getReferenceWithArticles, ...rest}) => {
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false);
+const AddModal = ({ reference, className, getReferenceWithArticles, ...rest }) => {
+    const [nextNumber, setNextNumber] = useState(null);
+    const handleOpen = async () => {
+        await getNextNumber();
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setNextNumber(null);
+        setOpen(false); }
     const [open, setOpen] = useState(false);
 
     const handleSubmit = async (event) => {
@@ -22,13 +28,18 @@ const AddModal = ({reference, className, getReferenceWithArticles, ...rest}) => 
         };
 
         const response = await api.post('/admin/references/article', article)
-        if(response.status === 200) {
+        if (response.status === 200) {
             toast.success("Article ajouté");
             getReferenceWithArticles();
             handleClose();
         } else {
             toast.error(response.data.message);
         }
+    }
+
+    const getNextNumber = async () => {
+        const response = await api.get('/admin/articles/last');
+        setNextNumber(response.data);
     }
 
     return (
@@ -63,6 +74,7 @@ const AddModal = ({reference, className, getReferenceWithArticles, ...rest}) => 
                             name='number'
                             type='number'
                             className="addarticle-modal-inputs-item"
+                            defaultValue={nextNumber}
                         >
                         </TextField>
                         <TextField
@@ -93,7 +105,7 @@ const AddModal = ({reference, className, getReferenceWithArticles, ...rest}) => 
                 </Box>
             </Modal>
         </div>
-   );
+    );
 };
 
 AddModal.propTypes = {

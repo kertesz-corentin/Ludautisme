@@ -184,4 +184,9 @@ module.exports = {
 
         return res.json(response);
     },
+    async getLast(req, res) {
+        const lastNumber = await articleDataMapper.getLastNumber();
+        const nextNumber = Number(lastNumber.number) + 1;
+        return res.json(nextNumber);
+    },
 };

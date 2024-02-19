@@ -5,6 +5,14 @@ const controllerHandler = require('../../../helpers/apiControllerHandler');
 
 const router = express.Router();
 /**
+ * GET /api/admin/articles/last
+ * @summary return the next number available
+ * @tags [ADMIN] Article
+ * @return {number} 200 - succes response - application/json
+ */
+router.route('/last')
+    .get(controllerHandler(articleController.getLast));
+/**
  * GET /api/admin/articles/:id
  * @summary Get one article
  * @tags [ADMIN] Article
