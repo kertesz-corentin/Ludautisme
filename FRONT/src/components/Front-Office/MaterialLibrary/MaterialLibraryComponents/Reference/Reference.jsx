@@ -34,7 +34,7 @@ const Reference = ({
     const handleClose = () => setOpen(false);
     const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-    const { valorisation, tag, picture, maincategory, name, id, description, articles_list } = reference;
+    const { valorisation, tag, picture, maincategory, name, id, description } = reference;
 
     let itemToAdd = {
         id,

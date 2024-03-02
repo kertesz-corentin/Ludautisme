@@ -76,6 +76,8 @@ const userList = `
         "user"."phone",
         "user"."social_reason",
         "user"."id_status",
+        "user"."convention_status",
+        "user"."convention_expiration",
         "user_status"."name"`;
 
 module.exports = {
@@ -170,6 +172,12 @@ module.exports = {
 
     async getExpiredCaution() {
         const query = `SELECT * FROM "user" WHERE caution_status=true AND caution_expiration < NOW()-INTERVAL '1 YEARS'`;
+        const result = await sqlHandler(query);
+        return result.rows;
+    },
+
+    async getExpiredConvention() {
+        const query = `SELECT * FROM "user" WHERE convention_status=true AND conventin_expiration < NOW()-INTERVAL '1 YEARS'`;
         const result = await sqlHandler(query);
         return result.rows;
     },

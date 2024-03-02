@@ -125,6 +125,27 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
             toast.error(response.data.message);
         }
     }
+    const handleUpdateConvention = async () => {
+        const user = {
+            'convention_status': true,
+            'convention_expiration': moment(Date.now()).format()
+        };
+
+        const response = await toast.promise(
+            api.put(`/admin/users/${params.row.id}`, user),
+            {
+                pending: `Mise a jour de l'utilisateur`,
+                error: 'Erreur lors de la mise a jour'
+            }
+        );
+
+        if (response.status === 200) {
+            toast.success("Utilisateur mis a jour");
+            updateOneUser(params.row.id);
+        } else {
+            toast.error(response.data.message);
+        }
+    }
 
     const handleArchivedCheck = (event) => {
         setArchivedChecked(event.target.checked)
@@ -348,6 +369,26 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 }}
                             >
                                 Renouveler caution
+                            </Button>
+                        </FormGroup>
+                        <FormGroup
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                                marginTop: '1rem'
+                            }}
+                        >
+                            {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> :  params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
+        
+                            <Button
+                                onClick={handleUpdateConvention}
+                                variant='contained'
+                                sx={{
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                Renouveler convention
                             </Button>
                         </FormGroup>
 

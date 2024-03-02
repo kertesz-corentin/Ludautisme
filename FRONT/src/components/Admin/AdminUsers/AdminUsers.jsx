@@ -153,6 +153,7 @@ const AdminUsers = ({ className, ...rest }) => {
                             id_role: false,
                             cotisation_expiration: false,
                             caution_expiration: false,
+                            convention_expiration: false,
                             name: false
                         },
                     },

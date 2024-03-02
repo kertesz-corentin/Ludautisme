@@ -24,6 +24,8 @@ CREATE TABLE "user" (
     "cotisation_expiration" DATE,
     "caution_status" BOOLEAN DEFAULT false,
     "caution_expiration" DATE,
+    "convention_status" BOOLEAN DEFAULT false,
+    "convention_expiration" DATE,
     "archived" BOOLEAN DEFAULT false,
     "id_role" INT REFERENCES "role"("id") DEFAULT 1,
     "id_status" INT REFERENCES "user_status"("id") DEFAULT 5,

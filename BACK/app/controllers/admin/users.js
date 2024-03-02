@@ -120,6 +120,7 @@ module.exports = {
     async updateUserData() {
         const expiredCotisation = await usersDataMapper.getExpiredCotisation();
         const expiredCaution = await usersDataMapper.getExpiredCaution();
+        const expiredConvention = await usersDataMapper.getExpiredConvention();
 
         for (const user of expiredCotisation) {
             // update user
@@ -143,6 +144,14 @@ module.exports = {
             // send email to user
             const mailTemplate = template.sendLateAdhesion(user.first_name, user.caution_expiration);
             mailer.send(user.email, mailTemplate.subject, mailTemplate.text);
+        }
+
+        for (const user of expiredConvention) {
+            // update user
+            const body = {
+                convention_status: false,
+            };
+            await usersDataMapper.update(user.id, body);
         }
         // mail de rapport
         const subject = 'utilisateur mis a jour';

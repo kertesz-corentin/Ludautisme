@@ -156,7 +156,6 @@ const userSchema  = {
         bloc : 2,
         field : 3,
         inputDisplay : 'checkbox',
-        
     },
     caution_expiration:{
         type : "date",
@@ -166,7 +165,24 @@ const userSchema  = {
         bloc : 2,
         field : 4,
         inputDisplay : 'date',
-        
+    },
+    convention_status:{
+        type : "boolean",
+        label : "Convention",
+        gridDisplay : "toggle",
+        width: 100,
+        bloc : 2,
+        field : 3,
+        inputDisplay : 'checkbox',
+    },
+    convention_expiration:{
+        type : "date",
+        label : "Convention Exp",
+        gridDisplay : "date",
+        width : 150,
+        bloc : 2,
+        field : 4,
+        inputDisplay : 'date',
     },
     id_role:{
         type : "number",
