@@ -133,6 +133,16 @@ router.route('/search')
     .post(controllerHandler(bookingController.getFiltered));
 
 /**
+ * GET /api/admin/extend
+ * @summary get all extension request
+ * @tags [ADMIN] Booking
+ * @return {extensionRequest} 200 - success response - application/json
+ */
+router.route('/extend')
+    .get(controllerHandler(bookingController.getAllExtend))
+    .post(controllerHandler(bookingController.extendAnswer));
+
+/**
  * GET /api/admin/booking
  * @summary Get all detailed booking
  * @tags [ADMIN] Booking

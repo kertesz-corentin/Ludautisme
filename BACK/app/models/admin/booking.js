@@ -76,6 +76,12 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {string} last_name - Last name of user
  * @property {string} perm_date - Date of permanency
  */
+/**
+ * @typedef {object} extensionRequest
+ * @property {number} id - ID of request
+ * @property {number} id_user - ID of user
+ * @property {string} article_array - arra of article ID
+ */
 
 module.exports = {
     async findAll() {

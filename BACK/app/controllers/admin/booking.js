@@ -485,4 +485,81 @@ module.exports = {
         mailer.send('carniguide@hotmail.fr', mail.subject, mail.text);
         return res.json('Réservation nettoyées');
     },
+    async getAllExtend(req, res) {
+        const result = await bookingDataMapper.getAllExtend();
+        const extendArray = [];
+        for (const extend of result) {
+            const user = await usersDataMapper.findById(extend.id_user);
+            const idArray = extend.article_id.split(',');
+            const articles = [];
+
+            for (const id of idArray) {
+                const article = await articleDataMapper.findOne(id);
+                articles.push(article);
+            }
+
+            const extendObject = {
+                user,
+                articles,
+            };
+
+            extendArray.push(extendObject);
+        }
+        return res.json(extendArray);
+    },
+    async extendAnswer(req, res) {
+        // tester si la demande existe
+        const answerId = Number(req.params.answerId);
+        const { article_array } = req.body;
+
+        const answer = await articleDataMapper.getAnswerById(answerId);
+        if (answer.lenght === 0) throw new ApiError(404, "Cette demande de prolongation n'existe pas");
+
+        const user = await usersDataMapper.findById(answer.id_user);
+        if (!user[0]) {
+            throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
+        }
+        // get activie permanency
+        const activePerm = await permanencyDataMapper.findActive();
+        // get active booking for this user
+        const getCurrentParams = [
+            { id_permanency: activePerm[0].next_id },
+            { id_user: user[0].id },
+        ];
+        let booking = await userBookingDataMapper.findFiltered(getCurrentParams);
+
+        // if not create new active booking
+        if (!booking.length) {
+            const newBooking = {
+                id_permanency: activePerm[0].next_id,
+                id_user: user[0].id,
+                delivered: true,
+            };
+            // create booking
+            booking = [await bookingDataMapper.addOne(newBooking)];
+        }
+        if (!booking[0]?.name === 'DatabaseError') {
+            throw new ApiError(500, 'Impossible de trouver ou créer une réservation');
+        }
+
+        // prolonger chaque article
+        for (const articleId of article_array) {
+            const article = await articleDataMapper.findOne(articleId);
+            if (!article[0]) throw new ApiError(400, `Impossible de trouver l'article ID: ${articleId}`);
+
+            // remove article from old booking
+            const deleteBooking = await bookingDataMapper.deleteArticle(article[0].id);
+
+            if (!deleteBooking) {
+                throw new ApiError(500, "Impossible de supprimer de l'ancienne réservation");
+            }
+            // add article to new booking
+            const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article[0].id]);
+            if (!newBooking) throw new ApiError(500, 'Impossible de prolonger');
+        }
+        const confirm = {
+            message: 'Articles prolongés',
+        };
+        return res.json(confirm);
+    },
 };

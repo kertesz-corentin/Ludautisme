@@ -133,6 +133,11 @@ CREATE TABLE "article_comment"(
     "validated" BOOLEAN DEFAULT false
 );
 
+CREATE TABLE "extension_ticket" (
+"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+"id_user" INT REFERENCES "user"("id") ON DELETE CASCADE,
+"article_array" TEXT NOT NULL )
+
 DROP VIEW IF EXISTS "full_perm";
 CREATE OR REPLACE VIEW "full_perm" AS
 SELECT * ,

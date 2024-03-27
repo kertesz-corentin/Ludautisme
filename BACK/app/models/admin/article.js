@@ -209,4 +209,20 @@ module.exports = {
         `);
         return result.rows[0];
     },
+
+    async createExtendTicket(userId, articlesIds) {
+        const result = await sqlHandler(`
+        INSERT INTO "extension_ticket" ("id_user", "article_array") 
+        VALUES ($1, $2)
+        `, [userId, articlesIds]);
+        return result.rows;
+    },
+
+    async getAnswerById(id) {
+        const result = await sqlHandler(`
+        SELECT * FROM "extension_ticket"
+        WHERE id = $1
+        `, [id]);
+        return result.rows;
+    },
 };

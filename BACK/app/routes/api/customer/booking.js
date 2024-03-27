@@ -39,6 +39,17 @@ router.route('/history/:id')
 router.route('/add/:UserId')
     .post(controllerHandler(bookingController.addBookingByRef));
 
+/**
+ * POST /api/customer/booking/extend/:UserId
+ * @summary ask for extend booking
+ * @tags [CUSTOMER] demande la prolongation d'articles
+ * @param {number} UserId.params.required - At least one of these params
+ * @param {number[]} request.body.required - At least one of these params
+ * @return {booking} 200 - success response - application/json
+ */
+router.route('/extend/:UserId')
+    .post(controllerHandler(bookingController.extendBooking));
+
 router.use(() => {
     throw new ApiError(404, 'API Route not found');
 });

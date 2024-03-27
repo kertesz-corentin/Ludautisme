@@ -1,7 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
 const { userBookingDataMapper } = require('../../models/customer');
-const { usersDataMapper, permanencyDataMapper, adminReferenceDataMapper } = require('../../models/admin');
+const {
+    usersDataMapper, permanencyDataMapper, adminReferenceDataMapper, articleDataMapper,
+} = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
 
 const { testUser } = require('../../helpers/testUser');
@@ -85,5 +87,30 @@ module.exports = {
         } catch (err) {
             res.json(err);
         }
+    },
+
+    async extendBooking(req, res) {
+        const userId = Number(req.params.UserId);
+        testUser(req, userId);
+
+        const { articleNumbers } = req.body;
+
+        const articlesIdsArray = [];
+        // test all article
+        // eslint-disable-next-line no-restricted-syntax
+        for (const number of articleNumbers) {
+            // eslint-disable-next-line no-await-in-loop
+            const article = await articleDataMapper.findByCode(number);
+
+            if (!article[0]) {
+                throw new ApiError(404, `L'article n°:${number} n'existe pas`);
+            }
+            articlesIdsArray.push(article[0].id);
+        }
+
+        const articleIdsString = articlesIdsArray.join(',');
+
+        const result = await articleDataMapper.createExtendTicket(userId, articleIdsString);
+        return res.json(result.rows[0]);
     },
 };
