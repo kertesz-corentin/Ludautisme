@@ -229,8 +229,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
-
-        if (articleId.includes(Number(article_number))) { 
+        if (listArticle.find(a => a.number === Number(article_number))) { 
             toast.error("article déjà présent dans la réservation");
         } else {
             // on récupère les données de l'article avant insertion dans le state
