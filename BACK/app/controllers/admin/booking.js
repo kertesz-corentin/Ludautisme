@@ -473,10 +473,8 @@ module.exports = {
             if (articleToReturn.length > 0) {
                 await articleDataMapper.return(articleToReturn);
             }
-            if (booking.length === 1) {
-                await bookingDataMapper.deleteAllArticles(testBooking.id);
-                await bookingDataMapper.deleteBooking(testBooking.id);
-            }
+            await bookingDataMapper.deleteAllArticles(testBooking[0].id);
+            await bookingDataMapper.deleteBooking(testBooking[0].id);
         }
         const mail = template.cleanBookingTemplate(listOfBooking);
         // send the rapport to ludautisme and me
