@@ -226,4 +226,52 @@ module.exports = {
 
         return { subject, text };
     },
+    /**
+     * template for notify admin where new comment is post by user
+     * @param comment
+     */
+    newUserExtend(userName) {
+        const subject = 'Une nouvelle demande de prolongation à été ajouté';
+
+        const text = `
+            <p> Bonjour </p>
+            <p> Une nouvelle demande de prolongation à été ajouté par ${userName} </p>
+            <p> Vous pourvez la valider ou la supprimer dans <a href="https://ludautisme.org/admin/home">L'espace administrateur</a> </p>
+            <p> A bientôt !</p>
+            <p> ${automaticalMail}</p>
+        `;
+
+        return { subject, text };
+    },
+
+    /**
+     * template for confirm extend of booking to user
+     */
+    confirmExtend() {
+        const subject = 'Votre demande de prolongation a été validée';
+
+        const text = `
+            <p> Bonjour </p>
+            <p> Votre demande de prolongation a été validée, vous trouverez la nouvelle date de rendu dans votre espace personel </p> 
+            <p> A bientôt !</p>
+            <p> ${automaticalMail}</p>
+        `;
+        return { subject, text };
+    },
+
+    /**
+     * template for candel extend answer
+     */
+    cancelExtend(message) {
+        const subject = 'Votre demande de prolongation a été refusé';
+
+        const text = `
+            <p> Bonjour </p>
+            <p> Votre demande de prolongation a été refusé pour les raisons suivantes:</p> 
+            <p> ${message}</p>
+            <p> A bientôt !</p>
+            <p> ${automaticalMail}</p>
+        `;
+        return { subject, text };
+    },
 };

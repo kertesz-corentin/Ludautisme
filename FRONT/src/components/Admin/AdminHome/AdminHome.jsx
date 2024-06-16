@@ -13,11 +13,12 @@ import { Fab, Chip, Button, IconButton, Modal, TextField, Box, Typography } from
 import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
 import { toast } from 'react-toastify';
 import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
-import { commentSchema } from '../../../Schemas';
+import { commentSchema, extendSchema } from '../../../Schemas';
 import moment from 'moment';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditCommentModale from '../EditCommentModal/EditCommentModal';
+import ExtendModale from '../ExtendModale/ExtendModale';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './adminhome.scss';
@@ -28,6 +29,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
     const [users, setUsers] = useState([]);
     const [references, setReferences] = useState([]);
     const [comments, setComments] = useState([]);
+    const [expendRequest, setExpendRequest] = useState([]);
 
     // domment modal variables
     const [open, setOpen] = useState(false);
@@ -72,6 +74,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
             toast.error(response.data.message);
         }
     }
+    // #region comment
 
     const getComment = async () => {
         const path = `/admin/articles/comment/novalid`;
@@ -90,7 +93,6 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         const path = `/admin/articles/comment/novalid`;
         try {
             const response = await api.get(path);
-            console.log(response);
             if (response.status === 200) {
                 setComments(response.data);
             } else {
@@ -138,7 +140,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
 
             let response = await api.patch(`/admin/articles/comment/${modalId}`, object);
             if (response) {
-                if(response.status === 200) {
+                if (response.status === 200) {
                     toast.success(validMessage);
                     await updateComment();
                     handleClose();
@@ -157,6 +159,21 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         setButtonTitle("");
         setModalId(null);
     }
+    // #endregion
+
+    const getExtend = async () => {
+        const path = `/admin/booking/extend`;
+        try {
+            const response = await api.get(path);
+            if (response.status === 200) {
+                setExpendRequest(response.data)
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (err) {
+            toast.error(err.response.data.message);
+        }
+    }
 
     useEffect(() => {
         allBookings();
@@ -164,6 +181,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         allUsers();
         allReferences();
         getComment();
+        getExtend();
     }, [])
 
     const columnsBuilder = (() => {
@@ -188,7 +206,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
                                 <DeleteIcon />
                             </IconButton>
                         );
-                        
+
                         break;
                     case "edit":
                         config.renderCell = (params) => (
@@ -232,6 +250,46 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         return columns;
     })();
 
+    const extendColumnBuilder = (() => {
+        const columns = [];
+        Object.keys(extendSchema).forEach(prop => {
+            const propElt = extendSchema[prop];
+
+            const config = {
+                type: propElt.type,
+                field: prop,
+                headerName: propElt.label,
+                width: propElt.width,
+            };
+            if (propElt.gridDisplay !== "normal") {
+                switch (propElt.gridDisplay) {
+                    case "edit":
+                        config.renderCell = (params) => (
+                            <ExtendModale
+                                params={params.row.articles.map((art) => art = art[0])}
+                                extendId = {params.row.id}
+                                getExtend = {getExtend}
+                            />
+                        );
+                        break
+                    case "articles": 
+                        config.renderCell = (params) => (
+                            `${params.row.articles.map((art) => art = art[0].number)}`
+                        );
+                        break
+                    case "user":
+                        config.renderCell = (params) => (
+                            `${params.row.user[0].last_name} ${params.row.user[0].first_name}`
+                        )
+                        break
+                    default:
+                        break;
+                }
+            }
+            columns.push(config);
+        });
+        return columns;
+    })();
     return (
         <><div
             className={classnames('adminhome', className)}
@@ -254,100 +312,136 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
                     <AdminHomeCard title={'Références'} data={references} status={'enregistrées'} tag='reference' />
                 </div>
             </div>
-            <div>
-                <h2 className='adminhome-title'>Commentaires en attente de validation</h2>
-                <Container >
+            <div className='grid-container'>
+                <div style={{ width: '50%' }}>
+                    <h2 className='adminhome-title'>Commentaires en attente de validation</h2>
+                    <Container >
+                        <DataGrid
+                            autoHeight
+                            getRowId={(row) => row.id}
+                            rows={comments}
+                            columns={columnsBuilder}
+                            disableRowSelectionOnClick
+                            disableColumnSelector
+                            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
 
-                    <DataGrid
-                        autoHeight
-                        getRowId={(row) => row.id}
-                        rows={comments}
-                        columns={columnsBuilder}
-                        disableRowSelectionOnClick
-                        disableColumnSelector
-                        localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-
-                        components={{
-                            Toolbar: GridToolbar,
-                        }}
-                        initialState={{
-                            columns: {
-                                columnVisibilityModel: {
-                                    id_article: false,
-                                    id_user: false,
-                                    id: false,
-                                    first_name: false,
-                                    last_name: false,
-                                    name: false
+                            components={{
+                                Toolbar: GridToolbar,
+                            }}
+                            initialState={{
+                                columns: {
+                                    columnVisibilityModel: {
+                                    },
                                 },
-                            },
-                            sorting: {
-                                sortModel: [{ field: 'number', sort: 'asc' }],
-                            },
-                            filter: {
-                                filterModel: {
-                                    items: [
-                                        { columnField: 'archived', value: false },
-                                        { columnField: 'available', value: true },
-                                    ]
+                                sorting: {
+                                    sortModel: [{ field: 'number', sort: 'asc' }],
+                                },
+                                filter: {
+                                    filterModel: {
+                                        items: [
+                                            { columnField: 'archived', value: false },
+                                            { columnField: 'available', value: true },
+                                        ]
+                                    }
                                 }
-                            }
-                        }}
+                            }}
+                        >
+                        </DataGrid>
+                    </Container>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
                     >
-                    </DataGrid>
-                </Container>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <Box className="addarticle-modal" component="form" onSubmit={handleSubmit}>
-                        <div className='comment-modal-header'>
+                        <Box className="addarticle-modal" component="form" onSubmit={handleSubmit}>
+                            <div className='comment-modal-header'>
+                                <div>
+                                    <Typography className='addarticle-modal-header-title'>
+                                        {modalTitle}
+                                    </Typography>
+                                </div>
+                                <Button
+                                    className='comment-modal-header-close'
+                                    onClick={handleClose}
+                                    variant="outlined"
+                                >
+                                    <CloseIcon />
+                                </Button>
+                            </div>
                             <div>
-                                <Typography className='addarticle-modal-header-title'>
-                                    {modalTitle}
+                                <Typography>
+                                    {message}
                                 </Typography>
                             </div>
-                            <Button
-                                className='comment-modal-header-close'
-                                onClick={handleClose}
-                                variant="outlined"
+                            <TextField
+                                id='outlined'
+                                label='message'
+                                name='message'
+                                type='string'
+                                fullWidth
+                                multiline
                             >
-                                <CloseIcon />
-                            </Button>
-                        </div>
-                        <div>
-                            <Typography>
-                                {message}
-                            </Typography>
-                        </div>
-                        <TextField
-                            id='outlined'
-                            label='message'
-                            name='message'
-                            type='string'
-                            fullWidth
-                            multiline
+                            </TextField>
+                            <div className="addarticle-modal-footer">
+                                <Button
+                                    type='submit'
+                                    className="addarticle-modal-footer-submit"
+                                    variant="contained"
+                                >
+                                    {buttonTitle}
+                                </Button>
+                            </div>
+                        </Box>
+                    </Modal>
+                </div>
+                <div style={{ width: '50%' }}>
+                    <h2 className='adminhome-title'>Demande de prolongation en attente</h2>
+                    <Container >
+                        <DataGrid
+                            autoHeight
+                            getRowId={(row) => row.id}
+                            rows={expendRequest}
+                            columns={extendColumnBuilder}
+                            disableRowSelectionOnClick
+                            disableColumnSelector
+                            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+
+                            components={{
+                                Toolbar: GridToolbar,
+                            }}
+                            initialState={{
+                                columns: {
+                                    columnVisibilityModel: {
+                                        id_article: false,
+                                        id_user: false,
+                                        first_name: false,
+                                        last_name: false,
+                                        name: false
+                                    },
+                                },
+                                sorting: {
+                                    sortModel: [{ field: 'number', sort: 'asc' }],
+                                },
+                                filter: {
+                                    filterModel: {
+                                        items: [
+                                            { columnField: 'archived', value: false },
+                                            { columnField: 'available', value: true },
+                                        ]
+                                    }
+                                }
+                            }}
                         >
-                        </TextField>
-                        <div className="addarticle-modal-footer">
-                            <Button
-                                type='submit'
-                                className="addarticle-modal-footer-submit"
-                                variant="contained"
-                            >
-                                {buttonTitle}
-                            </Button>
-                        </div>
-                    </Box>
-                </Modal>
+                        </DataGrid>
+                    </Container>
+                </div>
             </div>
-        </div>
             <div className='help'>
                 <Fab color="primary" aria-label="help" href="https://docs.google.com/document/d/1kofKMn2T7YS-YfCv9o4-zQC-8MhM0y4a0gy7X-PBWUU/edit?usp=sharing" target='_blank' size='small'>
                     <QuestionMarkOutlinedIcon color='' />
                 </Fab>
             </div>
             <a href="https://docs.google.com/document/d/1K4pBXObkm-6A3bvy8fsh9MEBQd-raL6SB0wnO1e9q-s/edit?usp=sharing">Note de mise a jour</a>
+        </div >
         </>
     );
 };

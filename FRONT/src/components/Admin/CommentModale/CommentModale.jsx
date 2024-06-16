@@ -211,7 +211,6 @@ const CommentModale = ({ params, closed, ...rest }) => {
                                 <CloseIcon />
                             </Button>
                         </div>
-
                         <div>
                             <EditCommentModale
                                 button={<Button

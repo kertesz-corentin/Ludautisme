@@ -1,10 +1,12 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
-const { userBookingDataMapper } = require('../../models/customer');
+const { userBookingDataMapper, userDataMapper } = require('../../models/customer');
 const {
     usersDataMapper, permanencyDataMapper, adminReferenceDataMapper, articleDataMapper,
 } = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
+const mailer = require('../../config/mailer');
+const template = require('../../template/mail');
 
 const { testUser } = require('../../helpers/testUser');
 
@@ -93,6 +95,14 @@ module.exports = {
         const userId = Number(req.params.UserId);
         testUser(req, userId);
 
+        const user = await userDataMapper.findById(userId);
+
+        if (!user) throw new ApiError(404, 'L\'utilisateur n\'existe pas');
+
+        const existingExtend = await articleDataMapper.findExtendByMemberId(userId);
+
+        if (existingExtend[0]) throw new ApiError(401, 'Vous avez déjà une demande de prolongation en attente');
+
         const { articleNumbers } = req.body;
 
         const articlesIdsArray = [];
@@ -111,6 +121,10 @@ module.exports = {
         const articleIdsString = articlesIdsArray.join(',');
 
         const result = await articleDataMapper.createExtendTicket(userId, articleIdsString);
-        return res.json(result.rows[0]);
+
+        const mail = template.newUserExtend(`${user.first_name} ${user.last_name}`);
+        mailer.send(process.env.MAIL_TARGET, mail.subject, mail.text);
+
+        return res.json(result[0]);
     },
 };

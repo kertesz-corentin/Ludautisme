@@ -471,4 +471,10 @@ module.exports = {
 
         return result.rows;
     },
+    async getAllExtend() {
+        const result = await sqlHandler(`
+        SELECT * FROM "extension_ticket"`);
+
+        return result.rows;
+    },
 };

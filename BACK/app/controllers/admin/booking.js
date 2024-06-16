@@ -488,7 +488,7 @@ module.exports = {
         const extendArray = [];
         for (const extend of result) {
             const user = await usersDataMapper.findById(extend.id_user);
-            const idArray = extend.article_id.split(',');
+            const idArray = extend.article_array.split(',');
             const articles = [];
 
             for (const id of idArray) {
@@ -497,6 +497,7 @@ module.exports = {
             }
 
             const extendObject = {
+                id: extend.id,
                 user,
                 articles,
             };
@@ -507,13 +508,12 @@ module.exports = {
     },
     async extendAnswer(req, res) {
         // tester si la demande existe
-        const answerId = Number(req.params.answerId);
+        const answerId = Number(req.params.extendId);
         const { article_array } = req.body;
 
         const answer = await articleDataMapper.getAnswerById(answerId);
         if (answer.lenght === 0) throw new ApiError(404, "Cette demande de prolongation n'existe pas");
-
-        const user = await usersDataMapper.findById(answer.id_user);
+        const user = await usersDataMapper.findById(answer[0].id_user);
         if (!user[0]) {
             throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
         }
@@ -555,8 +555,42 @@ module.exports = {
             const newBooking = await bookingDataMapper.addArticlesToBooking(booking[0].id, [article[0].id]);
             if (!newBooking) throw new ApiError(500, 'Impossible de prolonger');
         }
+
+        // supprimer la demande
+        const deleteAnswer = await articleDataMapper.deleteAnswer(answerId);
+        if (!deleteAnswer) throw new ApiError(500, 'Impossible de supprimer la demande');
+
+        // envoyer un mail de confirmation
+        const mail = template.confirmExtend();
+        mailer.send(user[0].email, mail.subject, mail.text);
+
         const confirm = {
             message: 'Articles prolongés',
+        };
+        return res.json(confirm);
+    },
+
+    async deleteExtend(req, res) {
+        const answerId = Number(req.params.extendId);
+        const { message } = req.body;
+
+        const answer = await articleDataMapper.getAnswerById(answerId);
+        if (answer.lenght === 0) throw new ApiError(404, "Cette demande de prolongation n'existe pas");
+
+        const user = await usersDataMapper.findById(answer[0].id_user);
+        if (!user[0]) {
+            throw new ApiError(500, 'Impossible de trouver l\'utilisateur');
+        }
+
+        const query = await articleDataMapper.deleteAnswer(answerId);
+        if (query.lenght === 0) throw new ApiError(404, 'Impossible de supprimer la demande');
+
+        // envoyer un mail de confirmation
+        const mail = template.cancelExtend(message);
+        mailer.send(user[0].email, mail.subject, mail.text);
+
+        const confirm = {
+            message: 'Demande supprimé',
         };
         return res.json(confirm);
     },

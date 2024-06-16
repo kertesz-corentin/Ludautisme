@@ -84,6 +84,32 @@ router.route('/return/:id')
 router.route('/ligth')
     .get(controllerHandler(bookingController.twoYearsBooking));
 /**
+ * GET /api/admin/booking/extend
+ * @summary get all extension request
+ * @tags [ADMIN] Extend
+ * @return {extensionRequest} 200 - success response - application/json
+ */
+
+router.route('/extend')
+    .get(controllerHandler(bookingController.getAllExtend));
+/**
+ * POST /api/admin/booking/extend/:extendId
+ * @summary validate one extend
+ * @tags [ADMIN] Extend
+ * @param {number[]} request.params.body.required list od articles id (article_array)
+ * @return 200 - success response - application/json
+ */
+/**
+ * DELETE /api/admin/booking/extend/:extendId
+ * @sumary candel on booking extend
+ * @tags [ADMIN] Extend
+ * @param {string} request.body.required message from admin
+ * @return 200 - success response - application/json
+ */
+router.route('/extend/:extendId')
+    .post(controllerHandler(bookingController.extendAnswer))
+    .delete(controllerHandler(bookingController.deleteExtend));
+/**
  * GET /api/admin/booking/:id
  * @summary Get a single booking
  * @tags [ADMIN] Booking
@@ -131,16 +157,6 @@ router.route('/add/:UserId')
  */
 router.route('/search')
     .post(controllerHandler(bookingController.getFiltered));
-
-/**
- * GET /api/admin/extend
- * @summary get all extension request
- * @tags [ADMIN] Booking
- * @return {extensionRequest} 200 - success response - application/json
- */
-router.route('/extend')
-    .get(controllerHandler(bookingController.getAllExtend))
-    .post(controllerHandler(bookingController.extendAnswer));
 
 /**
  * GET /api/admin/booking

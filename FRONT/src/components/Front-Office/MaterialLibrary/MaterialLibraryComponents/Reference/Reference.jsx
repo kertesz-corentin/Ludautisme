@@ -8,7 +8,7 @@ import api from '../../../../../requests';
 import {
     Box, Modal, Fade, Button,
     Divider, Card, Typography
-    , Backdrop
+    , Backdrop, Checkbox
 } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
@@ -25,7 +25,9 @@ const Reference = ({
     display,
     currentItems,
     gridSize,
-    reference
+    reference,
+    setExtendArray,
+    extendArray
 }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = async () => {
@@ -62,7 +64,7 @@ const Reference = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { updateCurrentItems()}, [currentItems])
+    useEffect(() => { updateCurrentItems() }, [currentItems])
 
     function handleClick() {
         cartManager.add(itemToAdd);
@@ -91,6 +93,14 @@ const Reference = ({
         }
     }
 
+    const handleCheck = async (event) => {
+        if (event.target.checked) {
+            setExtendArray([...extendArray, reference.art_number]);
+        } else {
+            let newArray = extendArray.filter((id) => id !== reference.art_number)
+            setExtendArray(newArray);
+        }
+    }
 
     return (
         <Card className="reference-card"
@@ -138,12 +148,15 @@ const Reference = ({
                         }
                     </Box>
                 }
-                {(display === "booking") &&
-                    <EditCommentModale
-                        button={<AddCommentIcon />}
-                        title={"Envoyer un commentaire"}
-                        callBack={handleAddComment}
-                    />
+                {(display === "booking-current") &&
+                    <div style={{ display: 'flex', alignItems: "center", justifyContent: "center" }}>
+                        <EditCommentModale
+                            button={<AddCommentIcon />}
+                            title={"Envoyer un commentaire"}
+                            callBack={handleAddComment}
+                        />
+                        <Checkbox onChange={handleCheck}/>
+                    </div>
                 }
             </Box>
             <Modal

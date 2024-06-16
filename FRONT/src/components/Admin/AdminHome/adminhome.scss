@@ -8,6 +8,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: 0 auto;
+        justify-content: center;
 
         &-item {
             margin: $gutter;
@@ -16,5 +17,9 @@
 
     &-title {
         font-size: 2em;
+    }
+
+    .grid-container {
+        display: flex;
     }
 }

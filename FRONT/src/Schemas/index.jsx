@@ -4,5 +4,6 @@ import {articleSchema} from './article';
 import {bookingSchema} from './booking'; 
 import {categorySchema} from './category';
 import { commentSchema } from './comment';
+import { extendSchema } from './extend';
 
-export {userSchema, referenceSchema, articleSchema, bookingSchema, categorySchema, commentSchema}
+export {userSchema, referenceSchema, articleSchema, bookingSchema, categorySchema, commentSchema, extendSchema}

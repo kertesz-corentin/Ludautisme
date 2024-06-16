@@ -110,7 +110,7 @@ const UserBookings = ({className, ...rest}) => {
                         {/* <Permanency/> */}
                         <Box sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
-                                    display="booking"
+                                    display="booking-current"
                                     references= {nextBooking[0].references}
                                     gridSize={gridSize}
                                 />
@@ -131,9 +131,10 @@ const UserBookings = ({className, ...rest}) => {
                         <Typography className="booking__info">#{activeBooking[0].id} - A rendre {activeBooking[0].return_date_permanency}</Typography>
                         <Box sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
-                                    display="booking"
+                                    display="booking-current"
                                     references= {activeBooking[0].references}
                                     gridSize={gridSize}
+                                    checkbox= {true}
                                 />
                         </Box>
                         </>
@@ -149,7 +150,6 @@ const UserBookings = ({className, ...rest}) => {
                             </Box>
                             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                                 <ListOfBookings bookings = {oldBookings}/>
-
                             </Box>
                             </Box>
                         }

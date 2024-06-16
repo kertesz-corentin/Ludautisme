@@ -42,9 +42,9 @@ router.route('/add/:UserId')
 /**
  * POST /api/customer/booking/extend/:UserId
  * @summary ask for extend booking
- * @tags [CUSTOMER] demande la prolongation d'articles
+ * @tags [CUSTOMER] Extend
  * @param {number} UserId.params.required - At least one of these params
- * @param {number[]} request.body.required - At least one of these params
+ * @param {array<number>} request.body.required - At least one of these params
  * @return {booking} 200 - success response - application/json
  */
 router.route('/extend/:UserId')

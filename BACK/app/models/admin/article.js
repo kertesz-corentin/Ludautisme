@@ -214,6 +214,7 @@ module.exports = {
         const result = await sqlHandler(`
         INSERT INTO "extension_ticket" ("id_user", "article_array") 
         VALUES ($1, $2)
+        RETURNING *
         `, [userId, articlesIds]);
         return result.rows;
     },
@@ -223,6 +224,24 @@ module.exports = {
         SELECT * FROM "extension_ticket"
         WHERE id = $1
         `, [id]);
+        return result.rows;
+    },
+
+    async deleteAnswer(id) {
+        const result = await sqlHandler(`
+        DELETE FROM "extension_ticket"
+        WHERE id = $1
+        RETURNING *
+        `, [id]);
+        return result.rows;
+    },
+
+    async findExtendByMemberId(id) {
+        const result = await sqlHandler(`
+        SELECT * FROM "extension_ticket"
+        WHERE id_user = $1
+        `, [id]);
+
         return result.rows;
     },
 };
