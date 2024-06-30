@@ -15,6 +15,7 @@ const ListOfReferences = ({
     gridSize,
     isLoading,
     checkbox,
+    refresh,
     ...rest
 }) => {
 
@@ -30,6 +31,7 @@ const ListOfReferences = ({
         } else {
             toast.error(extend.data.message);
         }
+        refresh();
     }
     return (
         references.length ?

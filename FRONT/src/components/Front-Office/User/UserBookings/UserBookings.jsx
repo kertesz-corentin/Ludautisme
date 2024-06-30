@@ -40,6 +40,8 @@ const UserBookings = ({className, ...rest}) => {
                                 description: article.description_ref,
                                 art_id: article.id,
                                 art_number: article.number,
+                                return_date: moment(article.perm_date).add(3, 'M').format("MMMM YYYY"),
+                                extend: article.extend,
                                 picture: [
                                     {
                                         id:article.id_picture_ref,
@@ -135,6 +137,7 @@ const UserBookings = ({className, ...rest}) => {
                                     references= {activeBooking[0].references}
                                     gridSize={gridSize}
                                     checkbox= {true}
+                                    refresh={getBookings}
                                 />
                         </Box>
                         </>

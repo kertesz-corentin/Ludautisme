@@ -1,8 +1,10 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
 const { userBookingDataMapper, userDataMapper } = require('../../models/customer');
 const {
-    usersDataMapper, permanencyDataMapper, adminReferenceDataMapper, articleDataMapper,
+    usersDataMapper, permanencyDataMapper, adminReferenceDataMapper, articleDataMapper, bookingDataMapper
 } = require('../../models/admin');
 const ApiError = require('../../errors/apiError');
 const mailer = require('../../config/mailer');
@@ -30,6 +32,22 @@ module.exports = {
         testUser(req, idUser);
         const booking = await userBookingDataMapper.findHistory(idUser);
 
+        const extendlist = await bookingDataMapper.getAllExtend();
+        let bookingIndex = 0;
+        for (const book of booking) {
+            let articleIndex = 0;
+            for (const reference of book.articles) {
+                let extendAvailable = false;
+                // eslint-disable-next-line no-restricted-syntax
+                for (const extend of extendlist) {
+                    const articleArray = extend.article_array.split(',');
+                    if (articleArray.includes(String(reference.id))) extendAvailable = true;
+                }
+                booking[bookingIndex].articles[articleIndex].extend = extendAvailable;
+                articleIndex++;
+            }
+            bookingIndex++;
+        }
         return res.json(booking);
     },
 
@@ -98,10 +116,6 @@ module.exports = {
         const user = await userDataMapper.findById(userId);
 
         if (!user) throw new ApiError(404, 'L\'utilisateur n\'existe pas');
-
-        const existingExtend = await articleDataMapper.findExtendByMemberId(userId);
-
-        if (existingExtend[0]) throw new ApiError(401, 'Vous avez déjà une demande de prolongation en attente');
 
         const { articleNumbers } = req.body;
 

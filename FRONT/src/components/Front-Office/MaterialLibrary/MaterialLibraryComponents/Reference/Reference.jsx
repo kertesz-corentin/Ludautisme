@@ -8,7 +8,7 @@ import api from '../../../../../requests';
 import {
     Box, Modal, Fade, Button,
     Divider, Card, Typography
-    , Backdrop, Checkbox
+    , Backdrop, Checkbox, Chip
 } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
@@ -149,14 +149,20 @@ const Reference = ({
                     </Box>
                 }
                 {(display === "booking-current") &&
-                    <div style={{ display: 'flex', alignItems: "center", justifyContent: "center" }}>
-                        <EditCommentModale
-                            button={<AddCommentIcon />}
-                            title={"Envoyer un commentaire"}
-                            callBack={handleAddComment}
-                        />
-                        <Checkbox onChange={handleCheck}/>
-                    </div>
+                    <>
+                        <Typography>Date de retour : {reference.return_date}</Typography>
+                        <div style={{ display: 'flex', alignItems: "center", justifyContent: "center" }}>
+                            <EditCommentModale
+                                button={<AddCommentIcon/>}
+                                title={"Envoyer un commentaire"}
+                                callBack={handleAddComment}
+                            />
+                            {reference.extend
+                                ? <Chip label="Demande en attente" color="info" style={{margin: "10px"}}/>
+                                : <Checkbox onChange={handleCheck} />
+                            }
+                        </div>
+                    </>
                 }
             </Box>
             <Modal

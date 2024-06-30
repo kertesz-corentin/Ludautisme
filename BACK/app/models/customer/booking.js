@@ -144,7 +144,8 @@ module.exports = {
 				'description_ref', "reference"."description",
 				'id_picture_ref', "image"."id",
 				'url_picture_ref', "image"."url",
-				'text_picture_ref',"image"."alternative_text"
+				'text_picture_ref',"image"."alternative_text",
+                'perm_date', "perm"."perm_date"
                 )) AS "articles"
         FROM "booking" AS b
         INNER JOIN "user" ON "user"."id"="b"."id_user"

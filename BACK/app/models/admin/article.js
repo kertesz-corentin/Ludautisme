@@ -244,4 +244,12 @@ module.exports = {
 
         return result.rows;
     },
+    async getPermDate(id) {
+        const result = await sqlHandler(`
+            SELECT "permanency"."perm_date" FROM article_to_booking
+            INNER JOIN "booking" ON "booking"."id" = "article_to_booking"."id_booking"
+            INNER JOIN "permanency" ON "permanency"."id" = "booking"."id_permanency"
+            WHERE id_article = $1 AND "returned" = false`, [id]);
+        return result.rows;
+    },
 };
