@@ -159,7 +159,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 }
             )
             if (response.status === 200) {
-                toast.success("Réservation réussi");
+                toast.success("Réservation réussie");
                 updateOneBooking(response.data.newBookingConfirm.id);
                 setTimeout(() => { handleClose() }, 5000);
             } else {

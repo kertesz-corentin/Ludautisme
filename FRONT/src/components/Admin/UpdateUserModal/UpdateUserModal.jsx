@@ -341,7 +341,7 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 marginTop: '1rem'
                             }}
                         >
-                            {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} />}
+                            {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.cotisation_expiration ? <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de cotisation`} />}
                             <Button
                                 onClick={handleUpdateCotisation}
                                 variant='contained'
@@ -360,7 +360,7 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 marginTop: '1rem'
                             }}
                         >
-                            {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} />}
+                            {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.caution_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de caution`} />}
                             <Button
                                 onClick={handleUpdateCaution}
                                 variant='contained'

@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 
 // import requests
 import api from '../../../requests';
@@ -53,6 +54,9 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
             'social_reason': data.get('social_reason'),
             'id_status': Number(data.get('user_status'))
         };
+
+        if (cotisationChecked) user['cotisation_expiration'] = moment(Date.now()).format();
+        if (cautionChecked) user['caution_expiration'] = moment(Date.now()).format();
 
         if(user['id_status'] === 5) {
             toast.error("Ajoutez un status à votre utilisateur");

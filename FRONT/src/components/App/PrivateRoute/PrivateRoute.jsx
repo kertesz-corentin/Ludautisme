@@ -18,8 +18,6 @@ const PrivateRoute = ({
         return token ? <Outlet currentItems= {currentItems} currentItemsNumber= {currentItemsNumber} /> : <Navigate to="/" />;
     }
     return <Navigate to="/" />;
-
-
 }
 
 export default PrivateRoute;
