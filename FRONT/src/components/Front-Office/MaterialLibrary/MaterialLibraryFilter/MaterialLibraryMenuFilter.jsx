@@ -28,7 +28,6 @@ const MaterialLibraryMenuFilter = ({
                 getReferences();
             } else {
                 const response = await api.get(`/customer/articles/article/${event.target.value}`);
-                console.log(response.data);
                 if (response.status === 200) {
                     setRef(response.data);
                 } else {
@@ -36,7 +35,6 @@ const MaterialLibraryMenuFilter = ({
                 }
             }
         } catch (err) {
-            console.log(err);
             toast.error(err);
         }
     }

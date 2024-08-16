@@ -89,7 +89,6 @@ const UserBookings = ({className, ...rest}) => {
 
     const gridSize = 275;
     const displayCountRefBooked = (references) => (`( ${references.references.length} article${(references.references.length>1)?'s':''} )`)
-    // const displayCountRefBooked = (references) => (console.log(references.references.length));
     
 
     useEffect(() => {

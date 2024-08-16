@@ -134,7 +134,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                                 name = {name}
                                                 key = {name}
                                                 label={(label) ? label : ''} 
-                                                //onChange = {(event)=>{console.log(event.target)}}
                                                 control={<Checkbox name = {name}
                                                                    value = '@!ludo_checkbox' 
                                                                    checked={cleanedValue} 
@@ -154,8 +153,6 @@ const AdminDetails = ({schema,titleOverride,modeOverride}) => {
                                             label={(label) ? label : ''}
                                             value={value}
                                             onChange = {(event) => (event) && (event.toString() !== 'Invalid Date' && event) ? handleChange({target:{name,value:format(event, 'yyyy-MM-dd')}}) : console.log(event)} 
-                                            // onChange = {(event) => (event) && (event.toString() !== 'Invalid Date' && event) ? console.log(true,typeof(event)) : console.log(false,event)} 
-                                            //onChange={(event) => handleChangeDate(event)}
                                             renderInput={(params) => <TextField {...params} />}
                                         />
                                     </LocalizationProvider>)},
