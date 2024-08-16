@@ -22,8 +22,27 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
-        setOpen(false);
+        if (returnArticle.length) {
+            setOpenConfirmClose(true);
+        } else {
+            handleCloseForce();
+        }
     }
+
+    const handleCloseForce = () => {
+        // close booking
+        setOpen(false);
+        setReturnArticle([]);
+
+        // close warning message 
+        setOpenConfirmClose(false);
+    }
+
+    const closeWarning = () => {
+        setOpenConfirmClose(false);
+    }
+
+    const [openConfirmClose, setOpenConfirmClose] = useState(false);
 
     const inputRef = React.useRef(null);
     const [closed] = useState(params.row.closed);
@@ -42,7 +61,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const addToReturnList = (value) => {
-        console.log(value);
         setReturnArticle(value);
     }
     const handleFreeAndAdd = async () => {
@@ -186,6 +204,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             const articles = await api.put(`admin/booking/return/${params.row.id}`, options);
             if (articles.status === 200) {
                 toast.success("Articles rendus");
+                setReturnArticle([]);
                 updateOneBooking(params.row.id);
             } else {
                 toast.error(articles.data.message);
@@ -396,6 +415,44 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                         </Button>
                     </div>
                 </Box>
+            </Modal>
+            <Modal
+                open={openConfirmClose}
+                onClose={handleClose}
+                fullWidth
+            >
+                <section
+                    {...rest}
+                    style={{ width: '100%' }}
+                >
+                    <Box className="edit-modal" component="form" fullWidth>
+                        <Alert variant="outlined"
+                            severity="error">
+                            Etes vous sur de vouloir fermer sans valider le retour des articles ?
+                        </Alert>
+                        <div style={{ display: 'flex' }}>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px', marginRight: '10px' }}
+                                onClick={handleCloseForce}
+                            >
+                                Valider
+                            </Button>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px' }}
+                                onClick={closeWarning}
+                                color='warning'
+                            >
+                                Annuler
+                            </Button>
+                        </div>
+                    </Box>
+                </section>
             </Modal>
         </div>
     );

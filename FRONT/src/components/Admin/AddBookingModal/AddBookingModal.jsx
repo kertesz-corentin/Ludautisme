@@ -19,6 +19,8 @@ import './addbookingmodal.scss';
 const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...rest }) => {
     const [open, setOpen] = React.useState(false)
     const [notAvailableOpen, setNotAvailableOpen] = React.useState(false);
+    const [openConfirmClose, setOpenConfirmClose] = React.useState(false);
+    const [submited, setSubmited] = React.useState(false);
 
     const [articleId, setArticleId] = React.useState([]);
     const [listArticle, setListArticle] = React.useState([]);
@@ -48,28 +50,43 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         setOpen(true);
     }
     const handleClose = () => {
+        if (!submited && articleId.length) {
+            setOpenConfirmClose(true);
+
+        } else {
+            handleCloseForce();
+        }
+    }
+    const handleCloseForce = () => {
+        // colse and reset booking
         setOpen(false);
         setListArticle([]);
         setArticleId([]);
         setCurrentBooking(null);
+        setSubmited(false);
+        // close warning modale
+        setOpenConfirmClose(false);
+    }
+    const handleCloseModale = () => {
+        setOpenConfirmClose(false);
     }
 
     const handleFreeAndAdd = async () => {
         let response = null;
-        switch(noAvailableStatus) {
+        switch (noAvailableStatus) {
             // just non available
-            case 1: 
+            case 1:
                 let option = {
                     "available": true
                 }
                 response = await api.put(`/admin/articles/${currentArticle.id}`, option);
                 break;
             // in booking not delivered
-            case 2: 
+            case 2:
                 response = await api.delete(`/admin/booking/article/${currentArticle.id}`);
                 break;
             // in booking delivered
-            case 3: 
+            case 3:
                 response = await api.post(`/admin/booking/return/${currentArticle.id}`);
                 break;
             default:
@@ -141,7 +158,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussie");
                         updateOneBooking(currentBooking.id);
-                        setTimeout(() => { handleClose() }, 5000);
+                        setTimeout(() => { handleCloseForce() }, 5000);
                     }
                 } else {
                     toast.error(response.data.message)
@@ -149,6 +166,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 }
             })
             updateOneBooking(currentBooking.id);
+            setSubmited(true);
 
         } else {
             const response = await toast.promise(
@@ -161,7 +179,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             if (response.status === 200) {
                 toast.success("Réservation réussie");
                 updateOneBooking(response.data.newBookingConfirm.id);
-                setTimeout(() => { handleClose() }, 5000);
+                setSubmited(true);
+                setTimeout(() => { handleCloseForce() }, 5000);
             } else {
                 toast.error(response.data.message);
             }
@@ -180,7 +199,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 let options = {
                     articleNumber: id,
                     bookingId: currentBooking.id
-                } 
+                }
                 const response = await toast.promise(
                     api.put(`/admin/booking/${user[0].id}`, options),
                     {
@@ -192,7 +211,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussi");
                         updateOneBooking(response.data[0].id);
-                        setTimeout(() => { handleClose() }, 5000);
+                        setSubmited(true);
+                        setTimeout(() => { handleCloseForce() }, 5000);
                     }
                 } else {
                     toast.error(response.data.message);
@@ -213,7 +233,8 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 if (response.status === 200) {
                     toast.success("Réservation réussi");
                     updateOneBooking(response.data[0].id);
-                    setTimeout(() => { handleClose() }, 5000);
+                    setSubmited(true);
+                    setTimeout(() => { handleCloseForce() }, 5000);
                 } else {
                     toast.error(response.data.message);
                 }
@@ -229,7 +250,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
-        if (listArticle.find(a => a.number === Number(article_number))) { 
+        if (listArticle.find(a => a.number === Number(article_number))) {
             toast.error("article déjà présent dans la réservation");
         } else {
             // on récupère les données de l'article avant insertion dans le state
@@ -250,7 +271,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
                     let userName = `${bookingData?.first_name} ${bookingData?.last_name}`;
 
-                    if(!bookingData) {
+                    if (!bookingData) {
                         setNoAvailableStatus(1);
                         setModalMessage("Cet article n'est pas disponible mais dans aucune réservation");
                     } else if (!bookingData.delivered) {
@@ -279,6 +300,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         const newArticleList = articleId.filter((art) => art !== id)
         setArticleId(newArticleList)
     }
+
 
     const columnsBuilder = (() => {
         const columns = [];
@@ -482,7 +504,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     <div className="delete-modal-inputs">
                         <Alert variant="outlined"
                             severity="error">
-                           {modalMessage}
+                            {modalMessage}
                         </Alert>
                     </div>
                     <div className="delete-modal-footer">
@@ -506,6 +528,44 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                         </Button>
                     </div>
                 </Box>
+            </Modal>
+            <Modal
+                open={openConfirmClose}
+                onClose={handleClose}
+                fullWidth
+            >
+                <section
+                    {...rest}
+                    style={{ width: '100%' }}
+                >
+                    <Box className="edit-modal" component="form" fullWidth>
+                        <Alert variant="outlined"
+                            severity="error">
+                            Etes vous sur de vouloir fermer sans valider la création de cette réservation ?
+                        </Alert>
+                        <div style={{ display: 'flex' }}>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px', marginRight: '10px' }}
+                                onClick={handleCloseForce}
+                            >
+                                Valider
+                            </Button>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px' }}
+                                onClick={handleCloseModale}
+                                color='warning'
+                            >
+                                Annuler
+                            </Button>
+                        </div>
+                    </Box>
+                </section>
             </Modal>
         </div>
     );
