@@ -228,18 +228,25 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             updateOneBooking(params.row.id);
         }
 
-        let notReturnedArticle = false; 
-        for (const art of params.row.borrowed_articles) {
-            if (!art.returned) notReturnedArticle = true;
-        }
-
-        if (!notReturnedArticle) {
-            const closeResponse = await api.post(`admin/booking/close/${params.row.id}`, options);
-            if(closeResponse.status === 200) {
-                updateOneBooking(params.row.id);
-            } else {
-                toast.error(closeResponse.data.message);
+        let notReturnedArticle = false;
+        // get booking by id and test on this instance
+        let updatedBookingResquest= await api.get(`/admin/booking/${params.row.id}`);
+        if (updatedBookingResquest.status === 200) {
+            let updatedBooking = updatedBookingResquest.data[0];
+            for (const art of updatedBooking.borrowed_articles) {
+                if (!art.returned) notReturnedArticle = true;
             }
+
+            if (!notReturnedArticle) {
+                const closeResponse = await api.post(`admin/booking/close/${params.row.id}`, options);
+                if(closeResponse.status === 200) {
+                    updateOneBooking(params.row.id);
+                } else {
+                    toast.error(closeResponse.data.message);
+                }
+            }
+        } else {
+            toast.error(response.data.message);
         }
     }
 

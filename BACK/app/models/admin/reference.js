@@ -198,8 +198,6 @@ module.exports = {
             queryStart += ` WHERE `;
             arr.forEach((filter, index) => {
                 const prop = Object.keys(filter)[0];
-                console.log(prop);
-                console.log(filter[prop]);
                 queryStart += `${prop} IN (`;
                 filter[prop].forEach((filt, indx) => {
                     if (indx !== filter[prop].length - 1) {
