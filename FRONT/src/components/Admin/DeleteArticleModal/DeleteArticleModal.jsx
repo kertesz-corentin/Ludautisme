@@ -17,14 +17,7 @@ const DeleteArticleModal = ({params, closed, delivered, className,getBookings, .
 
 
     const handleDelete = async () => {
-        const response = await toast.promise(
-            api.delete(`/admin/booking/article/${params.row.id}`), 
-            {
-                pending: `Suppression de l'article`,
-                error: 'Erreur lors de la suppression'
-            }
-        )
-
+        const response = await api.delete(`/admin/booking/article/${params.row.id}`);
         if(response.status === 200){
             toast.success("Article supprimé");
             getBookings();

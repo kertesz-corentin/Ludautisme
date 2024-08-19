@@ -120,16 +120,9 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
     const handleDelete = async () => {
 
-        const response = await toast.promise(
-            api.delete(`/admin/booking/${params.row.id}`),
-            {
-                pending: `Suppression de la réservation`,
-                error: 'Erreur lors de la suppression'
-            }
-        );
-
+        const response = await api.delete(`/admin/booking/${params.row.id}`);
         if (response.status === 200) {
-            toast.success("réservation supprimé");
+            toast.success("réservation supprimé")
             deleteOneRow(params.row.id);
         } else {
             toast.error(response.statusText);

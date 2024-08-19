@@ -152,7 +152,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     }
                 )
 
-                api.put(`/admin/booking/${user[0].id}`, options);
 
                 if (response.status === 200) {
                     if (index + 1 === articleId.length) {
@@ -196,8 +195,16 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         if (currentBooking) {
             articleId.forEach(async (id, index) => {
+                const article = await toast.promise(
+                    api.get(`/admin/articles/${id}`),
+                    {
+                        pending: 'Réservation en cours',
+                        error: 'Erreur lors de la réservation'
+                    }
+                )
+
                 let options = {
-                    articleNumber: id,
+                    articleNumber: article.data[0].number,
                     bookingId: currentBooking.id
                 }
                 const response = await toast.promise(
@@ -211,7 +218,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     if (index + 1 === articleId.length) {
                         toast.success("Réservation réussi");
                         updateOneBooking(response.data[0].id);
-                        setSubmited(true);
                         setTimeout(() => { handleCloseForce() }, 5000);
                     }
                 } else {
@@ -219,6 +225,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     return;
                 }
             })
+            setSubmited(true);
         } else {
             const booking = await toast.promise(
                 api.post(`/admin/booking/add/${user[0].id}`, listIds),
@@ -233,7 +240,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                 if (response.status === 200) {
                     toast.success("Réservation réussi");
                     updateOneBooking(response.data[0].id);
-                    setSubmited(true);
                     setTimeout(() => { handleCloseForce() }, 5000);
                 } else {
                     toast.error(response.data.message);
@@ -241,6 +247,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             } else {
                 toast.error(booking.data.message);
             }
+            setSubmited(true);
         }
     }
 
