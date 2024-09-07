@@ -6,6 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Grid, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import api from '../../../../../requests';
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const ListOfReferences = ({
     className,
@@ -16,6 +18,7 @@ const ListOfReferences = ({
     isLoading,
     checkbox,
     refresh,
+    exportMode,
     ...rest
 }) => {
 
@@ -23,7 +26,7 @@ const ListOfReferences = ({
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     const handleExtend = async () => {
-        let body = {articleNumbers: extendArray};
+        let body = { articleNumbers: extendArray };
         const extend = await api.post(`/customer/booking/extend/${userToken.id}`, body);
 
         if (extend.status === 200) {
@@ -33,9 +36,77 @@ const ListOfReferences = ({
         }
         refresh();
     }
+
+    const exportList = () => {
+        const doc = new jsPDF();
+
+        doc.text("Liste de Favoris", 10, 10);
+
+        const columns = [
+            "Nom",
+            "Catégorie",
+            "Catégorie Secondaire",
+            "Numéros"
+          ];
+        const rows = [];
+
+        for (let i = 0; i < references.length; i++) {
+            let tags = [];
+            for (const tag of references[i].tag) {
+                if (tag.name != references[i].maincategory) tags.push(tag.name)
+            }
+            var temp = [
+              references[i].name,
+              references[i].maincategory,
+              tags,
+              references[i].numberList
+            ];
+            rows.push(temp);
+        }
+        doc.autoTable(columns, rows, {
+            startY: 20,
+            theme: "grid",
+            styles: {
+              font: "times",
+              halign: "center",
+              cellPadding: 3.5,
+              lineWidth: 0.5,
+              lineColor: [0, 0, 0],
+              textColor: [0, 0, 0]
+            },
+            headStyles: {
+              textColor: [0, 0, 0],
+              fontStyle: "normal",
+              lineWidth: 0.5,
+              lineColor: [0, 0, 0],
+              fillColor: [166, 204, 247]
+            },
+            alternateRowStyles: {
+              fillColor: [212, 212, 212],
+              textColor: [0, 0, 0],
+              lineWidth: 0.5,
+              lineColor: [0, 0, 0]
+            },
+            rowStyles: {
+              lineWidth: 0.5,
+              lineColor: [0, 0, 0]
+            },
+            tableLineColor: [0, 0, 0]
+          });
+
+        doc.save("favoris.pdf");
+    }
     return (
         references.length ?
             <React.Fragment>
+                {(exportMode) &&
+                    <Button
+                        variant="contained"
+                        style={{ width: "20em" }}
+                        onClick={exportList}>
+                        Exporter en PDF
+                    </Button>
+                }
                 <CssBaseline />
                 <Grid
                     className={`gridList ${className}`}

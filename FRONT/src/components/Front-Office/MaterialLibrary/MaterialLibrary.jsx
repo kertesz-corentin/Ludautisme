@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 const MaterialLibrary = ({ className,
     currentItems,
     typeDisplay,
+    exportMode,
     ...rest }) => {
     //Here i define all datas i'll need in materiallibrary, they'll be set by api response
     const [displayRef, setDisplayRef] = useState([]);
@@ -201,6 +202,7 @@ const MaterialLibrary = ({ className,
                     references={displayRef}
                     gridSize={gridSize}
                     isLoading={isLoading}
+                    exportMode={exportMode}
                 />
 
                 <Pagination

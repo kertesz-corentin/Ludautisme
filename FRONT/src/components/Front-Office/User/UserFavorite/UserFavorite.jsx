@@ -9,6 +9,7 @@ const UserFavorite = ({className, currentItems, ...rest}) => {
             <MaterialLibrary
               currentItems={currentItems}
               typeDisplay='favorites'
+              exportMode={true}
             />
         </div>      
     )

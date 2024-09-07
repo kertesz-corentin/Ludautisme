@@ -123,24 +123,6 @@ const Reference = ({
                                 <Button data-refid={id} data-favvalue={reference.favorite} onClick={handleFavorite}>{
                                     <FavoriteIcon color={(isFav) ? 'error' : 'disabled'} />}
                                 </Button>
-                                {(reference.nb_available > 0 && currentItems) ?
-                                    <>
-                                        {(!currentItems.map((item) => item.id).includes(id)) ?
-                                            <Button
-                                                onClick={handleClick}>
-                                                <AddShoppingCartIcon />
-                                            </Button>
-                                            :
-                                            <Box>
-                                                <BookmarkAddedIcon />
-                                            </Box>
-                                        }
-                                    </>
-                                    :
-                                    <>
-                                        <Unavailable />
-                                    </>
-                                }
                             </>
                             :
                             <>
@@ -202,32 +184,6 @@ const Reference = ({
                             </Typography>
                             <Box sx={{ marginBottom: "15px", display: 'flex', justifyContent: 'space-evenly' }}>
                                 {reference.nb_available > 0 ? <Available nbAvailable={reference.nb_available} nbTotal={reference.nb_total} /> : <Unavailable />}
-
-                                {(userToken) ?
-                                    <>
-                                        {(reference.nb_available > 0 && currentItems) ?
-                                            <>
-                                                {(!currentItems.map((item) => item.id).includes(id)) ?
-                                                    <Button
-                                                        onClick={handleClick}>
-                                                        <AddShoppingCartIcon />
-                                                    </Button>
-                                                    :
-                                                    <Box>
-                                                        <BookmarkAddedIcon />
-                                                    </Box>
-                                                }
-                                            </>
-                                            :
-                                            <>
-                                                <Unavailable />
-                                            </>
-                                        }
-                                    </>
-                                    :
-                                    <>
-                                    </>
-                                }
                             </Box>
                         </Box>
                     </Box>

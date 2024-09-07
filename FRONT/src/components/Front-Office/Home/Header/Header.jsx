@@ -29,8 +29,9 @@ const Header = ({
         test2: { url: '/about', display: 'Association' },
         test3: { url: '/materiallibrary', display: 'Matériathèque' },
         test4: { url: '/infos', display: 'Infos pratiques' },
-        test5: { url: '/usefullLinks', display: 'Liens utiles' },
+        test5: { url: '/usefullLinks', display: 'Liens utiles' }
     };
+    const favori = { url: '/user/favorites', display: 'Favoris'}
 
     const handleActive = (event) => {
         setIsActive(event);
@@ -98,8 +99,19 @@ const Header = ({
                                 </Link>
                             ))
                         }
+                        {(userToken) && <Link
+                                    key={favori}
+                                    className={(isActive === favori) ? 'header-link header-link--isActive' : 'header-link'}
+                                    to={favori.url}
+                                    onClick={() => { handleActive(favori); }}
+                                >
+                                    <Button
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        {favori.display}
+                                    </Button>
+                                </Link>}
                         <div className="header-items">
-                            {(userToken) && <Cart cartManager={cartManager} currentItems={currentItems} />}
                             <LoginUser />
                         </div>
                     </div>
@@ -123,17 +135,25 @@ const Header = ({
                                 </Link>
                             ))
                         }
+                         {(userToken) && <Link
+                                    key={favori}
+                                    className={(isActive === favori) ? 'header-link header-link--isActive' : 'header-link'}
+                                    to={favori.url}
+                                    onClick={() => { handleActive(favori); }}
+                                >
+                                    <Button
+                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                    >
+                                        {favori.display}
+                                    </Button>
+                                </Link>}
                         <div className="header-items">
-                            {(userToken) && <Cart cartManager={cartManager} currentItems={currentItems} />}
                             <LoginUser />
                         </div>
                     </div>
                 </nav>
 
             </Box>
-            {/* <Box className="maintenance">
-                <span>🚧 Bienvenue sur notre nouveau site, celui-ci est encore en travaux, à bientôt pour des nouveautés 😉</span>
-            </Box> */}
         </header>
         
     );
