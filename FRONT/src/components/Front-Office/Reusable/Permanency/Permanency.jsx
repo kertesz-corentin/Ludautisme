@@ -50,7 +50,7 @@ const Permanency = ({className,display, ...rest}) => {
                                 {(permDate && !isNaN(Number(permDate[0]))) &&
                                 <>
                                   <Typography className={(display ==='inline') && "inline-hours"}>
-                                  20h00 - 22h00
+                                  18h30 - 22h00
                                     </Typography>
                                 </>
                                 }
