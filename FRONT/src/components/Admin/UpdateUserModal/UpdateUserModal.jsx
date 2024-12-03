@@ -17,6 +17,7 @@ import moment from 'moment';
 import Chip from '@mui/material/Chip';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import './updateusermodal.scss';
 
@@ -103,7 +104,7 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
             toast.error(response.data.message);
         }
     }
-    
+
     const handleUpdateCaution = async () => {
         const user = {
             'caution_status': true,
@@ -379,17 +380,13 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 marginTop: '1rem'
                             }}
                         >
-                            {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> :  params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
-        
-                            <Button
-                                onClick={handleUpdateConvention}
-                                variant='contained'
-                                sx={{
-                                    marginTop: '1rem'
-                                }}
-                            >
-                                Renouveler convention
-                            </Button>
+                            {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
+
+                            {/* <DatePicker
+                                label="Controlled picker"
+                                value={params.row.convention_expiration}
+                                onChange={handleUpdateConvention}
+                            /> */}
                         </FormGroup>
 
                     </div>

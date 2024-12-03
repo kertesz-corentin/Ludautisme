@@ -129,7 +129,6 @@ const UserBookings = ({className, ...rest}) => {
                         </Box>
                         { (activeBooking[0]) ?
                         <>
-                        <Typography className="booking__info">#{activeBooking[0].id} - A rendre {activeBooking[0].return_date_permanency}</Typography>
                         <Box sx={{ bgcolor: 'background.paper' }}>
                                 <ListOfReferences
                                     display="booking-current"

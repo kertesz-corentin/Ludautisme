@@ -37,21 +37,30 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
             }
         );
 
-        if (response.status === 200) {
+        if (response.status === 200) { 
+            let user = response.data[0];
             // on vérifie la cotisation et la caution de l'adhérent 
-            if (!response.data[0].cotisation_expiration || !response.data[0].caution_expiration) {
+            if (!user.cotisation_expiration || (!user.caution_expiration && user.id_status !== 4)) {
                 // s'il manque les données on demande la mise a jour de la fiche
                 setModalMessage(`La fiche de l'adhérent ne contient pas d'information sur sa cotisation et sa caution, merci de la mettre à jour`);
                 setOpenModal(true);
-            } else if (response.data[0].cotisation_status === false || response.data[0].caution_status === false) {
-                if (response.data[0].cotisation_status === false && response.data[0].caution_status === false) {
-                    setModalMessage(`La cotisation et la caution de l'adhérent sont expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
-                } else if (response.data[0].cotisation_status === false) {
-                    setModalMessage(`La cotisation de l'adhérent est expirée depuis le ${moment(response.data[0].cotisation_expiration).format('DD/MM/YYYY')}`);
-                } else {
-                    setModalMessage(`La caution de l'adhérent est expirée depuis le ${moment(response.data[0].caution_expiration).format('DD/MM/YYYY')}`);
+            } else if (user.cotisation_status === false || user.caution_status === false) {
+                let confirmOpen = false;
+                if (user.cotisation_status === false && user.caution_status === false) {
+                    confirmOpen = true;
+                    setModalMessage(`La cotisation et la caution de l'adhérent sont expirée depuis le ${moment(user.cotisation_expiration).format('DD/MM/YYYY')}`);
+                } else if (user.cotisation_status === false) {
+                    confirmOpen = true;
+                    setModalMessage(`La cotisation de l'adhérent est expirée depuis le ${moment(user.cotisation_expiration).format('DD/MM/YYYY')}`);
+                } else if (user.id_status !== 4) {
+                    confirmOpen = true;
+                    setModalMessage(`La caution de l'adhérent est expirée depuis le ${moment(user.caution_expiration).format('DD/MM/YYYY')}`);
                 }
-                setOpenModal(true);
+                if (confirmOpen) {
+                    setOpenModal(true);
+                } else {
+                    setUserExist(true);
+                }
             } else {
                 setUserExist(true);
             }
