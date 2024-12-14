@@ -19,6 +19,9 @@ import { useGridApiRef } from '@mui/x-data-grid';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../../styles/theme';
 import moment from 'moment';
+import Chip from '@mui/material/Chip';
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import './adminusers.scss';
 
@@ -124,7 +127,11 @@ const AdminUsers = ({ className, ...rest }) => {
                             </IconButton>
                         );
                         break;
-
+                    case "status": 
+                        config.renderCell = (params) => (
+                            params.value ? <Chip color="success" icon={<DoneIcon />} /> : <Chip color="error" icon={<ClearIcon />}/>
+                        )
+                        break;
                     default:
                         break;
                 }

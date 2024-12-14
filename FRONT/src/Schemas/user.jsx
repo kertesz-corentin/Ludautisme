@@ -132,7 +132,7 @@ const userSchema  = {
     cotisation_status:{
         type : "boolean",
         label : "Cotisation",
-        gridDisplay : "toggle",
+        gridDisplay : "status",
         width : 100,
         bloc : 2,
         blocTitle : 'Situation',
@@ -151,7 +151,7 @@ const userSchema  = {
     caution_status:{
         type : "boolean",
         label : "Caution",
-        gridDisplay : "toggle",
+        gridDisplay : "status",
         width: 100,
         bloc : 2,
         field : 3,
@@ -169,7 +169,7 @@ const userSchema  = {
     convention_status:{
         type : "boolean",
         label : "Convention",
-        gridDisplay : "toggle",
+        gridDisplay : "status",
         width: 100,
         bloc : 2,
         field : 3,

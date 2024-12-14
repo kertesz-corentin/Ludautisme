@@ -18,6 +18,9 @@ import Chip from '@mui/material/Chip';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import frLocale from 'date-fns/locale/fr';
 
 import './updateusermodal.scss';
 
@@ -83,53 +86,18 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
         }
     }
 
-    const handleUpdateCotisation = async () => {
+    const handleUpdateDate = async (event, statusKey, dateKey) => {
+
+        let input = moment(event, "YYYY") // year in your date
+        let now = moment(new Date(), "YYYY") // current year
+
+        let yearCountDiff = now.diff(input, 'year');
+        let status = true; 
+        if (yearCountDiff > 1) status = false;
+
         const user = {
-            'cotisation_status': true,
-            'cotisation_expiration': moment(Date.now()).format()
-        };
-
-        const response = await toast.promise(
-            api.put(`/admin/users/${params.row.id}`, user),
-            {
-                pending: `Mise a jour de l'utilisateur`,
-                error: 'Erreur lors de la mise a jour'
-            }
-        );
-
-        if (response.status === 200) {
-            toast.success("Utilisateur mis a jour");
-            updateOneUser(params.row.id);
-        } else {
-            toast.error(response.data.message);
-        }
-    }
-
-    const handleUpdateCaution = async () => {
-        const user = {
-            'caution_status': true,
-            'caution_expiration': moment(Date.now()).format()
-        };
-
-        const response = await toast.promise(
-            api.put(`/admin/users/${params.row.id}`, user),
-            {
-                pending: `Mise a jour de l'utilisateur`,
-                error: 'Erreur lors de la mise a jour'
-            }
-        );
-
-        if (response.status === 200) {
-            toast.success("Utilisateur mis a jour");
-            updateOneUser(params.row.id);
-        } else {
-            toast.error(response.data.message);
-        }
-    }
-    const handleUpdateConvention = async () => {
-        const user = {
-            'convention_status': true,
-            'convention_expiration': moment(Date.now()).format()
+            [statusKey]: status,
+            [dateKey]: moment(event).format()
         };
 
         const response = await toast.promise(
@@ -343,15 +311,17 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                             }}
                         >
                             {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.cotisation_expiration ? <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de cotisation`} />}
-                            <Button
-                                onClick={handleUpdateCotisation}
-                                variant='contained'
-                                sx={{
-                                    marginTop: '1rem'
-                                }}
-                            >
-                                Renouveler cotisation
-                            </Button>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                <DatePicker
+                                    label="Sélectionner une date"
+                                    value={params.row.caution_expiration}
+                                    onChange={(event) => handleUpdateDate(event, 'cotisation_status', 'cotisation_expiration')}
+                                    renderInput={(params) => <TextField {...params} 
+                                    sx={{
+                                        marginTop: '1rem'
+                                    }}/>}
+                                />
+                            </LocalizationProvider>
                         </FormGroup>
                         <FormGroup
                             sx={{
@@ -362,15 +332,18 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                             }}
                         >
                             {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.caution_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de caution`} />}
-                            <Button
-                                onClick={handleUpdateCaution}
-                                variant='contained'
-                                sx={{
-                                    marginTop: '1rem'
-                                }}
-                            >
-                                Renouveler caution
-                            </Button>
+                            
+                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                <DatePicker
+                                    label="Sélectionner une date"
+                                    value={params.row.caution_expiration}
+                                    onChange={(event) => handleUpdateDate(event, 'caution_status', 'caution_expiration')}
+                                    renderInput={(params) => <TextField {...params} 
+                                    sx={{
+                                        marginTop: '1rem'
+                                    }}/>}
+                                />
+                            </LocalizationProvider>
                         </FormGroup>
                         <FormGroup
                             sx={{
@@ -381,12 +354,17 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                             }}
                         >
                             {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
-
-                            {/* <DatePicker
-                                label="Controlled picker"
-                                value={params.row.convention_expiration}
-                                onChange={handleUpdateConvention}
-                            /> */}
+                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                <DatePicker
+                                    label="Sélectionner une date"
+                                    value={params.row.convention_expiration}
+                                    onChange={(event) => handleUpdateDate(event, 'convention_status', 'convention_expiration')}
+                                    renderInput={(params) => <TextField {...params} 
+                                    sx={{
+                                        marginTop: '1rem'
+                                    }}/>}
+                                />
+                            </LocalizationProvider>
                         </FormGroup>
 
                     </div>
