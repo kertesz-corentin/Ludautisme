@@ -93,7 +93,7 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
 
         let yearCountDiff = now.diff(input, 'year');
         let status = true; 
-        if (yearCountDiff > 1) status = false;
+        if (yearCountDiff >= 1) status = false;
 
         const user = {
             [statusKey]: status,
