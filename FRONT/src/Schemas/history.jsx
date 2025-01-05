@@ -25,7 +25,7 @@ const historySchema  = {
     },
     perm_date: {
         type: "string",
-        lable: "Date d'emprunt",
+        label: "Date d'emprunt",
         gridDisplay: "date",
         width: 200
     }
