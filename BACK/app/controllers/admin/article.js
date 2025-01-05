@@ -189,4 +189,16 @@ module.exports = {
         const nextNumber = Number(lastNumber.number) + 1;
         return res.json(nextNumber);
     },
+    async getHistory(req, res) {
+        const { articleId } = req.params;
+
+        // test the article
+        const article = await articleDataMapper.findOne(articleId);
+        if (!article.length) return res.status(404).json('Article introuvable');
+
+        // récupérer la liste des réservation de cette article
+        const list = await articleDataMapper.getHistory(articleId);
+        if (!list) return res.json('Aucun historique');
+        return res.json(list);
+    },
 };

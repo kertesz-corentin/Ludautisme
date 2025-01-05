@@ -252,4 +252,21 @@ module.exports = {
             WHERE id_article = $1 AND "returned" = false`, [id]);
         return result.rows;
     },
+    async getHistory(id) {
+        const result = await sqlHandler(`
+            SELECT 
+            book.id,
+            "user".member_number,
+            "user".first_name,
+            "user".last_name,
+            perm.perm_date
+            FROM article_to_booking AS atb
+            INNER JOIN "booking" AS book ON atb.id_booking = book.id
+            INNER JOIN "user" ON "user".id = book.id_user
+            INNER JOIN "permanency" AS perm  ON perm.id = book.id_permanency
+            WHERE "id_article" = $1
+            ORDER BY perm.perm_date DESC
+            `, [id]);
+        return result.rows;
+    },
 };

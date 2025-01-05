@@ -101,6 +101,16 @@ router.route('/comment/:id')
 router.route('/status/:articleId')
     .get(controllerHandler(articleController.getStatus));
 /**
+ * GET /api/admin/articles/history/:articleId
+ * @summary get history of article
+ * @tags [ADMIN] Article
+ * @param {number} request.params.articleId.required - ID of article
+ * @return 200 - success response - application/json
+ */
+
+router.route('/history/:articleId')
+    .get(controllerHandler(articleController.getHistory));
+/**
  * GET /api/admin/articles
  * @summary Get all articles
  * @tags [ADMIN] Article

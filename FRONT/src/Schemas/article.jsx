@@ -136,6 +136,12 @@ const articleSchema  = {
         label: "Emplacement",
         gridDisplay: "normal",
         width: 200
+    },
+    historique: {
+        type: "string",
+        lable: "Historique",
+        gridDisplay: "button",
+        width: 200
     }
 }
 

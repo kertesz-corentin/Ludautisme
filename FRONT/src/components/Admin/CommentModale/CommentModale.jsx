@@ -187,7 +187,10 @@ const CommentModale = ({ params, closed, ...rest }) => {
     return (
         <div>
             {!closed && (
-                <IconButton onClick={handleOpen}>
+                <IconButton onClick={(e) =>  {
+                    e.stopPropagation();
+                    handleOpen();
+                }}>
                     {/* {`# ${params.value}`} */}
                     <CommentIcon />
                 </IconButton>
