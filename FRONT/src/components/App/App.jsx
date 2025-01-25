@@ -13,6 +13,7 @@ import AdminUsers from '../Admin/AdminUsers/AdminUsers';
 import AdminBookings from '../Admin/AdminBookings/AdminBookings';
 import AdminReferences from '../Admin/AdminReferences/AdminReferences';
 import AdminCategory from '../Admin/AdminCategory/AdminCategory';
+import AdminStat from '../Admin/AdminStat/AdminStat';
 import About from '../Front-Office/Static/About/About';
 import Infos from '../Front-Office/Static/Infos/Infos';
 import MaterialLibrary from '../Front-Office/MaterialLibrary/MaterialLibrary';
@@ -102,6 +103,9 @@ function App() {
                     </Route>
                     <Route path="/admin/category" element={<PrivateRoute />}>
                         <Route path="/admin/category" element={<AdminPage><AdminCategory /></AdminPage>}></Route>
+                    </Route>
+                    <Route path="/admin/stat" element={<PrivateRoute />}>
+                        <Route path="/admin/stat" element={<AdminPage><AdminStat /></AdminPage>}></Route>
                     </Route>
 
 

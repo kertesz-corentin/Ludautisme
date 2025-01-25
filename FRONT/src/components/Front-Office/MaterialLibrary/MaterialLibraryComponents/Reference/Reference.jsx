@@ -12,8 +12,6 @@ import {
 } from '@mui/material';
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { FunctionContext } from '../../../../App/App';
 import CloseIcon from '@mui/icons-material/Close';

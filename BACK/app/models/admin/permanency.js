@@ -1,7 +1,6 @@
 /* eslint-disable no-tabs */
 /* eslint-disable quotes */
 /* eslint-disable consistent-return */
-const client = require('../../config/db');
 const sqlHandler = require('../../helpers/sqlHandler');
 
 /**
@@ -16,8 +15,7 @@ const sqlHandler = require('../../helpers/sqlHandler');
 
 module.exports = {
     async findAll() {
-        const query =
-            `SELECT * ,
+        const query = `SELECT * ,
             LEAD(id,1) OVER(ORDER BY id) AS next_id,
             LEAD(perm_date,1) OVER(ORDER BY perm_date) AS next_date
             FROM "permanency"`;

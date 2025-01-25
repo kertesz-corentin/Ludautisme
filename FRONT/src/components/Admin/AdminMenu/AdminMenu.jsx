@@ -44,6 +44,12 @@ const MenuAdmin = ({className, ...rest}) => {
                 >
                     Réservations
                 </NavLink>
+                <NavLink
+                    to="/admin/stat"
+                    className={({ isActive }) => isActive ? 'menuadmin-link menuadmin-link--active' : 'menuadmin-link'}
+                >
+                    Statistiques
+                </NavLink>
                 <NavLink to="/admin">
                     <button
                         onClick={handleLogout}

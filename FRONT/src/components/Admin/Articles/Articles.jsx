@@ -152,7 +152,6 @@ const Articles = ({ params, children, name, className, articles, setArticles, ge
                 switch (propElt.gridDisplay) {
                     case "date":
                         config.renderCell = (params) => (
-                            console.log(params.value),
                             moment(params.value).format('DD/MM/YYYY')
                         );
                         break;

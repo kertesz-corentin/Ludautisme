@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 import { TextField, Chip } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { format, isAfter, parse } from 'date-fns';
 
 import './adminpermanency.scss';

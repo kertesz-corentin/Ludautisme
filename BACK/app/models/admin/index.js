@@ -6,6 +6,7 @@ const adminReferenceDataMapper = require('./reference');
 const usersDataMapper = require('./users');
 const categoryDataMapper = require('./category');
 const adminCommentDataMapper = require('./comment');
+const statDataMapper = require('./stat');
 
 module.exports = {
     adminCommentDataMapper,
@@ -16,4 +17,5 @@ module.exports = {
     adminReferenceDataMapper,
     usersDataMapper,
     categoryDataMapper,
+    statDataMapper,
 };
