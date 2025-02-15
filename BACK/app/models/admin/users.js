@@ -78,7 +78,8 @@ const userList = `
         "user"."id_status",
         "user"."convention_status",
         "user"."convention_expiration",
-        "user_status"."name"`;
+        "user_status"."name",
+        "user"."comment"`;
 
 module.exports = {
     //  Return all users in db

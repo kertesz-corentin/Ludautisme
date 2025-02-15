@@ -63,7 +63,8 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
             'archived': data.get('archived'),
             'social_reason': data.get('social_reason'),
             'id_role': idRole,
-            'id_status': Number(data.get('user_status'))
+            'id_status': Number(data.get('user_status')),
+            'comment': data.get('comment')
         };
 
         if (user['id_status'] === 5) {
@@ -92,7 +93,7 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
         let now = moment(new Date(), "YYYY") // current year
 
         let yearCountDiff = now.diff(input, 'year');
-        let status = true; 
+        let status = true;
         if (yearCountDiff >= 1) status = false;
 
         const user = {
@@ -281,7 +282,6 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 id="demo-simple-select"
                                 name='user_status'
                                 value={status}
-                                label="Status"
                                 onChange={handleChange}
                             >
                                 <MenuItem value={1}>Particulier</MenuItem>
@@ -291,6 +291,19 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                                 <MenuItem value={5}>Sans Status</MenuItem>
                             </Select>
                         </FormGroup>
+                        <TextField
+                            id='outlined'
+                            label='Commentaire'
+                            name='comment'
+                            type='string'
+                            className="updateuser-modal-inputs-item"
+                            multiline
+                            defaultValue={params.row.comment}
+                            sx={{
+                                mb: 2,
+                                marginTop: '1rem'
+                            }}
+                        />
                         <FormGroup
                             sx={{
                                 display: 'flex',
@@ -302,72 +315,73 @@ const UpdateUserModal = ({ params, className, getUsers, updateOneUser, ...rest }
                             <FormControlLabel control={<Checkbox name='archived' checked={archivedChecked} onChange={handleArchivedCheck} />} label="Archivé" />
                             <FormControlLabel control={<Checkbox name='id_role' checked={role} onChange={handleRole} />} label="Admin" />
                         </FormGroup>
-                        <FormGroup
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-around',
-                                marginTop: '1rem'
-                            }}
-                        >
-                            {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.cotisation_expiration ? <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de cotisation`} />}
-                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
-                                <DatePicker
-                                    label="Sélectionner une date"
-                                    value={params.row.caution_expiration}
-                                    onChange={(event) => handleUpdateDate(event, 'cotisation_status', 'cotisation_expiration')}
-                                    renderInput={(params) => <TextField {...params} 
-                                    sx={{
-                                        marginTop: '1rem'
-                                    }}/>}
-                                />
-                            </LocalizationProvider>
-                        </FormGroup>
-                        <FormGroup
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-around',
-                                marginTop: '1rem'
-                            }}
-                        >
-                            {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.caution_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de caution`} />}
-                            
-                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
-                                <DatePicker
-                                    label="Sélectionner une date"
-                                    value={params.row.caution_expiration}
-                                    onChange={(event) => handleUpdateDate(event, 'caution_status', 'caution_expiration')}
-                                    renderInput={(params) => <TextField {...params} 
-                                    sx={{
-                                        marginTop: '1rem'
-                                    }}/>}
-                                />
-                            </LocalizationProvider>
-                        </FormGroup>
-                        <FormGroup
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-around',
-                                marginTop: '1rem'
-                            }}
-                        >
-                            {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
-                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
-                                <DatePicker
-                                    label="Sélectionner une date"
-                                    value={params.row.convention_expiration}
-                                    onChange={(event) => handleUpdateDate(event, 'convention_status', 'convention_expiration')}
-                                    renderInput={(params) => <TextField {...params} 
-                                    sx={{
-                                        marginTop: '1rem'
-                                    }}/>}
-                                />
-                            </LocalizationProvider>
-                        </FormGroup>
-
                     </div>
+                    <div style= {{display: "flex", justifyContent: 'space-around', maxWidth: "1000px", width: "100%"}}>
+                            <FormGroup
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-around',
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                {params.row.cotisation_status ? <Chip color="success" label={`Cotisation du ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.cotisation_expiration ? <Chip color="error" icon={<ClearIcon />} label={`cotisation expirée depuis le : ${moment(params.row.cotisation_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de cotisation`} />}
+                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                    <DatePicker
+                                        label="Sélectionner une date"
+                                        value={params.row.caution_expiration}
+                                        onChange={(event) => handleUpdateDate(event, 'cotisation_status', 'cotisation_expiration')}
+                                        renderInput={(params) => <TextField {...params}
+                                            sx={{
+                                                marginTop: '1rem'
+                                            }} />}
+                                    />
+                                </LocalizationProvider>
+                            </FormGroup>
+                            <FormGroup
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-around',
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                {params.row.caution_status ? <Chip color="success" label={`Caution du ${moment(params.row.caution_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.caution_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Caution expirée depuis le : ${moment(params.row.caution_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de caution`} />}
+
+                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                    <DatePicker
+                                        label="Sélectionner une date"
+                                        value={params.row.caution_expiration}
+                                        onChange={(event) => handleUpdateDate(event, 'caution_status', 'caution_expiration')}
+                                        renderInput={(params) => <TextField {...params}
+                                            sx={{
+                                                marginTop: '1rem'
+                                            }} />}
+                                    />
+                                </LocalizationProvider>
+                            </FormGroup>
+                            <FormGroup
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-around',
+                                    marginTop: '1rem'
+                                }}
+                            >
+                                {params.row.convention_status ? <Chip color="success" label={`Convention du ${moment(params.row.convention_expiration).format('DD/MM/YYYY')} valable`} icon={<DoneIcon />} /> : params.row.convention_expiration ? <Chip color="error" icon={<ClearIcon />} label={`Convention expirée depuis le : ${moment(params.row.convention_expiration).format('DD/MM/YYYY')}`} /> : <Chip color="error" icon={<ClearIcon />} label={`Pas de convention`} />}
+                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                                    <DatePicker
+                                        label="Sélectionner une date"
+                                        value={params.row.convention_expiration}
+                                        onChange={(event) => handleUpdateDate(event, 'convention_status', 'convention_expiration')}
+                                        renderInput={(params) => <TextField {...params}
+                                            sx={{
+                                                marginTop: '1rem'
+                                            }} />}
+                                    />
+                                </LocalizationProvider>
+                            </FormGroup>
+                        </div>
                     <div className="updateuser-modal-footer">
                         <Button
                             type='submit'
