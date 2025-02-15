@@ -3,29 +3,59 @@ import React from 'react';
 import api from '../../../requests';
 import { toast } from 'react-toastify';
 import Highcharts from 'highcharts/highstock';
-import PieChart from "highcharts-react-official";
+import BarChart from "highcharts-react-official";
 
-const UserStat = ({ className, ...rest }) => {
+const CategoryStat = ({ className, ...rest }) => {
     const [stat, setStat] = React.useState([]);
     const options = {
         chart: {
-            type: 'pie'
-          },
-        title: {
-          text: 'utilisateurs'
+            type: 'bar'
         },
-        series: [
-          {
+        title: {
+            text: 'Reference les plus empruntées'
+        },
+        xAxis: {
+            type: 'category',
+            title: {
+                text: null
+            },
+            min: 0,
+            max: 4,
+            scrollbar: {
+                enabled: true
+            },
+            tickLength: 0
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: "Nombre d'emprunts",
+                align: 'high'
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: "emprunts",
             data: stat
-          }
-        ]
-      };
+        }]
+    };
 
     const getStat = async () => {
-        let path = '/admin/stat/user';
+        let path = '/admin/stat/category';
         try {
             const response = await api.get(path);
-
             if (response.status === 200) {
                 let rows = [];
                 for (const row of response.data) {
@@ -52,7 +82,7 @@ const UserStat = ({ className, ...rest }) => {
 
     return (
         <div>
-            <PieChart
+            <BarChart
                 highcharts={Highcharts}
                 options={options}
             />
@@ -60,11 +90,11 @@ const UserStat = ({ className, ...rest }) => {
     );
 }
 
-UserStat.propTypes = {
+CategoryStat.propTypes = {
     className: PropTypes.string,
 };
-UserStat.defaultProps = {
+CategoryStat.defaultProps = {
     className: '',
 };
 
-export default React.memo(UserStat);
+export default React.memo(CategoryStat);

@@ -6,6 +6,9 @@ import Typography from '@mui/material/Typography';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import UserStat from '../UserStat/UserStat';
+import ArticleStat from '../ArticleStat/ArticleStat';
+import CategoryStat from '../CategoryStat/CategoryStat';
+import BookingStat from '../BookingStat/BookingStat';
 
 const AdminStat = ({ className, ...rest}) => {
     return (
@@ -31,10 +34,7 @@ const AdminStat = ({ className, ...rest}) => {
               <Typography component="span">Jeux les plus empruntés</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <ArticleStat></ArticleStat>
             </AccordionDetails>
           </Accordion>
           <Accordion>
@@ -46,10 +46,7 @@ const AdminStat = ({ className, ...rest}) => {
               <Typography component="span">Catégories les plus empruntés</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <CategoryStat></CategoryStat>
             </AccordionDetails>
           </Accordion>
           <Accordion>
@@ -61,10 +58,7 @@ const AdminStat = ({ className, ...rest}) => {
               <Typography component="span">Emprunts par mois</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <BookingStat></BookingStat>
             </AccordionDetails>
           </Accordion>
         </div>
