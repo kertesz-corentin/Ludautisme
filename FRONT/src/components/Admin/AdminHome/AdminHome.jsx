@@ -40,7 +40,8 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
     const [modalId, setModalId] = useState(null);
 
     const allBookings = async () => {
-        const response = await api.get('/admin/booking');
+        const response = await api.get('/admin/booking/active');
+        console.log(response);
         if (response.status === 200) {
             setBookings(response.data.length);
         } else {
@@ -57,8 +58,14 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         }
     }
 
-    const allUsers = async () => {
-        const response = await api.get('/admin/users');
+    const allActiveUsers = async () => {
+        const response = await toast.promise(
+            api.post('admin/users/search', { cotisation_status: true }),
+            {
+                pending: `Recherche de l'utilisateur`,
+                error: 'Erreur lors de la recherche'
+            }
+        );
         if (response.status === 200) {
             setUsers(response.data.length);
         } else {
@@ -67,7 +74,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
     }
 
     const allReferences = async () => {
-        const response = await api.get('/admin/references');
+        const response = await api.get('/admin/references/active');
         if (response.status === 200) {
             setReferences(response.data.length);
         } else {
@@ -178,7 +185,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
     useEffect(() => {
         allBookings();
         delayBookings();
-        allUsers();
+        allActiveUsers();
         allReferences();
         getComment();
         getExtend();
@@ -267,12 +274,12 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
                         config.renderCell = (params) => (
                             <ExtendModale
                                 params={params.row.articles.map((art) => art = art[0])}
-                                extendId = {params.row.id}
-                                getExtend = {getExtend}
+                                extendId={params.row.id}
+                                getExtend={getExtend}
                             />
                         );
                         break
-                    case "articles": 
+                    case "articles":
                         config.renderCell = (params) => (
                             `${params.row.articles.map((art) => art = art[0].number)}`
                         );
@@ -290,6 +297,7 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
         });
         return columns;
     })();
+
     return (
         <><div
             className={classnames('adminhome', className)}

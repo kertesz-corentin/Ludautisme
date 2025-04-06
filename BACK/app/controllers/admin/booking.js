@@ -15,6 +15,11 @@ module.exports = {
         res.json(booking);
     },
 
+    async getActive(_, res) {
+        const booking = await bookingDataMapper.findActive();
+        res.json(booking);
+    },
+
     async twoYearsBooking(_, res) {
         const booking = await bookingDataMapper.findTwoYearsLater();
         res.json(booking);

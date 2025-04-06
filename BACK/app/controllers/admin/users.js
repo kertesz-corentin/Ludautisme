@@ -27,7 +27,7 @@ module.exports = {
     },
     async getFiltered(req, res) {
         //  Avoid injection on column
-        const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived', 'phone'];
+        const columns = ['id', 'member_number', 'email', 'first_name', 'last_name', 'archived', 'phone', 'cotisation_status'];
         const obj = req.body;
         const props = Object.keys(obj);
         const arr = [];
@@ -40,7 +40,7 @@ module.exports = {
             if (['id', 'member_number'].includes(columns[index]) && Number.isNaN(value)) {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : nombre)');
             }
-            if (['archived'].includes(columns[index]) && typeof value !== 'boolean') {
+            if (['archived', 'cotisation_status'].includes(columns[index]) && typeof value !== 'boolean') {
                 throw new ApiError(400, 'La valeur recherchée n\'est pas du type attendu (attendu : booléen)');
             }
             arr.push({ [columns[index]]: value });

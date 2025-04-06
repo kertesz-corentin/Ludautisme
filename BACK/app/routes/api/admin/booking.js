@@ -93,6 +93,14 @@ router.route('/ligth')
 router.route('/extend')
     .get(controllerHandler(bookingController.getAllExtend));
 /**
+ * GET /api/admin/booking/active
+ * @summary Get all active booking
+ * @tags [ADMIN] Booking
+ *  @return {booking} 200 - success response - application/json
+ */
+router.route('/active')
+    .get(controllerHandler(bookingController.getActive));
+/**
  * POST /api/admin/booking/extend/:extendId
  * @summary validate one extend
  * @tags [ADMIN] Extend
