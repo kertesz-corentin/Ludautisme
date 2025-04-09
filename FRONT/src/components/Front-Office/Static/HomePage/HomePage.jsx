@@ -140,13 +140,13 @@ const Accueil = ({ className, ...rest }) => {
                             Nous écrire:
                         </h3>
                         <p>
-                            77 rue de la fontaine blanche, 29800 LANDERNEAU
+                            8 rue traverse, 29800 LANDERNEAU
                         </p>
                         <h3>
                             Nous rencontrer :
                         </h3>
                         <p>
-                            Place François Mitterrand, 29800 LANDERNEAU
+                            77 rue de la fontaine blanche, 29800 LANDERNEAU
                         </p>
                         <h3>
                             Téléphone :

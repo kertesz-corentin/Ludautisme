@@ -37,9 +37,8 @@ const Infos = ({className, ...rest}) => {
                     </h2>
                     <strong>
                         Permanence le 2 ème mardi de chaque mois<br />
-                        Maison Pour Tous / Maison des Familles <br />
                     </strong>
-                    Place François Mitterrand<br />
+                    77 rue de la fontaine blanche<br />
                     29800 Landerneau<br />
                 </div>
                 <div>
@@ -57,7 +56,7 @@ const Infos = ({className, ...rest}) => {
 
             <div className="infos-header-permap">
             <Permanency />
-            <iframe title="ludo'map" className="infos-header-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2646.1474306172313!2d-4.257497284157107!3d48.45370073706886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b2c241a4e6ab%3A0xe04f55b4d36b897c!2sMaison%20Pour%20Tous%2FCentre%20Social!5e0!3m2!1sfr!2sfr!4v1646304683575!5m2!1sfr!2sfr" loading="lazy"></iframe>
+            <iframe title="ludo'map" className="infos-header-map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d233.88875878635238!2d-4.254805042393185!3d48.45366605556282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b2c24c1d52cb%3A0xcdde8366060c5e77!2s77%20Rue%20de%20la%20Font%20Blanche%2C%2029800%20Landerneau!5e0!3m2!1sfr!2sfr!4v1743877152376!5m2!1sfr!2sfr" loading="lazy"></iframe>
             </div>
 
         </div>
