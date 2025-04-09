@@ -41,7 +41,6 @@ const AdminHome = ({ isLogged, className, ...rest }) => {
 
     const allBookings = async () => {
         const response = await api.get('/admin/booking/active');
-        console.log(response);
         if (response.status === 200) {
             setBookings(response.data.length);
         } else {

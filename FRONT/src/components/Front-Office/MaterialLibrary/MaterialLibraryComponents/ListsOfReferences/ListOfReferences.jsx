@@ -26,15 +26,19 @@ const ListOfReferences = ({
     const userToken = JSON.parse(localStorage.getItem('user'));
 
     const handleExtend = async () => {
-        let body = { articleNumbers: extendArray };
-        const extend = await api.post(`/customer/booking/extend/${userToken.id}`, body);
+        if (extendArray.length > 0) {
+            let body = { articleNumbers: extendArray };
+            const extend = await api.post(`/customer/booking/extend/${userToken.id}`, body);
 
-        if (extend.status === 200) {
-            toast.success("Demande de prolongation envoyée");
+            if (extend.status === 200) {
+                toast.success("Demande de prolongation envoyée");
+            } else {
+                toast.error(extend.data.message);
+            }
+            refresh();
         } else {
-            toast.error(extend.data.message);
+            toast.error("sélectionnez les articles que vous souhaitez prolonger");
         }
-        refresh();
     }
 
     const exportList = () => {
@@ -47,7 +51,7 @@ const ListOfReferences = ({
             "Catégorie",
             "Catégorie Secondaire",
             "Numéros"
-          ];
+        ];
         const rows = [];
 
         for (let i = 0; i < references.length; i++) {
@@ -56,10 +60,10 @@ const ListOfReferences = ({
                 if (tag.name != references[i].maincategory) tags.push(tag.name)
             }
             var temp = [
-              references[i].name,
-              references[i].maincategory,
-              tags,
-              references[i].numberList
+                references[i].name,
+                references[i].maincategory,
+                tags,
+                references[i].numberList
             ];
             rows.push(temp);
         }
@@ -67,32 +71,32 @@ const ListOfReferences = ({
             startY: 20,
             theme: "grid",
             styles: {
-              font: "times",
-              halign: "center",
-              cellPadding: 3.5,
-              lineWidth: 0.5,
-              lineColor: [0, 0, 0],
-              textColor: [0, 0, 0]
+                font: "times",
+                halign: "center",
+                cellPadding: 3.5,
+                lineWidth: 0.5,
+                lineColor: [0, 0, 0],
+                textColor: [0, 0, 0]
             },
             headStyles: {
-              textColor: [0, 0, 0],
-              fontStyle: "normal",
-              lineWidth: 0.5,
-              lineColor: [0, 0, 0],
-              fillColor: [166, 204, 247]
+                textColor: [0, 0, 0],
+                fontStyle: "normal",
+                lineWidth: 0.5,
+                lineColor: [0, 0, 0],
+                fillColor: [166, 204, 247]
             },
             alternateRowStyles: {
-              fillColor: [212, 212, 212],
-              textColor: [0, 0, 0],
-              lineWidth: 0.5,
-              lineColor: [0, 0, 0]
+                fillColor: [212, 212, 212],
+                textColor: [0, 0, 0],
+                lineWidth: 0.5,
+                lineColor: [0, 0, 0]
             },
             rowStyles: {
-              lineWidth: 0.5,
-              lineColor: [0, 0, 0]
+                lineWidth: 0.5,
+                lineColor: [0, 0, 0]
             },
             tableLineColor: [0, 0, 0]
-          });
+        });
 
         doc.save("favoris.pdf");
     }
