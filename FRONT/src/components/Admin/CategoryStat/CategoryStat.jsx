@@ -12,7 +12,7 @@ const CategoryStat = ({ className, ...rest }) => {
             type: 'bar'
         },
         title: {
-            text: 'Reference les plus empruntées'
+            text: 'Catégories les plus empruntées'
         },
         xAxis: {
             type: 'category',
