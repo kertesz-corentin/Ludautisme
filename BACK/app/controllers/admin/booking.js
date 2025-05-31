@@ -618,7 +618,6 @@ module.exports = {
                     }
                 }
                 if (articleList.length > 0) {
-                    // console.log(booking);
                     bookingToNotify.push(booking.id);
                     const mail = template.sendLateBooking(booking.first_name, booking.date_permanency, articleList);
                     mailer.send(booking.email, mail.subject, mail.text);
