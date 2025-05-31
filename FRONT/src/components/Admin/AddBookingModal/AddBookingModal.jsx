@@ -238,7 +238,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             if (booking.status === 200) {
                 const response = await api.post(`/admin/booking/deliver/${booking.data.newBookingConfirm.id}`);
                 if (response.status === 200) {
-                    toast.success("Réservation réussi");
+                    toast.success("Réservation réussie");
                     updateOneBooking(response.data[0].id);
                     setTimeout(() => { handleCloseForce() }, 5000);
                 } else {

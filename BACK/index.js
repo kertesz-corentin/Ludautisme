@@ -3,6 +3,7 @@ require('dotenv').config();
 const cron = require('node-cron');
 const app = require('./app');
 const usersController = require('./app/controllers/admin/users');
+const bookingController = require('./app/controllers/admin/booking');
 
 const port = process.env.PORT ?? 3000;
 
@@ -11,12 +12,12 @@ const server = http.createServer(app);
 // tache cron une fois par semaine
 const task = cron.schedule('01 2 * * 7', () => {
     usersController.updateUserData();
+    bookingController.notifyDelayBooking();
 }, {
     scheduled: true,
     timezone: 'Europe/Paris',
 });
 task.start();
-
 server.listen(port, () => {
     console.log(`Listening on ${port}`);
 });

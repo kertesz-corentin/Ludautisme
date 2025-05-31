@@ -599,4 +599,32 @@ module.exports = {
         };
         return res.json(confirm);
     },
+    async notifyDelayBooking() {
+        const getCurrentParams = [
+            { overdue: true },
+        ];
+        const delayBooking = await bookingDataMapper.findFiltered(getCurrentParams);
+        const bookingToNotify = [];
+        for (const booking of delayBooking) {
+            if (booking.notify !== true) {
+                const articleList = [];
+
+                for (const article of booking.borrowed_articles) {
+                    if (!article.returned && !article.available && !article.archived) {
+                        articleList.push({
+                            number: article.number,
+                            name: article.name_ref,
+                        });
+                    }
+                }
+                if (articleList.length > 0) {
+                    // console.log(booking);
+                    bookingToNotify.push(booking.id);
+                    const mail = template.sendLateBooking(booking.first_name, booking.date_permanency, articleList);
+                    mailer.send(booking.email, mail.subject, mail.text);
+                }
+            }
+        }
+        if (bookingToNotify.length) bookingDataMapper.notify(bookingToNotify);
+    },
 };

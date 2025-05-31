@@ -248,6 +248,7 @@ module.exports = {
             b.delivered,
             b.closed,
             b.id_permanency,
+            b.notify,
             "user"."id" AS id_user,
         	"user"."member_number" AS member_number,
             "user"."first_name",
@@ -276,6 +277,7 @@ module.exports = {
         LEFT JOIN "article" AS borrowed ON "borrowed_ar_to_book"."id_article" = "borrowed"."id"
         INNER JOIN "reference" ON "reference"."id"="borrowed"."id_ref"
 		GROUP BY b.id, "user"."id", b.delivered, b.closed, b.id_permanency
+                , b.notify
                 ,"user"."id"
                 ,"user"."member_number"
                 ,"user"."first_name"
@@ -529,6 +531,24 @@ module.exports = {
         const result = await sqlHandler(`
         SELECT * FROM "extension_ticket"`);
 
+        return result.rows;
+    },
+    async notify(idArray) {
+        let startRequest = `UPDATE "booking"
+            SET "notify" = true
+            WHERE id IN (`;
+        let index = 1;
+        // eslint-disable-next-line no-restricted-syntax
+        for (const id of idArray) {
+            if (index === idArray.length) {
+                startRequest += `$${index})`;
+            } else {
+                startRequest += `$${index}, `;
+            }
+            index++;
+        }
+
+        const result = await sqlHandler(startRequest, idArray);
         return result.rows;
     },
 };
