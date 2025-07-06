@@ -6,7 +6,6 @@ import LoginUser from '../../User/LoginUser/LoginUser';
 import './header.scss';
 // import { NavLink } from 'react-router-dom';
 // import CartModal from '../CartModal/CartModal';
-import Cart from '../../Cart/Cart';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';

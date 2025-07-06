@@ -39,6 +39,7 @@ const CommentModale = ({ params, closed, ...rest }) => {
 
     useEffect(() => {
         getComment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleValid = async (commentId) => {

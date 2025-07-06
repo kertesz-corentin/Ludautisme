@@ -57,7 +57,7 @@ const ListOfReferences = ({
         for (let i = 0; i < references.length; i++) {
             let tags = [];
             for (const tag of references[i].tag) {
-                if (tag.name != references[i].maincategory) tags.push(tag.name)
+                if (tag.name !== references[i].maincategory) tags.push(tag.name)
             }
             var temp = [
                 references[i].name,

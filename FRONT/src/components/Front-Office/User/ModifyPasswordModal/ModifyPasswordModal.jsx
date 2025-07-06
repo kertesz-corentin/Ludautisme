@@ -16,8 +16,6 @@ import { toast } from 'react-toastify';
 const ModifyPasswordModal = ({ className, ...rest }) => {
 
     const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');
-
-    const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {

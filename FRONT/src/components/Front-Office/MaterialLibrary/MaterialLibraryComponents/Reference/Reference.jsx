@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReferenceSwiper from '../ReferenceSwiper/ReferenceSwiper';
 import PropTypes from 'prop-types';
 import './reference.scss';
@@ -13,7 +13,6 @@ import {
 import Unavailable from '../Unavailable/Unavailable';
 import Available from '../Available/Available';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { FunctionContext } from '../../../../App/App';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import EditCommentModale from '../../../../Admin/EditCommentModal/EditCommentModal';
@@ -32,19 +31,8 @@ const Reference = ({
         setOpen(true);
     };
     const handleClose = () => setOpen(false);
-    const cartManager = useContext(FunctionContext);
     const userToken = JSON.parse(localStorage.getItem('user'));
-    const { valorisation, tag, picture, maincategory, name, id, description } = reference;
-
-    let itemToAdd = {
-        id,
-        name,
-        description,
-        maincategory,
-        picture,
-        tag,
-        valorisation,
-    }
+    const { picture, name, id, description } = reference;
 
     // eslint-disable-next-line no-unused-vars
     const [cartItems, setCartItems] = useState(currentItems);
@@ -63,10 +51,6 @@ const Reference = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { updateCurrentItems() }, [currentItems])
-
-    function handleClick() {
-        cartManager.add(itemToAdd);
-    }
 
     const handleAddComment = async (comment) => {
         try {

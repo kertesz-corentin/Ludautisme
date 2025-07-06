@@ -31,6 +31,7 @@ const UserBookings = ({className, ...rest}) => {
             data = data.map((booking) => {
                 booking['references'] = [];
                 
+                // eslint-disable-next-line array-callback-return
                 booking.articles.map((article) => {
                     if (!booking['references'].find((e) => e.art_id === article.id)) {
                         booking['references'].push(

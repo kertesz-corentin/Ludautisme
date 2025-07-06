@@ -203,8 +203,6 @@ const ExtendModale = ({ params, closed, extendId, getExtend, ...rest }) => {
                 >
                 <Box className="edit-modal" component="form" onSubmit={confirmDelete} fullWidth>
                         <div className='comment-modal-header'>
-                            <h2></h2>
-
                             <Button
                                 className='comment-modal-header-close'
                                 onClick={handleCloseDelete}

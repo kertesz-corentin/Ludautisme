@@ -124,66 +124,66 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
     const inputRef = React.useRef(null);
 
-    const handleSubmitBooking = async (event) => {
-        event.preventDefault();
-        const listIds = {
-            "artIds": articleId
-        }
+    // const handleSubmitBooking = async (event) => {
+    //     event.preventDefault();
+    //     const listIds = {
+    //         "artIds": articleId
+    //     }
 
-        if (currentBooking) {
-            articleId.forEach(async (id, index) => {
-                const article = await toast.promise(
-                    api.get(`/admin/articles/${id}`),
-                    {
-                        pending: 'Réservation en cours',
-                        error: 'Erreur lors de la réservation'
-                    }
-                )
-                let options = {
-                    articleNumber: article.data[0].number,
-                    bookingId: currentBooking.id
-                }
-                const response = await toast.promise(
-                    api.put(`/admin/booking/${user[0].id}`, options),
-                    {
-                        pending: 'Réservation en cours',
-                        error: 'Erreur lors de la réservation'
-                    }
-                )
+    //     if (currentBooking) {
+    //         articleId.forEach(async (id, index) => {
+    //             const article = await toast.promise(
+    //                 api.get(`/admin/articles/${id}`),
+    //                 {
+    //                     pending: 'Réservation en cours',
+    //                     error: 'Erreur lors de la réservation'
+    //                 }
+    //             )
+    //             let options = {
+    //                 articleNumber: article.data[0].number,
+    //                 bookingId: currentBooking.id
+    //             }
+    //             const response = await toast.promise(
+    //                 api.put(`/admin/booking/${user[0].id}`, options),
+    //                 {
+    //                     pending: 'Réservation en cours',
+    //                     error: 'Erreur lors de la réservation'
+    //                 }
+    //             )
 
 
-                if (response.status === 200) {
-                    if (index + 1 === articleId.length) {
-                        toast.success("Réservation réussie");
-                        updateOneBooking(currentBooking.id);
-                        setTimeout(() => { handleCloseForce() }, 5000);
-                    }
-                } else {
-                    toast.error(response.data.message)
-                    return;
-                }
-            })
-            updateOneBooking(currentBooking.id);
-            setSubmited(true);
+    //             if (response.status === 200) {
+    //                 if (index + 1 === articleId.length) {
+    //                     toast.success("Réservation réussie");
+    //                     updateOneBooking(currentBooking.id);
+    //                     setTimeout(() => { handleCloseForce() }, 5000);
+    //                 }
+    //             } else {
+    //                 toast.error(response.data.message)
+    //                 return;
+    //             }
+    //         })
+    //         updateOneBooking(currentBooking.id);
+    //         setSubmited(true);
 
-        } else {
-            const response = await toast.promise(
-                api.post(`/admin/booking/add/${user[0].id}`, listIds),
-                {
-                    pending: 'Réservation en cours',
-                    error: 'Erreur lors de la réservation'
-                }
-            )
-            if (response.status === 200) {
-                toast.success("Réservation réussie");
-                updateOneBooking(response.data.newBookingConfirm.id);
-                setSubmited(true);
-                setTimeout(() => { handleCloseForce() }, 5000);
-            } else {
-                toast.error(response.data.message);
-            }
-        }
-    }
+    //     } else {
+    //         const response = await toast.promise(
+    //             api.post(`/admin/booking/add/${user[0].id}`, listIds),
+    //             {
+    //                 pending: 'Réservation en cours',
+    //                 error: 'Erreur lors de la réservation'
+    //             }
+    //         )
+    //         if (response.status === 200) {
+    //             toast.success("Réservation réussie");
+    //             updateOneBooking(response.data.newBookingConfirm.id);
+    //             setSubmited(true);
+    //             setTimeout(() => { handleCloseForce() }, 5000);
+    //         } else {
+    //             toast.error(response.data.message);
+    //         }
+    //     }
+    // }
 
     const handleDeliveredBooking = async (event) => {
         event.preventDefault();
