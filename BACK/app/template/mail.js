@@ -60,12 +60,12 @@ module.exports = {
         let text = `
         <p>Bonjour ${name},</p>
         <p>Vous avez emprunté des articles le ${formatedDate} et votre réservation a malheureusement dépassé la date de retour.  Pour que d'autres adhérents puissent également profiter de ce matériel, nous vous remercions de bien vouloir le rapporter lors de la prochaine permanence.</p>
-        <p>Voici la liste des articles concernées</p>`;
+        <p>Voici la liste des articles concernés</p>`;
         for (const article of articlesList) {
             text += `<p> Article n°: ${article.number}, nom: ${article.name} </p>`;
         }
         const finalText = `<p>Nous vous rappelons qu'il est possible de faire une demande de prolongation depuis votre espace personnel.</p>
-        <p>Vous pourrez, bien sûr, réemprunter vos articles préférés lors d'une permanence suivante !</p>
+        <p>Vous pourrez, bien sûr, réemprunter vos articles préférés lors d'une prochaine permanence !</p>
         <p>A bientôt !</p>
         <p>L'équipe de Lud'Autisme</p>
         <p>${automaticalMail}</p>`;

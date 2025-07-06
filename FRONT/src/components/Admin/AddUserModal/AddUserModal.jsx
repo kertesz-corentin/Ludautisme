@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -7,24 +7,37 @@ import moment from 'moment';
 import api from '../../../requests';
 
 // import material ui components
-import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup, Select, MenuItem }  from '@mui/material';
+import { TextField, Box, Typography, Modal, Button, Checkbox, FormControlLabel, FormGroup, Select, MenuItem, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './addusermodal.scss';
 
-const AddUserModal = ({getUsers, className, users, ...rest}) => {
+const AddUserModal = ({ getUsers, className, users, ...rest }) => {
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(5);
     const [nextNumber, setNextNumber] = useState(null);
+    const [openConfirmClose, setOpenConfirmClose] = useState(false);
 
     const handleOpen = () => {
         let userNumberArray = users.map((u) => u.member_number);
         let maxNumber = Math.max(...userNumberArray);
-        setNextNumber(maxNumber+1);
-        setOpen(true)}
+        setNextNumber(maxNumber + 1);
+        setOpen(true)
+    }
 
     const handleClose = () => {
+        setOpenConfirmClose(true);
+    }
+
+    const handleCloseForce = () => {
+        // close booking
         setOpen(false);
+
+        // close warning message 
+        setOpenConfirmClose(false);
+    }
+    const closeWarning = () => {
+        setOpenConfirmClose(false);
     }
     const [cotisationChecked, setCotisationChecked] = useState(false);
     const [cautionChecked, setCautionChecked] = useState(false);
@@ -34,7 +47,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        if(data.get('id_role' === true)){
+        if (data.get('id_role' === true)) {
             setRole(2);
         }
         const user = {
@@ -58,19 +71,20 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
         if (cotisationChecked) user['cotisation_expiration'] = moment(Date.now()).format();
         if (cautionChecked) user['caution_expiration'] = moment(Date.now()).format();
 
-        if(user['id_status'] === 5) {
+        if (user['id_status'] === 5) {
             toast.error("Ajoutez un status à votre utilisateur");
             return;
         }
         const response = await toast.promise(
-            api.post('/admin/users', user), 
+            api.post('/admin/users', user),
             {
                 pending: `Création de l'utilisateur`,
                 error: 'Erreur lors de la création'
             }
         );
-        if(response.status === 200) {
+        if (response.status === 200) {
             toast.success("Adhérent créée");
+            handleCloseForce();
             getUsers();
         } else {
             toast.error(response.data.message);
@@ -90,13 +104,13 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
     }
 
     const handleRole = (event) => {
-        if(event.target.checked === true){
+        if (event.target.checked === true) {
             setRole(2)
         }
     }
     const handleChange = (event) => {
         setStatus(event.target.value);
-      };
+    };
 
     return (
         <div className="adduser-modal--open">
@@ -127,7 +141,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='member_number'
                             type='number'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                             defaultValue={nextNumber}
                         />
                         <TextField
@@ -136,7 +150,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='email'
                             type='email'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -152,7 +166,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='first_name'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -160,7 +174,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='last_name'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -168,7 +182,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='phone'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -176,7 +190,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='adress_number'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -184,19 +198,19 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='adress_street'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
                             label='Code Postal'
                             name='adress_zipcode'
-                            placeholder= 'ex: 75000'
+                            placeholder='ex: 75000'
                             inputProps={{
                                 inputMode: 'numeric',
                                 pattern: '[0-9]*'
                             }}
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <TextField
                             id='outlined'
@@ -204,7 +218,7 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                             name='adress_city'
                             type='string'
                             className="adduser-modal-inputs-item"
-                            sx={{mb: 2}}
+                            sx={{ mb: 2 }}
                         />
                         <FormGroup
                             sx={{
@@ -255,7 +269,44 @@ const AddUserModal = ({getUsers, className, users, ...rest}) => {
                     </div>
                 </Box>
             </Modal>
-
+            <Modal
+                open={openConfirmClose}
+                onClose={handleClose}
+                fullWidth
+            >
+                <section
+                    {...rest}
+                    style={{ width: '100%' }}
+                >
+                    <Box className="edit-modal" component="form" fullWidth>
+                        <Alert variant="outlined"
+                            severity="error">
+                            Etes vous sur de vouloir fermer sans créer d'adhérent ?
+                        </Alert>
+                        <div style={{ display: 'flex' }}>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px', marginRight: '10px' }}
+                                onClick={handleCloseForce}
+                            >
+                                Valider
+                            </Button>
+                            <Button
+                                type='submit'
+                                className="updatereference-modal-footer-submit"
+                                variant="contained"
+                                style={{ marginTop: '10px' }}
+                                onClick={closeWarning}
+                                color='warning'
+                            >
+                                Annuler
+                            </Button>
+                        </div>
+                    </Box>
+                </section>
+            </Modal>
         </div>
     );
 };

@@ -13,7 +13,7 @@ import BookingStat from '../BookingStat/BookingStat';
 const AdminStat = ({ className, ...rest}) => {
     return (
         <div>
-          <Accordion>
+          <Accordion defaultExpanded>
             <AccordionSummary
               expandIcon={<ArrowDownwardIcon />}
               aria-controls="panel1-content"
@@ -25,7 +25,7 @@ const AdminStat = ({ className, ...rest}) => {
                 <UserStat></UserStat>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion defaultExpanded>
             <AccordionSummary
               expandIcon={<ArrowDownwardIcon />}
               aria-controls="panel1-content"
@@ -37,7 +37,7 @@ const AdminStat = ({ className, ...rest}) => {
               <ArticleStat></ArticleStat>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion defaultExpanded>
             <AccordionSummary
               expandIcon={<ArrowDownwardIcon />}
               aria-controls="panel1-content"
@@ -49,7 +49,7 @@ const AdminStat = ({ className, ...rest}) => {
               <CategoryStat></CategoryStat>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion defaultExpanded>
             <AccordionSummary
               expandIcon={<ArrowDownwardIcon />}
               aria-controls="panel1-content"

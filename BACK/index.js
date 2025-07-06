@@ -12,7 +12,7 @@ const server = http.createServer(app);
 // tache cron une fois par semaine
 const task = cron.schedule('01 2 * * 7', () => {
     usersController.updateUserData();
-    bookingController.notifyDelayBooking();
+    // bookingController.notifyDelayBooking();
 }, {
     scheduled: true,
     timezone: 'Europe/Paris',

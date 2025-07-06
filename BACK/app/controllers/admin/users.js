@@ -53,8 +53,10 @@ module.exports = {
         return res.json(user);
     },
     async create(req, res) {
-        const user = await usersDataMapper.findFiltered([
+        const userNumber = await usersDataMapper.findFiltered([
             { member_number: Number(req.body.member_number) },
+        ]);
+        const userMail = await usersDataMapper.findFiltered([
             { email: req.body.email },
         ]);
         const {
@@ -63,8 +65,11 @@ module.exports = {
         if (!id_role || !email || !member_number || !adress_number || !adress_street) {
             throw new ApiError(400, 'Les informations minimum n\'ont pas été réceptionnées');
         }
-        if (user.length > 0) {
-            throw new ApiError(400, 'Un utilisateur avec le même email ou numéro de membre existe déjà');
+        if (userNumber.length > 0) {
+            throw new ApiError(400, 'Un utilisateur avec le même numéro de membre existe déjà');
+        }
+        if (userMail.length > 0) {
+            throw new ApiError(400, 'Un utilisateur avec le même email existe déjà');
         }
         if (req.body.password) {
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);

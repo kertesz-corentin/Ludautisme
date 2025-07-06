@@ -30,6 +30,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const handleCloseForce = () => {
+        getBookings();
         // close booking
         setOpen(false);
         setReturnArticle([]);
@@ -252,6 +253,9 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             <Modal
                 open={open}
                 onClose={handleClose}
+                onClick = {(event) => {
+                    event.stopPropagation();
+                }}
             >
                 <Box className="update-modal">
                     <div className="update-modal-header">

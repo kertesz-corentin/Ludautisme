@@ -46,7 +46,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
             }
         }
         // séparer la listes pour l'affichage et la liste pour envoyer a réserver
-
         setOpen(true);
     }
     const handleClose = () => {
@@ -257,6 +256,11 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
         const data = new FormData(event.currentTarget);
         const article_number = (data.get('number'));
+        if (!article_number) {
+            toast.error("Veuillez entrer un numéro d'article");
+            return;
+        } 
+
         if (listArticle.find(a => a.number === Number(article_number))) {
             toast.error("article déjà présent dans la réservation");
         } else {
@@ -480,14 +484,14 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                     </div>
                     <div className="addbook-modal-footer">
                         <div className="addbook-modal-footer-button">
-                            <Button
+                            {/* <Button
                                 onClick={handleSubmitBooking}
                                 className="addbook-modal-footer-submit"
                                 variant='outlined'
                                 color='primary'
                             >
                                 Valider
-                            </Button>
+                            </Button> */}
                             <Button
                                 onClick={handleDeliveredBooking}
                                 className="addbook-modal-footer-submit"
