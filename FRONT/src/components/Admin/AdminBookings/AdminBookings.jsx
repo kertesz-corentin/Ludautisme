@@ -121,9 +121,10 @@ const AdminBookings = ({ className, ...rest }) => {
                                     value={params.value}
                                     selected={params.value}
                                     onChange={async () => {
-                                        const id = Number(params.row.id);
-                                        await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
-                                        await updateOneBooking(params.row.id);
+                                        // no update by grid for cloture
+                                        // const id = Number(params.row.id);
+                                        // await api.post(`/admin/booking/close/${id}`, { [prop]: !params.value });
+                                        // await updateOneBooking(params.row.id);
                                     }}
                                     aria-label={`${prop}-${params.row.id}`}
                                 >

@@ -626,4 +626,16 @@ module.exports = {
         }
         if (bookingToNotify.length) bookingDataMapper.notify(bookingToNotify);
     },
+    async getArchivedToPrint(req, res) {
+        const articleList = await bookingDataMapper.getAchivedList();
+        return res.json(articleList);
+    },
+    async getAvalaibleToPrint(req, res) {
+        const articleList = await bookingDataMapper.getAvalaibleList();
+        return res.json(articleList);
+    },
+    async getBorrowedçToPrint(req, res) {
+        const articleList = await bookingDataMapper.getBorrowedList();
+        return res.json(articleList);
+    },
 };

@@ -52,6 +52,9 @@ module.exports = {
 
         return res.json(user);
     },
+    test(req, res) {
+        return res.json(true);
+    },
     async create(req, res) {
         const userNumber = await usersDataMapper.findFiltered([
             { member_number: Number(req.body.member_number) },

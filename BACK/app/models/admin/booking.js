@@ -82,6 +82,17 @@ const sqlHandler = require('../../helpers/sqlHandler');
  * @property {number} id_user - ID of user
  * @property {string} article_array - arra of article ID
  */
+/**
+ * @typedef {object} inventoryArt
+ * @property {number} number article number
+ * @property {string} name reference name
+ */
+/**
+ * @typedef {object} inventoryArtBorrowed
+ * @property {number} number article number
+ * @property {string} name reference name
+ * @property {number} member_number member number
+ */
 
 module.exports = {
     async findAll() {
@@ -549,6 +560,42 @@ module.exports = {
         }
 
         const result = await sqlHandler(startRequest, idArray);
+        return result.rows;
+    },
+    async getAchivedList() {
+        const request = `
+        SELECT art.number, ref.name FROM "article" as art
+        JOIN "reference" as ref ON art.id_ref = ref.id
+        WHERE art.archived = true
+        ORDER BY art.number asc
+        `;
+        const result = await sqlHandler(request);
+        return result.rows;
+    },
+    async getAvalaibleList() {
+        const request = `
+        SELECT art.number, ref.name FROM "article" as art
+        JOIN "reference" as ref ON art.id_ref = ref.id
+        LEFT JOIN "article_to_booking" as atb ON atb.id_article = art.id
+        WHERE ( art.archived = false AND atb.returned = true ) OR ( art.archived = false AND atb.id IS NULL )
+        GROUP BY art.number, ref.name
+        ORDER BY art.number asc
+        `;
+        const result = await sqlHandler(request);
+        return result.rows;
+    },
+    async getBorrowedList() {
+        const request = `
+        SELECT art.number, ref.name, us.member_number FROM "article" as art
+        JOIN "reference" as ref ON art.id_ref = ref.id
+        JOIN "article_to_booking" as atb ON atb.id_article = art.id
+        JOIN "booking" as book ON atb.id_booking = book.id
+        JOIN "user" as us ON book.id_user = us.id
+        WHERE art.archived = false AND atb.returned = false
+        GROUP BY art.number, ref.name, us.member_number
+        ORDER BY art.number asc
+        `;
+        const result = await sqlHandler(request);
         return result.rows;
     },
 };

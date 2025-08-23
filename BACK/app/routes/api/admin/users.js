@@ -45,6 +45,15 @@ router.route('/search')
     .post(controllerHandler(usersController.getFiltered));
 
 /**
+ * GET /api/admin/users/test
+ * @summary Test if user token is valid
+ * @tags [ADMIN] Users
+ * @return 200 - success response - application/json
+ */
+router.route('/test')
+    .get(controllerHandler(usersController.test));
+
+/**
  * GET /api/admin/users
  * @summary Get all users detailed informations
  * @tags [ADMIN] Users

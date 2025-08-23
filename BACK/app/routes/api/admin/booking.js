@@ -167,6 +167,28 @@ router.route('/search')
     .post(controllerHandler(bookingController.getFiltered));
 
 /**
+ * GET /api/admin/booking/print
+ * @summary Get archived article list for inventory
+ * @tags [ADMIN] Booking
+ * @return {inventoryArt} 200 - success response - application/json
+ */
+/**
+ * POST /api/admin/booking/print
+ * @summary Get available article list for inventory
+ * @tags [ADMIN] Booking
+ * @return {inventoryArt} 200 - success response - application/json
+ */
+/**
+ * PUT /api/admin/booking/print
+ * @summary Get Borrowed article list for inventory
+ * @tags [ADMIN] Booking
+ * @return {inventoryArtBorrowed} 200 - success response - application/json
+ */
+router.route('/print')
+    .get(controllerHandler(bookingController.getArchivedToPrint))
+    .post(controllerHandler(bookingController.getAvalaibleToPrint))
+    .put(controllerHandler(bookingController.getBorrowedçToPrint));
+/**
  * GET /api/admin/booking
  * @summary Get all detailed booking
  * @tags [ADMIN] Booking

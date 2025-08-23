@@ -4,7 +4,6 @@ import {
 } from './admin';
 
 const baseURL = (window.location.origin.includes('localhost')) ? `http://localhost:3001` : window.location.origin;
-console.log(baseURL);
 
 const connection = axios.create({
     baseURL: `${baseURL}/api`,
