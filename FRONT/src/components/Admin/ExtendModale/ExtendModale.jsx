@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Modal, Box, Button, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { frFR } from '@mui/x-data-grid/locales';
 import { articleSchema } from '../../../Schemas';
 import EditIcon from '@mui/icons-material/Edit';
 import { toast } from 'react-toastify';
@@ -128,10 +129,7 @@ const ExtendModale = ({ params, closed, extendId, getExtend, ...rest }) => {
                                 columns={columnsBuilder}
                                 disableRowSelectionOnClick
                                 localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-
-                                components={{
-                                    Toolbar: GridToolbar,
-                                }}
+                                showToolbar
                                 initialState={{
                                     columns: {
                                         columnVisibilityModel: {

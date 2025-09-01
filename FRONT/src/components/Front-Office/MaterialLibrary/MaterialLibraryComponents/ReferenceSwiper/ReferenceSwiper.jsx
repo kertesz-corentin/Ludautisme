@@ -1,7 +1,7 @@
 import React from 'react';
 import './referenceswiper.scss'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from "swiper";
+import { Pagination, Navigation } from "swiper/modules";
 import LazyImage from '../LazyImage/LazyImage';
 import HideImageIcon from '@mui/icons-material/HideImage';
 import { Box } from '@mui/material';

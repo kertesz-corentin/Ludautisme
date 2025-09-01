@@ -2,17 +2,19 @@ import * as React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import 'date-fns'
-import frLocale from 'date-fns/locale/fr';
 
 import api from '../../../requests';
 import { toast } from 'react-toastify';
 
 // import material ui components
-import { TextField, Chip } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { Chip } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { format, isAfter, parse } from 'date-fns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { isAfter } from 'date-fns';
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 import './adminpermanency.scss';
 import { Button } from '@mui/material';
@@ -28,8 +30,8 @@ const AdminPermanency = ({ className, ...rest }) => {
         const activePermanency = response.data;
         if (response.status === 200) {
             (activePermanency[0].next_date)
-                ? setDate(format(new Date(activePermanency[0].next_date), 'yyyy-MM-dd', { timeZone: 'Europe/Paris' }))
-                : setDate(format(new Date(), 'yyyy-MM-dd', { timeZone: 'Europe/Paris' }));
+                ? setDate(activePermanency[0].next_date)
+                : setDate(new Date());
             (activePermanency[0].next_date) && setIsDefined(true);
         } else {
             toast.error(response.data.message);
@@ -38,7 +40,7 @@ const AdminPermanency = ({ className, ...rest }) => {
 
     const handleChangeDate = (event) => {
         if (new Date(event) >= new Date()) {
-            setDate(format(new Date(event), 'yyyy-MM-dd', { timeZone: 'Europe/Paris' }));
+            setDate(new Date(event));
         } else {
             setAlertMessage({
                 message: 'Erreur'
@@ -49,8 +51,9 @@ const AdminPermanency = ({ className, ...rest }) => {
 
     const setPermanencyDate = async () => {
         if (date) {
+            date.setHours(date.getHours() + 2);
             const newDate = {
-                'next_date': date
+                'next_date': dayjs(date)
             }
             const response = await api.patch('/admin/permanency/next', newDate);
 
@@ -92,12 +95,19 @@ const AdminPermanency = ({ className, ...rest }) => {
         <div className="adminpermanency">
             <h2 className="adminpermanency-title">Prochaine permanence</h2>
             <div className="adminpermanency-element">
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
                     <DatePicker
+                        slotProps={{
+                            textField: {
+                                sx: {
+                                    width: '180px'
+                                }
+                            }
+                        }}
+                        format='DD/MM/YYYY'
                         label="Sélectionner une date"
-                        value={date}
+                        value={dayjs(date)}
                         onChange={(event) => handleChangeDate(event)}
-                        renderInput={(params) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
             </div>
@@ -114,7 +124,7 @@ const AdminPermanency = ({ className, ...rest }) => {
                         </AlertMessage>
                     </>
                     :
-                    (isAfter(new Date(), parse(date, 'yyyy-MM-dd', new Date())) && isDefined) ?
+                    (isAfter(new Date(), date) && isDefined) ?
                         <>
                             <Button
                                 variant='outlined'

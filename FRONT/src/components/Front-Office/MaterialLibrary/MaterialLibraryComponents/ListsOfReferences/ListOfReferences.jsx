@@ -7,7 +7,9 @@ import { Grid, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import api from '../../../../../requests';
 import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import { applyPlugin } from 'jspdf-autotable'
+
+applyPlugin(jsPDF)
 
 const ListOfReferences = ({
     className,
@@ -67,7 +69,9 @@ const ListOfReferences = ({
             ];
             rows.push(temp);
         }
-        doc.autoTable(columns, rows, {
+        doc.autoTable({
+            head: [columns],
+            body: rows,
             startY: 20,
             theme: "grid",
             styles: {

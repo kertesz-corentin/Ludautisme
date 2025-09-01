@@ -12,17 +12,25 @@ import UpdateReferenceModal from '../UpdateReferenceModal/UpdateReferenceModal';
 import { referenceSchema } from '../../../Schemas';
 import { TextField } from '@mui/material';
 import { toast } from 'react-toastify';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 // import material ui component
 import { IconButton, Button } from '@mui/material';
 
+import { jsPDF } from "jspdf";
+import { applyPlugin } from 'jspdf-autotable';
+
 import './adminreferences.scss';
 import '../BookingUserChoice/bookinguserchoice.scss';
+applyPlugin(jsPDF)
 
 const AdminReferences = ({ className, ...rest }) => {
     const [references, setReferences] = useState([]);
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(false);
+    const open = Boolean(anchorEl);
 
     const [articleValue, setArticleValue] = useState('');
     // config path for api route
@@ -88,6 +96,154 @@ const AdminReferences = ({ className, ...rest }) => {
         }
     }
 
+    const handleExportAvailable = async () => {
+        const response = await api.post('/admin/booking/print');
+        if (response.status === 200) {
+            const doc = new jsPDF();
+
+            doc.text("Articles disponibles", 10, 10);
+
+            const columns = [
+                "Numéro",
+                "Nom"
+            ];
+            const rows = [];
+
+            for (const article of response.data) {
+                const art = [
+                    article.number,
+                    article.name
+                ];
+                rows.push(art);
+            }
+
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 20,
+                theme: "grid",
+                bodyStyles: {cellHeight: 0.5}
+            });
+
+            doc.save("disponibles.pdf");
+        } else {
+            toast.error("Impossible de récupérer la liste");
+        }
+    }
+
+    const handleExportBorrowed = async () => {
+        const response = await api.put('/admin/booking/print');
+        if (response.status === 200) {
+            const doc = new jsPDF();
+
+            doc.text("Articles empruntées", 10, 10);
+
+            const columns = [
+                "Numéro",
+                "Nom",
+                "Numéro adhérent"
+            ];
+            const rows = [];
+
+            for (const article of response.data) {
+                const art = [
+                    article.number,
+                    article.name,
+                    article.member_number
+                ];
+                rows.push(art);
+            }
+
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 20,
+                theme: "grid",
+                bodyStyles: {cellHeight: 0.5}
+            });
+
+            doc.save("empruntées.pdf");
+        } else {
+            toast.error("Impossible de récupérer la liste");
+        }
+    }
+
+    const handleExportNoBorrowed = async () => {
+        const response = await api.patch('/admin/booking/print');
+        if (response.status === 200) {
+            const doc = new jsPDF();
+
+            doc.text("Articles jamais empruntées", 10, 10);
+
+            const columns = [
+                "Numéro",
+                "Nom",
+                "Numéro adhérent"
+            ];
+            const rows = [];
+
+            for (const article of response.data) {
+                const art = [
+                    article.number,
+                    article.name,
+                    article.member_number
+                ];
+                rows.push(art);
+            }
+
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 20,
+                theme: "grid",
+                bodyStyles: {cellHeight: 0.5}
+            });
+
+            doc.save("jamais empruntées.pdf");
+        } else {
+            toast.error("Impossible de récupérer la liste");
+        }
+
+    }
+    const handleExportArchived = async () => {
+        const response = await api.get('/admin/booking/print');
+        if (response.status === 200) {
+            const doc = new jsPDF();
+
+            doc.text("Articles empruntées", 10, 10);
+
+            const columns = [
+                "Numéro",
+                "Nom"
+            ];
+            const rows = [];
+
+            for (const article of response.data) {
+                const art = [
+                    article.number,
+                    article.name
+                ];
+                rows.push(art);
+            }
+
+            doc.autoTable({
+                head: [columns],
+                body: rows,
+                startY: 20,
+                theme: "grid",
+                bodyStyles: {cellHeight: 0.5}
+            });
+
+            doc.save("archivés.pdf");
+        } else {
+            toast.error("Impossible de récupérer la liste");
+        }
+
+    }
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
     useEffect(() => {
         getReferences();
         getMainCategories();
@@ -114,7 +270,7 @@ const AdminReferences = ({ className, ...rest }) => {
                                 value={params.value}
                                 aria-label={`${prop}-${params.row.id}`}
                             >
-                                <UpdateReferenceModal params={params} categories={categories} tags={tags} getReferences={getReferences}/>
+                                <UpdateReferenceModal params={params} categories={categories} tags={tags} getReferences={getReferences} />
                             </IconButton>
                         );
                         break;
@@ -146,6 +302,37 @@ const AdminReferences = ({ className, ...rest }) => {
             style={{ width: "150px" }}
         >
         </TextField>
+    const pdfButton =
+        <div className="addreference-modal--open">
+            <Button
+                variant="outlined"
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                Exporter
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                slotProps={{
+                    list: {
+                        'aria-labelledby': 'basic-button',
+                    },
+                }}
+            >
+                <MenuItem onClick={handleExportAvailable}>Disponibles</MenuItem>
+                <MenuItem onClick={handleExportBorrowed}>Empruntés</MenuItem>
+                <MenuItem onClick={handleExportNoBorrowed}>Jamais empruntés</MenuItem>
+                <MenuItem onClick={handleExportArchived}>Archivés</MenuItem>
+            </Menu>
+        </div>
+
+
+
 
     return (
         <div
@@ -169,7 +356,7 @@ const AdminReferences = ({ className, ...rest }) => {
                         sortModel: [{ field: 'id', sort: 'asc' }],
                     },
                 }}
-                buttonList={[<AddReferenceModal categories={categories} tags={tags} getReferences={getReferences} />, categoryButton, articleInput]}
+                buttonList={[<AddReferenceModal categories={categories} tags={tags} getReferences={getReferences} />, categoryButton, pdfButton, articleInput]}
             />
         </div>
     );

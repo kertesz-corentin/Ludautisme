@@ -8,7 +8,8 @@ import { articleSchema } from '../../../Schemas';
 
 // import material ui components
 import { IconButton, Button, Chip } from '@mui/material';
-import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { frFR } from '@mui/x-data-grid/locales';
 
 import './bookingarticles.scss';
 
@@ -92,15 +93,13 @@ const BookingArticles = ({ list, closed, delivered, className, getBookings, setR
                     autoHeight
                     getRowId={(row) => row.id}
                     rows={list}
+                    showToolbar
                     columns={columnsBuilder}
                     checkboxSelection={true}
                     disableSelectionOnClick
                     localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                     onRowSelectionModelChange={(value) => {
                         setReturnArticle(value);
-                    }}
-                    components={{
-                        Toolbar: GridToolbar,
                     }}
                     initialState={{
                         columns: {

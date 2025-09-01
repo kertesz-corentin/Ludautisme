@@ -86,7 +86,7 @@ const Reference = ({
 
     return (
         <Card className="reference-card"
-            sx={{ width: gridSize }}
+            sx={{ width: gridSize, margin: '0.5rem' }}
         >
             <ReferenceSwiper
                 refId={id}

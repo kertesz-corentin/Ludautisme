@@ -12,7 +12,8 @@ import { articleSchema } from '../../../Schemas';
 import { Button, Modal, Box, Typography, TextField, IconButton, Alert } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { frFR } from '@mui/x-data-grid/locales';
 
 import './addbookingmodal.scss';
 

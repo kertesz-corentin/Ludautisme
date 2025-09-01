@@ -7,7 +7,8 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 import './commentmodale.scss';
 import api from '../../../requests';
-import { DataGrid, frFR, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { frFR } from '@mui/x-data-grid/locales';
 import { commentSchema } from '../../../Schemas';
 import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -235,10 +236,7 @@ const CommentModale = ({ params, closed, ...rest }) => {
                                 columns={columnsBuilder}
                                 disableRowSelectionOnClick
                                 localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-
-                                components={{
-                                    Toolbar: GridToolbar,
-                                }}
+                                showToolbar
                                 initialState={{
                                     columns: {
                                         columnVisibilityModel: {

@@ -6,7 +6,6 @@ import api from '../../../../requests/index';
 import RecoverPasswordModal from '../RecoverPasswordModal/RecoverPasswordModal';
 import './loginform.scss'
 import { toast } from 'react-toastify';
-import ButtonUnstyled  from '@mui/base/ButtonUnstyled';
 
 const LoginForm = ({handleCloseLogin, ...rest}) => {
     const navigate = useNavigate();
@@ -69,14 +68,14 @@ const LoginForm = ({handleCloseLogin, ...rest}) => {
                             id="password"
                             autoComplete="current-password"
                             />
-                            <ButtonUnstyled
+                            <Button
                             className="loginForm-submit"
                             type="submit"
                             variant="contained"
                             sx={{ mt: 1, mb: 2 }}
                             >
                                 SE CONNECTER
-                            </ButtonUnstyled>
+                            </Button>
             </Box>
             <Box>
             <Grid container className= "gridContainer">

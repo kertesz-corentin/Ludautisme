@@ -634,8 +634,12 @@ module.exports = {
         const articleList = await bookingDataMapper.getAvalaibleList();
         return res.json(articleList);
     },
-    async getBorrowedçToPrint(req, res) {
+    async getBorrowedToPrint(req, res) {
         const articleList = await bookingDataMapper.getBorrowedList();
+        return res.json(articleList);
+    },
+    async getNotBorrowedToPrint(req, res) {
+        const articleList = await bookingDataMapper.getNeverBorrowedList();
         return res.json(articleList);
     },
 };
