@@ -10,18 +10,20 @@ import moment from 'moment';
 
 const BookingUserChoice = ({ articles, params, className, setHistory, checked, getBookings, updateOneBooking, ...rest }) => {
     const [search, setSearch] = useState(false);
-    const [userExist, setUserExist] = useState(false);
     const [user, setUser] = useState([]);
     const [value, setValue] = useState('');
-    const [openModal, setOpenModal] = useState(false);
+    const [openWarningModal, setWarningOpenModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const [openModale, setOpenModale] = React.useState(false);
+    const [currentBooking, setCurrentBooking] = React.useState();
+    const [listArticle, setListArticle] = React.useState([]);
 
     const handleSearch = () => setSearch(true);
 
     const handleClose = () => {
-        setUserExist(true);
-        setOpenModal(false);
+        setWarningOpenModal(false);
         setModalMessage("");
+        setOpenModale(true);
     }
     const handleSubmit = async (event) => {
         // on vérifie que l'adhérent existe et on retourne true ou false
@@ -37,13 +39,24 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
             }
         );
 
-        if (response.status === 200) { 
+        if (response.status === 200) {
             let user = response.data[0];
+            // get active booking of this user if exist 
+            const activeBooking = await api.get(`/customer/booking/active/${user.id}`);
+
+            // get articles if booking exist
+            if (activeBooking?.data) {
+                setCurrentBooking(activeBooking.data[0])
+                if (activeBooking.data[0]?.borrowed_articles) {
+                    setListArticle(activeBooking.data[0]?.borrowed_articles)
+                }
+            }
+            setUser(response.data);
             // on vérifie la cotisation et la caution de l'adhérent 
             if (!user.cotisation_expiration || (!user.caution_expiration && user.id_status !== 4)) {
                 // s'il manque les données on demande la mise a jour de la fiche
                 setModalMessage(`La fiche de l'adhérent ne contient pas d'information sur sa cotisation et sa caution, merci de la mettre à jour`);
-                setOpenModal(true);
+                setWarningOpenModal(true);
             } else if (user.cotisation_status === false || user.caution_status === false) {
                 let confirmOpen = false;
                 if (user.cotisation_status === false && user.caution_status === false) {
@@ -56,16 +69,13 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                     confirmOpen = true;
                     setModalMessage(`La caution de l'adhérent est expirée depuis le ${moment(user.caution_expiration).format('DD/MM/YYYY')}`);
                 }
+
                 if (confirmOpen) {
-                    setOpenModal(true);
-                } else {
-                    setUserExist(true);
+                    setWarningOpenModal(true);
                 }
             } else {
-                setUserExist(true);
+                setOpenModale(true);
             }
-
-            setUser(response.data);
         } else {
             toast.error(response.data.message);
         }
@@ -73,7 +83,6 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
 
     const handleChange = (event) => {
         setValue(event.target.value)
-        setUserExist(false);
     }
 
     const handleSwitchHistory = (event) => {
@@ -103,7 +112,7 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                         </TextField>
                     )}
 
-                    {!userExist && search && (
+                    {search && (
                         <Button
                             type='submit'
                             className="booking-search-element"
@@ -113,13 +122,13 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                         </Button>
                     )}
                     <Modal
-                        open={openModal}
+                        open={openWarningModal}
                         onClose={handleClose}
                     >
                         <Box className="delete-modal">
                             <div className="delete-modal-header">
                                 <Typography className='delete-modal-header-title'>
-                                    
+
                                 </Typography>
                             </div>
                             <div className="delete-modal-inputs">
@@ -141,10 +150,7 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                         </Box>
                     </Modal>
 
-                    {userExist && search && (
-                        <AddBookingModal user={user} params={params} getBookings={getBookings} updateOneBooking={updateOneBooking} />
-                    )}
-
+                    <AddBookingModal user={user} params={params} getBookings={getBookings} updateOneBooking={updateOneBooking} open={openModale} setOpen={setOpenModale} currentBooking={currentBooking} setCurrentBooking={setCurrentBooking} listArticle={listArticle} setListArticle={setListArticle}/>
                 </Box>
             </div>
             <FormControlLabel control={<Switch checked={checked} onChange={handleSwitchHistory} inputProps={{ 'aria-label': 'controlled' }} />} label="Historique complet" />

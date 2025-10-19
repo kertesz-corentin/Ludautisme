@@ -17,15 +17,12 @@ import { frFR } from '@mui/x-data-grid/locales';
 
 import './addbookingmodal.scss';
 
-const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...rest }) => {
-    const [open, setOpen] = React.useState(false)
+const AddBookingModal = ({ user, className, getBookings, updateOneBooking, open, setOpen, listArticle, setListArticle, currentBooking, setCurrentBooking, ...rest }) => {
     const [notAvailableOpen, setNotAvailableOpen] = React.useState(false);
     const [openConfirmClose, setOpenConfirmClose] = React.useState(false);
     const [submited, setSubmited] = React.useState(false);
-
     const [articleId, setArticleId] = React.useState([]);
-    const [listArticle, setListArticle] = React.useState([]);
-    const [currentBooking, setCurrentBooking] = React.useState();
+
     const [currentArticle, setCurrentArticle] = React.useState();
     // status of non available article 
     // 1 = just not available 
@@ -35,20 +32,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
     const [modalMessage, setModalMessage] = React.useState('');
 
-    const handleOpen = async () => {
-        // get active booking of this user if exist 
-        let activeBooking = await api.get(`/customer/booking/active/${user[0].id}`);
-
-        // get articles if booking exist
-        if (activeBooking.data) {
-            setCurrentBooking(activeBooking.data[0])
-            if (activeBooking.data[0]?.borrowed_articles) {
-                setListArticle(activeBooking.data[0]?.borrowed_articles)
-            }
-        }
-        // séparer la listes pour l'affichage et la liste pour envoyer a réserver
-        setOpen(true);
-    }
     const handleClose = () => {
         if (!submited && articleId.length) {
             setOpenConfirmClose(true);
@@ -260,7 +243,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
         if (!article_number) {
             toast.error("Veuillez entrer un numéro d'article");
             return;
-        } 
+        }
 
         if (listArticle.find(a => a.number === Number(article_number))) {
             toast.error("article déjà présent dans la réservation");
@@ -330,11 +313,11 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                         config.renderCell = (params) => (
 
                             <IconButton
-                                value={params.value}
-                                aria-label={`${prop}-${params.row.id}`}
-                                key={params.id}
-                            >
-                                <DeleteIcon onClick={() => handleDelete(params.id)} />
+                                    value={params.value}
+                                    aria-label={`${prop}-${params.row.id}`}
+                                    key={params.id}
+                                >
+                                    <DeleteIcon onClick={() => handleDelete(params.id)} />
                             </IconButton>
                         );
                         break;
@@ -350,12 +333,6 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
 
     return (
         <div>
-            <Button
-                onClick={handleOpen}
-                variant="contained"
-            >
-                Continuer
-            </Button>
             <Modal open={open} onClose={handleClose}>
                 <Box className="addbook-modal">
                     <div className="addbook-modal-header">
@@ -376,7 +353,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                             name='first_name'
                             type='string'
                             disabled
-                            defaultValue={user[0].first_name}
+                            defaultValue={user[0]?.first_name}
                             className="addbook-modal-inputs-item"
                             sx={{ mb: 2 }}
                         >
@@ -386,7 +363,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                             name='last_name'
                             type='string'
                             disabled
-                            defaultValue={user[0].last_name}
+                            defaultValue={user[0]?.last_name}
                             className="addbook-modal-inputs-item"
                             sx={{ mb: 2 }}
                         >
@@ -396,7 +373,7 @@ const AddBookingModal = ({ user, className, getBookings, updateOneBooking, ...re
                             name='email'
                             type='string'
                             disabled
-                            defaultValue={user[0].email}
+                            defaultValue={user[0]?.email}
                             className="addbook-modal-inputs-item"
                             sx={{ mb: 2 }}
                         >
