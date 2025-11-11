@@ -68,6 +68,8 @@ const BookingUserChoice = ({ articles, params, className, setHistory, checked, g
                 } else if (user.id_status !== 4) {
                     confirmOpen = true;
                     setModalMessage(`La caution de l'adhérent est expirée depuis le ${moment(user.caution_expiration).format('DD/MM/YYYY')}`);
+                } else {
+                    setOpenModale(true);
                 }
 
                 if (confirmOpen) {
