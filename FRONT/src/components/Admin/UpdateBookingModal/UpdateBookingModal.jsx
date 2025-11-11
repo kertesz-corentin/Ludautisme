@@ -62,7 +62,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const addToReturnList = (value) => {
-        setReturnArticle(value);
+        setReturnArticle(Array.from(value.ids));
     }
     const handleFreeAndAdd = async () => {
         let response = null;
@@ -191,6 +191,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const handleReturn = async () => {
+        console.log(returnArticle);
         if (returnArticle.length) {
             const options = {
                 return_article: returnArticle
