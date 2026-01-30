@@ -9,14 +9,21 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 import api from '../../../requests/index';
 import RecoverPasswordModal from '../../Front-Office/User/RecoverPasswordModal/RecoverPasswordModal';
 import { Fab } from '@mui/material';
 import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
+import InputAdornment from '@mui/material/InputAdornment';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
+
 
 import './adminlogin.scss';
 
@@ -25,6 +32,7 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     const [recover, setRecover] = useState(true);
+    const [showPassword, setShowPassword] = React.useState(false);
 
 
     const handleSubmit = async (event) => {
@@ -50,6 +58,16 @@ export default function SignIn() {
     const handleRecover = () => {
         setRecover(!recover);
     }
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handleMouseUpPassword = (event) => {
+        event.preventDefault();
+    };
 
     return (
         <><div className="admin-login">
@@ -81,15 +99,31 @@ export default function SignIn() {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Mot de passe"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password" />
+                            {/* <InputLabel htmlFor="password">Toto</InputLabel> */}
+                            <FormControl fullWidth variant="outlined">
+                                <InputLabel htmlFor="password">Mot de passe</InputLabel>
+                                <OutlinedInput
+                                    margin="normal"
+                                    required
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    id="password"
+                                    label="Mot de passe"
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label={showPassword ? 'hide the password' : 'display the password'
+                                                }
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                onMouseUp={handleMouseUpPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>}
+                                />
+                            </FormControl>
                             {/* Ici voir pour rendre disablle le bouton se connecter si les deux input ne sont pas remplies */}
                             <Button
                                 type="submit"
@@ -100,14 +134,9 @@ export default function SignIn() {
                             >
                                 Se connecter
                             </Button>
-
-                            <Grid container>
-                                <Grid item xs>
-                                    <Button variant="outlined" onClick={handleRecover}>
-                                        Mot de Passe oublié
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                            <Button variant="outlined" fullWidth onClick={handleRecover}>
+                                Mot de Passe oublié
+                            </Button>
                         </Box>
                     </Box>
                 </Container>

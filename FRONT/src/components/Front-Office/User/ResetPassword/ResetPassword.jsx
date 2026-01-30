@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import './resetpwd.scss';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import api from '../../../../requests/index';
 import Logo from '../../../../public/logo.png';
 import { toast } from 'react-toastify';
 import PasswordChecklist from "react-password-checklist";
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
+import InputAdornment from '@mui/material/InputAdornment';
 
 
 const ResetPassword = ({ className, ...rest }) => {
@@ -15,6 +22,7 @@ const ResetPassword = ({ className, ...rest }) => {
     const [password, setPassword] = useState("")
     const [passwordAgain, setPasswordAgain] = useState("")
     const [validPassword, setValidPassword] = useState(false)
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,6 +50,16 @@ const ResetPassword = ({ className, ...rest }) => {
         }
 
     }
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handleMouseUpPassword = (event) => {
+        event.preventDefault();
+    };
+
     //Rendre le formulaire controlable
     return (
         <div className="pwd-container">
@@ -54,30 +72,61 @@ const ResetPassword = ({ className, ...rest }) => {
                 <h1>Veuillez entrer votre nouveau mot de passe</h1>
                 <form>
                     <div>
-                        <TextField
-                            id='outlined'
-                            label='Mot de passe'
-                            name='password'
-                            type='password'
-                            className="updateuser-modal-inputs-item"
-                            sx={{ mb: 2 }}
-                            fullWidth
-                            onChange={e => setPassword(e.target.value)}
-                        >
-                        </TextField>
+                        <FormControl fullWidth variant="outlined">
+                            <InputLabel htmlFor="password">Mot de passe</InputLabel>
+                            <OutlinedInput
+                                margin="normal"
+                                required
+                                name="password"
+                                type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                label="Mot de passe"
+                                sx={{ mb: 2 }}
+                                onChange={e => setPassword(e.target.value)}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label={showPassword ? 'hide the password' : 'display the password'
+                                            }
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            onMouseUp={handleMouseUpPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>}
+                            />
+                        </FormControl>
                     </div>
                     <div>
-                        <TextField
-                            id='outlined'
-                            label='Confirmation mot de passe'
-                            name='member_number'
-                            type='password'
-                            className="updateuser-modal-inputs-item"
-                            sx={{ mb: 2 }}
-                            fullWidth
-                            onChange={e => setPasswordAgain(e.target.value)}
-                        >
-                        </TextField>
+                        <FormControl fullWidth variant="outlined">
+                            <InputLabel htmlFor="password">Confirmation mot de passe</InputLabel>
+                            <OutlinedInput
+                                margin="normal"
+                                required
+                                name='member_number'
+                                type={showPassword ? 'text' : 'password'}
+                                id="password"
+                                label="Confirmation mot de passe"
+                                sx={{ mb: 2 }}
+                                onChange={e => setPasswordAgain(e.target.value)}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label={showPassword ? 'hide the password' : 'display the password'
+                                            }
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            onMouseUp={handleMouseUpPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>}
+                            />
+                        </FormControl>
+
                     </div>
 
                     <PasswordChecklist
