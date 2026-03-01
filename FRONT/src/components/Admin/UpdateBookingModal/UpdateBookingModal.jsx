@@ -95,13 +95,13 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
             if (updatedArticle.status === 200) {
                 setCurrentArticle(updatedArticle.data[0]);
-                
+
                 const settings = {
                     articleNumber: updatedArticle.number,
                     bookingId: params.row.id
                 }
                 const addResponse = await api.put(`/admin/booking/article/${params.row.member_number}`, settings);
-    
+
                 if (addResponse.status === 200) {
                     updateOneBooking(params.row.id);
                 } else {
@@ -191,7 +191,6 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
     }
 
     const handleReturn = async () => {
-        console.log(returnArticle);
         if (returnArticle.length) {
             const options = {
                 return_article: returnArticle
@@ -205,7 +204,21 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
                 toast.error(articles.data.message);
             }
         } else {
-            toast.error("Auncun articles selectionnées");
+            let allReturned = true;
+            for (const article of params.row.borrowed_articles) {
+                if (!article.returned) { allReturned = false; break; }
+            }
+
+            if (allReturned) {
+                const closeResponse = await api.post(`admin/booking/close/${params.row.id}`);
+                if (closeResponse.status === 200) {
+                    updateOneBooking(params.row.id);
+                } else {
+                    toast.error(closeResponse.data.message);
+                }
+            } else {
+                toast.error("Auncun articles selectionnées");
+            }
         }
     }
     const handleProlong = async (row) => {
@@ -225,7 +238,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
         let notReturnedArticle = false;
         // get booking by id and test on this instance
-        let updatedBookingResquest= await api.get(`/admin/booking/${params.row.id}`);
+        let updatedBookingResquest = await api.get(`/admin/booking/${params.row.id}`);
         if (updatedBookingResquest.status === 200) {
             let updatedBooking = updatedBookingResquest.data[0];
             for (const art of updatedBooking.borrowed_articles) {
@@ -234,7 +247,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
 
             if (!notReturnedArticle) {
                 const closeResponse = await api.post(`admin/booking/close/${params.row.id}`, options);
-                if(closeResponse.status === 200) {
+                if (closeResponse.status === 200) {
                     updateOneBooking(params.row.id);
                 } else {
                     toast.error(closeResponse.data.message);
@@ -254,7 +267,7 @@ const UpdateBookingModal = ({ params, className, updateOneBooking, getBookings, 
             <Modal
                 open={open}
                 onClose={handleClose}
-                onClick = {(event) => {
+                onClick={(event) => {
                     event.stopPropagation();
                 }}
             >
